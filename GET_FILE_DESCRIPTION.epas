@@ -1,0 +1,54 @@
+function getFieldName13112017(Obj:TComponent):String;
+var
+  s:string;
+begin
+  s:=LowerCase(Obj.Classname);
+  if s='tdxedit' then result:=tdxedit(Obj).Fieldname
+  else if s='tdxcalcedit' then result:=tdxcalcedit(Obj).Fieldname
+  else if s='tdxdateedit' then result:=tdxdateedit(Obj).Fieldname
+  else if s='tdxtimeedit' then result:=tdxtimeedit(Obj).Fieldname
+  else if s='tdxcombobox' then result:=tdxcombobox(Obj).Fieldname
+  else if s='tdxlookupcombobox' then result:=tdxlookupcombobox(Obj).Fieldname
+  else if s='tdxmemo' then result:=tdxmemo(Obj).Fieldname
+  else if s='tdxcounter' then result:=tdxcounter(Obj).Fieldname
+  else if s='tdxobjectfield' then result:=tdxobjectfield(Obj).Fieldname
+  else if s='tdxfile'then result:=tdxfile(Obj).Fieldname
+  else result:='';
+end;
+
+
+function findobject13112017(name:String): String;
+var
+  i: Integer;
+  fn: string;
+begin
+  result:='';
+  // Функция должна сработать только один раз.
+  for i := 0 to Self.ComponentCount - 1 do
+  begin
+    fn:=LowerCase(getFieldName13112017(Self.Components[i]));
+    if fn=LowerCase(name) then
+      begin
+        Result:=Self.Components[i].name;
+        exit;
+      end;
+  end;
+end;
+
+
+{@function
+OrigName=GET_FILE_DESCRIPTION
+Name=GET_FILE_DESCRIPTION
+Args=s
+Result=s
+Group=test
+Description=GET_FILE_DESCRIPTION(Имя поля с файлом)
+<br><br>Результат: видимое в поле описание.
+@}
+
+function GET_FILE_DESCRIPTION(FName:string):string;
+var c:TComponent;
+begin
+c:=TComponent(Self.FindComponent(findobject13112017(FName)));
+  result:=TdxFile(c).Description;
+end;

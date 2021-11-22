@@ -1,0 +1,161 @@
+{@module
+author=DataExpress
+version=1.0
+description=Выбор данных из окна списка.
+@}
+
+{@action
+id=A12B9557-D44C-4B2A-8EA5-0D1010E9BE0A
+target=button
+origname=ShoppingFromListWindow
+name=Подбор данных из окна списка
+group=Окна списка
+ui=<ui>
+  <form name="form" caption="Форма для подбора" required="1"/>
+  <text name="title" caption="Заголовок окна"/>
+  <filter name="filter" caption="Фильтр" source="form"/>
+  <childform name="tbl" caption="Таблица текущей формы" required="1"/>
+  <grid name="insval" caption="Вставка значений в таблицу" height="100">
+    <field name="formfield" caption="Поле формы" source="form" required="1"/>
+    <field name="tblfield" caption="Поле таблицы" source="tbl" required="1"/>
+  </grid>
+  <grid name="inpval" caption="Ввод значений в таблицу" height="80">
+     <field name="tblfield2" caption="Поле таблицы" source="tbl" filter="number" required="1"/>
+  </grid>
+  <checkbox name="hidecmd" caption="Скрыть кнопки и меню"/>
+</ui>
+description=Подобно стандартной функции "Шопинг" действие открывает форму в
+окне списка, из которого можно выбирать данные (товары, услуги и т. п.) и
+вставлять в таблицу текущей формы. Дважды щелкните по записи или нажмите ENTER,
+чтобы добавить данные в таблицу.<br><br>
+<b>Форма для подбора</b> - форма, отображаемая в окне списка, из которой
+выбираются данные.<br><br>
+<b>Заголовок окна</b> - текст, отображаемый в заголовке окна списка.<br><br>
+<b>Фильтр</b> - данные в окне списка могут быть отфильтрованы. Фильтр составляется
+также как в фильтре списка.<br><br>
+<b>Таблица текущей формы</b> - таблица, в которую будут добавляться данные из
+окна-списка.<br><br>
+<b>Вставка значений в таблицу</b> - установка соответствия полей формы и таблицы.<br><br>
+<b>Ввод значений в таблицу</b> - при выборе данных будет открываться окно для
+ввода числового значения, которое будет вставлено в выбранное поле таблицы.<br><br>
+<b>Скрыть кнопки и меню</b> - в окне списка будут скрыты стандартные кнопки
+редактирования данных и контекстное меню таблицы.
+@}
+
+var
+  ShopFm, Tbl: TdxForm;
+  Fields, InputFields: TVariantArray2d;
+  Edit: TEdit;
+  LW: TListWindow;
+
+procedure InputValueCloseQuery(Sender: TObject; var CanClose: Boolean);
+var
+  S: String;
+  E: Extended;
+begin
+  if TWindow(Sender).ModalResult <> mrOk then Exit;
+
+  S := Edit.Text;
+  CanClose := False;
+  if S = '' then
+    MsgBox('Внимание', 'Введите значение')
+  else if not TryStrToFloat(S, E) then
+    MsgBox('Внимание', 'Некорректное число')
+  else
+    CanClose := True;
+end;
+
+function InputValue(const Title: String; var S: String): Boolean;
+var
+  Wnd: TWindow;
+begin
+  Wnd := TWindow.Create;
+  Wnd.Caption := Title;
+  Wnd.Width := 200;
+  Wnd.Height := 100;
+  Wnd.Left := LW.Left + Round(LW.Width / 2 - Wnd.Width / 2);
+  Wnd.Top := LW.Top + Round(LW.Height / 2 - Wnd.Height / 2);
+  Wnd.Font.Name := 'Verdana';
+  Wnd.Font.Size := 10;
+  Wnd.BorderStyle := bsDialog;
+
+  with TLabel.Create(Wnd) do
+  begin
+    Parent := Wnd;
+    Left := 8; Top := 8;
+    Caption := 'Введите значение';
+  end;
+
+  Edit := TEdit.Create(Wnd);
+  Edit.Parent := Wnd;
+  Edit.Left := 8;
+  Edit.Top := 25;
+  Edit.Width := 184;
+  Edit.Caption := S;
+
+  with TButtonPanel.Create(Wnd) do
+  begin
+    Parent := Wnd;
+    ShowButtons := [pbOk, pbCancel];
+  end;
+
+  Wnd.OnCloseQuery := @InputValueCloseQuery;
+  Result := Wnd.ShowModal = mrOk;
+  if Result then S := Edit.Text;
+
+  Wnd.Free;
+end;
+
+procedure ShopGridDblClick(Sender: TObject);
+var
+  i: Integer;
+  S: String;
+begin
+  Tbl.Append;
+
+  for i := 0 to High(Fields) do
+    Tbl[ Fields[i][1] ] := ShopFm[ Fields[i][0] ];
+
+  for i := 0 to High(InputFields) do
+  begin
+    S := '';
+    if InputValue(Fields[i][0], S) then
+      Tbl[ InputFields[i][0] ] := S
+    else
+    begin
+      Tbl.Cancel;
+      Exit;
+    end;
+  end;
+
+  Tbl.Post;
+end;
+
+procedure ShopGridKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  if Key = 13 then ShopGridDblClick(Sender);
+end;
+
+procedure ShoppingFromListWindow(const FormName, Title, Filter, TableName: String;
+  aFields, aInputFields: TVariantArray2d; HideCmd: Integer);
+begin
+  Tbl := Self.Forms[TableName];
+  Fields := aFields;
+  InputFields := aInputFields;
+  LW := TListWindow.Create(FormName, vtGridOnly);
+  LW.Caption := Title;
+  if HideCmd = 1 then
+  begin
+    LW.Toolbar.Visible := False;
+    LW.FormView.Grid.PopupMenu := nil;
+  end;
+  LW.FormView.Grid.OnKeyDown := @ShopGridKeyDown;
+  LW.FormView.Grid.OnDblClick := @ShopGridDblClick;
+  if LW.FormView.Tree.Visible then LW.FormView.Tree.UpdateTree;
+  LW.FormView.Form.OpenRecords(Filter, Self, False);
+
+  ShopFm := LW.FormView.Form;
+  LW.ShowModal;
+
+  LW.Free;
+end;

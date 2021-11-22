@@ -1,0 +1,24 @@
+{@module
+Author= develop-soft
+Version=1.0
+Description= Функция для выполнения  JScript кода, необходимо для выполнения формул.
+@}
+
+{@function
+OrigName=JS_Eval
+Name=JS_Eval
+Args=s
+Result=v
+Group=Скрипты
+Description=Выполнить JScript код
+@}
+
+function JS_Eval(s:string):variant;
+var JS:variant;
+begin
+JS:=CreateOleObject('MSScriptControl.ScriptControl');
+JS.Language := 'JScript';
+result:= JS.Eval(s);
+JS:=Unassigned;
+JS:=null;
+end;

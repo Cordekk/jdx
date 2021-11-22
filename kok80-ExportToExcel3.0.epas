@@ -1,0 +1,738 @@
+{@module
+Author=kok80
+Version=3.0
+Description=Экспорт в Excel/LibreOffice Calc из форм, запросов, сводных таблиц, TdxSQLQuery
+@}
+
+
+type TGridFunc =(gfMoveFirst, gfMoveNext, gfDisableControls, gfDisableScrollEvents,
+                 gfEnableControls, gfEnableScrollEvents, gfMoveTo, gfEOF, gfRecNo);
+
+type TGridFunc2 =(gfColumnCount, gfFieldAsString, gfColumnCaption, gfColumnVisible, gfColumnWidth);
+
+const pic1 = 'Qk02BAAAAAAAADYAAAAoAAAAEAAAABAAAAABACAAAAAAAAAAAAARFwAAERcAAAAAAAAAAAAA///+Af39/AT9/fwE////Af///wD///8A////AP///wD///8A////Bf///wX+//4F/P38Bfz9/AX8/fwF/v7+Af///wD///8A+/z6AMzZwwDL2MESwtG2NY2pdmCDoWqTa5BOr4akbw+CoWoApLuSAf///wD+/v4A////AP///wDj6t0Reptgb3OWV6I+bRfNOWoS8TpqE/83aA/+OGgQ/ztrFfZBcBuDOmoTeFiBNnuyxaN6rMGcfKe9lXLo7+QQ1uDNNTlqEv86axP/R3Qi/0ZzIf9IdSP+SXUk+0RyHvtQey38zNnD/93m2P/b5NX/wtG2/9ji0P6dtYr/vs+yQ9ji0TVGdCL7RHMg/D5uGPxGcyH+O2sV/z9uGf9FciD/RnQi/1J9Mft0l1n7pLuS+0h1JPuVr4D6wdC1/8DQtETY4tA1Q3Ed/0p2Jv9fhj//O2sU/26SUf9hiEL/Pm0X/0p3Jv98nGP/mLKE/7rLrP91l1r/ssWj/r7NsP/Az7NE2OLRNUNxHv9GdCL/097K/3eZXP/d5db/ZIpG/z1tFv9JdiX/ZIpF/4Khaf+swJv/WYI4/6C3jP6/z7P/v8+zRNjh0DVGdCL/OGkR/3maX//8/fv/mrOG/zZnDv9GdCL/SHUk/3GUVP+Oqnj/tMel/2iNSf+qv5j+v8+y/8DPs0TY4dA1RnMh/ztrFP9jiUT//////4ekb/81Zw3/RnQi/0l2Jf94mV3/la9//7jKqv9xlFP/r8Of/r7Osv/Az7NE2OLQNUVzIP88bBb/yda+/562i//T3sr/VoA1/0BvGv9IdST/YYhC/4CgZ/+rwJr/VoA0/562iv6/z7P/v8+zRNji0DVDcR7/SHUj/3ycYv9Abxr/h6Rv/2mOS/88bBX/S3cn/4Kgaf+etYr/vs2w/3ybYv+3yKj+vc2w/8DPs0TY4tE1RnQi+0VzIPw6ahP8RXIg/jlqEv8/bhn/RXIg/0Z0Iv9RfDD7c5ZY+6S6kvtIdCP7la5/+sHQtf/A0LRE1uDNNTlqEv86axP/SHUj/0ZzIv9IdST+SHQj+0NxHvtQey38y9jB/9zl1f/b5NP/wtG2/9ji0P6dtYr/v8+zQ+Pq3RB6m2Bvc5ZYoj5uGM05ahLwOmsU/ztrFf47axX/PGwW9kZ0IYM/bxl4W4Q7e7LFo3qswJx8qL2Wcuvw5w////8A////APv8+gDO2sQAztrEEsDQtDVskU9faY9Mk2mOTK9mi0cPXIQ8AImmcgH///8A/v7+AP///wD///8A///+Af39/AT9/fwE////Af///wD///8A////AP///wD///8A////Bf///wX+//4F/P38Bfz9/AX8/fwF/v/+AQ==';
+const pic2 = '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';
+
+const pic11 = 'Qk04CAAAAAAAADYAAAAoAAAAIAAAACAAAAABABAAAAAAAAIIAAASCwAAEgsAAAAAAAAAAAAA/3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f+EIYQqhCoEKgQqBCoEKgQqBCoEKgQqBCoEKgQqBCoEKgQqBCoEKoQphCuEI/3//f/9//3//f/9//3//f/9//3+gCcISiCaJKogmiCaIJogmiCaIJogmiCaIJogmiCaIJogmiCaJKogmwhKgCf9//3//f/9//3//f/9//3//f/9/wAXFGtdeG28ZZxpnGmcaZxpnGmcaZxpnGmsaaxprGmsaaxln+27XXsUawAX/f/9//3//f/9//3//f/9//3//f8AFxBrWWn13nXeee557nnu+e557nnudd5x3nHedb51vnXOcc3131lrEGsAF/3//f/9//3//f/9//3//f/9//3/ABcQa1lqdd3prFVcVVxVXNlsVVzVb1Va3SrVSkl6yXrJaOWedd9ZaxBrABf9//3//f/9//3//f/9//3//f/9/wAXEFvZannfyTqw2Mk/vQoou70IRS5A+Who0MqVtYXaEYvVennf2WsQWwAX/f/9//3//f/9//3//f/9//3//f6AFxBb3Xp538UruPpdfU1OqMjJPdVvTRlsOVTLFdet+MGsXY553917EFqAF/3//f/9//3//f/9//3//f/9//3+gBcQW916ee/JKyzIySw9DiSrvQjBHsULbOpROpHE2e31rGGOdd/dexBagBf9//3//f/9//3//f/9//3//f/9/oAXEGhdfnXcSTw9Dl2NUV8w2U1N1X/NSnXc2e6VxV3+dbxhjnXcXX8QaoAX/f/9//3//f/9//3//f/9//3//f6AFxBoXY557EkuqMjBL7j6JJu06D0OwRhlnOGuSZjhr91oXY553F1/EGqAF/3//f/9//3//f/9//3//f/9//3+gBcQaGGOeexJPMEvZa5Vb7DZ0V7djVVevPndfmmPySrJKe2+eexdjxBqgBf9//3//f/9//3//f/9//3//f/9/oAXEGjhjv38ST6kqDkPtNocm7DYNP+w2ZiINOw07qCoST99/nnsXY8QaoAX/f/9//3//f/9//3//f/9//3//f6AFxBo4Y757Ek8wS9lvdlvtOnRbt2d1W+w2uGe4azBLE1O+e757GGPFGqAF/3//f/9//3//f/9//3//f/9//3+gBcQaOGe/fxJPyjIwSw4/qCoNPy9H7T6oJi9DL0fKLhNT33+/fzhnxRqgBf9//3//f/9//3//f/9//3//f/9/oAXFGjlnv38yS8cmTT8rN6YiCjMsOwszpiIsO0w7yCozU99/v385Z8UaoAX/f/9//3//f/9//3//f/9//3//f6AFxRpZZ99/M0/oKk5DLDvHJiw3TT8sN8cmTT9NP+kuM1Pff99/WWflGsAF/3//f/9//3//f/9//3//f/9//3+gBcUaWWfff5prNFM0UzRTNFc0UzRXNFc0VzRTNFM0U7pv3399d+9Cwg5gBf9//3//f/9//3//f/9//3//f/9/oAXFGlln33//f/9//3//f/9//3//f/9//3//f/9//3/ff5538ELBCsAFQAT/f/9//3//f/9//3//f/9//3//f6AF5Rpaa99/3nvee9573nvee9573nvee9573nvff99/nnsQR8EOwAEAAAAA/3//f/9//3//f/9//3//f/9//3+gBcUeWmvff9573nvee9573nvee9573nvee957/3+eexFLwg6gAUAAAAXABP9//3//f/9//3//f/9//3//f/9/oAHlHnpv33/ff99/33/ff99/33/ff99//3/ff79/EUvCDqABIAAgBeAOwAn/f/9//3//f/9//3//f/9//3//f6AB5R56a/9//3//f/9//3//f/9//3//f/9/v38SS8IOoAEgACAFgA7gDsAN/3//f/9//3//f/9//3//f/9//3+gAeUeem//f/9//3//f/9//3//f/9//3+/fzNPwg7AASAAAAWgDqAOwA7ACf9//3//f/9//3//f/9//3//f/9/oAHmHp1333/ff99/33/ff99/33/ff79/M1PCDsABIAAABaAOoA5gDsAOwAn/f/9//3//f/9//3//f/9//3//f6AFwhLKLusyyi7KMsoyyjLKMsoy6jLKLsMSwAFAAAAFgA6gDoAOYA7ADsAJ/3//f/9//3//f/9//3//f/9//3/hCGEOgQqBCoEKgQqBCoEKgQqBCmEKgQrhBWEEIQShCcESgRKBEoESoRKBCf9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//38AAA==';
+const pic22 = 'iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAGUmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdEV2dD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlRXZlbnQjIiB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAyMC0wNS0zMFQxOTowNjo1NiswMzowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAyMC0wNS0zMFQxOTowNjo1NiswMzowMCIgeG1wOk1vZGlmeURhdGU9IjIwMjAtMDUtMzBUMTk6MDY6NTYrMDM6MDAiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MmIyZWQ3YTQtNjQwZS0zODQ0LWIwMWMtOTUxNGViYjExYWNkIiB4bXBNTTpEb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6ZjlmZDIzNTktNDMzOC05ZTRkLTk0ZTktNjcyYmM1ZjljOTQ2IiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6ZmU0MTM1ZTItYTM2MS01MjQ5LTliYjMtYWYzMjUxZjI0MDYzIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiBkYzpmb3JtYXQ9ImltYWdlL3BuZyI+IDx4bXBNTTpIaXN0b3J5PiA8cmRmOlNlcT4gPHJkZjpsaSBzdEV2dDphY3Rpb249ImNyZWF0ZWQiIHN0RXZ0Omluc3RhbmNlSUQ9InhtcC5paWQ6ZmU0MTM1ZTItYTM2MS01MjQ5LTliYjMtYWYzMjUxZjI0MDYzIiBzdEV2dDp3aGVuPSIyMDIwLTA1LTMwVDE5OjA2OjU2KzAzOjAwIiBzdEV2dDpzb2Z0d2FyZUFnZW50PSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDoyYjJlZDdhNC02NDBlLTM4NDQtYjAxYy05NTE0ZWJiMTFhY2QiIHN0RXZ0OndoZW49IjIwMjAtMDUtMzBUMTk6MDY6NTYrMDM6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cykiIHN0RXZ0OmNoYW5nZWQ9Ii8iLz4gPC9yZGY6U2VxPiA8L3htcE1NOkhpc3Rvcnk+IDxwaG90b3Nob3A6RG9jdW1lbnRBbmNlc3RvcnM+IDxyZGY6QmFnPiA8cmRmOmxpPnhtcC5kaWQ6Y2Y5NGUwZWMtZTkwOC02MTQ5LTliNDAtNWQyZWQxOTVjZjg0PC9yZGY6bGk+IDwvcmRmOkJhZz4gPC9waG90b3Nob3A6RG9jdW1lbnRBbmNlc3RvcnM+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+u+y6WQAABYZJREFUWIXtl1tsHGcVx3/nm9mL7fVt7djr2m2cxJGbRk0rEsqltKiQWhQBElJ5QwJUiCqKKnGR4AHxAAGJi1ClEqGWl4pLX1LxyHPVlAjEpSoPaRXcxCHeOL6u92LvznyXw8M6LZV2rS4v4YGRRiPNzHe+3znzP9/3H1FVbudhbuvs/wsAcaeb+VOyO/wUcTMjBAdIl9EeJKvYS5A8D1Sh8AQMfxK0CgqIQhiE7d/jmr/R/vcEIB8kMzRdjBfCR+mP87RCinSgEBGcWi4OX+RKWCP6Jdg3wD4CcQGogypEWciPd06jI0BL4UB8iGeO/YqxkTGcV0yH8QYgwG+vvsC35BusaoVwDrafg5EnIR4Are+93EXrHQEQUE2p2A3G8mPEKl0DIPD52S9iXcq3H/4O665Ceg6qEYyeAelvQ/YGACiB4F178D4ZIMAAfOnwGVJv+d7Hv8ua3yZ5DuoZKHwB6AcT9QiAgvEGAjgcol2UGAADUSHiiSNPYkn4wcL3WaPK7vOgAYa+Ca5Lv3UWobQDO9++Wk2hGwCgQYlNRHY4x1dmn8I7x49On2Uj1Gn+GtxZCNUeK+BEsaH9CUxkEP2PFJR3taaqggpOHbnhLF+efRobAj959IdsRg3SZwHfI4CqoOoIBHJRvi35W3qIeEdYsnfeehbDwIE8Z8LXcCHlZ4/8lDoN/As9AgigahARLm+8yd9u/KXddibCiBIQxCuYiEjABY8PHmOEkzMPcHRsnq/q1/FXPb9YeIbKSq3XCiheFVHh1fIF/lA5z4mZE1R2aiwuX+LQ1ByFvhHqzTqLK29y/5GTGANvlRdxmnL0nnmGRgf59PZnecmeZ226RwAUsA4cpKFJ0zVIfJM0NKmnCYlvknUZmr5JyzZJfIIqJLZJcAENivcB7zyRNajtPE13ACyKR1FyTpi0E0zaaeI0T5EVivYAI1GRbFpjLdxgIpkgMhGbuglq9oQJPrRj9LQQ3RK49Q7nLGIM95Ue4LG5T3Fla4lGssODdzzE5EiJ1foqjXSH04cfoz+OyUoWLDhrsQqJtwiu6362TwUAVSKNsNZx8eZFqr7Gxu42l1cu0QyW0VyBWrPBpfI/OJ97EY/w1s03+MzM40RRhjRt0a59d9PTHSAAvl0FIzkenPsIH5tf4Mr2dcQ5Hpo7zVSxxEZ5naHKJKenPkEuX+Sv4RV2VlLKpWWKhTEk7LOPdAWQ9j7uvMMRSH3K61dfQzysNTZY2rhOLv4TI6tDRNdiHp/+HH2VXRqLf+TRuVP8KzS5trzEyPwYLuwl0+UbdHVEgXZvO++IiDg0NsepOz7M/QdOcHBomvvG7+X9kyeZLt7JXUePcCjaovTnn3N3X5Vjx+4ligRnE0Lwb69R770CgKNtJjJi0BBYqi3x+uprVOpb3Kitsri5yGq6yk4l4sd/r3J8q8aCOpI00LQGJEIQgipuH4DunlDAB8EFJQRPabDEPaXjzBZnKeQK3Dkyw/zEMQb6RnnxauDl9Tz5OEt+63f4m+fwPiFIBu8VTHdX17kN97CctxCEDBm2tza5XP4n69VV0l3L8nqZRqvB9lZg3O+ScSkbLcUvvUS1fxJXOg4I3tt9U+0IYIBYFe9THCkfOvgw430lfKqMD0zxvrs/QCskiCgzE8J03w0GTT/Xp55mud/RImZydBpI0eCRoD1WABACEoTgA1OD0xwsHIYAYoTIGHwICIK7K0V9nSARdTOA90JWlUycQBLQsBerFwAEIsmStXkq16o0pI7B7KHpu+yAiGCM2btbeTuEV8eAK5CzeeIo29XPdASIPVSkzLP1s8S7eWxI6S6jboeSMVmcb1EbLZPpxZCkF7DrJ+r68uAraPJfzP0OA5IDKSvuQudulP//nN5ugH8DlCW1GiZgP74AAAAASUVORK5CYII=';
+
+procedure GridToExcel(sender:TObject); forward;
+procedure GridToExcelSelected(sender:TObject); forward;
+
+var BMP:TBitmap;
+    ICO:integer;
+    xlsOldOnDataBaseClose:TNotifyEvent;
+    xlsOldMainWindowOnCreateForm:TCreateFormEvent;
+    //xlsOldOnCreateListWindow:TCreateListWindowEvent;
+    PivotRow, GridRow:integer;
+    AddTodxQueryGridToolbar,
+    AddTodxFormPopupMenu,AddTodxFormPopupMenuSelected,
+      AddTodxQueryGridPoupMenu,AddTodxQueryGridPoupMenuSelected,AddTodxPivotGridPopupMenu:boolean;
+    XLScaption:string;
+    ExportSelected:boolean;
+    OldMainWindow_OnCreateForm:TCreateFormEvent;
+    AllFormsMultiSelect,AllQueriesMultiSelect:integer;
+    UseCalc:boolean;
+
+// возвращает текущую активную форму
+function xls_GetActiveForm:TDxForm;
+begin
+  if MainWindow.Pages.ActivePageIndex < 0 then
+    result:=nil
+  else
+    result:=MainWindow.FormViews[MainWindow.Pages.ActivePageIndex].Form;
+end;
+
+function GetBMPstring:string;
+begin
+  if not UseCalc then
+    result:=pic1
+  else
+    result:=pic11;
+end;
+
+
+function GetPNGstring:string;
+begin
+  if not UseCalc then
+    result:=pic2
+  else
+    result:=pic22;
+end;
+
+// загружает из строки в BMP картинку
+function GetBMPFromString(bmpString:string):TBitmap;
+var stream:TStringStream;
+begin
+  stream:=TStringStream.create(DecodeBase64(bmpString,true));
+  try
+    result:=TBitmap.create;
+    result.LoadFromStream(stream);
+  finally
+    stream.free;
+  end;
+end;
+
+// загружает из строки картинку в набор mainWindow.Toolbar и возвращает индекс картинки
+function GetICOFromString(pngString:string):integer;
+var stream:TStringStream;
+begin
+  stream:=TStringStream.create(DecodeBase64(pngString,true));
+  try
+    result:=MainWindow.Toolbar.images.addFromStream(stream);
+  finally
+    stream.free;
+  end;
+end;
+
+// добавить кнопку на главную панель
+Function AddXLSToMainToolbar:TToolButton;
+begin
+ if ico=0 then
+   ico:=GetICOFromString(GetPNGString);
+ result:=TToolButton.create(MainWindow.Toolbar);
+ with result do
+   begin
+     result.parent:=MainWindow.Toolbar;
+     left:=MainWindow.Toolbar.width;
+     Hint:=XLSCaption;
+     ImageIndex:=ico;
+     onClick:=@GridToExcel;
+     name:='ExportToExcel';
+   end;
+end;
+
+// добавить кнопку на панель запроса
+function AddXLSTodxQueryGridToolbar(qg:TdxQueryGrid):TSpeedButton;
+var ToolBar:TCustomControl;
+begin
+  if BMP=nil then
+    BMP:=GetBMPFromString(GetBMPstring);
+  ToolBar:=TCustomControl(qg.components[0]);
+  result:=TSpeedButton.Create(ToolBar);
+  with result do
+    begin
+      Parent:=ToolBar;
+      hint:=XLSCaption;
+      ShowHint:=true;
+      Flat:=true;
+      Glyph:=BMP;
+      OnClick:=@GridToExcel;
+    end;
+end;
+
+// добавить в контекстное меню Control
+function AddXlsToPopupMenu(control:TControl):TMenuItem;
+//var pic:string;
+begin
+  if BMP=nil then
+    BMP:=GetBMPFromString(GetBMPstring);
+  if control.PopupMenu=nil then
+    control.PopupMenu:=TPopupMenu.create(control);
+  result:=TMenuItem.create(control);
+  with result do
+    begin
+      caption:=XLSCaption;
+      OnClick:=@GridToExcel;
+      ShortCut:=16472;  //Ctrl+X
+      bitmap:=BMP;
+    end;
+  control.PopupMenu.items.add(result);
+end;
+
+// добавить в контекстное меню Control
+function AddXlsToPopupMenuSelected(control:TControl):TMenuItem;
+begin
+  if BMP=nil then
+    BMP:=GetBMPFromString(GetBMPstring);
+  if control.PopupMenu=nil then
+    control.PopupMenu:=TPopupMenu.create(control);
+  result:=TMenuItem.create(control);
+  with result do
+    begin
+      caption:=XLSCaption+': выделенные';
+      OnClick:=@GridToExcelSelected;
+      //ShortCut:=16472;  //Ctrl+X
+      bitmap:=BMP;
+    end;
+  control.PopupMenu.items.add(result);
+end;
+
+function IsMultiSelect(sender:TObject):boolean;
+begin
+  if sender is TdxForm then
+    result:=dgMultiselect in TdxForm(sender).Grid.Options else
+  if sender is TdxQueryGrid then
+    result:=dgMultiselect in TdxQueryGrid(sender).Options;
+end;
+
+function GridFunction(gf:TGridFunc; sender:TObject; param:integer):variant;
+begin
+  if sender is TdxForm then
+    with TdxForm(sender) do
+      case gf of
+        gfMoveFirst: if not ExportSelected then MoveFirst else                                     // экспорт всех строк
+                     if IsMultiSelect(TdxForm(sender)) then
+                        begin
+                          GridRow:=0;
+                          grid.MoveToSelectedRow(GridRow);
+                        end  // экспорт выделенных и есть мультибор
+                     else GridRow:=0;                                                              // экспорт выделенных и нет мультивыбора
+        gfMoveNext:  if not ExportSelected then MoveNext else
+                     if IsMultiSelect(TdxForm(sender)) then
+                       begin
+                         GridRow:=GridRow+1;
+                         if GridRow<=grid.SelectedRowCount-1 then
+                           grid.MoveToSelectedRow(GridRow);
+                       end
+                     else GridRow:=1;
+        gfDisableControls: DisableControls;
+        gfDisableScrollEvents: DisableScrollEvents;
+        gfEnableControls: EnableControls;
+        gfEnableScrollEvents: EnableScrollEvents;
+        gfEOF: if not ExportSelected then result:=EOF else                    // экспорт всех строк
+               if IsMultiSelect(TdxForm(sender)) then result:=GridRow>grid.SelectedRowCount-1  // экспорт выделенных и есть мультибор
+               else result:=GridRow=1;                                        // экспорт выделенных и нет мультивыбора
+        gfRecNo: result:=RecNo;
+        gfMoveTo: MoveTo(param);
+      end else
+
+  if sender is TdxQueryGrid then
+    with TdxQueryGrid(sender) do
+      case gf of
+        gfMoveFirst: if not ExportSelected then MoveFirst else                                     // экспорт всех строк
+                     if IsMultiSelect(sender) then
+                       begin
+                         GridRow:=0;
+                         MoveToSelectedRow(GridRow);
+                       end  // экспорт выделенных и есть мультибор
+                     else GridRow:=0;                                                              // экспорт выделенных и нет мультивыбора
+        gfMoveNext:  if not ExportSelected then MoveNext else
+                     if IsMultiSelect(sender) then
+                       begin
+                         GridRow:=GridRow+1;
+                         if GridRow<=SelectedRowCount-1 then
+                           MoveToSelectedRow(GridRow);
+                       end
+                     else GridRow:=1;
+        gfDisableControls: DisableControls;
+        gfDisableScrollEvents: DisableScrollEvents;
+        gfEnableControls: EnableControls;
+        gfEnableScrollEvents: EnableScrollEvents;
+        gfEOF: if not ExportSelected then result:=EOF else                    // экспорт всех строк
+               if IsMultiSelect(sender) then result:=GridRow>SelectedRowCount-1  // экспорт выделенных и есть мультибор
+               else result:=GridRow=1;                                        // экспорт выделенных и нет мультивыбора
+        gfRecNo: result:=RecNo;
+        gfMoveTo: MoveTo(param);
+      end else
+
+  if sender is TdxSQLQuery then
+    with TdxSQLQuery(sender) do
+      case gf of
+        gfMoveFirst: MoveFirst;
+        gfMoveNext: MoveNext;
+        gfEOF: result:=EOF;
+        gfRecNo: result:=RecNo;
+        gfMoveTo: MoveTo(param);
+      end else
+
+  if Sender is TdxPivotGrid then
+    with TdxPivotGrid(sender) do
+      case gf of
+        gfMoveFirst: PivotRow:=1;
+        gfMoveNext: PivotRow:=PivotRow+1;
+        gfEOF: result:=PivotRow+1>RowCount;
+        gfRecNo: result:=row;
+        gfMoveTo: row:=param;
+      end;
+
+end;
+
+function GridFunction2(gf:TGridFunc2; sender:TObject; param:integer):variant;
+begin
+  if Sender is TdxForm then
+    with TdxForm(sender).grid do
+      case gf of
+        gfColumnCount:   result:=columns.count;
+        gfFieldAsString: result:=columns[param].field.asString;
+        gfColumnCaption: result:=columns[param].title.caption;
+        gfColumnVisible: result:=columns[param].visible;
+        gfColumnWidth:   try result:=columns[param].width/Canvas.TextWidth('W') * 1.9; except result:=14; end;
+      end else
+
+  if Sender is TdxQueryGrid then
+    with TdxQueryGrid(sender) do
+      case gf of
+        gfColumnCount:   result:=columns.count;
+        gfFieldAsString: result:=columns[param].field.asString;
+        gfColumnCaption: result:=columns[param].title.caption;
+        gfColumnVisible: result:=columns[param].visible;
+        gfColumnWidth:   try result:=columns[param].width/Canvas.TextWidth('W') * 1.9; except result:=14; end;
+      end else
+
+  if Sender is TdxSQLQuery then
+    with TdxSQLQuery(sender) do
+      case gf of
+        gfColumnCount:   result:=FieldCount;
+        gfFieldAsString: result:=field[param].asString;
+        gfColumnCaption: result:=field[param].FieldName;
+        gfColumnVisible: result:=true;
+        gfColumnWidth:   result:=25;
+      end;
+
+  if Sender is TdxPivotGrid then
+    with TdxPivotGrid(sender) do
+      case gf of
+        gfColumnCount:   result:=ColCount;
+        gfFieldAsString: result:=cells[param,PivotRow];
+        gfColumnCaption: result:=cells[param,0];
+        gfColumnVisible: result:=true;
+        gfColumnWidth:   result:=ColWidths[param]/7.4;
+      end;
+end;
+
+
+procedure MoveFirst(sender:TObject);
+begin
+  GridFunction(gfMoveFirst,sender,0);
+end;
+
+procedure MoveNext(sender:TObject);
+begin
+  GridFunction(gfMoveNext,sender,0);
+end;
+
+function EOF(sender:TObject):boolean;
+begin
+  result:=GridFunction(gfEOF,sender,0);
+end;
+
+procedure DisableControls(sender:TObject);
+begin
+  GridFunction(gfDisableControls,sender,0);
+end;
+
+procedure DisableScrollEvents(sender:TObject);
+begin
+  GridFunction(gfDisableScrollEvents,sender,0);
+end;
+
+procedure EnableControls(sender:TObject);
+begin
+  GridFunction(gfEnableControls,sender,0);
+end;
+
+procedure EnableScrollEvents(sender:TObject);
+begin
+  GridFunction(gfEnableScrollEvents,sender,0);
+end;
+
+procedure MoveTo(sender:TObject; RecN:integer);
+begin
+  GridFunction(gfMoveTo,sender, RecN);
+end;
+
+function RecNo(sender:TObject):integer;
+begin
+  result:=GridFunction(gfRecNo,sender,0);
+end;
+
+function ColumnCount(sender:TObject):integer;
+begin
+  result:=GridFunction2(gfColumnCount, sender, 0);
+end;
+
+function FieldAsString(sender:TObject; column:integer):string;
+begin
+  result:=GridFunction2(gfFieldAsString, sender, column);
+end;
+
+function ColumnCaption(sender:TObject; column:integer):string;
+begin
+  result:=GridFunction2(gfColumnCaption, sender, column);
+end;
+
+function ColumnVisible(sender:TObject; column:integer):boolean;
+begin
+  result:=GridFunction2(gfColumnVisible, sender, column);
+end;
+
+function ColumnWidth(sender:TObject; column:integer):integer;
+begin
+  result:=GridFunction2(gfColumnWidth, sender, column);
+end;
+
+
+
+procedure GridToExcelSelected(sender:TObject);
+begin
+  ExportSelected:=true;
+  GridToExcel(sender);
+end;
+
+
+// выгузить в EXCEL элементы TdxForm или TdxQueryGrid
+procedure GridToExcel(sender:TObject);
+var //qg:TdxQueryGrid;
+    //fm:TdxForm;
+    Excel, Sheet: Variant;
+    column,StartRecNo,XLSColumn:integer;
+    ExportText,oldtext,CellValue:string;
+    ServiceManager,Desktop,Document,dispatcher:variant;
+    //ar:variant;
+begin
+  //---------------------------------------------------------------------------
+  //     TToolButton (owner=ToolBar)
+  //---------------------------------------------------------------------------
+  if sender is TToolButton then
+    begin
+      // если кнопка на панели главной формы
+      if TComponent(sender).owner.owner.classname='TMainFr' then
+        begin
+          sender:=xls_GetActiveForm;
+          if sender=nil then
+            begin msgbox('Error','Не удалось получить активную форму'); exit; end;
+        end;
+    end else
+  //---------------------------------------------------------------------------
+  //     TSpeedButton (owner=псевдо ToolBar запроса)
+  //---------------------------------------------------------------------------
+  if sender is TSpeedButton then
+    begin
+      if TComponent(sender).owner.owner is TdxQueryGrid then
+        sender:=TdxQueryGrid(TComponent(sender).owner.owner);
+    end else
+  //---------------------------------------------------------------------------
+  //     TMenuItem (owner=TPopupMenu, TdxQueryGrid, TdxGrid)
+  //---------------------------------------------------------------------------
+  if sender is TMenuItem then
+  begin
+    if TComponent(sender).owner is TPopupMenu then
+      sender:=TComponent(sender).owner.owner else
+    if TComponent(sender).owner is TdxGrid then
+      sender:=TdxGrid(TComponent(sender).owner).form else
+    if TComponent(sender).owner is TdxQueryGrid then
+      sender:=TComponent(sender).owner else
+    if TComponent(sender).owner is TdxPivotGrid then
+      sender:=TComponent(sender).owner else
+    begin
+      msgbox('Error', 'Не удалось определить OWNER у TMenuItem, должен быть: TPopupMenu, TdxQueryGrid, TdxGrid или TdxPivotGrid.');
+      exit;
+    end;
+  end;
+
+  DisableControls(sender);
+  DisableScrollEvents(sender);
+
+  if not UseCalc then
+    begin
+      // Создаем объект приложения Excel.
+      try Excel:=CreateOleObject('Excel.Application'); except msgbox('Error','Ошибка CreateOleObject(Excel.Application)'); exit; end;
+      Sheet:=Excel.WorkBooks.Add.ActiveSheet;
+    end
+  else
+    begin
+      try ServiceManager:=CreateOleObject('com.sun.star.ServiceManager'); except msgbox('Error','Ошибка CreateOleObject(com.sun.star.ServiceManager)'); exit; end;
+      try Desktop:=ServiceManager.createInstance('com.sun.star.frame.Desktop'); except msgbox('Error','Ошибка ServiceManager.createInstance(com.sun.star.frame.Desktop)'); exit; end;
+      Document:=Desktop.loadComponentFromURL('private:factory/scalc', '_blank', 0, []);
+    end;
+
+
+  XLSColumn:=1;
+  // устанавливаем ширину столбцов
+  for column:=0 to ColumnCount(sender)-1 do
+    if ColumnVisible(sender,column) then
+      begin
+        if not UseCalc then
+          Sheet.Columns(XLSColumn).ColumnWidth:=ColumnWidth(sender,column)
+        else
+          Document.GetCurrentController.GetActiveSheet.GetColumns.GetByIndex(XLSColumn-1).Width:=ColumnWidth(sender,column)*199;
+        XLSColumn:=XLSColumn+1;
+      end;
+
+
+   {// текстовой формат только для текстовых колонок
+  if dbGrid<>nil then
+    for column := 0 to dbGrid.columns.count - 1 do
+      if dbGrid.columns[column].field.DataType in [ftString] then
+        sheet.columns(column+1).NumberFormat:= '@';}
+
+  // заголовки
+  for column:=0 to ColumnCount(sender)-1 do
+    if ColumnVisible(sender,column) then
+      ExportText:=ExportText+ColumnCaption(sender,column)+#09;
+  ExportText:=ExportText+#$0d+#$0a;
+
+  // сохраняем текущий RecID
+  StartRecNo:=RecNo(sender);
+
+  if MainWindow.Params.ParamExists('selected') then
+    ExportSelected:=MainWindow.Params.Values['selected'];
+
+    // сохраняем в переменную TEXT все поля разделенные TAB`ом
+  MoveFirst(sender);
+  while not EOF(sender) do
+    begin
+      for column:=0 to ColumnCount(sender) - 1 do
+        if ColumnVisible(sender,column) then
+          begin
+            CellValue:=FieldAsString(sender, column);
+            // в значениях ячеек заменяем конец строки на пробел
+            CellValue:=StringReplace(CellValue,#$0d+#$0a,' ',[rfReplaceAll, rfIgnoreCase]);
+            ExportText:=ExportText+CellValue+chr(09);
+          end;
+      MoveNext(sender);
+      // в конце каждой строки добавляем
+      ExportText:=ExportText+#$0d+#$0a;
+    end;
+  ExportSelected:=false;
+
+
+  // сохраняем буфер
+  OldText:=ClipBoard.AsText;
+
+  // сохраняем в буфер сформированный для экспорт текст
+  Clipboard.AsText:=ExportText;
+  // вставляем из буфера
+  if not UseCalc then
+    begin
+      sheet.cells(1,1).select;
+      excel.ActiveSheet.Paste;
+      sheet.cells(1,1).select;
+      excel.visible:=true;
+      excel.WindowState:=-4137 ; //xlMaximized
+    end
+  else
+    begin
+      dispatcher := ServiceManager.CreateInstance('com.sun.star.frame.DispatchHelper');
+      sheet:=Document.CurrentController.Frame;
+      dispatcher.executeDispatch(sheet, '.uno:Paste', '', 0, []);
+    end;
+
+  // восстанавливаем буфер
+  Clipboard.AsText:=OldText;
+
+  EnableControls(sender);
+  EnableScrollEvents(sender);
+  // восстанавливаем RecID
+  MoveTo(sender, StartRecNo);
+
+  if not UseCalc then
+    excel:=unassigned
+  else
+    begin
+      ServiceManager:=unassigned;
+      Desktop:=unassigned;
+      Document:=unassigned;
+      dispatcher:=unassigned;
+      sheet:=unassigned;
+    end;
+end;
+
+
+
+{   dim args1(0) as new com.sun.star.beans.PropertyValue
+   args1(0).Name = "ToPoint"
+   args1(0).Value = "$C$13:$G$13"
+   dispatcher.executeDispatch(oDoc1, ".uno:GoToCell", "", 0, args1())
+   }
+
+
+procedure xlsMainWindowOnCreateForm(Sender: TObject; fm: TdxForm);
+var x:integer;
+begin
+  if xlsOldMainWindowOnCreateForm<>nil then
+    xlsOldMainWindowOnCreateForm(sender, fm);
+
+  if fm.ComponentCount > 0 then
+    for x:=0 to fm.ComponentCount-1 do
+      // для всех запросов
+      if fm.components[x] is TdxQueryGrid then
+        begin
+          if AddTodxQueryGridToolbar then
+            AddXLSTodxQueryGridToolbar(TdxQueryGrid(fm.components[x]));
+          if AddTodxQueryGridPoupMenu then
+            AddXlsToPopupMenu(TdxQueryGrid(fm.components[x]));
+          if AddTodxQueryGridPoupMenuSelected then
+            AddXlsToPopupMenuSelected(TdxQueryGrid(fm.components[x]))
+
+        end else
+      // для всех сводных таблиц
+      if fm.components[x] is TdxPivotGrid then
+        if AddTodxPivotGridPopupMenu then
+          AddXlsToPopupMenu(TdxPivotGrid(fm.components[x]));
+
+  if AddTodxFormPopupMenu then
+    AddXlsToPopupMenu(fm.grid);
+  if AddTodxFormPopupMenuSelected then
+    AddXlsToPopupMenuSelected(fm.grid);
+
+end;
+
+
+procedure MainWindow_OnCreateForm(Sender: TObject; fm: TdxForm);
+var x:integer;
+begin
+  if OldMainWindow_OnCreateForm<>nil then
+    OldMainWindow_OnCreateForm(sender, fm);
+
+  // если мультивыбор для всех форм
+  if AllFormsMultiSelect=1 then
+     begin
+      // мультивыбор для формы
+      fm.Grid.Options:=fm.Grid.Options+[dgMultiselect];
+      // отключаем переход на форму объекта по нажатию Ctrl+ЛКМ
+      fm.grid.OnCellClick:=nil;
+     end;
+
+  // если мультивыбор для всех запросов
+  if AllQueriesMultiSelect=1 then
+    if fm.QueryCount>0 then
+      for x:=0 to fm.QueryCount-1 do
+        fm.QueryByIndex[x].Options:=fm.QueryByIndex[x].Options+[dgMultiselect];
+end;
+
+
+
+{procedure xlsMainWindowOnCreateListWindow(Sender: TObject; aWindow: TForm);
+begin
+  if xlsOldOnCreateListWindow<>nil then
+    xlsOldOnCreateListWindow(sender, aWindow);
+
+  if aWindow is TListWindow then
+    GridToExcel(TListWindow(aWindow).FormView.Form);
+end;}
+
+procedure xlsMainWindowOnDataBaseClose(sender:TObject);
+begin
+  if xlsOldOnDataBaseClose<>nil then
+    xlsOldOnDataBaseClose(sender);
+
+  if BMP<>nil then
+    BMP.free;
+end;
+
+
+// настройки формы
+{@action
+Id=07B72A92-28B5-4707-96DA-D3D5AEC0FFE7
+target=form
+OrigName=KOK80ExportToExcel_form
+Name=Экспорт в Excel
+Group=Экспорт в Excel
+ui=<ui>
+  <checkbox name="FormMultiSelect" caption="Форма - сделать мультивыбор"/></checkbox >
+  <grid name="queries" caption="Запросы формы - сделать мультивыбор">
+    <query name="query" caption="запрос"/></query>
+<ui>
+Description=Экспорт в Excel
+@}
+procedure KOK80ExportToExcel_form(FormMultiSelect:integer; Fields: TVariantArray2d);
+var x:integer;
+    query:TdxQueryGrid;
+begin
+
+  // если не выбрано "мультивыбор для всех форм"
+  if AllFormsMultiSelect=0 then
+     // для выбранных форм устанавливаем мультивыбор
+    if FormMultiSelect=1 then
+      begin
+        Self.Grid.Options:=Self.Grid.Options+[dgMultiselect];
+        // отключаем переход на форму объекта по нажатию Ctrl+ЛКМ
+        self.grid.OnCellClick:=nil;
+      end;
+
+
+  // если не выбрано "мультивыбор для всех запросов"
+  if AllQueriesMultiSelect=0 then
+    // для выбранных запросов устанавливаем мультивыбор
+    for x:=0 to High(Fields) do
+      if Fields[x][0]<>'' then
+        begin
+          //debug(Fields[x][0]);
+          query:=self.queries[Fields[x][0]];
+          query.Options:=query.Options+[dgMultiselect];
+        end;
+end;
+
+
+
+{@action
+Id=F477247A-3094-4D6B-8FD6-C8C91972A3B3
+target=main
+OrigName=KOK80ExportToExcel
+Name=Экспорт в Excel
+Group=Настройки
+ui=
+<ui>
+  <checkbox name="UseCalc"   caption="LibreOffice Calc вместо Excel" defaultvalue="0"/>
+  <checkbox name="AddToMainToolbarButton"   caption="кнопку на главную панель" defaultvalue="0"/>
+  <checkbox name="AddTodxQueryGridToolbar"  caption="кнопку на панель запросов" defaultvalue="0"/>
+  <checkbox name="AddTodxFormPopupMenu"     caption="в контекстное меню форм" defaultvalue="0"/>
+  <checkbox name="AddTodxFormPopupMenuSelected"      caption="в контекстное меню форм: выделенные строки" defaultvalue="0"/>
+  <checkbox name="AddTodxQueryGridPopupMenu"         caption="в контекстное меню запросов" defaultvalue="0"/>
+  <checkbox name="AddTodxQueryGridPopupMenuSelected" caption="в контекстное меню запросов: выделенные строки" defaultvalue="0"/>
+  <checkbox name="AddTodxPivotGridPopupMenu" caption="в контекстное меню сводных таблиц" defaultvalue="0"/>
+  <text name="caption" caption="текст и всплывающая подсказка" defaultvalue="выгрузить в Excel" />
+  <checkbox  name="AllFormsMultiSelect" caption="Мультивыбор во всех формах"/></checkbox >
+  <checkbox  name="AllQueriesMultiSelect" caption="Мультивыбор во всех запросах"/></checkbox >
+</ui>
+Description=Экспорт в Excel
+@}
+
+
+
+
+procedure KOK80ExportToExcel(AUseCalc,
+                             AAddToMainToolbarButton,
+                             AAddTodxQueryGridToolbar,
+                             AAddTodxFormPopupMenu,
+                             AAddTodxFormPopupMenuSelected,
+                             AAddTodxQueryGridPopupMenu,
+                             AAddTodxQueryGridPopupMenuSelected,
+                             AAddTodxPivotGridPopupMenu:boolean;
+                             ACaption:string;
+                             AAllFormsMultiSelect,
+                             AAllQueriesMultiSelect:integer);
+begin
+  xlsOldMainWindowOnCreateForm:=MainWindow.OnCreateForm;
+  MainWindow.OnCreateForm:=@xlsMainWindowOnCreateForm;
+
+  xlsOldOnDataBaseClose:=MainWindow.OnDataBaseClose;
+  MainWindow.OnDataBaseClose:=@xlsMainWindowOnDataBaseClose;
+
+{  xlsOldOnCreateListWindow:=MainWindow.OnCreateListWindow;
+  MainWindow.OnCreateListWindow:=@xlsMainWindowOnCreateListWindow;
+}
+  UseCalc:=boolean(AUseCalc);
+
+  if AAddToMainToolbarButton then
+    AddXLSToMainToolbar;
+
+  AddTodxQueryGridToolbar:=AAddTodxQueryGridToolbar;
+  AddTodxFormPopupMenu:=AAddTodxFormPopupMenu;
+  AddTodxFormPopupMenuSelected:=AAddTodxFormPopupMenuSelected;
+  AddTodxQueryGridPoupMenu:=AAddTodxQueryGridPopupMenu;
+  AddTodxQueryGridPoupMenuSelected:=AAddTodxQueryGridPopupMenuSelected;
+  AddTodxPivotGridPopupMenu:=AAddTodxPivotGridPopupMenu;
+
+  if trim(ACaption)<>'' then
+    XLSCaption:=ACaption
+  else
+    if not UseCalc then
+      XLSCaption:='выгрузить в Excel'
+    else
+      XLSCaption:='выгрузить в Calc';
+
+  AllFormsMultiSelect:=AAllFormsMultiSelect;
+  AllQueriesMultiSelect:=AAllQueriesMultiSelect;
+
+  // если выбран хотя бы один из пунктов "мультивыбор для всех форм/запросов"
+  if AllFormsMultiSelect+AllQueriesMultiSelect > 0 then
+    begin
+      OldMainWindow_OnCreateForm:=MainWindow.OnCreateForm;
+      MainWindow.OnCreateForm:=@MainWindow_OnCreateForm;
+    end;
+
+end;
+

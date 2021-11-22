@@ -1,0 +1,381 @@
+{@module
+Author=kok80
+Version=1.00
+Description=Устанавливает обработчик на все объекты, поля объектов, запросы на всех формах: при двойном клике открывается исходная форма в режиме редактирования, если позволяют права доступа, вне зависимости от состояния (чтение/редактирование) исходной формы. В DataExpress, если исходная форма в режиме только для чтения, все формы из нее тоже открываются в режиме только для чтения.
+@}
+//07.09.2019
+type TObjectFieldRecord = record
+       ObjectName,
+       SourceFormName,
+       SourceFieldName,
+       SourceCLassName,
+       dxLookupComboBoxSourceFormName,
+       dxLookupComboBoxSourceFieldName,
+       dxLookupComboBoxSourceClassName:string;
+end;
+
+type TOnDBLClickRecord = record
+       FormName:string;
+       ComponentName:string;
+       OnDBLClick:TNotifyEvent;
+     end;
+
+function GetOldOnDBLClick(FormName, ComponentName: string):TNotifyEvent; forward;
+
+var OldMainWindow_OnCreateForm: TCreateFormEvent;
+    OldOnDataBaseClose:TNotifyEvent;
+    GetFormsSL:TStringList;
+    OldOnDBLCLickArray:array of TOnDBLClickRecord;
+
+function FindComponentByID(fm:TDXForm;id:integer):TComponent;
+var x:integer;
+begin
+  result:=nil;
+  if fm.ComponentCount > 0 then
+    for x:=0 to fm.ComponentCount-1 do
+      if GetComponentId(fm.components[x]) = id then
+         begin
+           result:=fm.components[x];
+           break;
+         end;
+end;
+
+
+// на форме ищет ОБЪЕКТ, на который ссылается ПОЛЕ ОБЪЕКТА obf и возвращает TObjectFieldRecord
+function GetTDXObjectFieldData(obf:TDXObjectField):TObjectFieldRecord;
+var fm, fm_source,fm_source2:TDXForm;
+    lcb, lcb2:TDXLookupComboBox;
+    component, component2:TComponent;
+begin
+  if obf.owner.classname<>'TdxForm' then begin msgbox('Error','GetTDXObjectFieldData(obf:TDXObjectField) - owner у Obj должен быть TdxForm'); exit; end;
+  fm:=tdxform(obf.owner);
+  //lcb = ОБЪЕКТ
+  lcb:=TdxLookupComboBox(FindComponentByID(fm,obf.ObjID));
+  // название поля ОБЪЕКТА
+  result.ObjectName:=lcb.FieldName;
+  // имя формы, на чьё поле ссылается ОБЪЕКТ
+  result.SourceFormName:=lcb.SourceFormName;
+
+  fm_source:=TdxForm(GetFormsSL.Objects[GetFormsSL.indexof(result.SourceFormName)]);
+  //fm_source:=tdxform.create(result.SourceFormName);
+  //fm_source.open;
+  component:=FindComponentByID(fm_source,obf.FieldId);
+  // имя поля
+  result.SourceFieldName:=GetComponentFieldName(component);
+  // тип поля объекта
+  result.SourceClassName:=component.ClassName;
+
+  if result.SourceClassName='TdxLookupComboBox' then
+    begin
+      lcb2:=TdxLookupComboBox(component);
+      //если в конфигураторе не настроен компонент - дальше не обрабатываем
+      if (lcb2.SourceFormName <> '') and (lcb2.SourceFieldName <> '') then
+        begin
+          fm_source2:=TdxForm(GetFormsSL.Objects[GetFormsSL.indexof(lcb2.SourceFormName)]);
+          //fm_source2:=Tdxform.create(lcb2.SourceFormName);
+          component2:=fm_source2.FindComponentByFieldName(lcb2.SourceFieldName);
+          result.dxLookupComboBoxSourceClassName:=component2.classname;
+          result.dxLookupComboBoxSourceFormName:=fm_source2.FormCaption;
+          result.dxLookupComboBoxSourceFieldName:=lcb2.SourceFieldName;
+          //fm_source2.free;
+        end;
+    end;
+  //fm_source.free;
+end;
+
+// открывает модально запись RecID формы с именем FormName в режиме редактирования, если позволяют права юзера
+procedure FormShowModal(FormName:string; recid:integer);
+var fm:tdxform;
+begin
+  if recid=0 then
+    exit;
+  fm:=TdxForm.create(FormName);
+  fm.OpenRecord(recid);
+  // если у юзера есть право редактировать этой формы
+  if fm.CanEdit<>asCantEdit then
+    fm.edit;
+  if fm.EditWindow.ShowModal=1 then
+    fm.post
+  else
+    fm.cancel;
+  fm.free;
+end;
+
+
+procedure CallOldOnDBLCLick(FormName, ComponentName:string; sender:TObject);
+var OldOnDBLCLick:TNotifyEvent;
+begin
+  OldOnDBLCLick:=GetOldOnDBLClick(FormName, ComponentName);
+  if OldOnDBLCLick<>nil then
+    OldOnDBLCLick(sender);
+end;
+
+
+function preg_match2(pattern, aIncomming: string):variant;
+var RegExp: Variant;
+begin
+  try
+    RegExp := CreateOleObject('VBScript.RegExp');
+    RegExp.global:=true;
+    RegExp.Pattern := pattern;
+    result := RegExp.Execute(aIncomming);
+  except
+    if length(aIncomming)> 100 then aIncomming:=copy(aIncomming,1,20)+'...';
+    msgbox('Ошибка','function RegExp('+pattern+', '+aIncomming+'):TStringList;');
+  finally
+    RegExp := unassigned;
+  end;
+end;
+
+
+//возвращает имя формы, из которой запрос получает данные
+function GetdxQueryGridSourceFormName(Query:TdxQueryGrid):string;
+var SQ,sq2:TdxSqlQuery;
+    id:string;
+    matches:variant;
+begin
+  SQ := TdxSqlQuery.Create('select data from dx_reports where data CONTAINING '+chr(39)+'name="'+Query.QueryName+'"'+chr(39));
+  SQ.Open;
+  if sq.RecordCount > 0 then
+  begin
+    matches:=preg_match2('source .*?id.*?(\d+)',sq.ass['data']);
+    if matches.count > 0 then
+      if matches.item[0].SubMatches.count > 0 then
+      begin
+        id:=Matches.Item[0].SubMatches[0];
+        //debug('id='+id);
+        matches:=unassigned;
+        sq2:=TdxSqlQuery.Create('select * from DX_FORMS where ID = '+id);
+        sq2.open;
+        if sq2.RecordCount>0 then
+          begin
+            matches:=preg_match2('FormCaption.*?'+chr(39)+'(.*?)'+chr(39),sq2.ass['form']);
+            if matches.count > 0 then
+              if matches.item[0].SubMatches.count > 0 then
+                result:=Matches.Item[0].SubMatches[0];
+              //debug(Matches.Item[0].SubMatches[0]);
+            matches:=unassigned;
+          end;
+        sq2.free;
+      end;
+    SQ.Free;
+  end;
+end;
+
+procedure Debug1;
+var x:integer;
+begin
+  for x:=0 to length(OldOnDBLCLickArray)-1 do
+    debug(OldOnDBLCLickArray[x].FormName+':'+OldOnDBLCLickArray[x].ComponentName);
+end;
+
+
+
+// открывает SourceForm объекта
+procedure dxLookupComboBox_SourceFormShowModal(sender:TObject);
+var lcb:TDxLookupComboBox;
+    FormName,ComponentName:string;
+begin
+  lcb:=TdxLookupComboBox(sender);
+  //if not VarIsNull(lcb.keyvalue) then
+  if lcb.keyvalue<>null then
+    FormShowModal(lcb.SourceFormName,variant(lcb.keyvalue));
+
+  FormName:=TdxForm(lcb.owner).name;
+  ComponentName:=lcb.name;
+  CallOldOnDBLCLick(FormName, ComponentName, sender);
+end;
+
+
+
+// открывает SourceForm поля объекта
+procedure dxObjectField_SourceFormShowModal(sender:TObject);
+var dxObjectField:TdxObjectField;
+    ofr:TObjectFieldRecord;
+    fm:TdxForm;
+    SourceRecID:integer;
+    FormName,ComponentName:string;
+begin
+  dxObjectField:=TdxObjectField(sender);
+  ofr:=GetTDXObjectFieldData(dxObjectField);
+  fm:=TdxForm(dxObjectField.owner);
+  FormName:=fm.name;
+  ComponentName:=dxObjectField.name;
+  // проверяем доступ юзера к возможности редактированию формы
+  if ofr.SourceClassName='TdxLookupComboBox' then
+    begin
+      SourceRecID:=fm.asi[format('%s|%s',[ofr.ObjectName,ofr.SourceFieldName])];
+      FormShowModal(ofr.dxLookupComboBoxSourceFormName,SourceRecID);
+    end
+  else
+    begin
+      SourceRecID:=fm.asi[ofr.ObjectName];
+      FormShowModal(ofr.SourceFormName,SourceRecID);
+    end;
+
+  CallOldOnDBLCLick(FormName, ComponentName, sender);
+end;
+
+
+
+
+// открывает SourceForm запроса
+procedure dxQueryGrid_SourceFormShowModal(sender:TObject);
+var FormName,ComponentName,SourceFormName:string;
+    query:TdxQueryGrid;
+    //OldOnDBLCLick:TNotifyEvent;
+begin
+  try
+    query:=TdxQueryGrid(sender);
+    SourceFormName:=GetdxQueryGridSourceFormName(query);
+    if length(SourceFormName) > 0 then
+      FormShowModal(SourceFormName, query.RecID);
+  except
+    FormName:=query.owner.name
+    ComponentName:=query.name;
+    CallOldOnDBLCLick(FormName, ComponentName, sender);
+  end;
+end;
+
+
+
+
+
+// проверяет, есть ли сохраненный обработчик по имени формы + имени компонента
+function Saved(FormName, ComponentName: string):boolean;
+var x:integer;
+begin
+  result:=false;
+  if length(OldOnDBLCLickArray) > 0 then
+    for x:=0 to length(OldOnDBLCLickArray)-1 do
+      if (OldOnDBLCLickArray[x].FormName=FormName) and (OldOnDBLCLickArray[x].ComponentName=ComponentName) then
+        begin
+          result:=true;
+          break;
+        end;
+end;
+
+
+// проверяет, есть ли сохраненный обработчик по имени формы + имени компонента
+function GetOldOnDBLClick(FormName, ComponentName: string):TNotifyEvent;
+var x:integer;
+begin
+  result:=nil;
+  if length(OldOnDBLCLickArray) > 0 then
+    for x:=0 to length(OldOnDBLCLickArray)-1 do
+      if (OldOnDBLCLickArray[x].FormName=FormName) and (OldOnDBLCLickArray[x].ComponentName=ComponentName) then
+        begin
+          result:=OldOnDBLCLickArray[x].OnDBLClick;
+          break;
+        end;
+end;
+
+// сохраняет старые обработчики объекта, поля объекта, запроса в массиве OldOnDBLCLick
+procedure SaveOldOnDBlClick(sender:TObject);
+var l:integer;
+    FormName,ComponentName:string;
+    OldOnDBLCLick:TNotifyEvent;
+begin
+  if sender.ClassName='TdxLookupComboBox' then
+    begin
+      ComponentName:=TdxLookupComboBox(sender).name;
+      FormName:=TdxForm(TdxLookupComboBox(sender).owner).name;
+      OldOnDBLCLick:=TdxLookupComboBox(sender).OnDBLCLick;
+    end
+  else
+  if sender.ClassName='TdxObjectField' then
+    begin
+      ComponentName:=TdxObjectField(sender).name;
+      FormName:=TdxForm(TdxObjectField(sender).owner).name;
+      OldOnDBLCLick:=TdxObjectField(sender).OnDBLCLick;
+    end
+  else
+  if sender.ClassName='TdxQueryGrid' then
+    begin
+      ComponentName:=TdxQueryGrid(sender).name;
+      FormName:=TdxForm(TdxQueryGrid(sender).owner).name;
+      OldOnDBLCLick:=TdxQueryGrid(sender).OnDBLCLick;
+    end;
+
+  if not saved(FormName, ComponentName) then
+    begin
+      l:=length(OldOnDBLCLickArray);
+      SetLength(OldOnDBLCLickArray,l+1);
+      OldOnDBLCLickArray[l].ComponentName:=ComponentName;
+      OldOnDBLCLickArray[l].FormName:=FormName;
+      OldOnDBLCLickArray[l].OnDBLCLick:=OldOnDBLCLick;
+    end;
+end;
+
+
+
+procedure MainWindow_OnCreateForm(Sender: TObject; fm: TdxForm);
+var x:integer;
+
+begin
+  //debug('MainWindow_OnCreateForm('+fm.name+')')
+  if OldMainWindow_OnCreateForm<>nil then
+    OldMainWindow_OnCreateForm(sender, fm);
+
+  if fm.ComponentCount > 0 then
+    for x:=0 to fm.ComponentCount-1 do
+      begin
+        // для всех объектов добавляем открытие SourceForm по двойному клику
+        if fm.components[x].ClassName='TdxLookupComboBox' then
+          begin
+            SaveOldOnDBlClick(fm.components[x]);
+            TdxLookupComboBox(fm.components[x]).OndblClick:=@dxLookupComboBox_SourceFormShowModal;
+          end
+        else
+        // для всех полей объектов добавляем открытие SourceForm по двойному клику
+        if fm.components[x].ClassName='TdxObjectField' then
+          begin
+            SaveOldOnDBlClick(fm.components[x]);
+            TdxObjectField(fm.components[x]).OndblClick:=@dxObjectField_SourceFormShowModal;
+           end
+        else
+        // для всех запросов добавляем открытие SourceForm по двойному клику
+        if fm.components[x].ClassName='TdxQueryGrid' then
+          begin
+            SaveOldOnDBlClick(fm.components[x]);
+            TdxQueryGrid(fm.components[x]).OndblClick:=@dxQueryGrid_SourceFormShowModal;
+          end;
+      end;
+end;
+
+
+procedure MainWindow_OnDataBaseClose(sender:TObject);
+begin
+  GetFormsSL.free;
+
+  if OldOnDataBaseClose<>nil then
+    OldOnDataBaseClose(sender);
+end;
+
+{@action
+Id=F77BEBC6-0605-4F21-9903-624F9218ADD7
+target=main
+OrigName=SetOnDBLClickOnObjectsAndObjectFieldsAndDXQueryGrids
+Name=устанавливает OnDBLCLick на все объекты, поля объктов, запросы
+Group=Настройки
+ui=
+<ui>
+</ui>
+Description=устанавливает обработчик двойного клика на все объекты, поля объектов, запросы:
+открытие формы в режиме редактирования, если разрешают права доступаы
+@}
+
+
+procedure SetOnDBLClickOnObjectsAndObjectFieldsAndDXQueryGrids;
+begin
+  GetFormsSL:=TStringList.create;
+  GetForms(GetFormsSL);
+
+  // сохраняем и устанавливаем новый обработчик на создание форм
+  OldMainWindow_OnCreateForm:=MainWindow.OnCreateForm;
+  MainWindow.OnCreateForm:=@MainWindow_OnCreateForm;
+
+  // сохраняем и устанавливаем новый обработчик на закрытие базы
+  OldOnDataBaseClose:=MainWindow.OnDataBaseClose;
+  MainWindow.OnDataBaseClose:=@MainWindow_OnDataBaseClose;
+end;

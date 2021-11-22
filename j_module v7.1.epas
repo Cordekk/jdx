@@ -1,0 +1,199 @@
+{@module
+Author=jurist23rus
+Version=7.1
+Description=В этом модуле содержатся функции:
+MergeIf - объединяет в одну строку значения столбца таблицы.
+QueryUpdate - обновляет запрос расположенный на форме.
+ABC - возвращает модуль числа.
+@}
+
+{@function
+OrigName=MERGEIF
+Name=MERGEIF
+Args=ssss
+Result=s
+Group=j-функции
+Description=<B>Описание:</B><br>
+Объединяет в одну строку значения столбца таблицы.
+Аналог штатной функции Merge, но в отличие от последней
+позволяет фильтровать результат<br><br>
+<B>Параметры:</B><br>
+<u>1 параметр</u>: имя дочерней формы (таблицы) (не может быть пустым).<br>
+<u>2 параметр</u>: имя поля дочерней формы (таблицы) (не может быть пустым).<br>
+<u>3 параметр</u>: разделитель (,;: и т.п.).<br>
+<u>4 параметр</u>: фильтр.<br><br>
+<u>Результат</u>: текст.<br><br>
+<B>Пример:</B><br>
+<code>
+MergeIf ('ИмяДочернейФормы', 'ИмяПоля', ';', '[ИмяПоля]<>null')<br>
+</code>
+@}
+
+function MergIf_getFldName(Obj:TComponent):String;
+var
+  s:string;
+begin
+  s:=LowerCase(Obj.Classname);
+  if s='tdxedit' then
+    result:=tdxedit(Obj).Fieldname
+  else if s='tdxcalcedit' then
+    result:=tdxcalcedit(Obj).Fieldname
+  else if s='tdxdateedit' then
+    result:=tdxdateedit(Obj).Fieldname
+  else if s='tdxtimeedit' then
+    result:=tdxtimeedit(Obj).Fieldname
+  else if s='tdxcombobox' then
+    result:=tdxcombobox(Obj).Fieldname
+  else if s='tdxlookupcombobox' then
+    result:=tdxlookupcombobox(Obj).Fieldname
+  else if s='tdxmemo' then
+    result:=tdxmemo(Obj).Fieldname
+  else if s='tdxcounter' then
+    result:=tdxcounter(Obj).Fieldname
+  else if s='tdxobjectfield' then
+    result:=tdxobjectfield(Obj).Fieldname
+  else if s='tdxfile'then
+    result:=tdxfile(Obj).Fieldname
+  else
+    result:='';
+end;
+
+function FindObj(NameTable, NameField:String): String;
+var
+  i: Integer;
+  fn: string;
+begin
+  result:='';
+  for i := 0 to Self.Forms[NameTable].ComponentCount - 1 do
+  begin
+    fn:=LowerCase(Mergif_getFldName(Self.Forms[NameTable].Components[i]));
+    if fn=LowerCase(NameField) then
+      begin
+        Result:=Self.Forms[NameTable].Components[i].name;
+        exit;
+      end;
+  end;
+end;
+
+function CheckError (NameTable, NameField, Fltr: String) : String;
+begin
+  Result := ''
+  if (NameTable='') or (NameField='') then
+    Result := 'Параметр 1 и параметр 2 не могут быть пустыми'
+  else if self.Forms[NameTable] = nil then
+    Result := 'Таблица с именем ''' + NameTable + ''' не найдена'
+  else if FindObj(NameTable, NameField) = '' then
+    Result := 'Поле с именем ''' + NameField + ''' не найдено'
+  else if (Fltr <> '') and (vartype(EvalExpr (Fltr, self.forms[NameTable])) <> varBoolean) then
+    Result := 'Неверно задан фильтр';
+end;
+
+function MergeIf (NameTable, NameField, Separator, Fltr: String): string;
+var i : integer;
+    errmsg : string;
+    bool: boolean;
+    res: variant;
+begin
+  Result := '';
+  errmsg := CheckError (NameTable, NameField, Fltr);
+  if errmsg <> '' then RaiseException (ErCustomError, errmsg);
+  with self.forms[NameTable] do
+    begin
+      i := 0;
+      MoveFirst;
+      while EOF <> true do
+      begin
+        if Fltr = '' then bool := true
+          else  bool := EvalExpr (Fltr, self.forms[NameTable]);
+        if bool then
+        begin
+          res := fields[NameField];
+          i := i+1;
+          if i >1 then Result := Result + Separator + ' ' + VarToStr(res)
+          else
+          Result := Result + VarToStr(res);
+        end;
+      MoveNext;
+      end;
+    end;
+end;
+
+{@function
+OrigName=QueryUpdate
+Name=QueryUpdate
+Args=s
+Result=
+Group=j-функции
+Description=<B>Описание:</B><br>
+Обновляет запрос расположенный на форме. <br><br>
+<B>Параметры:</B><br>
+<u>1 параметр</u>: имя  запроса - текст (не может быть пустым).<br>
+<u>Результат</u>: ничего не возвращает.<br><br>
+<B>Примеры:</B><br>
+<code>
+QueryUpdate ('ИмяЗапроса')<br><br>
+</code>
+@}
+
+function CheckErrorQU (QueryName: String) : String;
+begin
+  Result := ''
+  if QueryName='' then
+    Result := 'Аргумент "Имя запроса" не может быть пустым'
+end;
+
+procedure QueryUpdate (QueryName: String);
+var errmsg : string;
+    Q : TdxQueryGrid;
+begin
+  errmsg := CheckErrorQU (QueryName);
+  if errmsg <> '' then RaiseException (ErCustomError, errmsg);
+  Q := Self.Queries[QueryName];
+  q.Refresh;
+end;
+
+{@function
+OrigName=ABC
+Name=ABC
+Args=v
+Result=v
+Group=j-функции
+Description=<B>Описание:</B><br>
+Возвращает абсолютную величину отрицательного или положительного числа (модуль).
+Если параметром функции будет: null, то она вернёт 0; если строка вида '-123'
+преобразует её в число -123 и вернёт модуль числа; если строка вида 'АБВГ', то вернёт
+1. <br><br>
+<B>Параметры:</B><br>
+<u>1 параметр</u>: число, строка или null (не может быть пустым).<br>
+<u>Результат</u>: возвращает число.<br><br>
+<B>Примеры:</B><br>
+<code>
+ABC ([Числовое поле])<br>
+ABC ([Текстовое поле])<br>
+ABC (-150)<br>
+ABC ('-150')<br>
+</code>
+@}
+
+function CheckErrorABC (num: variant) : String;
+begin
+  Result := '';
+  if not (vartype(num) in [varString, varDouble, varNull]) then
+    Result := 'Аргументом может быть только строка, число или null';
+end;
+
+
+function ABC (num: variant): variant;
+var errmsg: string;
+begin
+  errmsg := CheckErrorABC (num);
+  if errmsg <> '' then RaiseException (ErCustomError, errmsg);
+  if vartype(num) = varNull then
+  begin
+    Result := 0
+    exit;
+  end;
+  if vartype(num) = varString then num := StrToInt (num);
+  Result := sqrt (num*num);
+end;
+

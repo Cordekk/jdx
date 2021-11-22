@@ -1,0 +1,3180 @@
+{@module
+Author=DataExpress
+Version=1.62
+HomePage=https://forum.mydataexpress.ru/viewtopic.php?f=16&t=3295
+Description=Множество полезных вещей.
+@}
+
+function VarIsInteger(V: Variant): Boolean;
+begin
+  Result := VarType(V) in [varByte, varWord, varLongWord, varSmallInt,
+    varShortInt, varInteger, varInt64];
+end;
+
+function VarIsNumber(V: Variant): Boolean;
+begin
+  Result := (VarType(V) in [varSingle, varDouble]) or VarIsInteger(V);
+end;
+
+procedure DoError(const Param: String; Row: Integer; const Msg: String);
+begin
+  if Row > 0 then
+    RaiseException(erCustomError, 'Ошибка в параметре "' +
+      Param + '" в строке ' + IntToStr(Row) + ': ' + Msg)
+  else
+    RaiseException(erCustomError, 'Ошибка в параметре "' +
+      Param + '": ' + Msg);
+end;
+
+procedure DoCalcError(const Param: String; Row: Integer);
+begin
+  if Row > 0 then
+    RaiseException(erCustomError, 'Ошибка вычисления выражения в параметре "' +
+      Param + '" в строке ' + IntToStr(Row) + ': ' + ExceptionParam)
+  else
+    RaiseException(erCustomError, 'Ошибка вычисления выражения в параметре "' +
+      Param + '": ' + ExceptionParam);
+end;
+
+procedure DoSetFieldError(const Param: String; Row: Integer; V: Variant);
+begin
+  DoError(Param, Row, 'Результат вычисления выражения несовместим с типом поля. ' +
+    'Результат выражения: ' + VarToStr(V));
+end;
+
+procedure ShowErrMsg(const ActionName, Msg: String);
+begin
+  MessageDlg('Ошибка', 'При выполнении действия [' + ActionName +
+    '] произошла ошибка!' + LineEnding + LineEnding + Msg,  mtError, [mbOk]);
+end;
+
+function TryEvalExpr(const Expr: String; Fm: TdxForm; const Param: String; Row: Integer): Variant;
+begin
+  try
+    Result := EvalExpr(Expr, Fm);
+  except
+    DoCalcError(Param, Row);
+  end;
+end;
+
+function EvalRecId(const Expr: String; Fm: TdxForm): Variant;
+begin
+  try
+    Result := EvalExpr(Expr, Fm);
+  except
+    DoCalcError('Найти запись по ID', 0);
+  end;
+
+  if (Result <> Null) and not (VarType(Result) in [varInteger, varDouble]) then
+    DoError('Найти запись по ID', 0, 'Некорректное вычисление идентификатора записи. ' +
+      'Идентификатор записи должен быть целым числом. Текущий результат выражения: ' +
+      VarToStr(Result));
+end;
+
+function IsEditQuery(Q: TdxQueryGrid): Boolean;
+begin
+  try
+    Q.RecId;
+    Result := True;
+  except
+    Result := False;
+  end;
+end;
+
+procedure RefreshQuery(Q: TdxQueryGrid; KeepPos: Boolean);
+var
+  RecId, RecNo: Integer;
+begin
+  if KeepPos then
+  begin
+    if IsEditQuery(Q) then RecId := Q.RecId
+    else RecNo := Q.RecNo;
+  end;
+  Q.Refresh;
+  if RecId > 0 then Q.GotoRecord(RecId)
+  else if RecNo > 0 then Q.MoveTo(RecNo);
+end;
+
+function Confirm(const Msg: String): Boolean;
+begin
+  Result := MessageDlg('Внимание', Msg, mtConfirmation, [mbYes, mbNo]) = mrYes;
+end;
+
+function SetFocusFirstControl(Any: TWinControl): Boolean;
+var
+  i: Integer;
+  C: TControl;
+  WC: TWinControl;
+begin
+  Result := False;
+  for i := 0 to Any.ControlCount - 1 do
+  begin
+    C := Any.Controls[i];
+    if C is TWinControl then
+    begin
+      WC := TWinControl(C);
+      if WC.TabOrder = 0 then
+      begin
+        if WC.ControlCount > 0 then Result := SetFocusFirstControl(WC)
+        else if WC.CanFocus then
+        begin
+          WC.SetFocus;
+          Result := True;
+          Break;
+        end;
+      end;
+    end;
+  end;
+end;
+
+{action
+id=
+target=
+origname=
+name=
+group=DX PLUS
+ui=<ui>
+
+</ui>
+description=
+@}
+
+{@action
+id=ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B
+target=button
+origname=AddRecordToForm
+name=Добавить запись в форму
+group=DX PLUS/Форма
+ui=<ui>
+  <form name="form" caption="Форма" required="1"/>
+  <grid name="values" caption="Вставить значения">
+    <field name="field" caption="Поле" source="form"/>
+    <expr name="expr" caption="Выражение"/>
+  </grid>
+  <checkbox name="ignoreaccess" caption="Игнорировать права доступа"/>
+  <divider caption="Действие после сохранения"/>
+  <object name="obj" caption="Вставить в объект"/>
+  <query name="qry" caption="или Обновить запрос"/>
+
+  <ifgrid grid="values">
+    <if expr="!SameTypes(expr, field)"
+      msg="Результат выражения несовместим с полем &quot;`GetText(field)`&quot;: получено &quot;`GetTypeText(expr)`&quot;, ожидается &quot;`GetTypeText(field)`&quot;."
+      focus="expr"/>
+  </ifgrid>
+</ui>
+description=Добавление новой записи в указанную форму со вставкой данных в поля.
+(Например, данные для вставки можно брать из полей текущей формы.)
+Далее ввод продолжается в окне редактирования. После сохранения
+идентификатор записи можно вставить в объект текущей формы или обновить
+связанный с формой запрос с позиционированием на новой записи.
+@}
+function AddRecordToForm(const FormName: String; Values: TVariantArray2d;
+  IgnoreAccess: Boolean; const ObjName, QueryName: String): Boolean;
+var
+  i: Integer;
+  FlNm, Expr: String;
+  Vl: Variant;
+  Q: TdxQueryGrid;
+begin
+  Result := False;
+  with TdxForm.Create(FormName) do
+  try
+    if not IgnoreAccess and (CanAppend <> asOk) then
+    begin
+      MsgBox('Внимание', 'Недостаточно прав для добавления записи.');
+      Exit;
+    end;
+    OpenRecord(0);
+    Append;
+    for i := 0 to High(Values) do
+    begin
+      FlNm := Values[i][0];
+      Expr := Values[i][1];
+      Vl := TryEvalExpr(Expr, Self, 'Вставить значения', i+1);
+      try
+        Fields[FlNm] := Vl;
+      except
+        DoSetFieldError('Вставить значения', i+1, Vl);
+      end;
+    end;
+    if EditWindow.ShowModal = mrOk then
+    begin
+      Post;
+      if (ObjName <> '') and (Self.State in [dsInsert, dsEdit]) then Self[ObjName] := RecId;
+      if QueryName <> '' then
+      begin
+        Q := Self.Queries[QueryName];
+        Q.Refresh;
+        if Q.Editable then Q.GotoRecord(RecId);
+      end;
+      Result := True;
+    end
+    else
+      Cancel;
+  finally
+    Free;
+  end;
+end;
+
+{@action
+id=E30DB736-3D71-4710-A25A-53525B5425E4
+target=button
+origname=EditRecordForm
+name=Редактировать запись формы
+group=DX PLUS/Форма
+ui=<ui>
+  <form name="form" caption="Форма" required="1"/>
+  <expr name="recid" caption="Идентификатор записи" required="1"/>
+  <checkbox name="ignoreaccess" caption="Игнорировать права доступа"/>
+  <divider caption="Действие после сохранения"/>
+  <object name="obj" caption="Вставить в объект"/>
+  <query name="qry" caption="или Обновить запрос"/>
+
+  <if expr="!ValueIn(GetExprType(recid), 'number', '')"
+    msg="Результатом выражения должно быть число - id записи, а получено - `GetTypeText(recid)`." focus="recid"/>
+</ui>
+description=Редактирование записи с указанным идентификатором. Идентификатор
+определяется при помощи выражения. В выражении, к примеру, может быть указан
+объект, функция RECID, GET или DBGETID. Результат выражения должен быть целым числом.
+Если результат выражения равен NULL, то ничего не произойдет.<br><br>
+Запись изменяется в окне редактирования. После сохранения идентификатор записи можно
+вставить в объект текущей формы или обновить связанный с формой запрос с
+позиционированием на измененной записи.
+@}
+
+function EditRecordForm(const FormName, RecIdExpr: String; IgnoreAccess: Boolean;
+  const ObjName, QueryName: String): Boolean;
+var
+  RId: Variant;
+  acc: TAccessStatus;
+  Q: TdxQueryGrid;
+begin
+  Result := False;
+  RId := EvalRecId(RecIdExpr, Self);
+  if RId = Null then Exit;
+  with TdxForm.Create(FormName) do
+  try
+    OpenRecord(RId);
+    if RecordCount = 0 then Exit;
+    if not IgnoreAccess then acc := CanEdit;
+    if IgnoreAccess or (acc = asOk) then acc := Edit;
+    if acc = asCantEdit then
+      MsgBox('Внимание', 'Недостаточно прав для редактирования записи.')
+    else if acc = asLocked then
+      MsgBox('Внимание', 'Запись уже редактируется пользователем "' + WhoEdit(RecId) + '".')
+    else if acc = asOk then
+    begin
+      if EditWindow.ShowModal = mrOk then
+      begin
+        Post;
+        if (ObjName <> '') and (Self.State in [dsInsert, dsEdit]) then Self[ObjName] := RecId;
+        if QueryName <> '' then
+        begin
+          Q := Self.Queries[QueryName];
+          Q.Refresh;
+          if IsEditQuery(Q) then Q.GotoRecord(RecId);
+        end;
+        Result := True;
+      end
+      else
+        Cancel;
+    end;
+  finally
+    Free;
+  end;
+end;
+
+{@action
+id=07F8A419-4FA7-4181-9529-073557E315CC
+target=button
+origname=ShowRecordForm
+name=Показать запись формы
+group=DX PLUS/Форма
+ui=<ui>
+  <form name="form" caption="Форма" required="1"/>
+  <expr name="recid" caption="Идентификатор записи" required="1"/>
+
+  <if expr="!ValueIn(GetExprType(recid), 'number', '')"
+    msg="Результатом выражения должно быть число - id записи, а получено - `GetTypeText(recid)`." focus="recid"/>
+</ui>
+description=Показывает запись с указанным идентификатором в окне редактирования.
+Идентификатор определяется при помощи выражения. В выражении, к примеру, может
+быть указан объект, функция RECID, GET или DBGETID. Результат выражения должен
+быть целым числом. Если результат выражения равен NULL, то ничего не произойдет.
+@}
+
+function ShowRecordForm(const FormName, RecIdExpr: String): Boolean;
+var
+  RId: Variant;
+begin
+  Result := False;
+  RId := EvalRecId(RecIdExpr, Self);
+  if RId = Null then Exit;
+  with TdxForm.Create(FormName) do
+  try
+    OpenRecord(RId);
+    if RecordCount = 0 then Exit;
+    if EditWindow.ShowModal = mrOk then
+      Post
+    else
+      Cancel;
+    Result := True;
+  finally
+    Free;
+  end;
+end;
+
+{@action
+id=3C3908DD-0725-493B-98BE-CDE84D76FA74
+target=button
+origname=DeleteRecordsForm
+name=Удалить записи формы
+group=DX PLUS/Форма
+ui=<ui>
+  <form name="form" caption="Форма" required="1"/>
+  <filter name="filter" caption="Фильтр" source="form"/>
+  <text name="prompt" caption="Подтверждение удаления"/>
+</ui>
+description=Удаление записей указанной формы согласно фильтру. Функция RESULT
+вернет количество записей, которые не удалось удалить.
+@}
+function DeleteRecordsForm(const FormName, AFilter, Prompt: String): Integer;
+begin
+  if (Prompt <> '') and not Confirm(Prompt) then Exit;
+  with TdxForm.Create(FormName) do
+  try
+    try
+      OpenRecords(AFilter, Self, False);
+    except
+      DoCalcError('Фильтр', 0)
+    end;
+    while not Eof do
+    begin
+      if Delete <> asOk then
+        MoveNext;
+    end;
+    Result := RecordCount;
+  finally
+    Free;
+  end;
+end;
+
+{@action
+id=27127C44-FC1E-4442-AA90-D1EDEC354917
+target=button
+origname=QueryRefresh
+name=Обновить запрос
+group=DX PLUS/Запросы
+ui=<ui>
+  <query name="qry" caption="Запрос" required="1"/>
+  <checkbox name="keeppos" caption="Сохранять позицию"/>
+</ui>
+description=Обновление запроса. Если выбрана опция "Сохранять позицию", то
+перед обновлением запоминается текущая запись запроса и после
+обновления осуществляется переход на эту запись. Опция работает только для
+редактируемых запросов.
+@}
+
+procedure QueryRefresh(const QueryName: String; KeepPos: Boolean);
+begin
+  RefreshQuery(Self.Queries[QueryName], KeepPos);
+end;
+
+{@action
+id=00CB2FAB-247E-4B84-BBD3-380E773E30E6
+target=button
+origname=BeginAppendToCurrentForm
+name=Начать добавление записи в текущую форму
+group=DX PLUS/Текущая форма
+ui=<ui>
+  <checkbox name="ignoreaccess" caption="Игнорировать права доступа"/>
+</ui>
+description=Добавление записи в текущую форму (главную или подчиненную). После
+добавления форма остается в режиме новой записи, т. е. запись еще не сохранена
+и можно отменить действие. Возможно добавление записи даже если текущему
+пользователю это запрещено (флажок "игнорировать права доступа").<br><br>
+Перед добавлением произойдет сохранение текущей записи, если она находится в
+режиме редактирования. Если сохранить запись не удалось, то новая  запись
+добавлена не будет.
+@}
+
+function BeginAppendRecordToForm(Fm: TdxForm; IgnoreAccess: Boolean): Boolean;
+var
+  acc: TAccessStatus;
+begin
+  Result := False;
+  if Fm.State in [dsInsert, dsEdit] then
+  begin
+    if Fm.Validate then Fm.Post
+    else Exit;
+  end;
+  if not IgnoreAccess then acc := Fm.CanAppend;
+  if IgnoreAccess or (acc = asOk) then acc := Fm.Append;
+  if acc = asCantAppend then
+  begin
+    if (Fm.ParentForm = nil) or ((Fm.ParentForm <> nil) and
+      (Fm.ParentForm.State in [dsInsert, dsEdit])) then
+      MsgBox('Внимание', 'Недостаточно прав для добавления записи.');
+  end;
+  Result := acc = asOk;
+  if Result then
+  begin
+    SetFocusFirstControl(Fm);
+  end;
+end;
+
+function BeginAppendToCurrentForm(IgnoreAccess: Boolean): Boolean;
+begin
+  Result := BeginAppendRecordToForm(Self, IgnoreAccess);
+end;
+
+{@action
+id=CC3AFFA9-C0C0-40B3-AA60-02E08C0CC92E
+target=button
+origname=PostCurrentForm
+name=Сохранить запись текущей формы
+group=DX PLUS/Текущая форма
+ui=<ui>
+</ui>
+description=Сохранение записи текущей формы. Перед сохранением будет выполнена
+проверка ввода. В случае ошибок запись сохранена не будет, а форма останется в
+режиме редактирования.<br><br>
+Отличается от встроенного действия "Сохранить изменения" тем, что не переводит
+форму в режим редактирования.
+@}
+
+function PostFormData(Fm: TdxForm): Boolean;
+begin
+  if Fm.State in [dsInsert, dsEdit] then
+  begin
+    Result := Fm.Validate;
+    if Result then Fm.Post;
+  end
+  else
+    Result := True;
+end;
+
+function PostCurrentForm: Boolean;
+begin
+  Result := PostFormData(Self);
+end;
+
+{@action
+id=4F5BF78B-863C-4134-8948-0C0247FA813D
+target=button
+origname=CancelChangesCurrentForm
+name=Отменить изменения в текущей форме
+group=DX PLUS/Текущая форма
+ui=<ui>
+
+</ui>
+description=Отмена проделанных изменений в записи текущей формы.
+@}
+
+procedure CancelChangesForm(Fm: TdxForm);
+begin
+  if Fm.State in [dsInsert, dsEdit] then Fm.Cancel;
+end;
+
+procedure CancelChangesCurrentForm;
+begin
+  CancelChangesForm(Self);
+end;
+
+{@action
+id=029B8BA9-5782-4A99-9EE5-B68BDD2099F4
+target=button
+origname=BeginEditCurrentForm
+name=Начать редактирование записи текущей формы
+group=DX PLUS/Текущая форма
+ui=<ui>
+  <checkbox name="ignoreaccess" caption="Игнорировать права доступа"/>
+</ui>
+description=Редактирование записи текущей формы (главной или подчиненной). Форма
+переводится в режим редактирования записи. Действие не сработает, если запись
+неактуальна, нет прав или заблокирована другим пользователем. При этом
+появится соответствующее сообщение. В случае если запись изменена или удалена
+будет предложено обновить данные формы.
+@}
+
+procedure RefreshForm(Fm: TdxForm);
+var
+  RecId: Integer;
+begin
+  RecId := Fm.RecId;
+  Fm.Refresh;
+  Fm.GotoRecord(RecId);
+end;
+
+function BeginEditForm(Fm: TdxForm; IgnoreAccess: Boolean): TAccessStatus;
+begin
+  if Fm.RecordCount = 0 then
+  begin
+    Result := asCantEdit;
+    Exit;
+  end
+  else if Fm.State in [dsInsert, dsEdit] then
+  begin
+    Result := asOk;
+    Exit;
+  end;
+
+  Result := Fm.CanEdit;
+  case Result of
+    asCantEdit:
+      if (Fm.ParentForm = nil) or ((Fm.ParentForm <> nil) and (Fm.ParentForm.State in [dsInsert, dsEdit])) then
+      begin
+        if IgnoreAccess then Result := asOk
+        else MsgBox('Внимание', 'Недостаточно прав для редактирования записи.');
+      end;
+    asModified:
+      if MessageDlg('Внимание', 'Запись была изменена, необходимо обновить данные. Продолжить?',
+        mtConfirmation, [mbYes, mbNo]) = mrYes then
+      begin
+        RefreshForm(Fm);
+        Exit;
+      end;
+    asDeleted:
+      if MessageDlg('Внимание', 'Запись была удалена, необходимо обновить данные. Продолжить?',
+        mtConfirmation, [mbYes, mbNo]) = mrYes then
+      begin
+        RefreshForm(Fm);
+        Exit;
+      end;
+    asLocked:
+      MsgBox('Внимание', 'Запись уже редактируется пользователем "' + Fm.WhoEdit(Fm.RecId) + '".');
+  end;
+  if Result = asOk then
+  begin
+    Result := Fm.Edit;
+    SetFocusFirstControl(Fm);
+  end;
+end;
+
+function BeginEditCurrentForm(IgnoreAccess: Boolean): Boolean;
+begin
+  Result := BeginEditForm(Self, IgnoreAccess) = asOk;
+end;
+
+{@action
+id=A4578B0A-604E-4BBA-8586-E511CEEA58CC
+target=button
+origname=InsertValuesToFieldsOfCurrentForm
+name=Вставить значения в поля текущей формы
+group=DX PLUS/Текущая форма
+ui=<ui>
+  <grid name="grid" caption="Вставить значения">
+    <field name="field" caption="Поле" required="1"/>
+    <expr name="expr" caption="Выражение" required="1"/>
+  </grid>
+  <checkbox name="ignoreaccess" caption="Игнорировать права доступа"/>
+  <checkbox name="saverec" caption="Сохранить запись"/>
+
+  <ifgrid grid="grid">
+    <if expr="!SameTypes(expr, field)"
+      msg="Результат выражения несовместим с полем &quot;`GetText(field)`&quot;: получено &quot;`GetTypeText(expr)`&quot;, ожидается &quot;`GetTypeText(field)`&quot;."
+      focus="expr"/>
+  </ifgrid>
+</ui>
+description=Вставка значений в поля текущей формы. Значения задаются в виде
+выражений. Форма автоматически переводится в режим редактирования. Действие не
+сработает, если перевести в редактирование не удалось.<br><br>
+Если установлен флажок "Сохранить запись", то будет выполнена попытка сохранить
+запись. Если в процессе проверки ввода будут найдена ошибки, то запись не
+будет сохранена, а форма останется в режиме редактирования.
+@}
+
+function InsertValuesToFieldsOfCurrentForm(FieldValues: TVariantArray2d; IgnoreAccess, SaveRec: Boolean): Boolean;
+var
+  i: Integer;
+  V: Variant;
+  acc: TAccessStatus;
+begin
+  Result := False;
+  if not (Self.State in [dsInsert, dsEdit]) then
+  begin
+    acc := BeginEditForm(Self, IgnoreAccess);
+    if acc <> asOk then Exit;
+  end;
+  for i := 0 to High(FieldValues) do
+  begin
+    V := TryEvalExpr(FieldValues[i][1], Self, 'Вставить значения', i+1);
+    try
+      Self[ FieldValues[i][0] ] := V;
+    except
+      DoSetFieldError('Вставить значения', i+1, V);
+    end;
+  end;
+  if SaveRec then
+  begin
+    Result := Self.Validate;
+    if Result then Self.Post;
+  end
+  else Result := True;
+end;
+
+{@action
+id=7D720030-6024-479A-BA31-A6C1CF8D379F
+target=button
+origname=MoveToRecordCurrentForm
+name=Перейти на запись текущей формы
+group=DX PLUS/Текущая форма
+ui=<ui>
+  <list name="moveto" caption="Перейти на" items="Первую запись;Последнюю запись;Предыдущую запись;Следующую запись" required="1"/>
+  <checkbox name="beginedit" caption="Начинать редактирование записи"/>
+  <checkbox name="ignoreaccess" caption="Игнорировать права доступа"/>
+</ui>
+description=Переход на определенную запись текущей формы. Перед переходом
+выполняется сохранение записи. Если запись сохранить не удалось, действие будет
+прервано. После перехода форму можно перевести в режим редактирования
+(если установлен флажок "начинать редактирование записи"). Если начать
+редактирование не удается, то будет показано соответствующее сообщение. Если
+запись неактуальна (была изменена), то будет предложено обновить данные формы,
+и после этого форма будет переведена в режим редактирования. В случае когда
+текущей формой является подчиненная форма, то начать редактирование невозможно,
+если главная форма находится в режиме просмотра. В этом случае никаких сообщений
+не появится.
+@}
+
+function MoveToRecordCurrentForm(const MoveToRec: String; BeginEdit, IgnoreAccess: Boolean): Boolean;
+var
+  acc: TAccessStatus;
+begin
+  if Self.State in [dsInsert, dsEdit] then
+  begin
+    Result := Self.Validate;
+    if Result then Self.Post
+    else Exit;
+  end;
+
+  case MoveToRec of
+    'Первую запись': Self.MoveFirst;
+    'Последнюю запись': Self.MoveLast;
+    'Предыдущую запись': Self.MovePrior;
+    'Следующую запись': Self.MoveNext;
+  end;
+
+  if BeginEdit then
+  begin
+    acc := BeginEditForm(Self, IgnoreAccess);
+    if acc = asModified then
+      acc := BeginEditForm(Self, IgnoreAccess);
+    Result := acc = asOk;
+  end
+  else Result := True;
+end;
+
+{@action
+id=E67BBB9B-D21B-4463-B99F-CC081E38893C
+target=button
+origname=DeleteRecordCurrentForm
+name=Удалить запись текущей формы
+group=DX PLUS/Текущая форма
+ui=<ui>
+  <checkbox name="prompt" caption="Подтверждать удаление записи" defaultvalue="1"/>
+  <checkbox name="ignoreaccess" caption="Игнорировать права доступа"/>
+</ui>
+description=Удаление записи текущей формы. Действие не сработает в следующих
+случаях:<br>
+<ol>
+<li>запись была изменена другим пользователем;</li>
+<li>запись была удалена;</li>
+<li>на запись есть ссылки в других формах;</li>
+<li>нет прав доступа;</li>
+<li>запись редактируется другим пользователем;</li>
+<li>текущая форма является подчиненной и главная форма в режиме просмотра;</li>
+<li>нет записей.</li>
+</ol><br>
+В первым двух случаях будет предложено обновить форму.
+@}
+
+function DeleteRecordForm(Fm: TdxForm; Prompt, IgnoreAccess: Boolean): TAccessStatus;
+begin
+  Result := asCantDelete;
+  if Fm.RecId = 0 then Exit
+  else if (Fm.ParentForm <> nil) and  not (Fm.ParentForm.State in [dsInsert, dsEdit]) then Exit
+  else if Prompt and (MessageDlg('Внимание', 'Вы точно хотите удалить запись?',
+    mtConfirmation, [mbYes, mbNo]) = mrNo) then Exit
+  else Result := asOk;
+
+  if not IgnoreAccess then Result := Fm.CanDelete;
+  if IgnoreAccess or (Result = asOk) then
+  begin
+    if Fm.State = dsInsert then Fm.Cancel
+    else
+    begin
+      if Fm.State = dsEdit then Fm.Cancel;
+      Result := Fm.Delete;
+    end;
+  end;
+  case Result of
+    asCantDelete:
+      if (Fm.ParentForm = nil) or ((Fm.ParentForm <> nil) and (Fm.ParentForm.State in [dsInsert, dsEdit])) then
+        MsgBox('Внимание', 'Недостаточно прав для удаления записи.');
+    asModified:
+      if MessageDlg('Внимание', 'Запись была изменена, необходимо обновить данные. Продолжить?',
+        mtConfirmation, [mbYes, mbNo]) = mrYes then
+      begin
+        RefreshForm(Fm);
+        Exit;
+      end;
+    asDeleted:
+      if MessageDlg('Внимание', 'Запись была удалена, необходимо обновить данные. Продолжить?',
+        mtConfirmation, [mbYes, mbNo]) = mrYes then
+      begin
+        RefreshForm(Fm);
+        Exit;
+      end;
+    asLocked:
+      MsgBox('Внимание', 'Невозможно удалить запись. Запись редактируется пользователем "' + Fm.WhoEdit(Fm.RecId) + '".');
+    asHasRef:
+      MsgBox('Внимание', 'Невозможно удалить запись, т. к. на нее есть ссылки в других формах.');
+  end;
+end;
+
+function DeleteRecordCurrentForm(Prompt, IgnoreAccess: Boolean): Boolean;
+begin
+  Result := DeleteRecordForm(Self, Prompt, IgnoreAccess) = asOk;
+end;
+
+{@action
+id=68F6220C-C814-4994-8D03-E2D9A95BB50D
+target=button
+origname=ClearTable
+name=Очистить таблицу
+group=DX PLUS/Таблица
+ui=<ui>
+  <childform name="table" caption="Таблица" required="1"/>
+  <text name="prompt" caption="Подтверждение очистки"/>
+  <checkbox name="ignoreaccess" caption="Игнорировать права доступа"/>
+</ui>
+description=Удаление всех записей таблицы. Действие не сработает, если главная
+форма в режиме просмотра или нет прав на удаление какой-либо записи.
+@}
+
+function ClearTable(const TableName, Prompt: String; IgnoreAccess: Boolean): Boolean;
+var
+  Tbl: TdxForm;
+  RId: Integer;
+  CanDelete: Boolean;
+begin
+  Result := False;
+  if not (Self.State in [dsInsert, dsEdit]) then Exit;
+  if (Prompt <> '') and not Confirm(Prompt) then Exit;
+
+  Tbl := Self.Forms[TableName];
+  if Tbl.State in [dsInsert, dsEdit] then Tbl.Cancel;
+  CanDelete := True;
+  if not IgnoreAccess then
+  begin
+    RId := Tbl.RecId;
+    Tbl.DisableScrollEvents;
+    Tbl.DisableControls;
+    Tbl.MoveFirst;
+    while not Tbl.Eof do
+    begin
+      if Tbl.CanDelete = asCantDelete then
+      begin
+        CanDelete := False;
+        Break;
+      end;
+      Tbl.MoveNext;
+    end;
+    Tbl.GotoRecord(RId);
+    Tbl.EnableControls;
+    Tbl.EnableScrollEvents;
+  end;
+  if not CanDelete then
+  begin
+    MsgBox('Внимание', 'Недостаточно прав для очистки таблицы.');
+    Exit;
+  end;
+
+  while Tbl.RecordCount > 0 do
+    Tbl.Delete;
+
+  Result := True;
+end;
+
+{@action
+id=715F1733-6C6D-4CCF-BA1E-A547EA6D87E1
+target=button
+origname=AppendRecordToTable
+name=Добавить запись в таблицу
+group=DX PLUS/Таблица
+ui=<ui>
+  <childform name="tbl" caption="Таблица" required="1"/>
+  <grid name="values" caption="Вставить значения">
+    <field name="field" caption="Поле" source="tbl" required="1"/>
+    <expr name="expr" caption="Выражение"/>
+  </grid>
+  <list name="action" caption="Действие после добавления записи" items="Показать окно редактирования;Сохранить запись;Нет действия" required="1"/>
+  <checkbox name="ignoreaccess" caption="Игнорировать права доступа"/>
+
+  <ifgrid grid="values">
+    <if expr="!SameTypes(expr, field)"
+      msg="Результат выражения несовместим с полем &quot;`GetText(field)`&quot;: получено &quot;`GetTypeText(expr)`&quot;, ожидается &quot;`GetTypeText(field)`&quot;."
+      focus="expr"/>
+  </ifgrid>
+</ui>
+description=Добавляет запись в подчиненную форму. Автоматически сохраняет
+предыдущую запись, если она находилась в режиме редактирования (актуально, если
+редактирование осуществляется в таблице). Действие не будет выполнено, если
+главная форма не в режиме редактирования.<br><br>
+
+Если выбрано действие после добавления "Сохранить запись", то перед сохранением
+будет выполнена проверка ввода. Если проверка не дает сохранить запись, то
+добавление записи отменяется.
+@}
+
+function AppendRecordToTable(const TblName: String; Values: TVariantArray2d;
+  const ActionAfter: String; IgnoreAccess: Boolean): Boolean;
+var
+  Tbl: TdxForm;
+  i: Integer;
+  acc: TAccessStatus;
+  V: Variant;
+begin
+  Result := False;
+  if not (Self.State in [dsInsert, dsEdit]) then Exit;
+
+  Tbl := Self.Forms[TblName];
+  if IgnoreAccess then acc := asOk
+  else acc := Tbl.CanAppend;
+
+  if acc = asOk then
+  begin
+    if Tbl.State in [dsInsert, dsEdit] then
+    begin
+      if Tbl.Validate then Tbl.Post
+      else Exit;
+    end;
+
+    Tbl.Append;
+    for i := 0 to High(Values) do
+    begin
+      V := TryEvalExpr(Values[i][1], Self, 'Вставить значения', i+1);
+      try
+        Tbl[ Values[i][0] ] := V;
+      except
+        Tbl.Cancel;
+        DoSetFieldError('Вставить значения', i+1, V);
+      end;
+    end;
+
+    if ActionAfter = 'Показать окно редактирования' then
+    begin
+      if Tbl.EditWindow.ShowModal = mrOk then
+      begin
+        Result := True;
+        Tbl.Post;
+      end
+      else
+        Tbl.Cancel;
+    end
+    else if ActionAfter = 'Сохранить запись' then
+    begin
+      if Tbl.Validate then
+      begin
+        Tbl.Post;
+        Result := True;
+      end
+      else
+        Tbl.Cancel;
+    end
+    else
+      Result := True;
+  end
+  else if acc = asCantAppend then
+    MsgBox('Внимание', 'Недостаточно прав для добавления записи.');
+end;
+
+{@action
+id=94911265-5D75-417C-8EEF-1EC34745169A
+target=button
+origname=EditRecordToTable
+name=Изменить запись в таблице
+group=DX PLUS/Таблица
+ui=<ui>
+  <childform name="tbl" caption="Таблица" required="1"/>
+  <grid name="values" caption="Вставить значения">
+    <field name="field" caption="Поле" source="tbl" required="1"/>
+    <expr name="expr" caption="Выражение" source="tbl"/>
+  </grid>
+  <list name="action" caption="Действие после изменения записи" items="Показать окно редактирования;Сохранить запись;Нет действия" required="1"/>
+  <checkbox name="ignoreaccess" caption="Игнорировать права доступа"/>
+
+  <ifgrid grid="values">
+    <if expr="!SameTypes(expr, field)"
+      msg="Результат выражения несовместим с полем &quot;`GetText(field)`&quot;: получено &quot;`GetTypeText(expr)`&quot;, ожидается &quot;`GetTypeText(field)`&quot;."
+      focus="expr"/>
+  </ifgrid>
+</ui>
+description=Изменяет текущую запись в таблице. Действие не будет выполнено, если
+главная форма не в режиме редактирования.<br><br>
+Если выбрано действие после изменения "Сохранить запись", то перед сохранением
+будет выполнена проверка ввода. Если проверка не дает сохранить запись, то
+редактирование записи отменяется - запись возвращается к состоянию до редактирования.
+@}
+function EditRecordToTable(const TblName: String; Values: TVariantArray2d;
+  const ActionAfter: String; IgnoreAccess: Boolean): Boolean;
+var
+  Tbl: TdxForm;
+  i: Integer;
+  acc: TAccessStatus;
+  V: Variant;
+begin
+  Result := False;
+  if not (Self.State in [dsInsert, dsEdit]) then Exit;
+
+  Tbl := Self.Forms[TblName];
+  if Tbl.RecId = 0 then Exit;
+
+  if IgnoreAccess then acc := asOk
+  else acc := Tbl.CanEdit;
+
+  if acc = asOk then
+  begin
+    if not (Tbl.State in [dsInsert, dsEdit]) then
+      Tbl.Edit;
+
+    for i := 0 to High(Values) do
+    begin
+      V := TryEvalExpr(Values[i][1], Tbl, 'Вставить значения', i+1);
+      try
+        Tbl[ Values[i][0] ] := V;
+      except
+        Tbl.Cancel;
+        DoSetFieldError('Вставить значения', i+1, V);
+      end;
+    end;
+
+    if ActionAfter = 'Показать окно редактирования' then
+    begin
+      if Tbl.EditWindow.ShowModal = mrOk then
+      begin
+        Result := True;
+        Tbl.Post;
+      end
+      else
+        Tbl.Cancel;
+    end
+    else if ActionAfter = 'Сохранить запись' then
+    begin
+      if Tbl.Validate then
+      begin
+        Tbl.Post;
+        Result := True;
+      end
+      else
+        Tbl.Cancel;
+    end
+    else
+      Result := True;
+  end
+  else if acc = asCantEdit then
+    MsgBox('Внимание', 'Недостаточно прав для изменения записи.');
+end;
+
+{@action
+id=CD068F97-1AB9-4022-A425-7098F23F7856
+target=button
+origname=DeleteRecordFromTable
+name=Удалить запись в таблице
+group=DX PLUS/Таблица
+ui=<ui>
+  <childform name="tbl" caption="Таблица" required="1"/>
+  <text name="prompt" caption="Подтверждение удаления"/>
+  <checkbox name="ignoreaccess" caption="Игнорировать права доступа"/>
+</ui>
+description=Удаляет текущую запись из таблицы. Действие не будет выполнено, если
+главная форма не в режиме редактирования.
+@}
+
+function DeleteRecordFromTable(const TblName, Prompt: String; IgnoreAccess: Boolean): Boolean;
+var
+  Tbl: TdxForm;
+  acc: TAccessStatus;
+begin
+  Result := False;
+  Tbl := Self.Forms[TblName];
+  if not (Self.State in [dsInsert, dsEdit]) then Exit;
+  if Tbl.RecId = 0 then Exit;
+  if (Prompt <> '') and not Confirm(Prompt) then Exit;
+
+  acc := Tbl.CanDelete;
+  if IgnoreAccess or (Tbl.State = dsInsert) or (acc = asOk) then
+  begin
+    Result := True;
+    Tbl.Delete;
+  end
+  else if acc = asCantDelete then
+    MsgBox('Внимание', 'Недостаточно прав для удаления записи.');
+end;
+
+{@action
+id=8D8123AE-0A6C-4349-9152-F9399322BE50
+target=button
+origname=ChangeRecordsInTable
+name=Изменить группу записей в таблице
+group=DX PLUS/Таблица
+ui=<ui>
+  <childform name="tbl" caption="Таблица" required="1"/>
+  <grid name="values" caption="Вставить значения">
+    <field name="field" caption="Поле таблицы" source="tbl" required="1"/>
+    <expr name="expr" caption="Выражение" source="tbl"/>
+  </grid>
+  <expr name="filter" caption="Фильтр" source="tbl"/>
+  <text name="prompt" caption="Подтверждение изменения"/>
+
+  <ifgrid grid="values">
+    <if expr="!SameTypes(expr, field)"
+      msg="Результат выражения несовместим с полем &quot;`GetText(field)`&quot;: получено &quot;`GetTypeText(expr)`&quot;, ожидается &quot;`GetTypeText(field)`&quot;."
+      focus="expr"/>
+  </ifgrid>
+</ui>
+description=Действие похоже на массовые вычисления, но изменяет записи таблицы
+только в рамках текущей родительской записи.<br><br>
+<b>Таблица</b> - выберите таблицу, записи которой хотите изменить.<br><br>
+<b>Вставить значения</b> - выберите поле таблицы, которое хотите изменить.
+Составьте выражение, результат вычисления которого запишется в выбранное поле.<br><br>
+<b>Фильтр</b> - составьте условие изменения записи (необязательно). Если условие
+не указано, то будут изменены все записи таблицы. Условие - это логическое
+выражение (как в функции IIF). Пример:<br><br>
+<center><code>[Отмечено]=1 & [Количество]>0</code></center><br><br>
+<b>Подтверждение изменения</b> - если это поле заполнено, то перед изменением
+будет показан запрос на подтверждение действия.<br><br>
+<b>Замечания:</b><br>
+1. При изменении полей также будут изменены все зависимые поля, даже если они не
+указаны в таблице.<br>
+2. Записи в таблице будут сохранены без проверки ввода. Будьте внимательны!
+@}
+
+function ChangeRecordsInTable(const TblName: String; Values: TVariantArray2d;
+  const Filter, Prompt: String): Boolean;
+var
+  Tbl: TdxForm;
+  RecId, i: Integer;
+  V: Variant;
+begin
+  Result := False;
+  Tbl := Self.Forms[TblName];
+  if not (Self.State in [dsInsert, dsEdit]) then Exit;
+  if (Prompt <> '') and not Confirm(Prompt) then Exit;
+  if Tbl.State in [dsInsert, dsEdit] then
+  begin
+    if Tbl.Validate then
+      Tbl.Post
+    else
+      Exit;
+  end;
+
+  RecId := Tbl.RecId;
+  Tbl.DisableControls;
+  Tbl.DisableScrollEvents;
+  Tbl.MoveFirst;
+
+  try
+
+  while not Tbl.Eof do
+  begin
+    if Filter <> '' then
+    begin
+      V := TryEvalExpr(Filter, Tbl, 'Фильтр', 0);
+      if (V <> Null) and (VarType(V) <> varboolean) then
+        DoError('Фильтр', 0, 'Результат вычисления выражения фильтра не ' +
+          'является булевым значением (True или False). Результат выражения: ' +
+          VarToStr(V));
+    end
+    else
+      V := Null;
+
+    if (V = Null) or (V = True) then
+    begin
+      Tbl.Edit;
+      for i := 0 to High(Values) do
+      begin
+        V := TryEvalExpr(Values[i][1], Tbl, 'Вставить значения', i+1);
+        try
+          Tbl[ Values[i][0] ] := V;
+        except
+          Tbl.Cancel;
+          DoSetFieldError('Вставить значения', i+1, V);
+        end;
+      end;
+      Tbl.Post;
+    end;
+    Tbl.MoveNext;
+  end;
+  Result := True;
+
+  finally
+    // Если возникла ошибка в вычислениях запись не будет сохранена
+    if Tbl.State = dsEdit then Tbl.Cancel;
+    //
+    Tbl.GotoRecord(RecId);
+    Tbl.EnableScrollEvents;
+    Tbl.EnableControls;
+  end;
+end;
+
+{@action
+id=A1039C22-88FA-4E7A-A030-FDBCED2E7D61
+target=button
+origname=FillTableFromQuery
+name=Заполнить таблицу из запроса
+group=DX PLUS/Таблица
+ui=<ui>
+  <childform name="tbl" caption="Таблица" required="1"/>
+  <query name="qry" caption="Запрос" required="1"/>
+  <grid name="fields" caption="Поля">
+    <field name="tf" caption="Поле таблицы" source="tbl" required="1"/>
+    <field name="qf" caption="Поле запроса" source="qry"/>
+    <expr name="expr" caption="Выражение"/>
+  </grid>
+  <text name="prompt" caption="Подтверждение заполнения"/>
+
+  <ifgrid grid="fields">
+    <if expr="GetText(qf)<>'' & !SameTypes(qf, tf)"
+      msg="Поля таблицы и запроса должны быть одного типа: `GetTypeText(tf)` не равно `GetTypeText(qf)`."
+      focus="tf"/>
+    <if expr="GetText(expr)<>'' & !SameTypes(expr, tf)"
+      msg="Поле таблицы и результат выражения должны быть одного типа: `GetTypeText(tf)` не равно `GetTypeText(expr)`."
+      focus="tf"/>
+  </ifgrid>
+</ui>
+description=<b>Таблица</b> - выберите таблицу, которую необходимо заполнить.<br><br>
+<b>Запрос</b> - выберите запрос, данные которого будут скопированы в таблицу.<br><br>
+<b>Поля</b> - выберите поле таблицы и соответствующее ему поле запроса. Поля должны
+быть одного типа.<br><br>
+<b>Подтверждение заполнения</b> - заполните это поле, если хотите показывать
+подтверждение перед заполнением.
+@}
+
+function FillTableFromQuery(const TblName, QryName: String; Fields: TVariantArray2d;
+  const Prompt: String): Boolean;
+var
+  Tbl: TdxForm;
+  Qry: TdxQueryGrid;
+  RecNo, i: Integer;
+  FlNm, QFlNm, Expr: String;
+  V: Variant;
+begin
+  Result := False;
+  if not (Self.State in [dsInsert, dsEdit]) then Exit;
+  if (Prompt <> '') and not Confirm(Prompt) then Exit;
+
+  Tbl := Self.Forms[TblName];
+  Qry := Self.Queries[QryName];
+
+  RecNo := Qry.RecNo;
+  Qry.DisableControls;
+  Qry.DisableScrollEvents;
+  Tbl.DisableControls;
+
+  try
+
+    while not Tbl.Eof do
+      Tbl.Delete;
+
+    Qry.MoveFirst;
+    while not Qry.Eof do
+    begin
+      Tbl.Append;
+      for i := 0 to High(Fields) do
+      begin
+        FlNm := Fields[i][0];
+        QFlNm := Fields[i][1];
+        Expr := Fields[i][2];
+        if QFlNm <> '' then
+          try
+            Tbl[FlNm] := Qry[QFlNm];
+          except
+            Tbl.Cancel;
+            DoError('Поля', i+1,
+              Format('Поля [%s] и [%s] несовместимы. Поля должны быть одного типа.',
+                [FlNm, QFlNm]));
+          end
+        else if Expr <> '' then
+        begin
+          V := TryEvalExpr(Expr, Self, 'Поля', i+1);
+          try
+            Tbl[FlNm] := V;
+          except
+            Tbl.Cancel;
+            DoSetFieldError('Поля', i+1, V);
+          end;
+        end;
+      end;
+      Tbl.Post;
+      Qry.MoveNext;
+    end;
+    Result := True;
+
+  finally
+    Tbl.MoveFirst;
+    Qry.MoveTo(RecNo);
+    Tbl.EnableControls;
+    Qry.EnableScrollEvents;
+    Qry.EnableControls;
+  end;
+end;
+
+{@action
+id=916E554A-D986-4A5B-A28C-E1303BABE705
+target=button
+origname=ListWindowShow
+name=Показать окно списка
+group=DX PLUS
+ui=<ui>
+  <form name="form" caption="Форма" required="1"/>
+  <filter name="filter" caption="Фильтр" source="form"/>
+  <expr name="recid" caption="Найти запись по ID"/>
+  <divider caption="Внешний вид"/>
+  <expr name="caption" caption="Заголовок окна" texthint="По умолчанию"/>
+  <list name="viewtype" caption="Представление" items="Таблица вверху;Таблица внизу;Таблица слева;Таблица справа;Только таблица;Только форма" defaultvalue="Только таблица"/>
+  <number name="width" caption="Ширина" texthint="Ширина по умолчанию"/>
+  <number name="height" caption="Высота" texthint="Высота по умолчанию"/>
+  <checkbox name="hidetree" caption="Скрыть дерево"/>
+  <checkbox name="readonly" caption="Только просмотр"/>
+  <divider caption="Действия с выбранной записью"/>
+  <object name="obj" caption="Вставить в объект"/>
+  <grid name="values" caption="Вставить значения">
+    <field name="fdest" caption="Поле текущей формы" required="1"/>
+    <field name="fsrc" caption="Поле окна списка" source="form" required="1"/>
+  </grid>
+
+  <if expr="!ValueIn(GetExprType(recid), 'number', '')"
+    msg="Результатом выражения должно быть число - id записи, а получено - `GetTypeText(recid)`." focus="recid"/>
+  <ifgrid grid="values">
+    <if expr="!SameTypes(fsrc, fdest)"
+      msg="Поля текущей формы и формы объекта должны быть одного типа: `GetTypeText(fdest)` не равно `GetTypeText(fsrc)`."
+      focus="fdest"/>
+  </ifgrid>
+</ui>
+description=<b>Форма.</b> Выберите форму, которая будет отображаться в окне списка.<br>
+<b>Фильтр.</b> Задайте фильтр, если надо показать только часть записей. Если
+фильтр не задан, то будут показаны все записи. Внимание! Данные фильтруются с
+учетом условия отбора (настраивается в роли).<br>
+<b>Найти запись по ID.</b> При показе окна возможно позиционирование на
+определенной записи. Для этого нужно определить ID (идентификатор) записи. ID
+определяется при помощи выражения. В выражении можно использовать
+поля типа "объект", функции RECID, DBGETID, GET и т. д.<br>
+<b>Заголовок окна</b> может быть задан в виде выражения или простого текста.<br>
+<b>Представление.</b> Обычно окна списков отображают формы в представлении
+"Только таблица", но вам, возможно, покажутся удобными и другие варианты.<br>
+<b>Только просмотр.</b> В этом режиме панель инструментов и контекстное меню таблицы
+скрываются.<br>
+<b>Действия с выбранной записью.</b> Если задан один из параметров, то в окне
+списка будут две кнопки: "ОК" и "Отмена". Если не заданы, то будет только кнопка
+"Закрыть". Вставка не сработает, если форма, куда вставляются данные, не
+находится в режиме редактирования.
+@}
+
+function StrToViewType(const S: String): TViewType;
+begin
+  case S of
+    'Таблица вверху': Result := vtGridTop;
+    'Таблица внизу': Result := vtGridBottom;
+    'Таблица слева': Result := vtGridLeft;
+    'Таблица справа': Result := vtGridRight;
+    'Только таблица': Result := vtGridOnly;
+    'Только форма': Result := vtWithoutGrid;
+    'Простая форма': Result := vtSimpleForm;
+    'По умолчанию': Result := vtDefault;
+  end;
+end;
+
+procedure ListWindowDblClick(Sender: TObject);
+var
+  LW: TListWindow;
+begin
+  LW := TListWindow(TControl(Sender).GetTopParent);
+  if LW.FormView.Form.RecId > 0 then LW.ModalResult := mrOk;
+end;
+
+procedure ListWindowCloseQuery(Sender: TObject; var CanClose: Boolean);
+var
+  LW: TListWindow;
+begin
+  LW := TListWindow(Sender);
+  with LW.FormView.Form do
+    if State in [dsInsert, dsEdit] then
+    begin
+      if Confirm('Сохранить изменения в записи?') then
+      begin
+        CanClose := Validate;
+        if CanClose then Post;
+      end
+      else
+      begin
+        Cancel;
+        CanClose := True;
+      end;
+    end;
+end;
+
+function ListWindowShow(const FormName, AFilter, RecIdExpr, ACaption, ViewType: String; W, H: Integer;
+  HideTree, ReadOnly: Boolean; const ObjName: String; FieldValues: TVariantArray2d): Boolean;
+var
+  LW: TListWindow;
+  Fm: TdxForm;
+  HasSelect: Boolean;
+  i: Integer;
+  RId: Variant;
+  Cap: String;
+begin
+  Result := False;
+  RId := EvalRecId(RecIdExpr, Self);
+  LW := TListWindow.Create(FormName, StrToViewType(ViewType));
+
+  try
+    Cap := VarToStr(EvalExpr(ACaption, Self));
+  except
+    Cap := ACaption;
+  end;
+  if Cap = '' then Cap := FormName;
+  LW.Caption := Cap;
+
+  if W > 0 then
+  begin
+    LW.Width := W;
+    if LW.FormView.Form.ViewType in [vtGridLeft, vtGridRight] then
+    begin
+      W := LW.FormView.Form.Width;
+      if W > LW.ClientWidth then W := LW.ClientWidth - 150;
+      LW.FormView.ScrollBox.Width := W;
+    end;
+  end;
+  if H > 0 then
+  begin
+    LW.Height := H;
+    if LW.FormView.Form.ViewType in [vtGridTop, vtGridBottom] then
+    begin
+      H := LW.FormView.Form.Height;
+      if H > LW.ClientHeight - 100 then H := LW.ClientHeight - 150;
+      LW.FormView.ScrollBox.Height := H;
+    end;
+  end;
+
+  HasSelect := (ObjName <> '') or (Length(FieldValues) > 0);
+  if HasSelect then
+  begin
+    LW.Buttons.ShowButtons := [pbOk, pbCancel];
+    LW.FormView.Grid.OnDblClick := @ListWindowDblClick;
+  end
+  else
+    LW.Buttons.ShowButtons := [pbClose];
+  if ReadOnly then
+  begin
+    LW.ToolBar.Visible := False;
+    LW.FormView.Grid.PopupMenu := nil;
+    LW.FormView.Grid.OnDblClick := nil;
+  end;
+  LW.OnCloseQuery := @ListWindowCloseQuery;
+
+  Fm := LW.FormView.Form;
+  Fm.CustomFilter := AFilter;
+  Fm.CustomFilterForm := Self;
+
+  if HideTree then LW.FormView.Tree.Visible := False
+  else
+  begin
+    LW.FormView.Tree.UpdateTree;
+    if RId <> Null then LW.FormView.Tree.SelectByRecord(RId);
+  end;
+  if not Fm.Opened then Fm.Open;
+  if RId <> Null then Fm.GotoRecord(RId);
+  if LW.ShowModal = mrOk then
+  begin
+    if Self.State in [dsInsert, dsEdit] then
+    begin
+      if ObjName <> '' then Self[ObjName] := Fm.RecId;
+      for i := 0 to High(FieldValues) do
+        try
+          Self[ FieldValues[i][0] ] := LW.FormView.Form[ FieldValues[i][1] ];
+        except
+          DoError('Вставить значения', i+1, 'Несовместимые типы полей. Поля должны быть одного типа.');
+        end;
+      Result := True;
+    end;
+  end
+  else if not HasSelect then Result := True;
+  LW.Free;
+end;
+
+{@action
+id=E6733302-5018-4F2B-A5B2-7692F0249B39
+target=button
+origname=CreatePageWithForm
+name=Создать закладку с формой
+group=DX PLUS
+ui=<ui>
+  <form name="form" caption="Форма" required="1"/>
+  <list name="viewtype" caption="Представление" items="Таблица вверху;Таблица внизу;Таблица слева;Таблица справа;Только таблица;Только форма;Простая форма;По умолчанию" defaultvalue="По умолчанию"/>
+  <checkbox name="setfilter" caption="Установить фильтр формы"/>
+  <grid name="filter" caption="Фильтр формы">
+    <field name="field" caption="Поле" source="form" required="1"/>
+    <checkbox name="not" caption="Не" width=30/>
+    <list name="op" caption="=" items="=;<=;&gt;=" defaultvalue="=" width="30"/>
+    <checkbox name="null" caption="Пусто" width=30/>
+    <expr name="expr" caption="Выражение"/>
+  </grid>
+  <expr name="recid" caption="Найти запись по ID"/>
+  <expr name="tabcaption" caption="Заголовок закладки" texthint="По умолчанию"/>
+
+  <ifgrid grid="filter">
+    <if expr="!SameTypes(expr, field)"
+      msg="Результат выражения несовместим с полем &quot;`GetText(field)`&quot;: получено &quot;`GetTypeText(expr)`&quot;, ожидается &quot;`GetTypeText(field)`&quot;."
+      focus="expr"/>
+  </ifgrid>
+  <if expr="!ValueIn(GetExprType(recid), 'number', '')"
+    msg="Результатом выражения должно быть число - id записи, а получено - `GetTypeText(recid)`." focus="recid"/>
+</ui>
+description=Создание закладки с формой с заданным представлением и фильтром.
+Если закладка с таким названием уже открыта, то происходит переключение на эту
+закладку и обновление формы.<br>
+<b>Установить фильтр формы.</b> Если флажок не установлен, то будет использоваться
+фильтр формы по умолчанию.<br>
+<b>Фильтр формы.</b> Результат выражения должен быть того же типа, что и поле.
+Операции &gt;= и &lt;= допускается применять только для числовых полей, дат и
+времени. Допускается добавлять фильтр одинаковые поля. В этом случае в фильтре
+будете несколько значений, при этом флажки "Не" и "Пусто" учитываются только для
+первого поля.<br>
+<b>Найти запись по ID.</b> После создания закладки можно перейти к записи с
+определенным идентификатором. В выражении могут использовать объекты, функции
+OBJID, DBGETID, GET и т. д.<br>
+<b>Название закладки.</b> Вы можете указать произвольное название закладки.
+По этому названию будет определяться создавать закладку или переключиться на
+уже созданную. Может быть задано в виде выражения.
+@}
+
+procedure DoFilterError(Row: Integer; const Msg: String);
+begin
+  DoError('Фильтр формы', Row, Msg);
+end;
+
+procedure SetFormFilter(Fm: TdxForm; FmFilter: TVariantArray2d; CurForm: TdxForm);
+var
+  i, n: Integer;
+  C: TComponent;
+  IsNot, IsNull, IsIntervalType: Boolean;
+  Cls, FlNm, Op: String;
+  FF: TFilterField;
+  V: Variant;
+begin
+  Fm.Filter.Clear;
+
+  for i := 0 to High(FmFilter) do
+  begin
+    FlNm := FmFilter[i][0];
+    IsNot := FmFilter[i][1] = 1;
+    Op := FmFilter[i][2];
+    IsNull := FmFilter[i][3];
+    C := Fm.FindComponentByFieldName(FlNm);
+    Cls := AnsiLowerCase(C.ClassName);
+    IsIntervalType := Cls in ['tdxcalcedit', 'tdxcounter', 'tdxdateedit', 'tdxtimeedit'];
+    if (Op <> '=') and not IsIntervalType then
+      DoFilterError(i+1, 'Поле "' + FlNm + '" не является числом, датой или временем. Операция ' + Op + 'недопустима.');
+
+    try
+      V := EvalExpr(FmFilter[i][4], CurForm);
+    except
+      DoCalcError('Фильтр формы', i+1);
+    end;
+
+    if V <> Null then
+    begin
+      case Cls of
+        'tdxcounter': if not VarIsInteger(V) then DoFilterError(i+1, 'Значение поля "' + FlNm + '" не является целым числом.');
+        'tdxcalcedit': if not VarIsNumber(V) then DoFilterError(i+1, 'Значение поля "' + FlNm + '" не является числом.');
+        'tdxdateedit': if (VarType(V) <> varDate) or (Frac(V) > 0) then DoFilterError(i+1, 'Значение поля "' + FlNm + '" не является датой.');
+        'tdxtimeedit': if (VarType(V) <> varDate) or (Trunc(V) > 0) then DoFilterError(i+1, 'Значение поля "' + FlNm + '" не является временм.');
+        'tdxlookupcombobox': if not VarIsInteger(V) then DoFilterError(i+1, 'Значение поля "' + FlNm + '" не является id (целым числом).');
+        'tdxcheckbox': if not VarIsNumber(V) or not (V in [0, 1]) then DoFilterError(i+1, 'Значение поля "' + FlNm + '" должно быть 0 или 1.');
+      end;
+    end;
+    V := VarToStr(V);
+    FF := Fm.Filter.FindField(FlNm);
+    if FF = nil then
+    begin
+      FF := Fm.Filter.AddField(FlNm);
+      FF.IsNot := IsNot;
+      FF.IsNull := IsNull;
+    end;
+    if V <> '' then
+    begin
+      if IsIntervalType then
+      begin
+        n := FF.Values.Count-1;
+        if n < 0 then n := FF.Values.Add('');
+        case Op of
+          '>=':
+            begin
+              if FF.Value[n] <> '' then FF.Values.Add(V + ' .. ')
+              else if FF.EndValue[n] <> '' then FF.Values[n] := V + FF.Values[n]
+              else  FF.Values[n] := V + ' .. ';
+            end;
+          '<=':
+            begin
+              if FF.EndValue[n] <> '' then FF.Values.Add(' .. ' + V)
+              else if FF.Value[n] <> '' then FF.Values[n] := FF.Values[n] + V
+              else  FF.Values[n] := ' .. ' + V;
+            end;
+          '=':
+            begin
+              if FF.Values[n] <> '' then FF.Values.Add(V + ' .. ' + V)
+              else FF.Values[n] := V + ' .. ' + V;
+            end;
+        end;
+      end
+      else FF.Values.Add(V);
+    end;
+  end;
+end;
+
+function FindTab(const TabCap: String): TTabSheet;
+var
+  Tab: TTabSheet;
+  i: Integer;
+begin
+  Result := nil;
+  for i := 0 to MainWindow.Pages.PageCount - 1 do
+  begin
+    Tab := MainWindow.Pages.Pages[i];
+    if Utf8CompareText(Tab.Caption, TabCap) = 0 then
+    begin
+      Result := Tab;
+      Exit;
+    end;
+  end;
+end;
+
+procedure CreatePageWithForm(const FormName, ViewType: String; SetFmFilter: Boolean;
+  FmFilter: TVariantArray2d; const RecIdExpr, TabCaption: String);
+var
+  Tab: TTabSheet;
+  View: TFormView;
+  Fm: Tdxform;
+  TabCap: String;
+  RId: Variant;
+begin
+  if MainWindow = nil then Exit;
+  if Self.EditWindow <> nil then Exit;
+  RId := EvalRecId(RecIdExpr, Self);
+
+  try
+	  TabCap := VarToStr(EvalExpr(TabCaption, Self));
+  except
+  	TabCap := TabCaption;
+  end;
+
+  if TabCap = '' then TabCap := FormName;
+  Tab := FindTab(TabCap);
+  if Tab = nil then
+  begin
+    Tab := MainWindow.CreatePage(FormName, StrToViewType(ViewType));
+    Tab.Caption := TabCap;
+  end;
+  View := MainWindow.FormViews[Tab.TabIndex];
+  Fm := View.Form;
+  if SetFmFilter then SetFormFilter(Fm, FmFilter, Self);
+  Fm.Tree.UpdateTree;
+  Fm.Refresh;
+  MainWindow.Pages.ActivePage := Tab;
+  if RId <> Null then Fm.GotoRecord(RId);
+end;
+
+{@action
+id=38CCE284-B508-450F-BF65-21917E79BAA7
+target=main
+origname=ButtonToToolBarButton
+name=Кнопка на панели инструментов
+group=DX PLUS
+ui=<ui>
+  <form name="form" caption="Форма" required="1"/>
+  <component name="button" caption="Кнопка" required="1" source="form" filter="TdxButton"/>
+  <image name="image" caption="Значок"/>
+  <text name="hint" caption="Всплывающая подсказка"/>
+</ui>
+description=Добавляет кнопку на панель инструментов главного окна. Кнопка на панели
+"нажимает" некоторую кнопку на указанной форме. Предполагается, что кнопка находится
+на простой форме, хотя это и не обязательно. Для правильной работы кнопка не
+должна обращаться к данным своей формы.
+@}
+
+type
+  TButtonData = record
+    FormName, ButtonName: String;
+    Bn: TToolButton;
+  end;
+
+var
+  BnData: array of TButtonData;
+  OldDBClose: TNotifyEvent;
+
+procedure DBClose(Sender: TObject);
+var
+  i: Integer;
+begin
+  for i := 0 to High(BnData) do
+    BnData[i].Bn.Free;
+
+  if OldDBClose <> nil then OldDBClose(Sender);
+end;
+
+function FindButtonData(Bn: TObject): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := 0 to High(BnData) do
+  begin
+    if BnData[i].Bn = Bn then
+    begin
+      Result := i;
+      Exit;
+    end;
+  end;
+end;
+
+procedure BC(Sender: TObject);
+var
+  BD: TButtonData;
+begin
+  BD := BnData[ FindButtonData(Sender) ];
+  with TFormView.Create(nil, BD.FormName, vtSimpleForm) do
+  try
+    TdxButton(Form.FindComponent(BD.ButtonName)).Click;
+  finally
+    Free;
+  end;
+end;
+
+procedure ButtonToToolBarButton(const FormName, ButtonName, ImageName, Hint: String);
+var
+  TB: TToolBar;
+  Bn: TToolButton;
+  Images: TCustomImageList;
+  BD: TButtonData;
+  n: Integer;
+begin
+  TB := MainWindow.ToolBar;
+  Images := TB.Images;
+  Bn := TToolButton.Create(TB);
+  Bn.Left := 10000;
+  Bn.Hint := Hint;
+  Bn.Parent := TB;
+  if ImageName <> '' then
+    Bn.ImageIndex := Images.AddImage(ImageName);
+  Bn.OnClick := @BC;
+
+  BD.FormName := FormName;
+  BD.ButtonName := ButtonName;
+  BD.Bn := Bn;
+
+  n := Length(BnData);
+  SetLength(BnData, n + 1);
+  BnData[n] := BD;
+
+  if n = 0 then
+  begin
+    OldDBClose := MainWindow.OnDatabaseClose;
+    MainWindow.OnDatabaseClose := @DBClose;
+  end;
+end;
+
+{@action
+id=BC27798C-D87E-46B8-9DA9-1E64AC67F188
+target=main
+origname=AddDividerToToolBar
+name=Добавить разделитель на панель инструментов
+group=DX PLUS
+ui=<ui>
+
+</ui>
+description=Добавляет кнопку-разделитель на панель инструментов главного окна.
+@}
+
+procedure AddDividerToToolBar;
+var
+  TB: TToolBar;
+  Bn: TToolButton;
+  BD: TButtonData;
+  n: Integer;
+begin
+  TB := MainWindow.ToolBar;
+  Bn := TToolButton.Create(TB);
+  Bn.Left := 10000;
+  Bn.Style := tbsDivider;
+  Bn.Parent := TB;
+
+  BD.Bn := Bn;
+
+  n := Length(BnData);
+  SetLength(BnData, n + 1);
+  BnData[n] := BD;
+
+  if n = 0 then
+  begin
+    OldDBClose := MainWindow.OnDatabaseClose;
+    MainWindow.OnDatabaseClose := @DBClose;
+  end;
+end;
+
+{@action
+id=768EC118-96BD-4D76-A2DA-1C221D8B82ED
+target=button
+origname=OpenFolderInExplorer
+name=Открыть папку в проводнике
+group=DX PLUS
+ui=<ui>
+  <expr name="folder" caption="Путь к папке" required="1"/>
+  <checkbox name="autocreate" caption="Автоматически создавать папку"/>
+</ui>
+description=Открывает папку в проводнике. Папка задается в виде выражения.
+Двойные кавычки в пути использовать не нужно, даже если имя папки содержит пробелы.
+@}
+
+function OpenFolderInExplorer(const FolderExpr: String; AutoCreate: Boolean): Boolean;
+var
+  MsgCap, S: String;
+begin
+  MsgCap := 'Открыть папку в проводнике';
+  try
+    S := VarToStr(EvalExpr(FolderExpr, Self));
+  except
+    DoCalcError('Путь к папке', 0);
+  end;
+  if not DirectoryExists(S) then
+  begin
+    Result := False;
+    if AutoCreate then
+    begin
+      if ForceDirectories(S) then
+        Result := True
+      else
+        MsgBox(MsgCap, 'Не удалось создать папку ' + S + '.');
+    end
+    else
+      MsgBox(MsgCap, 'Папка ' + S + ' не найдена.');
+  end
+  else
+    Result := True;
+
+  if Result then Result := ShellExecute('explore', S, '', '', 5);
+end;
+
+{@action
+id=9A63F742-0950-4A2D-9C9B-68713311C76D
+target=form
+origname=ShowImageFromQuery
+name=Показать картинку из запроса
+group=DX PLUS
+ui=<ui>
+  <query name="qry" caption="Запрос" required="1"/>
+  <form name="fm" caption="Форма запроса" source="qry" required="1"/>
+  <grid name="fields" caption="Поля">
+    <field name="field" caption="Форма запроса" source="fm" filter="image" required="1"/>
+    <component name="img" caption="Текущая форма" filter="TdxImage" required="1"/>
+  </grid>
+</ui>
+description=Показывает в компоненте "фоновое изображение" картинку из связанной с
+запросом формы. При каждом перемещении по записям запроса, происходит загрузка
+изображения в текущую форму. В таблице в первой колонке выбираете компонент "изображение" из
+формы запроса, во втором - компонент "фоновое изображение" из текущей формы.
+Запрос должен иметь только один источник.
+@}
+
+type
+  TSIQData = record
+    Qry: TdxQueryGrid;
+    AfterScroll, DestroyForm: TNotifyEvent;
+    QFm, Fm: TdxForm;
+    Fields: TVariantArray2d;
+    Skip: Boolean;
+  end;
+
+var
+  SIQArr: array of TSIQData;
+
+function FindSIQData(Qry: TObject): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := High(SIQArr) downto 0 do
+  begin
+    if (SIQArr[i].Qry = Qry) and not SIQArr[i].Skip then
+    begin
+      Result := i;
+      Exit;
+    end;
+  end;
+end;
+
+function FindSIQDataByForm(Fm: TObject): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := High(SIQArr) downto 0 do
+  begin
+    if (SIQArr[i].Fm = Fm) {and not SIQArr[i].Skip} then
+    begin
+      Result := i;
+      Exit;
+    end;
+  end;
+end;
+
+procedure SIQ_QueryAfterScroll(Sender: TObject);
+var
+  i, id, n: Integer;
+  QFm, Fm: TdxForm;
+  St: TStream;
+  Data: TSIQData;
+  Img: TdxImage;
+begin
+  n := FindSIQData(Sender);
+  if SIQArr[n].AfterScroll <> nil then
+  try
+    SIQArr[n].Skip := True;
+    SIQArr[n].AfterScroll(Sender);
+  finally
+    SIQArr[n].Skip := False;
+  end;
+  try
+    id := SIQArr[n].Qry.RecId;
+  except
+    ShowErrMsg('Показать картинку из запроса', 'Невозможно определить ID записи. ' +
+      'Убедитесь, что запрос "' + SIQArr[n].Qry.QueryName + '" имеет только один источник.');
+    Exit;
+  end;
+
+  Data := SIQArr[n];
+  Fm := TdxForm(Data.Qry.Owner);
+
+  for i := 0 to High(Data.Fields) do
+  begin
+    Img := TdxImage(Fm.FindComponent( Data.Fields[i][1] ));
+    Img.Clear;
+  end;
+
+  QFm := Data.QFm;
+  QFm.OpenRecord(id);
+  if QFm.RecordCount > 0 then
+  begin
+    St := TMemoryStream.Create;
+
+    for i := 0 to High(Data.Fields) do
+    begin
+      St.Size := 0;
+      QFm.Images[ Data.Fields[i][0] ].SaveToStream(St);
+      Img := TdxImage(Fm.FindComponent( Data.Fields[i][1] ));
+      //Img.Clear;
+      if St.Size > 0 then
+      begin
+        Img.Center := True;
+        Img.Proportional := True;
+        Img.Stretch := True;
+        Img.KeepSize := True;
+        St.Position := 0;
+        Img.LoadFromStream(St);
+      end;
+    end;
+
+    St.Free;
+  end;
+  QFm.Close;
+end;
+
+procedure SIQ_DestroyFormHandler(Sender: TObject);
+var
+  i: Integer;
+begin
+  i := FindSIQDataByForm(Sender);
+  with SIQArr[i] do
+  begin
+    QFm.Free;
+    QFm := nil;
+    Fm := nil;
+    Qry := nil;
+    if DestroyForm <> nil then DestroyForm(Sender);
+  end;
+end;
+
+procedure ShowImageFromQuery(const QueryName, FormName: String; Fields: TVariantArray2d);
+var
+  n: Integer;
+  Data: TSIQData;
+begin
+  Data.Qry := Self.Queries[QueryName];
+  Data.AfterScroll := Data.Qry.OnAfterScroll;
+  Data.Qry.OnAfterScroll := @SIQ_QueryAfterScroll;
+  Data.QFm := TdxForm.Create(FormName);
+  Data.Fields := Fields;
+  Data.Fm := Self;
+  Data.DestroyForm := Self.OnDestroy;
+  Self.OnDestroy := @SIQ_DestroyFormHandler;
+
+  n := Length(SIQArr);
+  SetLength(SIQArr, n+1);
+  SIQArr[n] := Data;
+end;
+
+{@action
+id=64B42EDB-518C-4E95-905F-01D0095ACE7F
+target=form
+origname=ShowValueFromQuery
+name=Показать значение из запроса
+group=DX PLUS
+ui=<ui>
+  <query name="qry" caption="Запрос" required="1"/>
+  <grid name="fields" caption="Поля">
+    <field name="qf" caption="Запрос" source="qry" required="1"/>
+    <component name="cmp" caption="Текущая форма" filter="TdxLabel;TdxEdit;TdxCalcEdit;TdxDateEdit;TdxTimeEdit;TdxMemo;TdxComboBox;TdxCheckBox;TdxLookupComboBox" required="1"/>
+  </grid>
+
+  <ifgrid grid="fields">
+    <if expr="!SameTypes(qf, cmp)"
+      msg="Нельзя записать в компонент &quot;`GetTypeText(cmp)`&quot; значение типа &quot;`GetTypeText(qf)`&quot;."
+      focus="qf"/>
+  </ifgrid>
+</ui>
+description=Показывает в компонентах формы значения полей запроса. Допускается
+показывать значение в следующих компонентах: надпись, текст, число, дата, время,
+заметка, флажок, список, объект.<br><br>
+Если представление формы не "простая форма", то кроме надписей, использовать
+другие компоненты не рекомендуется, т. к. значения будут сохраняться в базе.
+@}
+
+type
+  TSVQData = record
+    Qry: TdxQueryGrid;
+    AfterScroll, DestroyForm: TNotifyEvent;
+    Fm: TdxForm;
+    Fields: TVariantArray2d;
+    Skip: Boolean;
+  end;
+
+var
+  SVQArr: array of TSVQData;
+
+function FindSVQData(Qry: TObject): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := High(SVQArr) downto 0 do
+  begin
+    if (SVQArr[i].Qry = Qry) and not SVQArr[i].Skip then
+    begin
+      Result := i;
+      Exit;
+    end;
+  end;
+end;
+
+function FindSVQDataByForm(Fm: TObject): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := High(SVQArr) downto 0 do
+  begin
+    if (SVQArr[i].Fm = Fm) {and not SVQArr[i].Skip} then
+    begin
+      Result := i;
+      Exit;
+    end;
+  end;
+end;
+
+procedure SVQ_QueryAfterScroll(Sender: TObject);
+var
+  n, i: Integer;
+  Data: TSVQData;
+  QFlNm, CmpNm, FlNm: String;
+  Cmp: TComponent;
+begin
+  n := FindSVQData(Sender);
+  if SVQArr[n].AfterScroll <> nil then
+  try
+    SVQArr[n].Skip := True;
+    SVQArr[n].AfterScroll(Sender);
+  finally
+    SVQArr[n].Skip := False;
+  end;
+
+  Data := SVQArr[n];
+  if Data.Fm.State = dsBrowse then Exit;
+
+  for i := 0 to High(Data.Fields) do
+  begin
+    QFlNm := Data.Fields[i][0];
+    CmpNm := Data.Fields[i][1];
+    Cmp := Data.Fm.FindComponent(CmpNm);
+    if Cmp is TdxLabel then
+      TdxLabel(Cmp).Caption := Data.Qry.AsS[QFlNm]
+    else
+    begin
+      FlNm := GetComponentFieldName(Cmp);
+      try
+        Data.Fm[FlNm] := Data.Qry[QFlNm];
+      except
+        ShowErrMsg('Показать значение из запроса',
+          Format('Поля [%s] и [%s] в строке %d несовместимы. Поля должны быть одного типа.',
+            [QFlNm, FlNm, i+1]))
+      end;
+    end;
+  end;
+end;
+
+procedure SVQ_DestroyFormHandler(Sender: TObject);
+var
+  i: Integer;
+begin
+  i := FindSVQDataByForm(Sender);
+  with SVQArr[i] do
+  begin
+    Fm := nil;
+    Qry := nil;
+    if DestroyForm <> nil then DestroyForm(Sender);
+  end;
+end;
+
+// Проверяем компоненты на дубли
+procedure SVQ_CheckParams(var Fields: TVariantArray2d);
+var
+  SL: TStringList;
+  i: Integer;
+  Nm, Msg: String;
+begin
+  Msg := '';
+  SL := TStringList.Create;
+  for i := 0 to High(Fields) do
+  begin
+    Nm := Fields[i][1];
+    if SL.IndexOf(Nm) < 0 then
+      SL.Add(Nm)
+    else
+      Msg := Msg + LineEnding + Format('- В строке %d дублируется компонент [%s]', [i+1, Nm]);
+  end;
+  SL.Free;
+  if Msg <> '' then
+    DoError('Поля', 0, Msg);
+end;
+
+procedure ShowValueFromQuery(const QueryName: String; Fields: TVariantArray2d);
+var
+  Data: TSVQData;
+  n: Integer;
+begin
+  SVQ_CheckParams(Fields);
+
+  Data.Fm := Self;
+  Data.DestroyForm := Self.OnDestroy;
+  Self.OnDestroy := @SVQ_DestroyFormHandler;
+  Data.Qry := Self.Queries[QueryName];
+  Data.AfterScroll := Data.Qry.OnAfterScroll;
+  Data.Qry.OnAfterScroll := @SVQ_QueryAfterScroll;
+  Data.Fields := Fields;
+
+  n := Length(SVQArr);
+  SetLength(SVQArr, n + 1);
+  SVQArr[n] := Data;
+end;
+
+{@action
+id=8695A1F2-62B9-4A61-BF18-3858A0F1B9D7
+target=form
+origname=ShowImageFromObject
+name=Показать картинку из объекта
+group=DX PLUS
+ui=<ui>
+  <object name="obj" caption="Объект" required="1"/>
+  <grid name="fields" caption="Поля">
+    <field name="objfl" caption="Поле объекта" source="obj" filter="image" required="1"/>
+    <component name="img" caption="Текущая форма" filter="TdxImage" required="1"/>
+  </grid>
+</ui>
+description=Показывает картинку из объекта в компоненте "фоновое изображение".
+@}
+
+type
+  TSIOData = record
+    Fm, ObjFm: TdxForm;
+    DestroyForm: TNotifyEvent;
+    FieldChange: TFieldChangeEvent;
+    Obj: TdxLookupComboBox;
+    Fields: TVariantArray2d;
+    Skip: Boolean;
+  end;
+
+var
+  SIOArr: array of TSIOData;
+
+function FindSIOData(Fm: TObject): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := High(SIOArr) downto 0 do
+    if (SIOArr[i].Fm = Fm) and not SIOArr[i].Skip then
+    begin
+      Result := i;
+      Exit;
+    end;
+end;
+
+procedure SIO_FieldChange(Sender, Control: TObject; const FieldName: String);
+var
+  n, i: Integer;
+  St: TStream;
+  Img: TdxImage;
+begin
+  n := FindSIOData(Sender);
+  with SIOArr[n] do
+  begin
+
+    if FieldChange <> nil then
+    try
+      Skip := True;
+      FieldChange(Sender, Control, FieldName);
+    finally
+      Skip := False;
+    end;
+
+    if Control = Obj then
+    begin
+      if Fm[FieldName] = Null then
+        for i := 0 to High(Fields) do
+          TdxImage( Fm.FindComponent(Fields[i][1]) ).Clear
+      else
+      begin
+        St := TMemoryStream.Create;
+        ObjFm.OpenRecord(Fm[FieldName]);
+        if ObjFm.RecordCount > 0 then
+          for i := 0 to High(Fields) do
+          begin
+            Img := TdxImage( Fm.FindComponent(Fields[i][1]) );
+            Img.Clear;
+            St.Size := 0;
+            ObjFm.Images[ Fields[i][0] ].SaveToStream(St);
+            if St.Size > 0 then
+            begin
+              St.Position := 0;
+              Img.Center := True;
+              Img.Stretch := True;
+              Img.KeepSize := True;
+              Img.Proportional := True;
+              Img.LoadFromStream(St);
+            end;
+          end;
+        ObjFm.Close;
+        St.Free;
+      end;
+    end;
+  end;
+end;
+
+procedure SIO_DestroyFormHandler(Sender: TObject);
+var
+  i: Integer;
+begin
+  i := FindSIOData(Sender);
+  with SIOArr[i] do
+  begin
+    Fm := nil;
+    ObjFm.Free;
+    if DestroyForm <> nil then DestroyForm(Sender);
+  end;
+end;
+
+procedure ShowImageFromObject(const ObjName: String; Fields: TVariantArray2d);
+var
+  n: Integer;
+  Data: TSIOData;
+begin
+  Data.Fm := Self;
+  Data.DestroyForm := Self.OnDestroy;
+  Self.OnDestroy := @SIO_DestroyFormHandler;
+  Data.FieldChange := Self.OnFieldChange;
+  Self.OnFieldChange := @SIO_FieldChange;
+  Data.Obj := TdxLookupComboBox(Self.FindComponentByFieldName(ObjName));
+  Data.ObjFm := TdxForm.Create(Data.Obj.SourceFormName);
+  Data.Fields := Fields;
+
+  n := Length(SIOArr);
+  SetLength(SIOArr, n+1);
+  SIOArr[n] := Data;
+end;
+
+{@action
+id=49BDDFC2-FD4C-4945-9382-E70E33F37FE2
+target=form
+origname=ClickOnPost
+name=Клик при сохранении записи
+group=DX PLUS/События
+ui=<ui>
+  <component name="bn" caption="Кнопка" filter="TdxButton" required="1"/>
+  <list name="when" caption="Кликнуть" items="До сохранения;После сохранения" defaultvalue="После сохранения" required="1"/>
+</ui>
+description=<b>Кнопка</b> - выберите кнопку, которая должна быть автоматически
+нажата при сохранении записи.<br><br>
+<b>Кликнуть</b> - выберите, когда должна быть нажата кнопка: до или после
+сохранения записи.
+@}
+
+type
+  TCAPData = record
+    Fm: TdxForm;
+    AfterPost, BeforePost, DestroyForm: TNotifyEvent;
+    Bn: TdxButton;
+    Skip: Boolean;
+  end;
+
+var
+  CAPArr: array of TCAPData;
+
+function FindCAPData(Fm: TObject): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := High(CAPArr) downto 0 do
+    if (CAPArr[i].Fm = Fm) and not CAPArr[i].Skip then
+    begin
+      Result := i;
+      Exit;
+    end;
+end;
+
+procedure CAP_AfterPost(Sender: TObject);
+var
+  n: Integer;
+begin
+  n := FindCAPData(Sender);
+  with CAPArr[n] do
+  begin
+    if AfterPost <> nil then
+    try
+      Skip := True;
+      AfterPost(Sender);
+    finally
+      Skip := False;
+    end;
+
+    Bn.Click;
+  end;
+end;
+
+procedure CAP_BeforePost(Sender: TObject);
+var
+  n: Integer;
+begin
+  n := FindCAPData(Sender);
+  with CAPArr[n] do
+  begin
+    if BeforePost <> nil then
+    try
+      Skip := True;
+      BeforePost(Sender);
+    finally
+      Skip := False;
+    end;
+
+    Bn.Click;
+  end;
+end;
+
+procedure CAP_DestroyForm(Sender: TObject);
+var
+  n: Integer;
+begin
+  n := FindCAPData(Sender);
+  with CAPArr[n] do
+  begin
+    Fm := nil;
+    if DestroyForm <> nil then DestroyForm(Sender);
+  end;
+end;
+
+procedure ClickOnPost(const BnName, When: String);
+var
+  Data: TCAPData;
+  n: Integer;
+begin
+  Data.Fm := Self;
+  Data.Bn := TdxButton(Self.FindComponent(BnName));
+  if When = 'После сохранения' then
+  begin
+    Data.AfterPost := Self.OnAfterPost;
+    Self.OnAfterPost := @CAP_AfterPost;
+  end
+  else
+  begin
+    Data.BeforePost := Self.OnBeforePost;
+    Self.OnBeforePost := @CAP_BeforePost;
+  end;
+  Data.DestroyForm := Self.OnDestroy;
+  Self.OnDestroy := @CAP_DestroyForm;
+
+  n := Length(CAPArr);
+  SetLength(CAPArr, n + 1);
+  CAPArr[n] := Data;
+end;
+
+{@action
+id=AB1F57AC-16B0-4128-BF70-39EC56063515
+target=form
+origname=ClickAfterChangeField
+name=Клик после изменения поля
+group=DX PLUS/События
+ui=<ui>
+  <component name="bn" caption="Кнопка" filter="TdxButton" required="1"/>
+  <grid name="fields" caption="Поля">
+    <field name="fl" caption="Поле" required="1"/>
+  </grid>
+</ui>
+description=<b>Кнопка</b> - выберите кнопку, которая должна быть автоматически
+нажата после изменения поля.<br><br>
+<b>Поля</b> - выберите поля, после изменения которых будет нажата кнопка. Выбирайте
+поля, которых не зависят друг от друга, иначе кнопка будет нажата более одного раза.<br><br>
+
+Действие не сработает, когда поля изменяются при добавлении новой записи. Это
+сделано специально, потому что поля заполняются значениями по умолчанию и
+срабатывание кнопки в этом случае нежелательно.
+@}
+
+type
+  TCcfData = record
+    Fm: TdxForm;
+    FormDestroy, BeforeInsert, AfterInsert: TNotifyEvent;
+    FieldChange: TFieldChangeEvent;
+    Bn: TdxButton;
+    Fields: array of TObject;
+    Skip, SkipChange: Boolean;
+  end;
+
+var
+  CcfArr: array of TCcfData;
+
+function FindCcfData(Fm: TObject): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := High(CcfArr) downto 0 do
+    if (CcfArr[i].Fm = Fm) and not CcfArr[i].Skip then
+    begin
+      Result := i;
+      Exit;
+    end;
+end;
+
+procedure Ccf_FormDestroy(Sender: TObject);
+var
+  n: Integer;
+begin
+  n := FindCcfData(Sender);
+  with CcfArr[n] do
+  begin
+    Fm := nil;
+    SetLength(Fields, 0);
+    if FormDestroy <> nil then FormDestroy(Sender);
+  end;
+end;
+
+procedure Ccf_FieldChange(Sender, Control: TObject; const FieldName: String);
+var
+  n: Integer;
+  i: Integer;
+begin
+  n := FindCcfData(Sender);
+  with CcfArr[n] do
+  begin
+    if FieldChange <> nil then
+    try
+      Skip := True;
+      FieldChange(Sender, Control, FieldName);
+    finally
+      Skip := False;
+    end;
+
+    if not SkipChange then
+      for i := 0 to High(Fields) do
+        if Fields[i] = Control then
+        begin
+          Bn.Click;
+          Break;
+        end;
+  end;
+end;
+
+procedure Ccf_AfterInsert(Sender: TObject);
+var
+  n: Integer;
+begin
+  n := FindCcfData(Sender);
+  with CcfArr[n] do
+  begin
+    if AfterInsert <> nil then
+    try
+      Skip := True;
+      AfterInsert(Sender);
+    finally
+      Skip := False;
+    end;
+    SkipChange := False;
+  end;
+end;
+
+procedure Ccf_BeforeInsert(Sender: TObject);
+var
+  n: Integer;
+begin
+  n := FindCcfData(Sender);
+  with CcfArr[n] do
+  begin
+    if BeforeInsert <> nil then
+    try
+      Skip := True;
+      BeforeInsert(Sender);
+    finally
+      Skip := False;
+    end;
+    SkipChange := True;
+  end;
+end;
+
+procedure ClickAfterChangeField(const BnName: String; Fields: TVariantArray2d);
+var
+  n, i: Integer;
+  Data: TCcfData;
+begin
+  Data.Fm := Self;
+  Data.Bn := TdxButton(Self.FindComponent(BnName));
+  Data.FormDestroy := Self.OnDestroy;
+  Data.FieldChange := Self.OnFieldChange;
+  Data.BeforeInsert := Self.OnBeforeInsert;
+  Data.AfterInsert := Self.OnAfterInsert;
+  SetLength(Data.Fields, Length(Fields));
+  for i := 0 to High(Fields) do
+    Data.Fields[i] := Self.FindComponentByFieldName(Fields[i][0]);
+  Data.Fm.OnDestroy := @Ccf_FormDestroy;
+  Data.Fm.OnFieldChange := @Ccf_FieldChange;
+  Data.Fm.OnBeforeInsert := @Ccf_BeforeInsert;
+  Data.Fm.OnAfterInsert := @Ccf_AfterInsert;
+
+  n := Length(CcfArr);
+  SetLength(CcfArr, n + 1);
+  CcfArr[n] := Data;
+end;
+
+{@action
+id=8E1C0618-DC18-4F21-A621-456E55767869
+target=form
+origname=ClickAfterAppend
+name=Клик после добавления записи
+group=DX PLUS/События
+ui=<ui>
+  <component name="bn" caption="Кнопка" filter="TdxButton" required="1"/>
+</ui>
+description=<b>Кнопка</b> - выберите кнопку, которая должна быть автоматически
+нажата после добавления записи.
+@}
+
+type
+  TCaiData = record
+    Fm: TdxForm;
+    FormDestroy, AfterInsert, AfterScroll: TNotifyEvent;
+    Bn: TdxButton;
+    Skip, InsertFired: Boolean;
+  end;
+
+var
+  CaiArr: array of TCaiData;
+
+function FindCaiData(Fm: TObject): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := High(CaiArr) downto 0 do
+    if (CaiArr[i].Fm = Fm) and not CaiArr[i].Skip then
+    begin
+      Result := i;
+      Exit;
+    end;
+end;
+
+procedure Cai_FormDestroy(Sender: TObject);
+var
+  n: Integer;
+begin
+  n := FindCaiData(Sender);
+  with CaiArr[n] do
+  begin
+    Fm := nil;
+    if FormDestroy <> nil then FormDestroy(Sender);
+  end;
+end;
+
+procedure Cai_AfterScroll(Sender: TObject);
+var
+  n: Integer;
+begin
+  n := FindCaiData(Sender);
+  with CaiArr[n] do
+  begin
+    if AfterScroll <> nil then
+    try
+      Skip := True;
+      AfterScroll(Sender);
+    finally
+      Skip := False;
+    end;
+    if InsertFired then
+    begin
+      InsertFired := False;
+      Bn.Click;
+    end;
+  end;
+end;
+
+procedure Cai_AfterInsert(Sender: TObject);
+var
+  n: Integer;
+begin
+  n := FindCaiData(Sender);
+  with CaiArr[n] do
+  begin
+    if AfterInsert <> nil then
+    try
+      Skip := True;
+      AfterInsert(Sender);
+    finally
+      Skip := False;
+    end;
+    InsertFired := True;
+  end;
+end;
+
+procedure ClickAfterAppend(const BnName: String);
+var
+  n: Integer;
+  Data: TCaiData;
+begin
+  Data.Fm := Self;
+  Data.Bn := TdxButton(Self.FindComponent(BnName));
+  Data.FormDestroy := Self.OnDestroy;
+  Data.AfterInsert := Self.OnAfterInsert;
+  Data.AfterScroll := Self.OnAfterScroll;
+  Data.Fm.OnDestroy := @Cai_FormDestroy;
+  Data.Fm.OnAfterInsert := @Cai_AfterInsert;
+  Data.Fm.OnAfterScroll := @Cai_AfterScroll;
+
+  n := Length(CaiArr);
+  SetLength(CaiArr, n + 1);
+  CaiArr[n] := Data;
+end;
+
+{@action
+id=4437AAE4-C3A2-4F27-8FC7-939AE8FE8429
+target=button
+origname=CopyTextToClipboard
+name=Копировать в буфер обмена
+group=DX PLUS
+ui=<ui>
+  <expr name="expr" caption="Выражение"/>
+</ui>
+description=Копирует результат вычисления выражения в буфер обмена.
+@}
+
+function CopyTextToClipboard(const Expr: String): Boolean;
+begin
+  Result := True;
+  try
+    Clipboard.AsText := VarToStr(EvalExpr(Expr, Self));
+  except
+    DoCalcError('Выражение', 0);
+  end;
+end;
+
+{@action
+id=799C29C6-676F-44EE-A21C-F10DBF87CD0F
+target=button
+origname=DisableQueryAutoRefresh
+name=Отключить автообновление запроса
+group=DX PLUS/Запросы
+ui=<ui>
+  <query name="qry" caption="Запрос" required="1"/>
+</ui>
+description=Отключает автообновление запроса. Это может понадобиться при
+массовом изменении полей, от которых зависит запрос. Обновление запроса при
+изменении каждого поля может приводить к большим задержкам. Отключение
+автоматического обновления запроса решает эту проблему.
+@}
+
+procedure DisableQueryAutoRefresh(const QueryName: String);
+begin
+  Self.Queries[QueryName].ManualRefresh := True;
+end;
+
+{@action
+id=C1B33196-B72E-40D8-88AA-E67659C0485B
+target=button
+origname=EnableQueryAutoRefresh
+name=Включить автообновление запроса
+group=DX PLUS/Запросы
+ui=<ui>
+  <query name="qry" caption="Запрос" required="1"/>
+  <checkbox name="refresh" caption="Обновить запрос" defaultvalue="1"/>
+  <checkbox name="keeppos" caption="Сохранить позицию"/>
+</ui>
+description=Включает автообновление запроса. Если вы ранее временно отключали
+автоматическое обновление запроса, его нужно включить, чтобы запрос мог обновляться
+при изменении полей.
+@}
+
+procedure EnableQueryAutoRefresh(const QueryName: String; RefreshQry, KeepPos: Boolean);
+var
+  Q: TdxQueryGrid;
+begin
+  Q := Self.Queries[QueryName];
+  Q.ManualRefresh := False;
+  RefreshQuery(Q, KeepPos);
+end;
+
+{@action
+id=B053C09F-768D-40A9-ACB9-F9F8B4F1E392
+target=button
+origname=SetSortQuery
+name=Установить сортировку запроса
+group=DX PLUS/Запросы
+ui=<ui>
+  <query name="qry" caption="Запрос" required="1"/>
+  <grid name="fields" caption="Сортировка по полям">
+    <field name="fl" caption="Поле запроса" source="qry" required="1"/>
+    <checkbox name="desc" caption="По убыванию" width="100"/>
+  </grid>
+</ui>
+description=Устанавливает сортировку запроса по выбранным полям. После установки
+сортировки запрос обновляется.
+@}
+
+procedure SetSortQuery(const QryName: String; Fields: TVariantarray2d);
+var
+  Q: TdxQueryGrid;
+  i: Integer;
+begin
+  Q := Self.Queries[QryName];
+  Q.SortColumns.Clear;
+  for i := 0 to High(Fields) do
+    Q.SortColumns.Add(Fields[i][0], Fields[i][1] = 1);
+  Q.Refresh;
+end;
+
+{@action
+id=80BB7D56-86CD-4546-9108-EC989D1E68A8
+target=form
+origname=MoveButtonsToButtonPanel
+name=Переместить кнопки на панель кнопок
+group=DX PLUS
+ui=<ui>
+  <grid name="buttons" caption="Кнопки">
+    <component name="bn" caption="Кнопка" filter="TdxButton" required="1"/>
+    <number name="x" caption="Позиция по X" required="1"/>
+  </grid>
+</ui>
+description=Перемещает кнопки на панель кнопок окна редактирования (где кнопки
+ОК, Отмена).
+@}
+
+procedure MoveButtonsToButtonPanel(Buttons: TVariantArray2d);
+var
+  i: Integer;
+  Bn: TControl;
+begin
+  if Self.EditWindow = nil then Exit;
+
+  for i := 0 to High(Buttons) do
+  begin
+    Bn := TControl(Self.FindComponent(Buttons[i][0]));
+    Bn.Parent := Self.EditWindow;
+    Bn.Anchors := [akLeft, akBottom];
+    Bn.SetBounds(Buttons[i][1], Self.EditWindow.ClientHeight - 32, Bn.Width, 25);
+  end;
+end;
+
+{@action
+Id=3A6BD266-E617-44C6-8663-616D91A6E565
+Target=button
+OrigName=ShoppingFromReport
+Name=Подбор из окна отчета
+Group=DX PLUS/Отчеты
+UI=<ui>
+  <report name="rp" caption="Отчет" required="1"/>
+  <childform name="tbl" caption="Таблица" required="1"/>
+  <grid name="fields" caption="Вставить значения">
+    <field name="rpfield" caption="Поле отчета" required="1" source="rp"/>
+    <field name="field" caption="Поле таблицы" required="1" source="tbl"/>
+  </grid>
+  <checkbox name="hidebuttons" caption="Скрыть кнопки"/>
+  <ifgrid grid="fields">
+    <if expr="!SameTypes(rpfield, field)" msg="Типы &quot;`GetTypeText(rpfield)`&quot; и &quot;`GetTypeText(field)`&quot; несовместимы друг с другом."/>
+  </ifgrid>
+</ui>
+Description=Альтернатива шопингу. Отчет позволяет более гибко выбрать данные для
+подбора. Выберите таблицу, в которую будут добавлены значения из отчета. Выберите
+поля отчета, значения которых будут вставлены в соответствующие поля таблицы.
+Поля должны быть совместимы друг с другом.<br><br>
+<b>Примечание: </b>если данные отчета должны быть отфильтрованы в соотвествии с
+данными формы, то вы можете передавать значения полей формы в фильтры отчета
+через переменные, используя функции SETVAR и GETVAR.
+@}
+
+var
+  ShopRpFields: TVariantArray2d;
+  ShopRpTbl: TdxForm;
+
+procedure QGridDblClick(Sender: TObject);
+var
+  QG: TdxQueryGrid;
+  i: Integer;
+begin
+  QG := TdxQueryGrid(Sender);
+  ShopRpTbl.Append;
+  for i := 0 to High(ShopRpFields) do
+    ShopRpTbl[ ShopRpFields[i][1] ] := QG[ ShopRpFields[i][0] ];
+  ShopRpTbl.Post;
+end;
+
+procedure RpShow(Sender: TObject);
+begin
+  with TReportWindow(Sender) do
+  begin
+    ToolBar.Buttons[0].Visible := False;
+    QGrid.OnDblClick := @QGridDblClick;
+  end;
+end;
+
+procedure ShoppingFromReport(const Rp, TblName: String; Fields: TVariantArray2d;
+  AHideButtons: Boolean);
+begin
+  ShopRpTbl := Self.Forms[TblName];
+  ShopRpFields := Fields;
+  with TReportWindow.Create do
+  begin
+    OnShow := @RpShow;
+    if AHideButtons then
+      Toolbar.Visible := False;
+    ShowReport(Rp);
+    Free;
+  end;
+end;
+
+{@action
+Id=678EB3BE-2FC4-45CF-A7E3-EA3CAB7E3571
+Target=button
+OrigName=InsertFromReport
+Name=Вставить из окна отчета
+Group=DX PLUS/Отчеты
+UI=<ui>
+  <report name="rp" caption="Отчет" required="1"/>
+  <grid name="fields" caption="Вставить значения">
+    <field name="rpfield" caption="Поле отчета" required="1" source="rp"/>
+    <field name="field" caption="Поле формы" required="1"/>
+  </grid>
+  <checkbox name="hidebuttons" caption="Скрыть кнопки"/>
+  <ifgrid grid="fields">
+    <if expr="!SameTypes(rpfield, field)" msg="Типы &quot;`GetTypeText(rpfield)`&quot; и &quot;`GetTypeText(field)`&quot; несовместимы друг с другом."/>
+  </ifgrid>
+</ui>
+Description=Отчет позволяет гибко выбрать данные для вставки. Выберите
+поля отчета, значения которых будут вставлены в соответствующие поля формы.
+Поля должны быть совместимы друг с другом.<br><br>
+<b>Примечание: </b>если данные отчета должны быть отфильтрованы в соотвествии с
+данными формы, то вы можете передавать значения полей формы в фильтры отчета
+через переменные, используя функции SETVAR и GETVAR.
+@}
+
+var
+  InsertRpFields: TVariantArray2d;
+  InsertFm: TdxForm;
+
+procedure QGDblClick(Sender: TObject);
+var
+  QG: TdxQueryGrid;
+  i: Integer;
+begin
+  QG := TdxQueryGrid(Sender);
+  for i := 0 to High(InsertRpFields) do
+    InsertFm[ InsertRpFields[i][1] ] := QG[ InsertRpFields[i][0] ];
+  TForm(QG.GetTopParent).ModalResult := mrOk;
+end;
+
+procedure RprtShow(Sender: TObject);
+begin
+  with TReportWindow(Sender) do
+  begin
+    ToolBar.Buttons[0].Visible := False;
+    QGrid.OnDblClick := @QGDblClick;
+  end;
+end;
+
+function InsertFromReport(const Rp: String; Fields: TVariantArray2d;
+  AHideButtons: Boolean): Boolean;
+begin
+  if not (Self.State in [dsInsert, dsEdit]) then Exit;
+  InsertFm := Self;
+  InsertRpFields := Fields;
+  with TReportWindow.Create do
+  begin
+    OnShow := @RprtShow;
+    if AHideButtons then
+      Toolbar.Visible := False;
+    Result := ShowReport(Rp) = mrOk;
+    Free;
+  end;
+end;
+
+
+{@action
+Id=35B8560B-A110-4BF9-B886-635E7BED9058
+Target=button
+OrigName=AddRecordsFromQuery
+Name=Заполнить форму из запроса
+Group=DX PLUS/Форма
+UI=<ui>
+  <form name="fm" caption="Форма" required="1"/>
+  <query name="qry" caption="Запрос" required="1"/>
+  <grid name="fields" caption="Сопоставление полей">
+    <field name="fl" caption="Поле формы" source="fm" required="1"/>
+    <field name="qfl" caption="Поле запроса" source="qry"/>
+    <expr name="expr" caption="Выражение"/>
+  </grid>
+  <text name="msg" caption="Текст подтверждения"/>
+
+  <ifgrid grid="fields">
+    <if expr="GetText(qfl)<>'' & !SameTypes(qfl, fl)"
+      msg="Поля формы и запроса должны быть одного типа: `GetTypeText(fl)` не равно `GetTypeText(qfl)`."
+      focus="fl"/>
+    <if expr="GetText(expr)<>'' & !SameTypes(expr, fl)"
+      msg="Поле формы и результат выражения должны быть одного типа: `GetTypeText(fl)` не равно `GetTypeText(expr)`."
+      focus="fl"/>
+  </ifgrid>
+</ui>
+Description=Добавляет новые записи в форму, заполняя записи данными из запроса.
+Количество добавленных записей соответствует количеству записей запроса.<br><br>
+<b>Форма</b> - Форма, куда добавляются новые записи.<br><br>
+<b>Запрос</b> - Запрос, из которого берутся данные.<br><br>
+<b>Сопоставление полей</b> - поля формы и соответствующие им поля запроса.
+Вместо поля запроса можно вычислять выражение. Тип полей форм и запроса
+должны быть совместимыми.<br><br>
+<b>Текст подтверждения</b> - сообщение, которое будет показано перед выполнением
+действия.
+@}
+
+function AddRecordsFromQuery(const AFormName, AQueryName: String;
+  AFields: TVariantArray2d; const AMsg: String): Variant;
+var
+  Fm: TdxForm;
+  Qry: TdxQueryGrid;
+  i, RecN: Integer;
+  V: Variant;
+  FmFl, QFl, Expr: String;
+begin
+  Result := False;
+  if (AMsg <> '') and (MessageDlg('Внимание', AMsg, mtconfirmation,
+    [mbYes, mbNo]) <> mrYes) then Exit;
+
+  Qry := Self.Queries[AQueryName];
+  Fm := TdxForm.Create(AFormName);
+  try
+    RecN := Qry.RecNo;
+    Qry.DisableControls;
+    Qry.MoveFirst;
+    Fm.OpenRecord(0);
+    while not Qry.Eof do
+    begin
+      Fm.Append;
+      for i := 0 to High(AFields) do
+      begin
+        FmFl := AFields[i][0];
+        QFl := AFields[i][1];
+        Expr := AFields[i][2];
+        if QFl <> '' then
+          try
+            Fm[FmFl] := Qry[QFl];
+          except
+            Fm.Cancel;
+            DoError('Сопоставление полей', i+1,
+              Format('Поле формы [%s] и поле запроса [%s] несовместимы. Поля ' +
+                'должны быть одного типа.', [FmFl, QFl]));
+          end
+        else if Expr <> '' then
+        begin
+          V := TryEvalExpr(Expr, Self, 'Сопоставление полей', i+1);
+          try
+            Fm[FmFl] := V;
+          except
+            Fm.Cancel;
+            DoSetFieldError('Сопоставление полей', i+1, V);
+          end;
+        end;
+      end;
+      Fm.Post;
+      Qry.MoveNext;
+    end;
+    Result := True;
+  finally
+    Fm.Free;
+    Qry.MoveTo(RecN);
+    Qry.EnableControls;
+  end;
+end;
+
+{@action
+Id=C2B69DC1-2A0A-4AEF-8B70-3E22237C4FBE
+Target=button
+OrigName=OpenSimpleForm
+Name=Открыть простую форму
+Group=DX PLUS/Простая форма
+UI=<ui>
+  <form name="fm" caption="Простая форма" required="1"/>
+  <list name="openin" caption="Открыть в" items="В закладке;В модальной окне" defaultvalue="В закладке"/>
+  <grid name=fields caption="Вставить значения">
+    <field name="fl" caption="Поле формы" source="fm" required="1"/>
+    <expr name="expr" caption="Выражение"/>
+  </grid>
+
+  <ifgrid grid="fields">
+    <if expr="!SameTypes(expr, fl)"
+      msg="Поля формы и результат выражения должны быть одного типа: `GetTypeText(fl)` не равно `GetTypeText(expr)`."
+      focus="fl"/>
+  </ifgrid>
+</ui>
+Description=Открывает простую форму в закладке или модальном окне. При открытии
+возможно вставить значения в поля. Если форма открывается в закладке и закладка
+уже открыта, то она просто активируется.<br><br>
+@}
+
+function FindPage(const FormName: String): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := 0 to MainWindow.Pages.PageCount - 1 do
+    if MainWindow.FormViews[i].Form.FormCaption = FormName then
+    begin
+      Result := i;
+      Break;
+    end;
+end;
+
+function OpenSimpleForm(const FormName, AOpenIn: String; AFields: TVariantArray2d): Variant;
+var
+  Pg: TTabSheet;
+  Fm: TdxForm;
+  Wnd: TWindow;
+  FmView: TFormView;
+  i: Integer;
+  V: Variant;
+begin
+  Wnd := nil;
+  if AOpenIn = 'В закладке' then
+  begin
+    i := FindPage(FormName);
+    if i < 0 then
+    begin
+      Pg := MainWindow.CreatePage(FormName, vtSimpleForm)
+      MainWindow.Pages.ActivePage := Pg;
+      i := Pg.PageIndex;
+    end;
+    MainWindow.Pages.ActivePageIndex := i;
+    Fm := MainWindow.FormViews[i].Form;
+    SetFocusFirstControl(Fm);
+  end
+  else
+  begin
+    Wnd := TWindow.Create;
+    Wnd.BorderIcons := [biSystemMenu];
+    FmView := TFormView.Create(Wnd, FormName, vtSimpleForm);
+    FmView.Parent := Wnd;
+    FmView.Align := alClient;
+    Fm := FmView.Form;
+    Wnd.ClientWidth := Fm.Width;
+    Wnd.ClientHeight := Fm.Height;
+    Wnd.Caption := Fm.GetRecordCaption;
+  end;
+  if not Fm.Opened then
+  begin
+    Fm.OpenRecord(0);
+    Fm.Append;
+  end;
+  try
+    for i := 0 to High(AFields) do
+    begin
+      V := TryEvalExpr(AFields[i][1], Self, 'Вставить значения', i+1);
+      try
+        Fm[ AFields[i][0] ] := V;
+      except
+        DoSetFieldError('Вставить значения', i+1, V);
+      end;
+    end;
+    if Wnd <> nil then
+    begin
+      Wnd.ShowModal;
+      Wnd.Free;
+    end;
+  except
+    if Wnd <> nil then Wnd.Free;
+    RaiseLastException;
+  end;
+  Result := True;
+end;
+
+
+{@action
+Id=2973DD3B-75B3-4938-9497-AD0BB341D1DD
+Target=button
+OrigName=ShowWaitWindow
+Name=Показать окно ожидания
+Group=DX PLUS
+UI=<ui>
+  <text name="msg" caption="Сообщение"/>
+  <image name="img" caption="Значок"/>
+  <number name="w" caption="Ширина" texthint="По умолчанию"/>
+  <number name="h" caption="Высота" texthint="По умолчанию"/>
+</ui>
+Description=Показывает окно ожидания. Используется перед выполнением длительной
+операции. Не забудьте после операции применить действие "Скрыть окно ожидания".
+@}
+
+var
+  WaitWnd: TForm;
+
+function ShowWaitWindow(const AMsg, AImgName: String; W, H: Integer): Variant;
+var
+  Img: TdxImage;
+begin
+  Img := nil;
+  WaitWnd := TForm.Create(Application);
+  with WaitWnd do
+  begin
+    BorderStyle := bsNone;
+    if W = 0 then W := 300;
+    if H = 0 then H := 200;
+    Width := W;
+    Height := H;
+    Font.Name := 'Verdana';
+    Font.Size := 10;
+    Position := poMainFormCenter;
+    FormStyle := fsStayOnTop;
+    Color := clWhite;
+  end;
+  with TShape.Create(WaitWnd) do
+  begin
+    Parent := WaitWnd;
+    Align := alClient;
+    Brush.Color := WaitWnd.Color;
+  end;
+  if AImgName <> '' then
+  begin
+    Img := TdxImage.Create(WaitWnd);
+    with Img do
+    begin
+      Parent := WaitWnd;
+      ImageName := AImgName;
+      Width := Bitmap.Width;
+      Height := Bitmap.Height;
+      Left := WaitWnd.Width div 2 - Width div 2;
+      Top := WaitWnd.Height div 2 - Height div 2;
+      if AMsg <> '' then Top := Top - Round(Abs(WaitWnd.Font.Height) * 2);
+    end;
+  end;
+  if AMsg <> '' then
+  begin
+    with TLabel.Create(WaitWnd) do
+    begin
+      Parent := WaitWnd;
+      AutoSize := False;
+      WordWrap := True;
+      Alignment := taCenter;
+      if Img = nil then
+      begin
+        Align := alClient;
+        BorderSpacing.Around := 4;
+        Layout := tlCenter;
+      end
+      else
+      begin
+        Left := 4;
+        Top := Img.Top + Img.Height + Round(Abs(WaitWnd.Font.Height));
+        Width := WaitWnd.Width - 8;
+        Height := WaitWnd.Height - Top - 4;
+      end;
+      Caption := AMsg;
+    end;
+  end;
+  WaitWnd.Show;
+  Application.ProcessMessages;
+  Result := True;
+end;
+
+{@action
+Id=863C5553-93C2-4C8F-A1E6-1987C6D32920
+Target=button
+OrigName=CloseWaitWindow
+Name=Скрыть окно ожидания
+Group=DX PLUS
+UI=<ui>
+  <checkbox name="smooth" caption="Эффект затухания"/>
+</ui>
+Description=Скрывает окно ожидания.
+@}
+
+  
+procedure WaitWndClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action := caFree;
+  WaitWnd := nil;
+end;
+
+procedure WaitWndTimer(Sender: TObject);
+begin
+  with WaitWnd do
+    if AlphaBlendValue >= 80 then
+      AlphaBlendValue := AlphaBlendValue - 80
+    else
+    begin
+      TTimer(Sender).Enabled := False;
+      Close;
+    end;
+end;
+
+function CloseWaitWindow(SmoothClosing: Boolean): Variant;
+begin
+  Result := True;
+  if WaitWnd <> nil then
+  begin
+    if SmoothClosing then
+    begin
+      WaitWnd.OnClose := @WaitWndClose;
+      WaitWnd.AlphaBlend := True;
+      with TTimer.Create(WaitWnd) do
+      begin
+        Interval := 100;
+        OnTimer := @WaitWndTimer;
+      end;
+    end
+    else
+    begin
+      WaitWnd.Free;
+      WaitWnd := nil;
+    end;
+  end;
+end;

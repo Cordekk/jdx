@@ -1,0 +1,81 @@
+{@module
+Author=cordek, develop-soft
+Version=0.5
+Description=Содержит действие для кнопки "Добавить файл в хранилище (FileStore2)", которые служат для организации
+системы группового или одиночного добавления и хранения файлов в базе данных.
+Является частью комплекса "Хранилище файлов 2.0".
+@}
+
+{@action
+Id=0AABDA55-EC7B-453E-9ECF-BD99CEB2D42E
+Target=button
+OrigName=File_Add
+Name=Добавить файл в хранилище
+Group=FileStore2
+UI=
+  <divider caption="Описание записи в хранилище:" />
+  <expr name="_express" caption="Введите выражение:" />
+
+Description= Является частью комплекса "Хранилище файлов 2.0".
+Служит для группового или одиночного добавления файлов в базу данных.
+Открывает окно выбора файлов для загрузки в базу. Выбранные файлы
+добавлются в базу данных и находятся в Хранилище файлов 2.0 (FileStore2).<br><br>
+
+<B>"Описание записи в хранилище"</B> - поле предназначено для написания выражения,
+результат вычисления которого будет подставляться в поле "Описание" "Хранилища
+файлов 2.0".
+Данную опцию можно оставить пустой, она нужна исключительно для удобства
+пользователя, в целях зрительной идентификации файлов, вложенных в хранилище
+Result будет истинным если файл добавили в форму.<br><br>
+
+@}
+
+ function File_Add (DscrField: Variant): Boolean;
+var
+Store_Fm, CurFm: TdxForm;
+i: Integer;
+RecDescript: String;
+FileComp: TdxFile;
+FileNames: TStringList;
+FDlg: TOpenDialog;
+
+begin
+  try
+  CurFm := Self;  // надо добавить в действие выбор формы и значение идентификатора
+	Store_Fm := TdxForm.Create ('FileStore2');
+  FDlg := TOpenDialog.Create (Self);
+	FDlg.Options := [ofAllowMultiSelect, ofFileMustExist];
+	FDlg.Title := 'Выберите файлы для загрузки в базу данных';
+	if not FDlg.Execute then exit;
+	FileNames := TStringList.Create;
+	FileNames.AddStrings (FDlg.Files);
+  RecDescript := VarToStr (EvalExpr (DscrField, self));
+	begin
+		for i := 0 to FileNames.Count-1 do
+		begin
+			Store_Fm.OpenRecord(0);
+			Store_Fm.Append;
+			if not (Store_Fm.State in [dsInsert, dsEdit])  then Store_Fm.Edit;
+			Store_Fm['ID формы'] := CurFm.Id; // добавить идентификатор формы, надо добавить в действие
+			Store_Fm['ID записи'] := CurFm.RecId;   // добавить идентификатор записи формы, надо добавить в действие
+			Store_Fm['Форма'] := CurFm.FormCaption; // добавить название формы, надо добавить в действие
+			if RecDescript <> '' then
+			Store_Fm['Описание записи'] := RecDescript;
+			Store_Fm['Дата записи'] := Date;
+			Store_Fm['Время записи'] := Time;
+			FileComp := TdxFile (Store_Fm.FindComponent('dxFile1'));
+			FileComp.LoadFromFile (FileNames[i]);
+			Store_Fm['Имя файла'] := FileComp.Description;
+			Store_Fm.Post;
+		  end;
+		if Assigned (FileNames) then
+			begin
+				FileNames.Free;
+				FileNames := nil;
+			end;
+    end;
+      Result := True;
+     except
+      Result := False;
+		end;
+end;

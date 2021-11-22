@@ -1,0 +1,97 @@
+{@function
+OrigName=EX_EXEC
+Name=EX_EXEC
+Args=ss
+Result=s
+Group=EX_EXEC
+Description=Запускает приложение или открывает файл/ссылку в соспоставленном
+приложении.<br><br>
+1 параметр: путь к приложению или файлу.<br>
+2 параметр: параметры запуска приложения.<br>
+Результат: пустая строка, т. к. результат нигде не используется.<br><br>
+<b>Примечание.</b> Первый параметр автоматически заключается в двойные кавычки
+для того, чтобы корректно запустить приложение/файл, который содержит в пути
+пробелы. Во втором параметре двойные кавычки указываются явно по необходимости.<br><br>
+Примеры:<br><br>
+<code>
+// открыть ссылку в браузере<br>
+EX_EXEC('http://google.com', '')<br>
+// написать письмо адресату<br>
+EX_EXEC('mailto:address@mail.ru', '')<br>
+// Открыть файл в блокноте<br>
+EX_EXEC('notepad.exe', 'd:\info.txt')
+</code>
+@}
+function EX_EXEC(const FileName, Params: Variant): String;
+begin
+  Result := '';
+  if (FileName = Null) or (Params = Null) then Exit;
+  ShellExecute('open', '"' + FileName + '"', Params, ExtractFilePath(FileName), 5);
+end;
+
+{@function
+OrigName=EX_EXEC_HIDE
+Name=EX_EXEC_HIDE
+Args=ss
+Result=s
+Group=EX_EXEC
+Description=Полностью аналогична функции EX_EXEC, но запускает приложение скрытно.
+@}
+function EX_EXEC_HIDE(const FileName, Params: Variant): String;
+begin
+  Result := '';
+  if (FileName = Null) or (Params = Null) then Exit;
+  ShellExecute('open', '"' + FileName + '"', Params, ExtractFilePath(FileName), 0);
+end;
+
+
+{@action
+ID=24D63534-E57E-4B4F-AA91-4F05B2313B7D
+OrigName=EXEC_ACT
+Name=Запустить приложение/файл
+Group=Взаимодействие с ОС
+UI=<ui>
+   1. <file name="_filename" caption="Приложение/файл"/>
+   2. <expr name="_expr_run" caption="ИЛИ Выражение"/>
+      <divider name="_dvdr" caption="Параметры запуска"/>
+   3. <text name="_params" caption="Параметры строкой"/>
+   4. <expr name="_expr_params" caption="ИЛИ Выражение"/>
+   5. <checkbox name="_hide" caption="Запустить в скрытом режиме"/>
+</ui>
+Description=Действие кнопки запускает приложение или открывает файл/ссылку в соспоставленном приложении.
+@}
+
+procedure EXEC_ACT(const
+FileNameRun:string;
+ExprRun, Params:string;
+ExprParams:variant;
+HideRun:integer);
+
+var FnEx,ParsEx:string;
+HR:integer;
+begin
+FnEx:=VarToStr(EvalExpr(ExprRun,Self));
+ParsEx:=VarToStr(EvalExpr(ExprParams,Self));
+if (FileNameRun = '') and
+    (FnEx = '') and
+    (Params = '') and
+    (ParsEx = '') then
+  Exit;
+if ((FileNameRun <> '') and (FnEx <> '')) then
+  begin
+    MsgBox('Запустить приложение/файл',
+    'Для запуска необходимо ИЛИ выбрать "Приложение/файл" ИЛИ указать в выражении.')
+    Exit;
+  end;
+if ((Params <> '') and (ParsEx <> '')) then
+  begin
+    MsgBox('Запустить приложение/файл',
+    'Установку параметров запуска необходимо ИЛИ указать в поле "Параметры строкой":  ИЛИ указать в выражении.')
+    Exit;
+  end;
+if HideRun=1 then HR:=0 else HR:=5;
+ ShellExecute('open', '"' + FileNameRun+FnEx + '"',
+ Params+ParsEx,
+ ExtractFilePath(FileNameRun+FnEx), HR);
+end;
+

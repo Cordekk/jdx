@@ -1,0 +1,1003 @@
+{@module
+Author=kok80
+Version=1.3
+Description=групповое изменение полей формы
+@}
+
+{@action
+Id=0D75186F-C6BB-4B69-BCF9-092FD2C316A3
+target=form
+OrigName=ChangeGroupFields
+Name=групповое изменение полей формы
+Group=групповое изменение полей формы
+ui=<ui>
+  <grid name="fields" caption="Поля формы">
+    <field name="field" caption="Поле"/></field></grid>
+
+  <grid name="queries" caption="Запросы">
+    <query name="query" caption "Запрос"></query></grid>
+
+<ui>
+Description=групповое изменение полей формы
+@}
+
+//Version 1.0.2
+//отключен переход по форму объекта при нажатии CTRL+лкм
+//Version 1.1
+//исправлена ошибка: вылет из программы при попытке удалить запись формы, для которой установлено множественное выделение
+//Version 1.2
+//добавлено: возможность группового удаления записей
+//убран пунт "Изменить значения группы" из контекстного меню GRID формы, действие установлено на "изменить",
+//срабатывает, если выбрано более одной записи
+//Version 1.3
+//исправлено: не работало для таблиц (подчиненных форм)
+//добавлено: групповое изменение и удаление записей из запроса
+//Version 1.4
+//исправлено: при групповом изменении строк запроса могла возникать ошибка
+
+
+
+
+
+
+
+
+// при первом запуске добавляем в 2 StrinList данные
+// в sl_forms - имя формы
+// в sl_ChangedFields - именя полей, которые можно редактировать
+// получается данные вида form1=dxEdit1; form1=dxEdit2; form1=dxEdit3
+// далее через sl_forms.index(имя формы) проверяем, внесено ли название форма, если да - для формы настроено расширение
+// далее, начиная с индекса формы в sl_forms (= индексу в sl_ChangedFields) ищем названия полей, которые можно редактировать
+// При входе в форму - блокируем все поля, разблокируем только те, которые разрегены для редактирования
+
+
+
+
+function GetActiveQuery(sender:TObject):TDxQueryGrid;forward;
+
+
+type TFormEvents = record
+  fm:TdxForm;
+  OldOnBeforeDelete,
+  OldOnAfterDelete,
+  OldSelf_Grid_PopupMenu_EDIT,
+  OldSelf_Grid_PopupMenu_delete: TNotifyEvent;
+end;
+
+
+// здесь храним из таблицы форм через sql-запрос данные запроса
+type TQueryInfo = record
+  name:string;
+  SourceCount:integer;
+  SourceFormIDs: array of integer;
+  SourceFormNames: array of string;
+  SourceFormCaptions: array of string;
+end;
+
+
+type TArrayOfInt = array of integer;
+
+
+const EOL=#13+#10;
+var sl,
+    sl_AllComponents,
+    sl_forms,                 //хранит имена форм, для которых в настройках выбраны поля для редактирования
+    sl_ChangedFields,
+    //sl_DisabledFields,
+    sl_queries:TStringList;
+    ColorArray:array of TColor;
+    OldMainWindow_toolbar_buttons_TBN_DELETE_onClick,
+    OldMainwindow_toolbar_buttons_TBN_EDIT_onClick: TNotifyEvent;
+    array_FormEvents: array of TFormEvents;
+    OldMainWindow_OnDestroyForm:TCreateFormEvent;
+    QueryInfoAray:array of TQueryInfo;
+    SL_FormIDname:TStringList;             //хранит данные формы в виде ID=fm.name        (можно получить по ID fm.name)
+    SL_FormIDFormCaption:TStringList;      //хранит данные формы в виде ID=fm.FormCaption (можно получить по ID fm.FormCaption)
+
+
+function GetFormNameByID(id:integer):string;
+begin
+  result:=SL_FormIDname.values[IntToStr(id)];
+end;
+
+function GetFormCaptionByID(id:integer):string;
+begin
+  result:=SL_FormIDFormCaption.values[IntToStr(id)];
+end;
+
+
+// заполняем StringList строками вида "id=имя формы"
+procedure Fill_SL_FormID;
+var SLForms:TStringList;
+    fm:tdxForm;
+    x:integer;
+begin
+  SLForms:=TStringList.create;
+  GetForms(SLForms);
+  for x:=0 to SLForms.count-1 do
+    begin
+      fm:=TdxForm(SLForms.Objects[x]);
+      SL_FormIDname.add(IntToStr(fm.ID)+'='+fm.name);
+      SL_FormIDFormCaption.add(IntToStr(fm.ID)+'='+fm.FormCaption);
+      //debug(fm.name+' '+fm.FormCaption);
+    end;
+  //debug(SL_FormID.values['1']);
+  SLForms.free;
+end;
+
+
+// заполняем массив с данными всех запросов
+procedure FillQueryInfoArray;
+var x,index:integer;
+    request, data:string;
+    sql:TdxSQLQuery;
+    RegExp,Matches:Variant;
+begin
+  RegExp:=CreateOleObject('VBScript.RegExp');
+  RegExp.global:=true;
+  RegExp.Multiline:=false;
+
+  request:='select * from DX_REPORTS';
+  sql:=SQLSelect(request);
+  sql.MoveFirst;
+
+  while not sql.eof do
+  begin
+    data:=sql.ass['DATA'];
+    data:=StringReplace(data, eol, ' ',[rfReplaceAll]);
+
+    // имя запроса
+    RegExp.Pattern:='name="(.*?)"';
+    Matches:=RegExp.Execute(data);
+
+    index:=length(QueryInfoAray);
+    SetLength(QueryInfoAray, index+1);
+    QueryInfoAray[index].name:=Matches.Item[0].SubMatches[0];
+
+    RegExp.Pattern:='source kind=.*?id="(\d+)" ';
+    Matches:=RegExp.Execute(data);
+    QueryInfoAray[index].SourceCount:=Matches.count;
+
+    with QueryInfoAray[index] do
+      begin
+        if Matches.count > 0 then
+          begin
+            SetLength(SourceFormIDs,SourceCount);
+            SetLength(SourceFormNames,SourceCount);
+            SetLength(SourceFormCaptions,SourceCount);
+            for x:=0 to Matches.count-1 do
+              begin
+                SourceFormIDs[x]:=Matches.Item[x].SubMatches[0];
+                SourceFormNames[x]:=GetFormNameByID(SourceFormIDs[x]);
+                SourceFormCaptions[x]:=GetFormCaptionByID(SourceFormIDs[x]);
+              end;
+          end;
+      end;
+
+    Matches := unassigned;
+    sql.MoveNext;
+  end;
+
+  Matches := unassigned;
+  RegExp := unassigned;
+
+  {for x:=0 to length(QueryInfoAray)-1 do
+    with QueryInfoAray[x] do
+    begin
+      debug(name);
+      debug(SourceCount);
+      if SourceCount>0 then
+        for index:=0 to SourceCount-1 do
+          debug(IntToStr(SourceFormIDs[index]) +' '+SourceFormNames[index]);
+    end; }
+end;
+
+procedure printarray_FormEvents;
+var x,l:integer;
+begin
+  l:=length(array_FormEvents);
+  debug('');
+  debug('length(array_FormEvents)='+inttostr(l));
+  if l > 0 then
+    for x:=0 to l-1 do
+      begin
+        debug('Form'+inttostr(x));
+        {if array_FormEvents[x].fm <> nil then
+          debug(array_FormEvents[x].fm.FormCaption)
+        else
+          debug('nil');}
+
+        if array_FormEvents[x].OldOnBeforeDelete<>nil then
+          debug('OldOnBeforeDelete')
+        else
+          debug('nil');
+
+        if array_FormEvents[x].OldOnAfterDelete<>nil then
+          debug('OldOnAfterDelete')
+        else
+          debug('nil');
+
+        if array_FormEvents[x].OldSelf_Grid_PopupMenu_EDIT<>nil then
+          debug('OldSelf_Grid_PopupMenu_EDIT')
+        else
+          debug('nil');
+
+        if array_FormEvents[x].OldSelf_Grid_PopupMenu_delete<>nil then
+          debug('OldSelf_Grid_PopupMenu_delete')
+        else
+          debug('nil');
+      end;
+end;
+
+
+//===========================================================================================
+// найти индекс по форме
+function Array_FormEvents_FindForm(fm:TdxForm):integer;
+var x:integer;
+begin
+  //debug('FindFormInArray_FormEvents:');
+  result:=-1;
+  //debug('  length(array_FormEvents)='+inttostr(length(array_FormEvents)));
+  if length(array_FormEvents) > 0 then
+    for x:=low(array_FormEvents) to high(array_FormEvents) do
+      begin
+      //debug('  x='+inttostr(x));
+      if fm=array_FormEvents[x].fm then
+        begin
+          //debug('  '+array_FormEvents[x].fm.FormCaption);
+          result:=x;
+          break;
+        end;
+      end;
+  //debug('  result='+inttostr(result));
+end;
+
+// изменить размер массива на X
+procedure Array_FormEvents_ChangeLength(x:integer);
+begin
+  SetLength(Array_FormEvents, length(Array_FormEvents)+x);
+end;
+
+// индекс последнего элемента
+function Array_FormEvents_LastIndex:integer;
+begin
+  result:=length(Array_FormEvents)-1;
+end;
+
+// удаляет элемент с индексом X (копирует последний элемент на вместо X и уменьшает длину массива на 1)
+// пока не используем
+procedure Array_FormEvents_DeleteIndex(x:integer);
+begin
+  if x<0 then
+    exit;
+  //debug('Array_FormEvents_DeleteIndex('+inttostr(x)+')');
+  Array_FormEvents[x]:=Array_FormEvents[Array_FormEvents_LastIndex];
+  Array_FormEvents_ChangeLength(-1);
+  //printarray_FormEvents;
+end;
+
+
+function Array_FormEvents_AlreadyInArray(fm:TdxForm):boolean;
+var x:integer;
+begin
+  //debug('Array_FormEvents_AlreadyInArray:');
+  result:=false;
+  if length(Array_FormEvents) > 0 then
+    for x:=0 to length(Array_FormEvents)-1 do
+      if Array_FormEvents[x].fm=fm then
+        begin
+          result:=true;
+          break;
+        end;
+end;
+
+
+
+//===========================================================================================
+
+
+// возвращает форму на активной вкладке
+function GetActiveForm(sender:TObject):TDxForm;
+begin
+  if (sender=nil) or (sender is TToolButton) then
+    result:=MainWindow.FormViews[MainWindow.Pages.ActivePageIndex].Form
+  else
+    if sender is TMenuItem then
+      begin
+        if TMenuItem(sender).owner is TPopupMenu then
+          if (TPopupMenu(TMenuItem(sender).owner).PopupComponent is TdxGrid) then
+            result:=TdxGrid(TPopupMenu(TMenuItem(sender).owner).PopupComponent).form
+          else
+            result:=MainWindow.FormViews[MainWindow.Pages.ActivePageIndex].Form;
+      end
+  else
+    if sender is TdxForm then
+      result:=TdxForm(sender)
+  else
+    if sender.ClassName='TGridButton' then
+      result:=TdxGrid(TControl(sender).owner.owner).form;
+end;
+
+// отлючить или включить все элементы формы
+procedure EnableAllControls(fm:TdxForm; status:boolean);
+var x:integer;
+begin
+  for x:=0 to fm.componentcount-1 do
+    if fm.components[x] is TControl then
+    begin
+      if not (fm.components[x].ClassName in ['TdxPageControl','TdxTabSheet','TdxGroupBox','TdxButton']) then
+        TControl(fm.components[x]).Enabled:=status;
+    end;
+end;
+
+procedure ChangeGroupAttributes_OnFieldChange(Sender, Control: TObject; const FieldName: String);
+begin
+  // если измененное поле в списе разрешенных к изменению полей
+  if sl.IndexOf(FieldName)>=0 then
+    begin
+      if sl_ChangedFields.indexOf(FieldName) < 0 then
+        sl_ChangedFields.add(FieldName);
+      TControl(Control).Color:=RGBtoColor(128,255,128);
+      //debug(sl_ChangedFields.CommaText);
+    end;
+end;
+
+
+
+
+// изменить атрибуты у группы форм
+procedure ChangeGroupAttributes(fm:TdxForm; ArrayOfInt:TArrayOfInt);
+var x, index, row:integer;
+    ValueArray:Array of variant;
+    ShowModal:integer;
+    msg:string;
+    OldFieldChangeEvent:TFieldChangeEvent;
+    sl_DisabledFields:TStringList;
+
+begin
+  // если строк выделено меньше двух
+  //if fm.grid.SelectedRowCount < 2 then
+  if length(ArrayOfInt)<2 then
+    exit;
+
+  // переходим к первой выбранной форме
+  //fm.grid.MoveToSelectedRow(0);
+  fm.GotoRecord(ArrayOfInt[0]);
+
+  // переводим в статус редактирования, если не получилось - выходим
+  fm.edit;
+  if not (fm.state in [dsEdit]) then
+    begin
+      msgbox('Внимание',format('Не удалось перевести форму RecID=%d в режим редактирования',[fm.RecID]));
+      exit;
+    end;
+
+  sl_DisabledFields:=TStringList.create;
+
+  // в SL помещаем названия полей, которые можно редактировать, только для выбранной формы
+  sl.clear;
+  index:=sl_forms.IndexOf(fm.name);
+  while (index<=sl_forms.count-1) and (sl_forms[index]=fm.name) do
+    begin
+      sl.add(sl_allComponents[index]);
+      inc(index);
+    end;
+
+  OldFieldChangeEvent:=fm.OnFieldChange;
+  fm.OnFieldChange:=@ChangeGroupAttributes_OnFieldChange;
+
+  // сохраняем все заблокированные до нас компоненты
+  for x:=0 to fm.ComponentCount-1 do
+    if fm.components[x] is TControl then
+      if not TControl(fm.components[x]).enabled then
+        sl_DisabledFields.add(fm.components[x].name);
+
+  // блокируем все компоненты
+  EnableAllControls(fm,false);
+
+  // сохраняем цвета изменяемых компонентов
+  SetLength(ColorArray,sl.count);
+  for x:=0 to sl.count-1 do
+    begin
+      ColorArray[x]:=TControl(fm.FindComponentByFieldName(sl[x])).Color;
+      //debug('color='+inttostr(ColorArray[x]));
+    end;
+
+  // устанавливаем цвета изменяемых компонентов и разблокируем их
+  for x:=0 to sl.count-1 do
+    begin
+      TControl(fm.FindComponentByFieldName(sl[x])).enabled:=true;
+      TControl(fm.FindComponentByFieldName(sl[x])).Color:=RGBtoColor(255,255,128);
+    end;
+
+  ShowModal:=fm.EditWindow.ShowModal;
+
+  // разблокируем все компоненты
+  EnableAllControls(fm,true);
+
+  // блокируем все заблокированные до нас компоненты
+  if sl_DisabledFields.count > 0 then
+    for x:=0 to sl_DisabledFields.count-1 do
+      TControl(fm.FindComponent(sl_DisabledFields[x])).enabled:=false;
+
+  // восстанавливаем цвета изменяемых компонентов
+  for x:=0 to sl.count-1 do
+    TControl(fm.FindComponentByFieldName(sl[x])).Color:=ColorArray[x];
+
+  if (ShowModal <> mrOk) or (not fm.Modified) then
+    fm.cancel
+  else
+    begin
+      fm.OnFieldChange:=OldFieldChangeEvent;
+      // длина массива для хранения значений
+      SetLength(ValueArray,sl.count);
+      // заполняем массив значениями
+      for x:=0 to sl.count-1 do
+        begin
+          ValueArray[x]:=fm[sl[x]];
+          //debug(x);
+          //debug(ValueArray[x]);
+        end;
+      // сохраняем текущую форму
+      fm.post;
+      // начиная со второй формы - обновляем значения
+      //if fm.grid.SelectedRowCount > 1 then
+      if length(ArrayOfInt) > 1 then
+        //for row:=1 to fm.grid.SelectedRowCount-1 do
+        for row:=1 to length(ArrayOfInt)-1 do
+          begin
+            // если не получилось перейти в записи RecID=ArrayOfInt[row]
+            if not fm.GotoRecord(ArrayOfInt[row]) then
+              begin
+                msg:=format('Не удалось перейти на форму RecID=%d. Воможно она удалена. Продолжить ?',[ArrayOfInt[row]]);
+                if MessageDlg('Внимание',msg,mtWarning,[mbYes,mbCancel]) = mrYes then
+                  continue
+                else
+                  break;
+              end;
+            fm.edit;
+            if not (fm.state in [dsEdit]) then
+              begin
+                msg:=format('Не удалось перевести форму RecID=%d в режим редактирования. Продолжить ?',[fm.RecID]);
+                if MessageDlg('Внимание',msg,mtWarning,[mbYes,mbCancel]) = mrYes then
+                  continue
+                else
+                  break;
+              end
+            else
+              begin
+                // устанавливаем сохраненные значения
+                for x:=0 to sl.count-1 do
+                // только для измененных полей
+                  if sl_ChangedFields.IndexOf(sl[x]) >= 0 then
+                    begin
+                      //debug(x);
+                      //debug(sl[x]);
+                      //debug(ValueArray[x]);
+                      fm[sl[x]]:=ValueArray[x];
+                      end;
+                fm.post;
+              end;
+          end;
+    end;
+
+  SetLength(ColorArray,0);
+  sl_DisabledFields.free;
+end;
+
+
+// отключаем множественный выбор и запускаем OldOnBeforeDelete
+procedure OnBeforeDelete(sender:TObject);
+var index:integer;
+    event:TNotifyEvent;
+    fm:TdxForm;
+begin
+  fm:=GetActiveForm(sender);
+  if fm=nil then
+    exit;
+  //debug(fm.FormCaption+'.OnBeforeDelete');
+  //отключаем множественный выбор
+  fm.Grid.Options:=fm.Grid.Options-[dgMultiselect];
+  //индекс текущей формы
+  index:=Array_FormEvents_FindForm(fm);
+  //старый обработчик
+  event:=Array_FormEvents[index].OldOnBeforeDelete;
+  if event<>nil then
+    event(sender);
+end;
+
+// включаем множественный выбор и запускаем OldOnAfterDelete
+procedure OnAfterDelete(sender:TObject);
+var index:integer;
+    event:TNotifyEvent;
+    fm:TdxForm;
+begin
+  fm:=GetActiveForm(sender);
+  if fm=nil then
+    exit;
+  //debug(fm.FormCaption+'.OnAfterDelete');
+  //включаем назад множественный выбор
+  fm.Grid.Options:=fm.Grid.Options+[dgMultiselect];
+  //индекс текущей формы
+  index:=Array_FormEvents_FindForm(fm);
+  //старый обработчик
+  event:=Array_FormEvents[index].OldOnAfterDelete;
+  if event<>nil then
+    event(sender);
+end;
+
+procedure DeleteGroup(fm:TdxForm; ArrayOfInt:TArrayOfInt);
+var x,y:integer;
+    status:TAccessStatus;
+    msg:string;
+    sl_NotDeleted:TStringList;
+begin
+  if length(ArrayOfInt) = 0 then
+    exit;
+  // проходимся по всем выделенным ранее RecID и удаляем
+  if MessageDlg('Внимание','Вы точно хотите удалить выбранные записи?',mtWarning,[mbYes,mbCancel]) = 6 then
+    for x:=0 to length(ArrayOfInt)-1 do
+      if not fm.GotoRecord(ArrayOfInt[x]) then
+        // если не удалось перейти на нужный RecID
+        begin
+          //debug(ArrayOfInt[x]);
+          //debug(fm.RecID);
+          msg:=format('Не удалось перейти на запись формы RecID=%d. Возможно она удалена. Продолжить?',[ArrayOfInt[x]]);
+          if MessageDlg('Внимание',msg,mtWarning,[mbYes,mbCancel]) = mrYes then
+            continue
+          else
+            break;
+        end
+      else
+        // если удалось перейти на нужный RecID
+        begin
+          // результат удаления
+          status:=fm.delete;
+          msg:='';
+          // в зависимости от результата удаления формируем сообщение об ошибке
+          case status of
+            asCantDelete: msg:='Действие запрещено правами доступа, удаление невозможно.';
+            asLocked: msg:='Запись редактируется другим пользователем, удаление невозможно.';
+            asHasRef: msg:='На запись есть ссылки в других формах, удаление невозможно.';
+          end;
+          // если удалить не получилось
+          if msg<>'' then
+            begin
+              // SL для хранения неудаленных RecID
+              if sl_NotDeleted=nil then
+                sl_NotDeleted:=TStringList.create;
+              // окончательное сообщение об ошибке
+              msg:=format('RecID=%d%s%s',[fm.RecID,EOL, msg+' Продолжить?']);
+              // если продолжить
+              if MessageDlg('Внимание',msg,mtWarning,[mbYes,mbCancel]) = mrYes then
+              // добавляем в SL неудаленный RecID
+                sl_NotDeleted.add(inttostr(fm.RecID))
+              else
+              // иначе дополняем SL остальными RecID до которых не дошли
+                begin
+                  for y:=x to length(ArrayOfInt)-1 do
+                    sl_NotDeleted.add(inttostr(ArrayOfInt[y]));
+                  break;
+                end;
+            end;
+        end;
+
+   // если было отмечено на удаление больше 1 RecID и хоть один был не удален
+   if (length(ArrayOfInt) > 1) and (sl_NotDeleted<>nil) then
+     msgbox('Attention','Не удалены записи формы с RecID = '+sl_NotDeleted.CommaText);
+
+   if sl_NotDeleted<>nil then
+     sl_NotDeleted.free;
+end;
+
+function GetQuerySourceFormName(query:TdxQueryGrid):string;
+var x:integer;
+begin
+  result:='';
+  if query<>nil then
+    // если массив запросов заполнен
+    if length(QueryInfoAray) > 0 then
+      // проверяем все запросы массива запросов
+      for x:=0 to length(QueryInfoAray)-1 do
+        if QueryInfoAray[x].name=query.QueryName then
+          // если у запроса 1 источник
+          if QueryInfoAray[x].SourceCount=1 then
+            begin
+              result:=QueryInfoAray[x].SourceFormNames[0];
+              break;
+            end;
+
+end;
+
+
+function GetQuerySourceFormCaption(query:TdxQueryGrid):string;
+var x:integer;
+begin
+  result:='';
+  if query<>nil then
+    // если массиф запросов заполнен
+    if length(QueryInfoAray) > 0 then
+      // проверяем все запросы массива запросов
+      for x:=0 to length(QueryInfoAray)-1 do
+        if QueryInfoAray[x].name=query.QueryName then
+          // если у запроса 1 источник
+          if QueryInfoAray[x].SourceCount=1 then
+            begin
+              result:=QueryInfoAray[x].SourceFormCaptions[0];
+              break;
+            end;
+
+end;
+
+
+function GetQuerySelectedRecID(query:TdxQueryGrid):TArrayOfInt;
+var x:integer;
+begin
+  if query.SelectedRowCount > 0 then
+    for x:=0 to query.SelectedRowCount-1 do
+      begin
+        query.MoveToSelectedRow(x);
+        SetLength(result,length(result)+1);
+        result[length(result)-1]:=query.RecID;
+      end;
+end;
+
+
+
+function GetFormSelectedRecID(fm:TdxForm):TArrayOfInt;
+var x:integer;
+begin
+  if fm.grid.SelectedRowCount > 0 then
+    for x:=0 to fm.grid.SelectedRowCount-1 do
+      begin
+        fm.grid.MoveToSelectedRow(x);
+        SetLength(result,length(result)+1);
+        result[length(result)-1]:=fm.RecID;
+      end;
+end;
+
+
+// подумать над восстановлением позиции предыдущей перед первой удаляемой строкой
+procedure Query_Grid_PopupMenu_delete(Sender:TOBject);
+var query:TdxQueryGrid;
+    ArrayOfInt:TArrayOfInt;
+    fm:TdxForm;
+    FormCaption:string;
+begin
+  query:=GetActiveQuery(sender);
+  if query=nil then
+   exit;
+  FormCaption:=GetQuerySourceFormCaption(query);
+  if FormCaption<>'' then
+    begin
+      // выделенные строки
+      ArrayOfInt:=GetQuerySelectedRecID(query);
+      fm:=TdxForm.create(FormCaption);
+      fm.OpenRecords('',nil,true);
+      DeleteGroup(fm, ArrayOfInt);
+      fm.free;
+      fm:=nil;
+      query.refresh;
+    end;
+end;
+
+
+
+procedure Self_Grid_PopupMenu_delete(Sender:TOBject);
+var ArayOfInt:TArrayOfInt;
+    fm:TdxForm;
+begin
+  fm:=GetActiveForm(sender);
+  if fm=nil then
+    exit;
+  // удалять здесь нельзя, при первом вызове OnBeforeDelete выделения будут сброшены
+  ArayOfInt:=GetFormSelectedRecID(fm);
+  DeleteGroup(fm, ArayOfInt);
+end;
+
+
+
+procedure Mainwindow_ToolBar_buttons_TBN_DELETE_onClick(sender:TObject);
+var index:integer;
+    fm:TdxForm;
+begin
+  fm:=GetActiveForm(sender);
+  //индекс текущей формы
+  index:=Array_FormEvents_FindForm(fm);
+  if index>=0 then
+    Self_Grid_PopupMenu_delete(sender)
+  else
+    if OldMainwindow_toolbar_buttons_TBN_DELETE_onClick<>nil then
+      OldMainwindow_toolbar_buttons_TBN_DELETE_onClick(sender);
+end;
+
+
+procedure Self_Grid_PopupMenu_EDIT(sender:TObject);
+var event:TNotifyEvent;
+    index:integer;
+    fm:TdxForm;
+    ArrayOfInt:TArrayOfInt;
+begin
+  fm:=GetActiveForm(sender);
+  if fm=nil then
+    exit;
+  if fm.grid.SelectedRowCount <=1 then
+    begin
+      //индекс текущей формы
+      index:=Array_FormEvents_FindForm(fm);
+      //старый обработчик
+      event:=Array_FormEvents[index].OldSelf_Grid_PopupMenu_EDIT;
+      if event<>nil then
+        event(sender)
+    end
+  else
+    begin
+      ArrayOfInt:=GetFormSelectedRecID(fm);
+      ChangeGroupAttributes(fm,ArrayOfInt);
+    end;
+end;
+
+
+
+procedure Mainwindow_ToolBar_buttons_TBN_EDIT_onClick(sender:TObject);
+var index:integer;
+    fm:TdxForm;
+begin
+  fm:=GetActiveForm(sender);
+  //индекс текущей формы
+  index:=Array_FormEvents_FindForm(fm);
+  if index>=0 then
+    Self_Grid_PopupMenu_EDIT(sender)
+  else
+    if OldMainwindow_toolbar_buttons_TBN_EDIT_onClick<>nil then
+      OldMainwindow_toolbar_buttons_TBN_EDIT_onClick(sender);
+end;
+
+
+// проверяем все запросы на форме и возвращает запрос, которому принадлежит PopupMenu
+function FindQueryByPopupMenu(fm:TdxForm; PopupMenu:TPopupMenu):TdxQueryGrid;
+var q:integer;
+begin
+  if fm.QueryCount > 0 then
+    for q:=0 to fm.QueryCount-1 do
+      if fm.QueryByIndex[q].PopupMenu=PopupMenu then
+        begin
+          result:=fm.QueryByIndex[q];
+          exit;
+        end;
+end;
+
+
+function GetActiveQuery(sender:TObject):TDxQueryGrid;
+var PopupMenu:TPopupMenu;
+    fm:TdxForm;
+begin
+  result:=nil;
+  if sender is TMenuItem then
+    begin
+      if TMenuItem(sender).owner is TPopupMenu then
+        begin
+          PopupMenu:=TPopupMenu(TMenuItem(sender).owner);
+          fm:=GetActiveForm(sender);
+          result:=FindQueryByPopupMenu(fm,PopupMenu);
+          // проверяем все запросы на форме
+          if result<>nil then
+            begin
+              //debug(result.name);
+              exit;
+            end;
+        end;
+    end
+  else
+    if sender.ClassName='TGridButton' then
+      result:=TdxQueryGrid(TControl(sender).owner.owner);
+end;
+
+
+procedure Query_Grid_PopupMenu_EDIT(sender:TObject);
+var query:TdxQueryGrid;
+    fm:TdxForm;
+    FirstRecID:integer;
+    ArrayOfInt:TArrayOfInt;
+    SourceFormName, SourceCaptionName:string;
+begin
+  query:=GetActiveQuery(sender);
+  if query=nil then
+    begin
+      debug('Не удалось определить запрос');
+      exit;
+    end;
+
+  SourceFormName:=GetQuerySourceFormName(query);
+  SourceCaptionName:=GetQuerySourceFormCaption(query);
+  // если имя формы не найдено в настройках
+  if sl_Forms.IndexOf(SourceFormName)<0 then
+    begin
+      // возможно, форма еще не создавалась и ее настроки не сохранены
+      fm:=TdxForm.create(SourceCaptionName);
+      fm.free;
+    end;
+  if sl_Forms.IndexOf(SourceFormName)<0 then
+     msgbox('Внимание','Для формы "'+SourceCaptionName+'" (источник запроса "'+query.name+'") не настроено расширение "групповое изменение полей формы"')
+  else
+    begin
+      // создаем форму источник запроса
+      //debug('Query_Grid_PopupMenu_EDIT');
+      fm:=TdxForm.create(SourceCaptionName);
+      fm.openRecords('',nil,true);
+        //если выбрана 1 строка или 0 (при 1м открытии не выбрана ни одна)
+        if query.SelectedRowCount <=1 then
+          begin
+            //сохраняем RecID выбранной строки
+            FirstRecID:=query.RecID;
+            fm.GotoRecord(query.RecID);
+            fm.edit;
+            if fm.EditWindow.ShowModal=1 then
+              fm.post
+            else
+              fm.cancel;
+          end
+        else
+          // если выбраны несколько строк
+          begin
+            //сохраняем первую выделенную строку
+            query.MoveToSelectedRow(0);
+            FirstRecID:=query.RecID;
+            ArrayOfInt:=GetQuerySelectedRecID(query);
+            ChangeGroupAttributes(fm, ArrayOfInt);
+          end;
+      fm.free;
+      fm:=nil;
+      //debug('Query_Grid_PopupMenu_EDIT free');
+      query.refresh;
+      //после обновления запроса все выделения сбрасываются, восстанавливаем первое
+      query.GotoRecord(FirstRecID);
+    end;
+end;
+
+// возвращает панель, на которой расположены кнопки подчиненой формы или запроса
+function GetGridButtonPanel(fm:TdxForm):TControl;
+var x:integer;
+begin
+  if fm.grid.componentCount>0 then
+    for x:=0 to self.grid.componentCount-1 do
+      // прописываем имя класса, тк он не прописан: "is TGridButtons" - неизвестный класс
+      if fm.grid.components[x].ClassName='TGridButtons' then
+        begin
+          result:=TControl(fm.grid.components[x]);
+          break;
+        end;
+end;
+
+
+procedure MainWindow_OnDestroyForm(Sender: TObject; fm: TdxForm);
+var index:integer;
+begin
+  if OldMainWindow_OnDestroyForm<>nil then
+    OldMainWindow_OnDestroyForm(sender, fm);
+
+  index:=Array_FormEvents_FindForm(fm);
+  Array_FormEvents_DeleteIndex(index);
+end;
+
+
+procedure ChangeGroupFields(Fields, Queries: TVariantArray2d);
+var x:integer;
+    panel:TControl;
+    query:TdxQueryGrid;
+begin
+  //debug('-->ChangeGroupFields: '+self.name);
+
+  // при первом запуске инициализация
+  if sl_ChangedFields=nil then
+    begin
+      sl_ChangedFields:=TStringList.create;
+      sl_forms:=TStringList.create;
+      sl_AllComponents:=TStringList.create;
+      sl:=TStringList.create;
+      sl_queries:=TStringList.create;
+      // сохраняем старый и устанавливаем новый обработчик на кнопку DELETE на главной панели
+      OldMainwindow_toolbar_buttons_TBN_DELETE_onClick:=Mainwindow.toolbar.buttons[TBN_DELETE].onClick;
+      Mainwindow.toolbar.buttons[TBN_DELETE].onClick:=@Mainwindow_toolbar_buttons_TBN_DELETE_onClick;
+      // сохраняем старый и устанавливаем новый обработчик на кнопку EDIT на главной панели
+      OldMainwindow_toolbar_buttons_TBN_EDIT_onClick:=Mainwindow.toolbar.buttons[TBN_EDIT].onClick;
+      Mainwindow.toolbar.buttons[TBN_EDIT].onClick:=@Mainwindow_toolbar_buttons_TBN_EDIT_onClick;
+
+      OldMainWindow_OnDestroyForm:=MainWindow.OnDestroyForm;
+      MainWindow.OnDestroyForm:=@MainWindow_OnDestroyForm;
+
+      SL_FormIDname:=TStringList.create;
+      SL_FormIDFormCaption:=TStringList.create;
+      Fill_SL_FormID;
+      FillQueryInfoArray;
+    end;
+
+  // названия полей и название формы из настроек сохраняем в соответствующие TStringList
+  // sl_forms=имя формы, sl_AllComponents=имя компонента
+  // потом для текущей формы из sl_AllComponents по sl_forms получим все значения
+  for x:=0 to High(Fields) do
+    if Fields[x][0]<>'' then
+      begin
+        sl_forms.add(self.name);
+        sl_AllComponents.add(Fields[x][0]);
+      end;
+  //debug(sl_AllComponents.CommaText);
+
+  // множественный выбор для формы
+  Self.Grid.Options:=Self.Grid.Options+[dgMultiselect];
+
+  // отключаем переход на форму объекта по нажатию Ctrl+ЛКМ
+  self.grid.OnCellClick:=nil;
+
+  // если данная форма еще не в массиве Array_FormEvents
+  if not Array_FormEvents_AlreadyInArray(self) then
+    begin
+      Array_FormEvents_ChangeLength(1);
+      with Array_FormEvents[Array_FormEvents_LastIndex] do
+        begin
+          // сохраняем старые обработчики
+          fm:=self;
+          OldOnBeforeDelete:=self.OnBeforeDelete;
+          OldOnAfterDelete:=self.OnAfterDelete;
+          OldSelf_Grid_PopupMenu_delete:=Self.Grid.PopupMenu.items[MI_FORM_DELETE].OnClick;
+          OldSelf_Grid_PopupMenu_EDIT:=Self.Grid.PopupMenu.items[MI_FORM_EDIT].OnClick;
+
+          //устанавливаем новые обработчики
+          self.OnBeforeDelete:=@OnBeforeDelete;
+          self.OnAfterDelete:=@OnAfterDelete;
+          self.Grid.PopupMenu.items[MI_FORM_DELETE].OnClick:=@Self_Grid_PopupMenu_delete;
+          // если в "действия формы" выбрано хоть одно поле - устанавливаем новый обработчик меню ИЗМЕНИТЬ
+          if (Self.ViewType = vtGridOnly) and (sl_forms.indexOf(self.name) >= 0) then
+            Self.Grid.PopupMenu.items[MI_FORM_EDIT].OnClick:=@Self_Grid_PopupMenu_EDIT;
+
+          //устанавливаем обработчики на кнопки панели Grid подчиненной формы
+          panel:=GetGridButtonPanel(self);
+          if panel<>nil then
+            if panel.ComponentCount > 0 then
+              begin
+                TControl(panel.Components[MI_TABLE_EDIT]).OnClick:=@Self_Grid_PopupMenu_EDIT;
+                TControl(panel.Components[MI_TABLE_DELETE]).OnClick:=@Self_Grid_PopupMenu_delete;
+              end;
+        end;
+      //printarray_FormEvents;
+    end;
+
+  // в sl_queries все запросы для которых выбрано множественное изменение
+  for x:=0 to High(Queries) do
+    if Queries[x][0]<>'' then
+      begin
+        sl_queries.add(Queries[x][0]);
+        query:=self.queries[Queries[x][0]];
+        // мультивыбор для запроса
+        query.Options:=query.Options+[dgMultiselect];
+
+        query.PopupMenu.items[MI_QUERY_EDIT].OnClick:=@Query_Grid_PopupMenu_EDIT;
+        query.PopupMenu.items[MI_QUERY_DELETE].OnClick:=@Query_Grid_PopupMenu_delete;
+
+        //устанавливаем обработчики на кнопки панели Grid запроса
+        panel:=GetGridButtonPanel(self);
+        if panel<>nil then
+          if panel.ComponentCount > 0 then
+            begin
+              TControl(panel.Components[MI_TABLE_EDIT]).OnClick:=@Query_Grid_PopupMenu_EDIT;
+              TControl(panel.Components[MI_TABLE_DELETE]).OnClick:=@Query_Grid_PopupMenu_delete;
+            end;
+      end;
+
+end;
+
+
+procedure MainWindow_OnDataBaseClose(sender:TObject);
+begin
+  sl_ChangedFields.free;
+  //sl_DisabledFields.free;
+  sl_forms.free;
+  sl_AllComponents.free;
+  sl.free;
+  sl_queries.free;
+  SL_FormIDname.free;
+  SL_FormIDFormCaption.free;
+
+  SetLength(array_FormEvents,0);
+end;
+

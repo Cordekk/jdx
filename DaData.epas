@@ -1,0 +1,777 @@
+{@module
+Author=Pavel Duborkin (code rewriting by YurAnt)
+Version=1.2
+Description=Модуль для получения подсказок (реквизитов фирм, адресов, банков) через онлайн-сервис DaData.ru
+@}
+
+const
+// firm
+FirmParams = '"data.branch_count", "data.branch_type", "data.inn", "data.kpp", "data.management.name", '+
+'"data.management.post", "data.name.full_with_opf", "data.name.short_with_opf", "data.name.latin", '+
+'"data.ogrn", "data.okved", "data.opf.code", "data.type"';
+// bank
+BankParams = '"data.bic", "data.correspondent_account", "data.name.payment", "data.opf.type", '+
+'"data.registration_number", "data.swift"';  // "data.phone", "data.rkc",
+// address
+AddressParams = '"data.postal_code", "data.country", "data.region_fias_id", "data.region_kladr_id", '+
+'"data.region_with_type", "data.region_type", "data.region_type_full", "data.region", "data.area_fias_id", '+
+'"data.area_kladr_id", "data.area_with_type", "data.area_type", "data.area_type_full", "data.area", "data.city_fias_id", '+
+'"data.city_kladr_id", "data.city_with_type", "data.city_type", "data.city_type_full", "data.city", "data.city_area", '+
+'"data.city_district_fias_id", "data.city_district_kladr_id", "data.city_district_with_type", "data.city_district_type", '+
+'"data.city_district_type_full", "data.city_district", "data.settlement_fias_id", "data.settlement_kladr_id", '+
+'"data.settlement_with_type", "data.settlement_type", "data.settlement_type_full", "data.settlement", "data.street_fias_id", '+
+'"data.street_kladr_id", "data.street_with_type", "data.street_type", "data.street_type_full", "data.street", "data.house_fias_id", '+
+'"data.house_kladr_id", "data.house_type", "data.house_type_full", "data.house", "data.block_type", "data.block_type_full", "data.block", '+
+'"data.flat_type", "data.flat_type_full", "data.flat", "data.flat_area", "data.square_meter_price", "data.flat_price", "data.postal_box", '+
+'"data.fias_id", "data.fias_level", "data.kladr_id", "data.capital_marker", "data.okato", "data.oktmo", "data.tax_office", '+
+'"data.tax_office_legal", "data.timezone", "data.geo_lat", "data.geo_lon", "data.beltway_hit", "data.beltway_distance", "data.qc_geo", '+
+'"data.qc_complete", "data.qc_house", "data.qc", "data.unparsed_parts"';
+// shared
+SharedFBAParams = '"unrestricted_value", "value"';
+SharedFBParams = '"data.address.value", "data.address.unrestricted_value", "data.okpo", "data.state.actuality_date", '+
+'"data.state.registration_date", "data.state.liquidation_date", "data.state.status", "data.name.full", "data.name.short", "data.opf.full", '+
+'"data.opf.short"'; // "data.address.data",
+
+
+
+function AllParams(s:string):string;
+begin
+if s = 'party' then
+result:= FirmParams +', '+SharedFBParams+', '+SharedFBAParams
+else if s = 'bank' then
+result:= BankParams +', '+SharedFBParams+', '+SharedFBAParams
+else if s = 'address' then
+result:= AddressParams +', '+SharedFBAParams else
+result:='';
+end;
+
+function UnixToDateTime(const AValue: variant): TDateTime;
+var R:variant; Dt:TDateTime;
+begin
+R:=AddSecond(StrToDateTime('01.01.1970'),AValue);
+if TryStrToDateTime(R,Dt)then result:=TDateTime(R);
+end;
+
+function DateFromDateTime(const AValue: variant): string;
+begin
+result:=FormatDateTime('dd.mm.yyyy',UnixToDateTime(AValue));
+end;
+
+function DDT_Date(const Dt: string): string;
+begin
+result:=DateToStr(UnixToDateTime(StrToInt64(Dt) div 1000));
+end;
+
+function CheckNReplace(p,s:string):string;
+var r:string;
+begin
+  if s='' then exit;
+
+  if (p='ogrn_date') or
+     (p='data.state.actuality_date')or
+     (p='data.state.registration_date')or
+     (p='data.state.liquidation_date')
+  then
+    begin
+     r:=DDT_Date(s);
+     result:=r;
+    end
+
+  else if p='data.state.status' then
+    begin
+     if s='ACTIVE' then
+     r:='Действующая' else
+     if s='LIQUIDATING' then
+     r:='Ликвидируется' else
+     if s='LIQUIDATED' then
+     r:='Ликвидирована';
+     result:=r;
+    end
+
+  else if p='data.type' then
+    begin
+     if s='LEGAL' then
+     r:='Юридическое лицо' else
+     if s='INDIVIDUAL' then
+     r:='Индивидуальный предприниматель';
+     result:=r;
+    end
+
+  else if p='data.branch_type' then
+    begin
+     if s='MAIN' then
+     r:='Головная организация' else
+     if s='BRANCH' then
+     r:='Филиал';
+     result:=r;
+    end
+
+  else if p='data.opf.type' then
+    begin
+     if s='BANK' then
+     r:='Банк' else
+     if s='BANK_BRANCH' then
+     r:='Филиал банка' else
+     if s='NKO' then
+     r:='Небанковская кредитная организация (НКО)' else
+     if s='NKO_BRANCH' then
+     r:='Филиал НКО' else
+     if s='RKC' then
+     r:='Расчетно-кассовый центр' else
+     if s='OTHER' then
+     r:='Другой';
+     result:=r;
+     end
+
+  else
+  result:=s;
+end;
+
+Function GetXMLData(ApiKey,SearhStr,SuggestType:string):string;
+  var
+  strResponseText,Stat,Msg,FP,Node,TmpRes:string;
+  objWinHttp:variant;
+  SL:TStrings;
+  i:integer;
+
+
+begin
+  // проверка на "пусто" или более 300 символов запроса.
+  Stat:='';
+try
+  objWinHttp := CreateOleObject('MSXML2.XMLHTTP');
+  objWinHttp.Open('POST', 'http://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/'+SuggestType, false);
+  objWinHttp.setRequestHeader('Content-type', 'application/json');
+  objWinHttp.setRequestHeader('Accept', 'application/xml');
+  objWinHttp.setRequestHeader('Authorization', 'Token  '+ApiKey);  // 8c6ee64a07dd3722089576af4fea2b181ff77dfb
+  objWinHttp.Send('{ "query": "'+SearhStr+'", "count": 1 }');
+ Stat:=objWinHttp.Status;
+  strResponseText:=objWinHttp.ResponseText;
+if (Stat in ['400','401','403','413']) or
+(Copy(Stat,1,1)='5') or
+(ExceptionParam<>'') or
+(strResponseText='<SuggestResponse/>') then
+begin
+  if Stat = '400' then Msg:='Ошибка 400 (Некорректный запрос).'
+  else if Stat = '401' then Msg:='Ошибка 401 (В запросе отсутствует API-ключ).'
+  else if Stat = '403' then Msg:='Ошибка 403 (В запросе указан несуществующий API-ключ).'
+  else if Stat = '413' then Msg:='Ошибка 413 (Нарушены ограничения).'
+  else if Copy(Stat,1,1) = '5' then Msg:='Произошла внутренняя ошибка сервиса во время обработки';
+  if Stat in ['400','401','403','413',Copy(Stat,1,1)] then
+  begin
+  debug('Dadata: '+Msg);
+  strResponseText:='';
+  end;
+  if strResponseText='<SuggestResponse/>' then
+  strResponseText:='По запросу ничего не найдено';
+
+  result:=strResponseText;
+  objWinHttp:=Unassigned;
+end
+else
+begin
+//debug(strResponseText);
+ result:=strResponseText;
+ FP:=StringReplace(AllParams(SuggestType),' ','',[rfReplaceAll]);
+ FP:=StringReplace(FP,'"','',[rfReplaceAll]);
+
+ SL:=TStringList.Create;
+ SplitStr(FP,',',SL);
+ for i := 0 to SL.Count - 1 do
+  begin
+    Node:=StringReplace(SL[i],'.','/',[rfReplaceAll]);
+    TmpRes:=objWinHttp.ResponseXML.selectSingleNode('//SuggestResponse/suggestions/'+Node).text;
+    TmpRes:=CheckNReplace(SL[i],TmpRes);
+    EvalExpr('setvar("'+SL[i]+'",'''+TmpRes+''')',Self);
+  end;
+  SL.Free;
+ end;
+finally
+  objWinHttp:=Unassigned;
+except;
+  debug('Dadata: '+ExceptionParam);
+end;
+End;
+
+function ReadValueFromXMLSection(s,txt:variant):string;
+var s1,s2:string;
+  p1,p2:integer;
+begin
+  if (s=null) or (txt=null) then exit;
+  s:=VarToStr(s);
+  s1:='<'+s+'>';
+  s2:='</'+s+'>';
+  p1:=Pos(s1,txt)+Length(s1);
+  p2:=Pos(s2,txt);
+  result:=Trim(Copy(txt,p1,p2-p1));
+end;
+
+function GetDDTValue(s:string;txt:variant):string; // мой говнопарсер. скоро снесу за ненадобностью...
+  var i:integer;
+  SL:TStrings;
+  t:string;
+begin
+  if s='' then exit;
+  SL:=TStringlist.Create;
+  SplitStr(s,'.',SL);
+  t:=txt;
+  for i := 0 to SL.Count - 1 do
+  begin
+  if i<>SL.Count then
+   begin
+    t:=ReadValueFromXMLSection(SL[i],t);
+    Continue;
+   end else
+    Break;
+  end;
+  result:=CheckNReplace(s,t);
+  SL.Free;
+end;
+
+function GetVar(s:string):variant;
+begin
+result:=EvalExpr('iif(varexists('''+s+''')=1,getvar('''+s+'''),block ( setvar('''+s+''',null), getvar('''+s+''') ))',Self);
+end;
+
+////////////////////////////////////////////////////////////////////////////////
+
+{************************************************************
+                        DA_FIRMGET
+*************************************************************}
+
+{@function
+OrigName=DA_FIRMGET
+Name=DA_FIRMGET
+Args=vv
+Result=s
+Group=DaData
+Description=Функция обращается к сервису и возвращает реквизиты организации.<br>
+<center><code>DA_FIRMGET(API-ключ, строка поиска)</code></center><br>
+<b>Параметры:</b> API-ключ - текст, строка поиска - текст.<br><br>
+<b>Результат:</b> текст.<br><br>
+API-ключ необходим для доступа к сервису DaData.ru. Ключ можно узнать в
+личном кабинете.<br>
+Строка поиска - название, ИНН или адрес организации.<br>
+Результат функции - множество полей-реквизитов в формате XML. Функция
+извлекает реквизиты и сохраняет в специальной переменной. Для доступа к
+реквизитам используются функции DA_FIRM... и некоторые другие, а также
+функция DA_FIRMFIELD. Повторный вызов функции DA_FIRMGET заменит содержимое
+специальной переменной новыми реквизитами.<br><br>
+<b>Пример:</b><br>
+<center><code>DA_FIRMGET('02010a4f12aff45457e5ea7cf32e815400b39b32', 'Газпром')</code></center>
+@}
+
+function DA_FIRMGET(ApiKey,SearhStr:string):string;
+var RespTxt:string;
+begin
+RespTxt:=GetXMLData(ApiKey,SearhStr,'party');
+EvalExpr('setvar("DA_FIRMFIELD",'''+RespTxt+''')',Self);
+result:=RespTxt;
+
+end;
+
+{@function
+OrigName=DA_FIRMNAME
+Name=DA_FIRMNAME
+Args=
+Result=s
+Group=DaData
+Description=Функция возвращает наименование организации
+из переменной, полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "текст".
+@}
+
+function DA_FIRMNAME:variant;
+begin
+result:=getvar('data.name.short');
+end;
+
+{@function
+OrigName=DA_FIRMFULLNAME
+Name=DA_FIRMFULLNAME
+Args=
+Result=s
+Group=DaData
+Description=Функция возвращает полное наименование организации
+из переменной, полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "текст".
+@}
+
+function DA_FIRMFULLNAME:variant;
+begin
+result:=getvar('data.name.full');
+end;
+
+{@function
+OrigName=DA_FIRMNAMELATIN
+Name=DA_FIRMNAMELATIN
+Args=
+Result=s
+Group=DaData
+Description=Функция возвращает наименование организации латинскими буквами
+из переменной, полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "текст".
+@}
+
+function DA_FIRMNAMELATIN:variant;
+begin
+result:=getvar('data.name.latin')
+end;
+
+{@function
+OrigName=DA_FIRMADDR
+Name=DA_FIRMADDR
+Args=
+Result=s
+Group=DaData
+Description=Функция возвращает адрес организации
+из переменной, полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "текст".
+@}
+
+function DA_FIRMADDR:variant;
+begin
+result:=getvar('data.address.value')
+end;
+
+{@function
+OrigName=DA_FIRMINN
+Name=DA_FIRMINN
+Args=
+Result=s
+Group=DaData
+Description=Функция возвращает ИНН организации
+из переменной, полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "текст".
+@}
+
+function DA_FIRMINN:variant;
+begin
+result:=getvar('data.inn');
+end;
+
+{@function
+OrigName=DA_FIRMKPP
+Name=DA_FIRMKPP
+Args=
+Result=s
+Group=DaData
+Description=Функция возвращает КПП организации
+из переменной, полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "текст".
+@}
+
+function DA_FIRMKPP:variant;
+begin
+result:=getvar('data.kpp');
+end;
+
+
+{@function
+OrigName=DA_FIRMOGRN
+Name=DA_FIRMOGRN
+Args=
+Result=s
+Group=DaData
+Description=Функция возвращает ОГРН организации
+из переменной, полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "текст".
+@}
+
+function DA_FIRMOGRN:variant;
+begin
+result:=getvar('data.ogrn');
+end;
+
+
+{@function
+OrigName=DA_FIRMOKPO
+Name=DA_FIRMOKPO
+Args=
+Result=s
+Group=DaData
+Description=Функция возвращает ОКПО организации
+из переменной, полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "текст".
+@}
+
+function DA_FIRMOKPO:variant;
+begin
+result:=getvar('data.okpo');
+end;
+
+
+{@function
+OrigName=DA_FIRMOKVED
+Name=DA_FIRMOKVED
+Args=
+Result=s
+Group=DaData
+Description=Функция возвращает ОКВЭД организации
+из переменной, полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "текст".
+@}
+
+function DA_FIRMOKVED:variant;
+begin
+result:=getvar('data.okved');
+end;
+
+{@function
+OrigName=DA_MANAGER
+Name=DA_MANAGER
+Args=
+Result=s
+Group=DaData
+Description=Функция возвращает ФИО руководителя организации
+из переменной, полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "текст".
+@}
+
+function DA_MANAGER:variant;
+begin
+result:=getvar('data.management.name');
+end;
+
+{@function
+OrigName=DA_MANAGERPOST
+Name=DA_MANAGERPOST
+Args=
+Result=s
+Group=DaData
+Description=Функция возвращает должность руководителя  организации
+из переменной полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "текст".
+@}
+
+function DA_MANAGERPOST:variant;
+begin
+result:=getvar('data.management.post');
+end;
+
+{@function
+OrigName=DA_FIRMSTATUS
+Name=DA_FIRMSTATUS
+Args=
+Result=s
+Group=DaData
+Description=Функция возвращает статус организации <i>(Действующая, Ликвидируется, Ликвидирована)</i>
+из переменной, полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "текст".
+@}
+
+function DA_FIRMSTATUS:variant;
+begin
+result:=getvar('data.state.status');
+end;
+
+{@function
+OrigName=DA_BRANCHTYPE
+Name=DA_BRANCHTYPE
+Args=
+Result=s
+Group=DaData
+Description=Функция возвращает тип подразделения организации <i>(Головная организация, Филиал)</i>
+из переменной полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "текст".
+@}
+
+function DA_BRANCHTYPE:variant;
+begin
+result:=getvar('data.branch_type');
+end;
+
+{@function
+OrigName=DA_FIRMACTUALDATE
+Name=DA_FIRMACTUALDATE
+Args=
+Result=s
+Group=DaData
+Description=Функция возвращает дату актуальности сведений об организации
+из переменной, полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "дата".
+@}
+
+function DA_FIRMACTUALDATE:variant;
+var v:variant;
+begin
+v:=getvar('data.state.actuality_date');
+if v='' then v:=null;
+result:=v;
+end;
+
+
+
+{@function
+OrigName=DA_FIRMREGDATE
+Name=DA_FIRMREGDATE
+Args=
+Result=s
+Group=DaData
+Description=Функция возвращает дату регистрации организации
+из переменной, полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "дата".
+@}
+
+function DA_FIRMREGDATE:variant;
+var v:variant;
+begin
+v:=getvar('data.state.registration_date');
+if v='' then v:=null;
+result:=v;
+end;
+
+
+{@function
+OrigName=DA_FIRMLIQUIDDATE
+Name=DA_FIRMLIQUIDDATE
+Args=
+Result=s
+Group=DaData
+Description=Функция возвращает дату ликвидации организации
+из переменной, полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "дата".
+@}
+
+function DA_FIRMLIQUIDDATE:variant;
+var v:variant;
+begin
+v:=getvar('data.state.liquidation_date');
+if v='' then v:=null;
+result:=v;
+end;
+
+
+{@function
+OrigName=DA_FIRMTYPE
+Name=DA_FIRMTYPE
+Args=
+Result=s
+Group=DaData
+Description=Функция возвращает тип организации <i>(Юридическое лицо, Индивидуальный предприниматель)</i>
+из переменной, полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "текст".
+@}
+
+function DA_FIRMTYPE:variant;
+begin
+result:=getvar('data.type');
+end;
+
+{@function
+OrigName=DA_FIRMNAMEOPF
+Name=DA_FIRMNAMEOPF
+Args=
+Result=s
+Group=DaData
+Description=Функция возвращает наименование организации с ОПФ
+из переменной, полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "текст".
+@}
+
+function DA_FIRMNAMEOPF:variant;
+begin
+result:=getvar('data.name.short_with_opf');
+end;
+
+{@function
+OrigName=DA_FIRMFULLNAMEOPF
+Name=DA_FIRMFULLNAMEOPF
+Args=
+Result=s
+Group=DaData
+Description=Функция возвращает полное наименование организации с ОПФ
+из переменной, полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "текст".
+@}
+
+function DA_FIRMFULLNAMEOPF:variant;
+begin
+result:=getvar('data.name.full_with_opf');
+end;
+
+{@function
+OrigName=DA_BRANCHCOUNT
+Name=DA_BRANCHCOUNT
+Args=
+Result=s
+Group=DaData
+Description=Функция количество филиалов организации
+из переменной, полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "число".
+@}
+
+function DA_BRANCHCOUNT:variant;
+begin
+result:=getvar('data.branch_count');
+end;
+
+{@function
+OrigName=DA_FIRMOKOPF
+Name=DA_FIRMOKOPF
+Args=
+Result=s
+Group=DaData
+Description=Функция возвращает ОКОПФ организации
+из переменной, полученной c помощью функции DA_FIRMGET. <br> Параметров не имеет.<br>
+Тип: "тест".
+@}
+
+function DA_FIRMOKOPF:variant;
+begin
+result:=getvar('data.opf.code');
+end;
+
+
+{************************************************************
+                        DA_BANKGET
+*************************************************************}
+
+{@function
+OrigName=DA_BANKGET
+Name=DA_BANKGET
+Args=vv
+Result=s
+Group=DaData
+Description=Функция обращается к сервису и возвращает реквизиты банка.<br>
+<center><code>DA_BANKGET(API-ключ, строка поиска)</code></center><br>
+<b>Параметры:</b> API-ключ - текст, строка поиска - текст.<br><br>
+<b>Результат:</b> текст.<br><br>
+API-ключ необходим для доступа к сервису DaData.ru. Ключ можно узнать в
+личном кабинете.<br>
+Строка поиска - название, БИК или адрес банка.<br>
+Результат функции - множество полей-реквизитов в формате XML. Функция
+извлекает реквизиты и сохраняет в специальной переменной. Для доступа к
+реквизитам используется функция DA_BANKFIELD. Повторный вызов функции DA_BANKGET
+заменит содержимое специальной переменной новыми реквизитами.<br><br>
+<b>Пример:</b><br>
+<center><code>DA_BANKGET('02010a4f12aff45457e5ea7cf32e815400b39b32', 'Сбербанк')</code></center>
+@}
+
+function DA_BANKGET(ApiKey,SearhStr:string):string;
+var RespTxt:string;
+begin
+RespTxt:=GetXMLData(ApiKey,SearhStr,'bank');
+EvalExpr('setvar("DA_BANKGET",'''+RespTxt+''')',Self);
+result:=RespTxt;
+end;
+
+
+{@function
+OrigName=DA_BANKFIELD
+Name=DA_BANKFIELD
+Args=s
+Result=s
+Group=DaData
+Description=
+Функция возвращает значение реквизита.<br>
+<center><code>DA_BANKFIELD(путь к реквизиту)</code></center><br>
+<b>Параметры:</b> путь к реквизиту - текст.<br><br>
+<b>Результат:</b> текст.<br><br>
+<b>Пример:</b><br>
+<center><code>DA_BANKFIELD('data.name.full')</code></center><br><br>
+<b>Описание путей и реквизитов:</b><br><br>
+<code><b>value</b></code><br><i><font color="#808080">Наименование банка одной строкой (как показывается в списке подсказок)</font> </i><br><br>
+<code><b>unrestricted_value</b></code><br><i><font color="#808080">Наименование банка одной строкой (полное)</font> </i><br><br>
+<code><b>data.address.value</b></code><br><i><font color="#808080">Адрес регистрации одной строкой</font> </i><br><br>
+<code><b>data.address.unrestricted_value</b></code><br><i><font color="#808080">Адрес одной строкой (полный, от региона)</font> </i><br><br>
+<code><b>data.address.data</b></code><br><i><font color="#808080">Гранулярный адрес. Может отсутствовать</font> </i><br><br>
+<code><b>data.bic</b></code><br><i><font color="#808080">Банковский идентификационный код (БИК) ЦБ РФ</font> </i><br><br>
+<code><b>data.correspondent_account</b></code><br><i><font color="#808080">Корреспондентский счет в ЦБ РФ</font> </i><br><br>
+<code><b>data.name.payment</b></code><br><i><font color="#808080">Платежное наименование</font> </i><br><br>
+<code><b>data.name.full</b></code><br><i><font color="#808080">Полное наименование</font> </i><br><br>
+<code><b>data.name.short</b></code><br><i><font color="#808080">Краткое наименование</font> </i><br><br>
+<code><b>data.okpo</b></code><br><i><font color="#808080">Код ОКПО</font> </i><br><br>
+<code><b>data.opf.type</b></code><br><i><font color="#808080">Тип кредитной организации. Варианты ответа:</font> </i><br>
+<font color="#808080"><i>
+- Банк;<br>
+- Филиал банка;<br>
+- Небанковская кредитная организация (НКО);<br>
+- Филиал НКО;<br>
+- Расчетно-кассовый центр;<br>
+- Другой.<br><br>
+</i></font>
+
+<code><b>data.opf.full</b></code><br><i><font color="#808080">Тип кредитной организации (на русском)</font> </i><br><br>
+<code><b>data.opf.short</b></code><br><i><font color="#808080">Тип кредитной организации (на русском, сокращенный)</font> </i><br><br>
+<code><b>data.phone</b></code><br><i><font color="#808080">Не заполняется</font> </i><br><br>
+<code><b>data.registration_number</b></code><br><i><font color="#808080">Регистрационный номер в ЦБ РФ</font> </i><br><br>
+<code><b>data.rkc</b></code><br><i><font color="#808080">Расчетно-кассовый центр. Объект такой же структуры, как сам банк.</font> </i><br><br>
+<code><b>data.state.actuality_date</b></code><br><i><font color="#808080">Дата актуальности сведений</font> </i><br><br>
+<code><b>data.state.registration_date</b></code><br><i><font color="#808080">Дата регистрации</font> </i><br><br>
+<code><b>data.state.liquidation_date</b></code><br><i><font color="#808080">Дата ликвидации</font> </i><br><br>
+<code><b>data.state.status</b></code><br><i><font color="#808080">Статус организации:</font> </i><br>
+<font color="#808080"><i>
+— Действующая<br>
+— Ликвидируется<br>
+— Ликвидирована<br> <br>
+</i></font>
+<code><b>data.swift</b></code><br><i><font color="#808080">Банковский идентификационный код в системе SWIFT</font> </i>
+@}
+
+function DA_BANKFIELD(s:string):string;
+begin
+result:=getvar(s)
+//result:=GetDDTValue(s,
+//EvalExpr('getvar("DA_BANKGET")',Self));  //getvar('data.address.value')//
+end;
+
+
+
+
+{************************************************************
+                        DA_ADDRGET
+*************************************************************}
+
+{@function
+OrigName=DA_ADDRGET
+Name=DA_ADDRGET
+Args=vv
+Result=s
+Group=DaData
+Description=Функция обращается к сервису и возвращает дробный адрес.<br>
+<center><code>DA_ADDRGET(API-ключ, строка поиска)</code></center><br>
+<b>Параметры:</b> API-ключ - текст, строка поиска - текст.<br><br>
+<b>Результат:</b> текст.<br><br>
+API-ключ необходим для доступа к сервису DaData.ru. Ключ можно узнать в
+личном кабинете.<br>
+Строка поиска - часть адреса.<br>
+Результат функции - множество полей в формате XML. Функция
+извлекает поля и сохраняет в специальной переменной. Для доступа к
+полям используется функция DA_ADDRFIELD. Повторный вызов функции DA_ADDRGET
+заменит содержимое специальной переменной новыми значениями.<br><br>
+<b>Пример:</b><br>
+<center><code>DA_ADDRGET('02010a4f12aff45457e5ea7cf32e815400b39b32', 'Краснодар ул Ленина 12')</code></center>
+@}
+
+function DA_ADDRGET(ApiKey,SearhStr:string):string;
+var RespTxt:string;
+begin
+RespTxt:=GetXMLData(ApiKey,SearhStr,'address');
+EvalExpr('setvar("DA_ADDRFIELD",'''+RespTxt+''')',Self);
+result:=RespTxt;
+end;
+
+
+{@function
+OrigName=DA_ADDRFIELD
+Name=DA_ADDRFIELD
+Args=s
+Result=s
+Group=DaData
+Description=Функция возвращает значение отдельного поля адреса.<br>
+<center><code>DA_ADDRFIELD(путь к полю)</code></center><br>
+<b>Параметры:</b> путь к полю - текст.<br><br>
+<b>Результат:</b> текст.<br><br>
+Путь к полю записывается так: родительский тег.дочерний тег.дочерний тег...
+Описание полей и путей к ним можно найти здесь:
+<a href="#">https://dadata.ru/api/suggest/#response-address</a><br>
+<center><code>DA_ADDRFIELD('data.region_type')</code></center>
+@}
+
+function DA_ADDRFIELD(s:string):string;
+begin
+result:=getvar(s)
+//result:=GetDDTValue(s,
+//EvalExpr('getvar("DA_ADDRFIELD")',Self));
+end;

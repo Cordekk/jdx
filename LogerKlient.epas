@@ -1,0 +1,493 @@
+{@module
+Author=jurist23rus
+Version=3.0a
+Description=
+LogerProbe - служит для организации системы логирования (журнализирования) определённых
+действий пользователя в журнале событий для образцов (для работы требуется установка журналов событий).
+@}
+
+{@action
+Id=DC4A2A06-F7FF-4A5E-89FF-025F21121D22
+OrigName=LogerKlient
+Name=Логер клиентов
+Group=Логер
+UI=<ui>
+  <checkbox name="AllFields" caption="Отслеживать все поля формы"/>
+  <grid name="LogFields" caption="Отслеживаемые поля">
+    <field name="Field" required="1" filter="text;number;date;time;object;counter;checkbox" />
+  </grid>
+  <grid name="Users" caption="Исключённые пользователи">
+    <text name="User" required="1"/>
+  </grid>
+</ui>
+Description=
+<b>ОПИСАНИЕ</b><br>
+Служит для организации системы логирования (журнализирования) определённых
+действий пользователя и фиксации изменений в журнале событий. Отслеживает
+изменения в полях формы и фиксирует эти изменения в журнале событий.
+ИСПОЛЬЗОВАТЬ В СВОЙСТВЕ ФОРМЫ "ПОДКЛЮЧИТЬ ДЕЙСТВИЕ".
+<br><br>
+<b>Отслеживать все поля формы</b> - если опция включена, то модуль контролирует
+изменения всех полей формы, при этом не имеет значение, будет ли в таблице
+"Отслеживаемые поля" что-либо указано или нет.
+<br><br>
+
+<b>Отслеживаемые поля</b> - список полей, изменения в которых отслеживаются
+модулем. Если включена опция "Отслеживать все поля формы", то список игнорируется.
+<br><br>
+
+<b>Исключённые пользователи</b> - список пользователей, при входе которых, модуль
+не будет производить логирования.
+<br><br>
+
+@}
+
+type TdxLoger = record
+  Fm          : TdxForm;
+  FNameList   : TVariantArray2d;
+  Event       : boolean;
+  AllowPost   : boolean;
+  BeforeValue : array of variant;
+  FormType    : string;
+  FormState   : string;
+  StartTime   : TDateTime;
+  ParentFormID: integer;
+end;
+
+var
+  dxLoger: array of TdxLoger;
+  LogFm: TdxForm;
+  StopFuncCount, UserCheckCount, MainWindowEvent: Boolean;
+  n : integer;
+
+procedure DatabaseClose (Sender: Tobject);
+var
+  i: integer;
+begin
+  MainWindow.OnDatabaseClose  := nil;
+  MainWindow.OnDestroyForm    := nil;
+  MainWindowEvent             := false;
+  for i:=0 to Length (dxLoger)-1 do
+  begin
+    with dxLoger[i] do
+    begin
+      if Event then
+      begin
+        Fm.OnBeforeEdit := nil;
+        Fm.OnBeforePost := nil;
+        Fm.OnBeforeDelete := nil;
+        Fm.OnBeforeInsert := nil;
+        Fm.OnBeforeCancel := nil;
+        Fm.OnBeforeDuplicate := nil;
+        Event := false;
+      end;
+      SetLength (BeforeValue, 0);
+      SetLength (FNameList, 0);
+    end;
+  end;
+  SetLength (dxLoger, 0);
+end;
+
+procedure Loger_StopFunc;
+begin
+  if StopFuncCount then exit;
+  DatabaseClose (nil);
+  StopFuncCount := true;
+end;
+
+procedure ErrorMessage (Msg: string);
+begin
+  MessageDlg ('Ошибка работы функции Loger', 'Работа Функции Loger прекращена.' +#13+#13+
+      Msg+
+      'Если вы не можете устранить неполадки самостоятельно - свяжитесь с разработчиком!'+
+      +#13+#13+
+      'ВАЖНО: работа функции Loger возобновится только после перехода в дизайнер и '+
+      'исправления ошибки!', mtError, [mbOk]);
+end;
+
+procedure ReadField (Sender: TObject);
+var
+  i, Cnt: integer;
+  msg: string;
+begin
+  Cnt := Length (dxLoger[n].FNameList);
+  SetLength (dxLoger[n].BeforeValue, Cnt);
+  try
+    for i:=0 to Cnt-1 do
+    begin
+      dxLoger[n].BeforeValue[i] := dxLoger[n].Fm[dxLoger[n].FNameList[i][0]];
+    end;
+  except
+    Loger_StopFunc;
+    msg :=  'Возможные причины неполадки:'+#13+
+      '1. Вы не указали имена полей формы для отслеживания.'+#13+
+      '2. Вы не установили журнал событий в базу данных'+ #13+#13;
+    ErrorMessage (Msg);
+  end;
+end;
+
+function ConvertToStr (Val: Variant; i: integer): string;
+var basicType : Integer;
+begin
+  if VarIsNull(val) or VarIsEmpty (val) or VarIsNothing(val) then
+  begin
+    Result := '';
+    exit;
+  end;
+  basicType := VarType (Val);
+  case basicType of
+    varInteger   : Result := val;
+    varBoolean   : if val = true then Result := '1' else Result := '0';
+    varString    : Result := val;
+    varDouble    : Result := FormatFloat ('0.####', Val);
+    varDate      :
+    begin
+     if DateToStr (Val) = '30.12.1899' then Result := TimeToStr (Val)
+       else Result := DateToStr (Val)
+    end;
+    else Result := 'Тип данных неопределён!';
+  end;
+end;
+
+function SybmolFind (NameF: String): string;
+var p: integer;
+begin
+  Result := NameF;
+  p := Pos ('|', NameF);
+  if p > 0 then
+  begin
+    delete (NameF, p, 100);
+    Result := NameF;
+  end;
+end;
+
+procedure AddRecordLog;
+var
+  i, Cnt: integer;
+begin
+  try
+    if dxLoger[n].FormState = '' then exit;
+    if LogFm = nil then
+    begin
+      LogFm := TdxForm.Create ('Log');
+      LogFm.Params.values['Запуск'] := false;
+    end;
+    with LogFm do
+    begin
+      OpenRecord(0);
+      Append;
+      fields['Время начала редактирования'] := dxLoger[n].StartTime;
+      fields['Пользователь'] := GetCurrentUser;
+      fields['Форма'] := dxLoger[n].Fm.FormCaption;
+      fields['Тип формы'] := dxLoger[n].FormType;
+      fields['ИД'] := dxLoger[n].Fm.RecId;
+      fields['Наименование события'] := dxLoger[n].FormState;
+      if dxLoger[n].FormState in ['добавление записи', 'дублирование записи'] then
+      begin
+        fields['Время сохранения записи'] := time;
+        Post;
+        Exit;
+      end;
+      cnt := Length (dxLoger[n].FNameList);
+      for i:=0 to Cnt-1 do
+      begin
+        forms['Fields'].append;
+        forms['Fields'].fields['Имя поля'] := SybmolFind (dxLoger[n].FNameList[i][0]);
+        forms['Fields'].fields['Значение до'] :=
+          ConvertToStr (dxLoger[n].BeforeValue[i], i);
+        if dxLoger[n].FormState = 'изменение записи' then
+        begin
+          forms['Fields'].fields['Значение после'] :=
+            ConvertToStr (dxLoger[n].Fm[dxLoger[n].FNameList[i][0]], i);
+          if forms['Fields'].fields['Значение до'] =
+            forms['Fields'].fields['Значение после']
+          then
+          begin
+            forms['Fields'].cancel;
+            continue;
+          end;
+        end;
+        forms['Fields'].post;
+      end;
+      fields['Время сохранения записи'] := time;
+      Post;
+    end;
+  except
+    Loger_StopFunc;
+  finally
+    if LogFm <> nil then
+    begin
+      LogFm.Free;
+      LogFm := nil;
+    end;
+  end;
+end;
+
+procedure FormSelection;
+var
+  i: integer;
+begin
+  for i:= 0 to Length (dxLoger)-1 do
+  begin
+    if dxLoger[i].AllowPost then
+    begin
+      n := i
+      AddRecordLog;
+      dxLoger[i].StartTime := 0;
+      dxLoger[i].FormState := '';
+      dxLoger[i].AllowPost := false;
+    end;
+  end;
+end;
+
+function FormSeach (Frm: TdxForm): integer;
+var
+  i: integer;
+begin
+  Result := -1
+  for i:=0 to length (dxLoger)-1 do
+  begin
+    with dxLoger[i] do
+    begin
+      if Fm = nil then continue;
+      if Fm = Frm then
+      begin
+        Result := i;
+        exit;
+      end;
+    end;
+  end;
+end;
+
+procedure DeleteRecord (Sender: TObject);
+begin
+  n := FormSeach (TdxForm (Sender));
+  dxLoger[n].FormState := 'удаление записи';
+  dxLoger[n].StartTime := time;
+  ReadField (nil);
+  dxLoger[n].AllowPost := true;
+  if dxLoger[n].FormType = 'дочерняя (таблица)' then exit;
+  FormSelection;
+end;
+
+procedure EditRecord (Sender: TObject);
+begin
+  n := FormSeach (TdxForm (Sender));
+  dxLoger[n].FormState := 'изменение записи';
+  dxLoger[n].StartTime := time;
+  ReadField (nil);
+end;
+
+procedure AddRecord (Sender: TObject);
+begin
+  n := FormSeach (TdxForm (Sender));
+  dxLoger[n].FormState := 'добавление записи';
+  dxLoger[n].StartTime := time;
+  ReadField (nil)
+end;
+
+procedure DuplicateRecord (Sender: TObject);
+begin
+  n := FormSeach (TdxForm (Sender));
+  dxLoger[n].FormState := 'дублирование записи';
+  dxLoger[n].StartTime := time;
+  ReadField (nil);
+  dxLoger[n].AllowPost := true;
+  if dxLoger[n].FormType = 'дочерняя (таблица)' then exit;
+  FormSelection;
+end;
+
+procedure PostRecord (Sender: TObject);
+begin
+  n := FormSeach (TdxForm (Sender));
+  dxLoger[n].AllowPost := true;
+  if dxLoger[n].FormType = 'дочерняя (таблица)' then exit;
+  FormSelection;
+end;
+
+procedure CancelRecord (Sender: TObject);
+var
+  i: integer;
+begin
+  n := FormSeach (TdxForm (Sender));
+  dxLoger[n].FormState := '';
+  dxLoger[n].AllowPost := false;
+  if (dxLoger[n].FormType = 'родительская (главная)') and (dxLoger[n].Fm.FormCount>0)
+  then
+  for i:=0 to Length (dxLoger)-1 do
+  begin
+    if dxLoger[i].ParentFormID = dxLoger[n].Fm.Id then
+    begin
+       dxLoger[i].allowPost := false;
+       dxLoger[i].FormState := '';
+    end;
+  end;
+end;
+
+procedure FormEvent;
+var
+  ConfigFm: TdxForm;
+begin
+  if dxLoger[n].Event then exit;
+  try
+    ConfigFm := TdxForm.Create('Log_Config');
+    ConfigFm.Open;
+    if ConfigFm['флажок_изменение'] then
+      dxLoger[n].Fm.OnBeforeEdit :=@EditRecord;
+    if ConfigFm['Флажок_создание'] then
+      dxLoger[n].Fm.OnBeforeInsert :=@AddRecord;
+    if ConfigFm['Флажок_удаление'] then
+      dxLoger[n].Fm.OnBeforeDelete := @DeleteRecord;
+    if ConfigFm['флажок_дублирование'] then
+      dxLoger[n].Fm.OnBeforeDuplicate := @DuplicateRecord;
+    dxLoger[n].Fm.OnBeforePost := @PostRecord;
+    dxLoger[n].Fm.OnBeforeCancel := @CancelRecord;
+    dxLoger[n].Event := true;
+  finally
+    ConfigFm.Free;
+  end;
+end;
+
+procedure AddToDxLoger (Self: TdxForm; FieldName: TVariantArray2d);
+var
+  FormIndex: integer;
+begin
+  FormIndex := FormSeach (Self);
+  if FormIndex > -1 then
+  begin
+    n := FormIndex;
+    FormEvent;
+    exit;
+  end;
+  SetLength (dxLoger, length (dxLoger)+1);
+  with dxLoger[high(dxLoger)] do
+  begin
+    Fm := Self;
+    if Fm.ParentForm = nil then
+    begin
+      FormType := 'родительская (главная)'
+      ParentFormID := -1;
+    end
+    else
+    begin
+      FormType := 'дочерняя (таблица)';
+      ParentFormID := Self.ParentForm.Id;
+    end;
+    FNameList := FieldName;
+    n := high(dxLoger);
+    FormEvent;
+  end;
+end;
+
+procedure FormDestroy (Sender: TObject; Form: TdxForm);
+var
+  FormIndex: integer;
+begin
+  FormIndex := FormSeach (Form);
+  if FormIndex = -1 then exit;
+  dxLoger[FormIndex].Event := false;
+  dxLoger[FormIndex].allowPost := false;
+  dxLoger[FormIndex].FormState := '';
+  dxLoger[FormIndex].Fm := nil;
+end;
+
+function UserCheck (UserList: TVariantArray2d): boolean;
+var
+  i, Cnt: integer;
+  User1, User2: String;
+begin
+  try
+    Cnt := Length (UserList);
+    User1 := LowerCase (GetCurrentUser);
+    for i:=0 to Cnt-1 do
+    begin
+      User2 := UserList[i][0];
+      if User1 = User2 then
+      begin
+        Loger_StopFunc;
+        Result := true;
+        exit;
+      end;
+    end;
+    UserCheckCount := true;
+  finally
+
+  end;
+end;
+
+function getFldName(Obj:TComponent):String;
+var
+  s:string;
+begin
+  s:=LowerCase(Obj.Classname);
+  if s='tdxedit' then
+    result:=tdxedit(Obj).Fieldname
+  else if s='tdxcalcedit' then
+    result:=tdxcalcedit(Obj).Fieldname
+  else if s='tdxdateedit' then
+    result:=tdxdateedit(Obj).Fieldname
+  else if s='tdxtimeedit' then
+    result:=tdxtimeedit(Obj).Fieldname
+  else if s='tdxcombobox' then
+    result:=tdxcombobox(Obj).Fieldname
+  else if s='tdxlookupcombobox' then
+    result:=tdxlookupcombobox(Obj).Fieldname
+  else if s='tdxmemo' then
+    result:=tdxmemo(Obj).Fieldname
+  else if s='tdxcheckbox' then
+    result:=tdxcheckbox(Obj).Fieldname
+  else if s='tdxcounter' then
+    result:=tdxcounter(Obj).Fieldname
+  else if s='tdxobjectfield' then
+    result:=tdxobjectfield(Obj).Fieldname
+  else
+    result:='';
+end;
+
+function GetAllFieldsName (Self: TdxForm): TVariantArray2d;
+var
+  i, Ln, Hg: Integer;
+  fn: string;
+  Arr: TVariantArray2d;
+begin
+  try
+    for i := 0 to Self.ComponentCount - 1 do
+    begin
+      fn := LowerCase(getFldName(Self.Components[i]));
+      if fn = '' then continue;
+      Ln := Length (Arr)+1;
+      setlength (Arr, Ln);
+      Hg := High(Arr);
+      setlength (Arr[Hg], 1);
+      Arr[Hg][0] := fn;
+    end;
+    Result := Arr;
+  except
+    setlength (Arr, 0);
+  end;
+end;
+
+procedure LogerKlient (AllFields: boolean; FieldName, UserList: TVariantArray2d);
+
+begin
+  try
+    if StopFuncCount then exit;
+    if AllFields then
+    begin
+      setlength (FieldName, 0);
+      FieldName := GetAllFieldsName (Self);
+    end;
+    AddToDxLoger  (Self, FieldName);
+    //if UserCheckCount then exit;
+    if UserCheck (UserList) then exit;
+    if not MainWindowEvent then
+    begin
+      MainWindow.OnDatabaseClose  := @DatabaseClose;
+      MainWindow.OnDestroyForm    := @FormDestroy;
+      MainWindowEvent := true;
+    end;
+  except
+    Loger_StopFunc;
+  end;
+end;
+

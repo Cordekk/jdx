@@ -1,0 +1,31 @@
+{@action
+Id=2244F873-AE38-4903-9DC3-4BE44F4D7091
+OrigName=GetFileDescription
+Name=Получить описание файла
+Group=Свойства компонентов
+UI=<ui>
+<field name="source_file_field" caption="Поле типа &quot;Файл&quot;" filter="TdxFile"
+required="1"/>
+<field name="any_txt_field" caption="Поле для вставки описания" filter="text"
+required="1"/>
+</ui>
+Description=Действие извлекает описание из поля "файл" в указанное текстовое поле формы.
+@}
+
+procedure FileChange(Sender: TObject);
+var Form:TdxForm;
+F:TdxFile;
+begin
+F:=TdxFile(Sender);
+Form:=TdxForm(F.Owner);
+if (Form.State=dsInsert) or (Form.State=dsEdit) then
+Form[Form.Params.Values[F.FieldName]]:=F.Description;
+end;
+
+procedure GetFileDescription(SrcFile,DestField:string);
+var C:TComponent;
+begin
+C:=Self.FindComponentByFieldName(SrcFile);
+TCustomEdit(C).OnChange:=@FileChange;
+Self.Params.Values[SrcFile]:=DestField;
+end;

@@ -1,0 +1,857 @@
+{@module
+Author=DataExpress
+Version=1.1
+Description=Импорт данных в форму или таблицу из файла CSV или другого текстового файла, где данные разделены точкой с запятой.
+@}
+
+const
+  BUTTON_CAPTION_1 = 'Показать только ошибки';
+  BUTTON_CAPTION_2 = 'Показать все';
+  OK_IMAGE = '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';
+  ERR_IMAGE = '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';
+
+var
+  ErrCount, ErrRowCount, EmptyRowCount: Integer;
+  CellErrors: array of array of Boolean;
+  GridData: array of array of String;
+  FormFields: TStringList;
+  Grid: TKGrid;
+
+function CreateProgress: TWindow;
+begin
+  Result := TWindow.Create;
+  Result.BorderStyle := bsNone;
+  Result.Width := 200;
+  Result.Height := 80;
+  Result.Position := poOwnerFormCenter;
+  with TShape.Create(Result) do
+  begin
+    Parent := Result;
+    Align := alClient;
+    Brush.Color := clBtnFace;
+    Shape := stRectangle;
+  end;
+  with TLabel.Create(Result) do
+  begin
+    Name := 'Msg';
+    Parent := Result;
+    Font.Size := 10;
+    Font.Name := 'Verdana';
+    AutoSize := False;
+    Align := alClient;
+    BorderSpacing.Around := 4;
+    Alignment := taCenter;
+    Layout := tlCenter;
+  end;
+end;
+
+procedure ShowProgress(W: TWindow; const Msg: String);
+begin
+  with TLabel(W.FindComponent('Msg')) do
+    Caption := Msg;
+  if not W.Visible then W.Show;
+end;
+
+procedure LoadImageFromString(Img: TdxImage; const Buf: String);
+var
+  SS: TStringStream;
+begin
+  SS := TStringStream.Create(DecodeBase64(Buf, False));
+  try
+    Img.LoadFromStream(SS);
+  finally
+    SS.Free;
+  end;
+end;
+
+function CheckValue(C: TObject; const Value: String): Boolean;
+var
+  E: Extended;
+  DT: TDateTime;
+begin
+  Result := False;
+  if Value = '' then Result := True
+  else if (C is TdxCalcEdit) and  not TryStrToFloat(Value, E) then
+  else if (C is TdxDateEdit) and not TryStrToDate(Value, DT) then
+  else if (C is TdxTimeEdit) and not TryStrToTime(Value, DT) then
+  else if (C is TdxCheckBox) and (Value <> '0') and (Value <> '1') then
+  else Result := True;
+end;
+
+function ReadValue(St: TStream; var EndLine: Boolean): String;
+var
+  IsQuote: Boolean;
+  S: String;
+begin
+  Result := '';
+  SetLength(S, 1);
+  EndLine := False;
+
+  if St.Read(S, 1) = 1 then
+  begin
+    if S = '"' then IsQuote := True
+    else St.Position := St.Position - 1;
+  end;
+
+  while (St.Read(S, 1) = 1) do
+  begin
+    if (S = ';') and not IsQuote then
+      Break
+    else if S = '"' then
+    begin
+      // Экранированные кавычки - ""
+      if not IsQuote then
+        Result := Result + S[1]
+      else if St.Read(S, 1) = 1 then
+      begin
+        if S = '"' then
+          Result := Result + S[1]
+        else
+        begin
+          IsQuote := False;
+          St.Position := St.Position - 1;
+        end;
+      end
+      else
+        IsQuote := False;
+    end
+    else if (S[1] in [#10, #13]) and not IsQuote then
+    begin
+      EndLine := True;
+      if (St.Read(S, 1) = 1) and (S <> #10) then
+        St.Position := St.Position - 1;
+      Break;
+    end
+    else
+      Result := Result + S[1];
+  end;
+  // Если закрывающая кавычка не встретилась, то считаем ее как часть значения.
+  if IsQuote then
+    Result := '"' + Result;
+end;
+
+procedure SkipBOM(St: TStream);
+var
+  S: String;
+begin
+  SetLength(S, 3);
+  St.Read(S, 3);
+  if S <> #$EF#$BB#$BF then St.Seek(0, soFromBeginning);
+end;
+
+procedure ReadData(const FileName: String; ANSI, SkipFirstRow: Boolean);
+var
+  St: TMemoryStream;
+  C, R, RowCount: Integer;
+  HasRowError, EndLine, EmptyRow: Boolean;
+  S: String;
+  Cmp: TObject;
+begin
+  ErrCount := 0; ErrRowCount := 0; EmptyRowCount := 0;
+  HasRowError := False;
+  EmptyRow := True;
+  C := 0; R := 0; RowCount := 1000;
+  SetLength(GridData, RowCount);
+  SetLength(CellErrors, RowCount);
+  SetLength(GridData[R], FormFields.Count);
+  SetLength(CellErrors[R], FormFields.Count);
+
+  St := TMemoryStream.Create;
+  St.LoadFromFile(FileName);
+
+  try
+
+  SkipBOM(St);
+  while St.Position < St.Size do
+  begin
+    S := ReadValue(St, EndLine);
+    if ANSI then S := WinCPToUtf8(S);
+    if S <> '' then EmptyRow := False;
+
+    if (R = 0) and SkipFirstRow then
+    else if C < FormFields.Count then
+    begin
+      Cmp := FormFields.Objects[C];
+      // Убираем пробелы, разделяющие разряды числа
+      if Cmp is TdxCalcEdit then
+        S := StringReplace(S, ' ', '', [rfReplaceAll]);
+      CellErrors[R][C] := not CheckValue(Cmp, S);
+      if CellErrors[R][C] then
+      begin
+        Inc(ErrCount);
+        HasRowError := True;
+      end;
+      GridData[R][C] := S;
+      Inc(C);
+    end;
+
+    if EndLine or (St.Position = St.Size) then
+    begin
+      if (R = 0) and SkipFirstRow then
+        SkipFirstRow := False
+      else
+      begin
+        Inc(R);
+        if R = RowCount then
+        begin
+          RowCount := RowCount + 1000;
+          SetLength(GridData, RowCount);
+          SetLength(CellErrors, RowCount);
+        end;
+        SetLength(GridData[R], FormFields.Count);
+        SetLength(CellErrors[R], FormFields.Count);
+        if HasRowError then Inc(ErrRowCount);
+        if EmptyRow then Inc(EmptyRowCount);
+        HasRowError := False;
+        EmptyRow := True;
+      end;
+      C := 0;
+    end
+  end;
+
+  SetLength(GridData, R);
+  SetLength(CellErrors, R);
+
+  finally
+    St.Free;
+  end;
+end;
+
+procedure GridDrawCell(Sender: TObject; ACol, ARow: Integer; R: TRect;
+  State: TKGridDrawState);
+var
+  C: TCanvas;
+  Bk, Txt: TColor;
+  TS: TTextStyleRec;
+  Cmp: TObject;
+  n: Integer;
+begin
+  C := Grid.Canvas;
+  if (kgdMouseOver in State) and (kgdFixed in State) then
+  begin
+    Bk := Grid.Colors.FixedCellIndication;
+    Txt := Grid.Colors.FixedCellText;
+  end
+  else if kgdFixed in State then
+  begin
+    Bk := Grid.Colors.FixedCellBkGnd;
+    Txt := Grid.Colors.FixedCellText;
+  end
+  else if kgdFocused in State then
+  begin
+    Bk := Grid.Colors.FocusedCellBkGnd;
+    Txt := Grid.Colors.FocusedCellText;
+  end
+  else
+  begin
+    n := StrToInt(Grid.Cells[0, ARow]);
+    if CellErrors[n-1][ACol-1] then Bk := RGBToColor(255, 100, 100)
+    else Bk := Grid.Colors.CellBkGnd;
+    Txt := Grid.Colors.CellText;
+  end;
+  C.Brush.Color := Bk;
+  C.Font.Color := Txt;
+  C.FillRect(R);
+
+  if (ACol > 0) and (ARow > 0) then
+  begin
+    Cmp := FormFields.Objects[ACol-1];
+    if (Cmp is TdxCalcEdit) or (Cmp is TdxCheckBox) then TS.Alignment := 1;
+  end;
+  TS.Layout := 1;
+  TS.SingleLine := True;
+  TS.Clipping := True;
+  C.TextRect(R, R.Left + 2, R.Top + 3, Grid.Cells[ACol, ARow], TS);
+end;
+
+function ErrorExistsInRow(R: Integer): Boolean;
+var
+  i: Integer;
+begin
+  Result := False;
+  for i := 0 to FormFields.Count - 1 do
+    if CellErrors[R][i] then
+    begin
+      Result := True;
+      Exit;
+    end;
+end;
+
+function IsEmptyRow(R: Integer): Boolean;
+var
+  i: Integer;
+begin
+  Result := True;
+  for i := 0 to FormFields.Count - 1 do
+    if GridData[R][i] <> '' then
+    begin
+      Result := False;
+      Exit;
+    end;
+end;
+
+procedure ShowErrorsOnly;
+var
+  i, j, r: Integer;
+begin
+  r := 1;
+  Grid.RowCount := ErrRowCount + 1;
+  for i := 0 to High(GridData) do
+  begin
+    if not ErrorExistsInRow(i) then Continue;
+    Grid.Cells[0, r] := IntToStr(i+1);
+    for j := 1 to Grid.ColCount - 1 do
+      Grid.Cells[j, r] := GridData[i][j-1];
+    Inc(r);
+  end;
+end;
+
+procedure ShowAllRows;
+var
+  i, j: Integer;
+begin
+  Grid.RowCount := Length(GridData) + 1;
+  for i := 1 to Grid.RowCount - 1 do
+  begin
+    Grid.Cells[0, i] := IntToStr(i);
+    for j := 1 to Grid.ColCount - 1 do
+      Grid.Cells[j, i] := GridData[i-1][j-1];
+  end;
+end;
+
+procedure BtnClick(Sender: TObject);
+var
+  Bn: TButton;
+begin
+  Bn := TButton(Sender);
+  if Bn.Caption = BUTTON_CAPTION_1 then
+  begin
+    Bn.Caption := BUTTON_CAPTION_2;
+    ShowErrorsOnly;
+  end
+  else
+  begin
+    Bn.Caption := BUTTON_CAPTION_1;
+    ShowAllRows;
+  end;
+end;
+
+procedure HelpButtonClick(Sender: TObject);
+begin
+  MsgBox('Помощь', 'Проверьте, чтобы все данные соответствовали полям формы. ' +
+    'Ячейки с ошибками выделены красным цветом. ' +
+    'Данные считаются ошибочными, если тип данных не соответствует ' +
+    'типу поля или имеют другой формат. Строки с ошибками и пустые строки не ' +
+    'импортируются. Если вы видите "иероглифы" или "вопросы" вместо текста, ' +
+    'значит файл имеет другую кодировку.');
+end;
+
+function ShowCheckDataWindow: Integer;
+var
+  i: Integer;
+  W: TWindow;
+  Lbl: TLabel;
+  Pan: TPanel;
+  Buttons: TButtonPanel;
+  Btn: TButton;
+  Img: TdxImage;
+begin
+  W := TWindow.Create;
+  W.Width := 850; W.Height := 400;
+  W.Caption := 'Данные для импорта';
+  W.Position := poOwnerFormCenter;
+  W.Font.Size := 10;
+  W.Font.Name := 'Verdana';
+  W.BorderIcons := W.BorderIcons - [biMinimize];
+
+  Pan := TPanel.Create(W);
+  Pan.Parent := W;
+  Pan.BevelOuter := bvNone;
+  Pan.Caption := '';
+  Pan.Height := 48;
+  Pan.Align := alTop;
+
+  Img := TdxImage.Create(W);
+  Img.Parent := W;
+  Img.SetBounds(8, 8, 32, 32);
+
+  Lbl := TLabel.Create(W);
+  Lbl.Parent := Pan;
+  Lbl.Font.Style := [fsBold];
+  Lbl.Font.Size := 8;
+  Lbl.Left := 48; Lbl.Top := 18;
+
+  Btn := TButton.Create(W);
+  Btn.Parent := W;
+  Btn.SetBounds(W.Width - 208, 12, 200, 25);
+  Btn.Caption := BUTTON_CAPTION_1;
+  Btn.OnClick := @BtnClick;
+  Btn.Anchors := [akRight, akTop];
+
+  Grid := TKGrid.Create(W);
+  Grid.Name := 'Grid';
+  Grid.Parent := W;
+  Grid.Align := alClient;
+  Grid.Colors.CellLines := clSilver;
+  Grid.Options := [goColSizing, goFixedHorzLine, goFixedVertLine, goHorzLine,
+    goVertLine, goHeader];
+  Grid.RowCount := Length(GridData) + 1;
+  Grid.ColCount := FormFields.Count + 1;
+  Grid.FixedRows := 1;
+  Grid.FixedCols := 1;
+  Grid.BorderSpacing.Left := 4;
+  Grid.BorderSpacing.Right := 4;
+  Grid.OnDrawCell := @GridDrawCell;
+
+  Buttons := TButtonPanel.Create(W);
+  Buttons.Parent := W;
+  Buttons.ShowButtons := [pbOk, pbCancel, pbHelp];
+  Buttons.ShowBevel := False;
+  Buttons.OkButton.Caption := 'Импортировать';
+  Buttons.HelpButton.OnClick := @HelpButtonClick;
+
+  if ErrCount > 0 then
+  begin
+    LoadImageFromString(Img, ERR_IMAGE);
+    Lbl.Caption := Format('Обнаружено %d ошибок в %d строках. Импортировано будет строк: %d из %d',
+      [ErrCount, ErrRowCount, Length(GridData) - ErrRowCount - EmptyRowcount,
+      Length(GridData)]);
+    Lbl.Font.Color := clMaroon;
+  end
+  else
+  begin
+    LoadImageFromString(Img, OK_IMAGE);
+    if EmptyRowCount = 0 then
+      Lbl.Caption := Format('Ошибок не обнаружено. Импортировано будет строк: %d',
+        [Length(GridData)])
+    else
+      Lbl.Caption := Format('Ошибок не обнаружено. Импортировано будет строк: %d из %d',
+        [Length(GridData) - EmptyRowCount, Length(GridData)]);
+    Lbl.Font.Color := clGreen;
+    Btn.Visible := False;
+  end;
+
+  Grid.ColWidths[0] := 50;
+  for i := 1 to Grid.ColCount - 1 do
+  begin
+    Grid.Cells[i, 0] := FormFields[i-1];
+    Grid.ColWidths[i] := 100;
+  end;
+  ShowAllRows;
+
+  Result := W.ShowModal;
+
+  W.Free;
+end;
+
+function OpenDialog(const InitFolder, DefaultFileName: String): String;
+begin
+  Result := '';
+  with TOpenDialog.Create(nil) do
+  begin
+    InitialDir := InitFolder;
+    FileName := DefaultFileName;
+    Title := 'Открыть файл для импорта';
+    Filter := 'Файлы CSV (*.csv)|*.csv|Все файлы|*.*';
+    DefaultExt := 'csv';
+    if Execute then
+      Result := FileName;
+    Free;
+  end;
+end;
+
+function GetOrAddObject(LCbx: TdxLookupComboBox; const Value: String): Integer;
+var
+  SQL: String;
+begin
+  SQL := Format('select id, [%1:s] from [%0:s] where LOWER([%1:s])=''%2:s''',
+    [LCbx.SourceFormName, LCbx.SourceFieldName, Utf8LowerCase(Value)]);
+  with TdxSQLQuery.Create(SQL) do
+  begin
+    Open;
+    if RecordCount = 0 then
+    begin
+      Append;
+      Field[1].AsString := Value;
+      Post;
+      ApplyUpdates;
+    end;
+    Result := Field[0].AsInteger;
+    Free;
+  end;
+end;
+
+function GetObjectId(LCbx: TdxLookupComboBox; const Value: String): Integer;
+var
+  SQL: String;
+begin
+  Result := 0;
+  SQL := Format('select id, [%1:s] from [%0:s] where LOWER([%1:s])=''%2:s''',
+    [LCbx.SourceFormName, LCbx.SourceFieldName, Utf8LowerCase(Value)]);
+  with TdxSQLQuery.Create(SQL) do
+  begin
+    Open;
+    if RecordCount > 0 then
+      Result := Field[0].AsInteger;
+    Free;
+  end;
+end;
+
+function UpdateFieldExists(var Fields: TVariantArray2d): Boolean;
+var
+  i: Integer;
+begin
+  Result := False;
+  for i := 0 to High(Fields) do
+    if Fields[i][1] = '1' then
+    begin
+      Result := True;
+      Exit;
+    end;
+end;
+
+function MakeFilter(Fm: TdxForm; var Values: TVariantArray2d): String;
+var
+  i: Integer;
+  S: String;
+  V: Variant;
+  C: TComponent;
+begin
+  Result := '';
+  for i := 0 to High(Values) do
+  begin
+    S := Values[i][0];
+    V := EvalExpr(Values[i][1], Self);
+    Result := Result + '[' + S + ']=';
+    if V = Null then
+      Result := Result + 'null'
+    else
+    begin
+      V := VarToStr(V);
+      C := Fm.FindComponentByFieldName(S);
+      if C is TdxCalcEdit then
+        V := StringReplace(V, GetFormatSettings.DecimalSeparator, '.', [])
+      else if (C is TdxCheckBox) or (C is TdxLookupComboBox) then
+      else V := '''' + V + '''';
+      Result := Result + V;
+    end;
+    Result := Result + ' & ';
+  end;
+  Delete(Result, Length(Result) - 2, 3);
+end;
+
+function ImportCSV(const InitFolder, DefaultFileName, CharSet: String;
+  SkipFirstRow: Boolean; Fm: TdxForm; Fields, Values: TVariantArray2d;
+  UpdateData: Boolean): Boolean;
+var
+  FileName: String;
+  Data: TStringList;
+  S, FlNm, V, LocateFields, Flt: String;
+  i, j, n, LocateFieldsCount, id: Integer;
+  Cmp: TObject;
+  PW: TWindow;
+  LocateValues, InsertValues: array of Variant;
+  DoLocate: Boolean;
+begin
+  Result := False;
+  if (Fm.ParentForm <> nil) and (Fm.ParentForm.State = dsBrowse) then
+  begin
+    MsgBox('Внимание', 'Переведите форму в режим редактирования!');
+    Exit;
+  end;
+  FileName := OpenDialog(InitFolder, DefaultFileName);
+  if FileName = '' then Exit;
+
+  // Заранее вычисляем выражения для вставки значений в поля.
+  SetLength(InsertValues, Length(Values));
+  for i := 0 to High(Values) do
+    InsertValues[i] := EvalExpr(Values[i][1], Self);
+
+  FormFields := TStringList.Create;
+  Data := TStringList.Create;
+  PW := CreateProgress;
+
+  try
+
+  // Помещаем компоненты формы в список для дальнейшей обработки
+  for i := 0 to High(Fields) do
+  begin
+    S := Fields[i][0];
+    Cmp := Fm.FindComponentByFieldName(S)
+    FormFields.AddObject(S, Cmp);
+  end;
+
+  // Формируем список полей, участвующих в поиске записи
+  LocateFieldsCount := 0;
+  LocateFields := '';
+  if UpdateData then
+  begin
+    for i := 0 to High(Fields) do
+      if Fields[i][1] = '1' then
+      begin
+        LocateFields := LocateFields + Fields[i][0] + ';';
+        Inc(LocateFieldsCount);
+      end;
+    Delete(LocateFields, Length(LocateFields), 1);
+    SetLength(LocateValues, LocateFieldsCount);
+  end;
+
+  ShowProgress(PW, 'Чтение данных...');
+  Application.ProcessMessages;
+
+  ReadData(FileName, Charset = 'ANSI', SkipFirstRow);
+
+  if Length(GridData) = 0 then
+  begin
+    PW.Close;
+    MsgBox('Внимание', 'Файл не содержит данных для импорта');
+    Exit;
+  end;
+
+  if ShowCheckDataWindow <> mrOk then Exit;
+
+  ShowProgress(PW, Format('Импортировано' + LineEnding + '0 из %d', [Length(GridData)]));
+  Application.ProcessMessages;
+
+  if Fm.PId = 0 then
+  begin
+    Flt := MakeFilter(Fm, Values);
+    if (Flt = '') and not UpdateFieldExists(Fields) then
+      Fm.OpenRecord(0)
+    else
+      Fm.OpenRecords(Flt, nil, False);
+  end;
+  Fm.DisableControls;
+
+  for i := 0 to High(GridData) do
+    try
+
+      // Импортируем только непустые строки без ошибок
+      if not ErrorExistsInRow(i) and not IsEmptyRow(i) then
+      begin
+
+        // Если есть поля для поиска, формируем список значений для поиска
+        if UpdateData and (LocateFieldsCount > 0) then
+        begin
+          n := 0; DoLocate := True;
+          for j := 0 to FormFields.Count - 1 do
+            if Fields[j][1] = '1' then
+            begin
+              S := GridData[i][j];
+              if S <> '' then
+              begin
+                Cmp := FormFields.Objects[j];
+                if Cmp is TdxLookupComboBox then
+                begin
+                  id := GetObjectId(TdxLookupComboBox(Cmp), S);
+                  if id > 0 then LocateValues[n] := IntToStr(id)
+                  else
+                  begin
+                    DoLocate := False;
+                    Break;
+                  end;
+                end
+                else
+                  LocateValues[n] := S;
+              end
+              else
+                LocateValues[n] := Null;
+              Inc(n);
+            end;
+          // Изменяем существующую запись или добавляем новую
+          if DoLocate and Fm.Locate(LocateFields, LocateValues, [loCaseInsensitive]) then
+          begin
+            if Fm.Edit <> asOk then RaiseException(erCustomError, 'Невозможно редактировать запись');
+          end
+          else
+            Fm.Append;
+        end
+        else
+          Fm.Append;
+
+        // Заполняем поля
+        for j := 0 to FormFields.Count - 1 do
+        begin
+          FlNm := FormFields[j];
+          Cmp := FormFields.Objects[j];
+          V := GridData[i][j];
+          if V = '' then
+            Fm[FlNm] := Null
+          else if Cmp is TdxLookupComboBox then
+            with TdxLookupComboBox(Cmp) do
+            begin
+              KeyValue := GetOrAddObject(TdxLookupComboBox(Cmp), V);
+              Field.AsString := V;
+            end
+          else
+            Fm[FlNm] := V;
+        end;
+
+        // Вставляем значения в поля
+        for j := 0 to High(Values) do
+        begin
+          FlNm := Values[j][0];
+          Fm[FlNm] := InsertValues[j];
+        end;
+
+        Fm.Post;
+
+        if i mod 10 = 0 then
+        begin
+          ShowProgress(PW, Format('Импортировано' + LineEnding + '%d из %d', [i, Length(GridData)]));
+          Application.ProcessMessages;
+        end;
+      end;
+    except
+      if Fm.State in [dsInsert, dsEdit] then Fm.Cancel;
+      Debug(Format('В строке %d произошла ошибка: %s', [i, ExceptionParam]));
+    end;
+
+  Result := True;
+
+  finally
+    if Fm.Opened then
+    begin
+      Fm.MoveFirst;
+      Fm.EnableControls;
+    end;
+    Data.Free;
+    FormFields.Free;
+    for i := 0 to High(GridData) do
+    begin
+      SetLength(CellErrors, 0);
+      SetLength(GridData, 0);
+    end;
+    SetLength(CellErrors, 0);
+    SetLength(GridData, 0);
+    SetLength(LocateValues, 0);
+    SetLength(InsertValues, 0);
+    PW.Free;
+  end;
+end;
+
+{@action
+id=3495F0CA-B40A-4D26-9E2D-91CF364BF2A3
+target=button
+origname=ImportCSVToTable
+name=Импорт CSV в таблицу
+group=Импорт данных
+ui=<ui>
+  <folder name="initfolder" caption="Исходная папка"/>
+  <text name="filename" caption="Имя файла"/>
+  <list name="charset" caption="Кодировка" items="ANSI;UTF-8" defaultvalue="ANSI"/>
+  <checkbox name="skipfirstrow" caption="Пропустить первую строку - заголовок"
+    defaultvalue="1"/>
+  <childform name="table" caption="Целевая таблица" required="1"/>
+  <grid name="fields" caption="Поля таблицы" height="250">
+    <field name="tablefield" caption="Поле таблицы" source="table" required="1"
+      filter="text;number;date;time;object;checkbox"/>
+  </grid>
+</ui>
+description=Импорт данных из CSV и других текстовых файлов, где значения отделены
+друг от друга точкой с запятой. Вы выбираете файл для импорта, расширение
+считывает данные и показывает их вам в табличном виде. Проверьте данные и,
+если все в порядке, можете их импортировать. Если в данных найдены ошибки, то
+они выделяются красным цветом. Данные считаются ошибочными, если тип данных не
+соответствует типу поля или имеют неправильный формат. Строки с ошибками и
+пустые строки не импортируются.<br><br>
+Расширение умеет удалять из числовых данных пробелы, понимает многострочные
+значения, значения в двойных кавычках (двойные кавычки используются, чтобы
+символы переноса строки и разделитель данных считались частью значения).<br><br>
+Расширение может добавлять отсутствующие значения в справочник, если данные
+импортируются в объект.<br><br>
+<b>Исходная папка</b> - именно эта папка будет текущей, когда откроется диалог
+выбора файла. Оставьте это поле пустым, если хотите, чтобы система сама решела
+какая папка будет текущей.<br>
+<b>Имя файла</b> - если файл с данными имеет конкретное имя, можете его указать
+в этом параметре. Допустимо использовать маску в имени файла - символы * и ?.
+Например: import*, myfile-????-data.<br>
+<b>Кодировка</b> - файл может быть в кодировке UTF-8 или однобайтовой кодировке
+ANSI. Например, файлы CSV, сохраненные в Excel будут иметь кодировку ANSI.
+Если при проверке вы видите "иероглифы", значит файл в другой кодировке.<br>
+<b>Пропустить первую строку - заголовок</b> - часто первая строка файла
+содержит заголовки полей. Ее надо пропустить.<br>
+<b>Целевая таблица</b> - подчиненная форма, куда будут импортированы данные.<br>
+<b>Поля таблицы</b> - укажите поля таблица в том порядке, в каком идут
+соответствующие данные в файле.
+@}
+function ImportCSVToTable(const InitFolder, DefaultFileName, CharSet: String;
+  SkipFirstRow: Boolean; const TableName: String; Fields: TVariantArray2d): Boolean;
+begin
+  Result := ImportCSV(InitFolder, DefaultFileName, CharSet, SkipFirstRow,
+    Self.Forms[TableName], Fields, [], False);
+end;
+
+{@action
+id=DAB4A991-055D-466F-A13B-A462C2BE964E
+target=button
+origname=ImportCSVToForm
+name=Импорт CSV в форму
+group=Импорт данных
+ui=<ui>
+  <folder name="initfolder" caption="Исходная папка"/>
+  <text name="filename" caption="Имя файла"/>
+  <list name="charset" caption="Кодировка" items="ANSI;UTF-8" defaultvalue="ANSI"/>
+  <checkbox name="skipfirstrow" caption="Пропустить первую строку - заголовок"
+    defaultvalue="1"/>
+  <form name="form" caption="Целевая форма" required="1"/>
+  <grid name="fields" caption="Поля формы" height="250">
+    <field name="formfield" caption="Поле формы" source="form" required="1"
+      filter="text;number;date;time;object;checkbox"/>
+    <checkbox name="update" caption="Обновлять" width="80"/>
+  </grid>
+  <grid name="values" caption="Вставить значения">
+    <field name="field" caption="Поле формы" source="form" required="1"
+      filter="text;number;date;time;object;checkbox"/>
+    <expr name="expr" caption="Выражение"/>
+  </grid>
+</ui>
+description=Импорт данных из CSV и других текстовых файлов, где значения отделены
+друг от друга точкой с запятой. Вы выбираете файл для импорта, программа
+считывает данные и показывает их вам в табличном виде. Проверьте данные и,
+если все в порядке, можете их импортировать. Если в данных найдены ошибки, то
+они выделяются красным цветом. Данные считаются ошибочными, если тип данных не
+соответствует типу поля или имеют неправильный формат. Строки с ошибками и
+пустые строки не импортируются.<br><br>
+Расширение умеет удалять из числовых данных пробелы, понимает многострочные
+значения, значения в двойных кавычках (двойные кавычки используются, чтобы
+символы переноса строки и разделитель данных считались частью значения). Также
+расширение умеет обновлять данные при импорте. Т. е. программа ищет по
+определенным полям данные и если они есть, то данные обновляются, в ином случае
+данные добавляются.<br><br>
+Расширение может добавлять отсутствующие значения в справочник, если данные
+импортируются в объект.<br><br>
+<b>Исходная папка</b> - эта папка будет текущей, когда откроется диалог
+выбора файла. Оставьте это поле пустым, если хотите, чтобы система сама определяла
+какая папка будет текущей.<br>
+<b>Имя файла</b> - если файл с данными имеет конкретное имя, можете его указать
+в этом параметре. Допустимо использовать маску в имени файла - символы * и ?.
+Например: import*, myfile-????-data.<br>
+<b>Кодировка</b> - файл может быть в кодировке UTF-8 или однобайтовой кодировке
+ANSI. Например, файлы CSV, сохраненные в Excel будут иметь кодировку ANSI.
+Если при проверке вы видите "иероглифы", значит файл в другой кодировке.<br>
+<b>Пропустить первую строку - заголовок</b> - часто первая строка файла
+содержит заголовки полей. Ее надо пропустить.<br>
+<b>Целевая форма</b> - форма, куда будут импортированы данные.<br>
+<b>Поля формы</b> - укажите поля формы в том порядке, в каком идут
+соответствующие данные в файле. Флажок "Обновлять" указывает программе искать
+значения по этому полю. Если значение найдено, то программа обновляет запись,
+если не найдено, то добавляется новая запись.
+<b>Вставить значения</b> - при добавлении записей в указанные поля будут
+вставляться результаты вычисления выражений. Данный параметр можно использовать
+при импорте каких-то зависимых данных.
+@}
+
+function ImportCSVToForm(const InitFolder, DefaultFileName, CharSet: String;
+  SkipFirstRow: Boolean; const FormName: String; Fields, Values: TVariantArray2d): Boolean;
+var
+  Fm: TdxForm;
+begin
+  Fm := TdxForm.Create(FormName);
+  try
+    Result := ImportCSV(InitFolder, DefaultFileName, CharSet, SkipFirstRow, Fm,
+      Fields, Values, True);
+  finally
+    Fm.Free;
+  end;
+end;
