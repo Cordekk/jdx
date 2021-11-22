@@ -1,0 +1,224 @@
+procedure Url (Sender: TObject);
+begin
+ ShellExecute('open', 'http://www.dataexpress.wiki/moduli:jurist23rus:dx_loger:dx_loger', '',   '', 1);
+end;
+
+procedure BrowseRecord (Sender: TObject);
+var Fm: TdxForm;
+begin
+  if (Self['Форма'] = null) or (Self['ИД'] = null) then exit;
+  try
+    Fm := TdxForm.Create(Self['Форма']);
+    Fm.Open
+    if Fm.GoToRecord(Self['ИД']) then
+      Fm.EditWindow.ShowModal
+    else
+    MsgBox ('Просмотр записи', 'Невозможно просмотреть запись.'+#13+
+        'Запись уже удалена.');
+  except
+    MsgBox ('Ошибка', 'Невозможно просмотреть запись!'+#13+
+        'Возможно эта запись относится к таблице (дочерней форме).');
+  finally
+    if Fm <> nil then Fm.Free;
+  end;
+end;
+
+procedure VisualComponents (Sender: TObject);
+var s: string;
+begin
+  if Self.Params.values['Запуск'] <> null then exit;
+  if Self.AsS['Тип формы'] = 'дочерняя (таблица)' then
+  begin
+    dxShape2.Brush.Color := $00C0C0C0
+    dxButton1.Enabled := false;
+    exit;
+  end;
+
+  s := Self.AsS['Наименование события'];
+  if not (s in ['удаление записи', '']) then
+    dxButton1.Enabled := true else dxButton1.Enabled := false;
+
+  if S = 'удаление записи' then dxShape2.Brush.Color := $008080FF
+  else if S = 'изменение записи' then dxShape2.Brush.Color := $0080FFFF
+  else if S = 'добавление записи' then dxShape2.Brush.Color := $0080FF80
+  else dxShape2.Brush.Color := clNone;
+end;
+
+procedure UpdateLog (Sender: TObject);
+var
+  iDr, CountR: integer;
+
+begin
+  iDr := Self.RecID;
+  CountR := Self.RecordCount;
+  Self.Refresh;
+  Self.GoTORecord (iDr);
+  CountR := Self.RecordCount-CountR;
+  msgbox ('Журнал событий', 'Данные журнала обновлёны!'+#13+#13+
+    'Новых записей: '+IntToStr(CountR));
+end;
+
+procedure LoadDataLabel;
+var iDr: integer;
+begin
+  dxLabel14.Caption := TimeToStr(Time);
+  dxLabel17.Caption := DateToStr ((Self.AsDT['Дата']))+' '+
+    TimeToStr(Self.AsDT['Время сохранения записи']);
+  iDr := Self.RecID;
+  Self.MoveLast;
+  dxLabel15.Caption := DateToStr (Self.AsDT['Дата'])+' '+
+    TimeToStr(Self.AsDT['Время сохранения записи']);
+  Self.GoTORecord (iDr);
+end;
+
+procedure AutoClear (DateClear: TDateTime; ConfirmClear: boolean);
+var
+  str : string;
+  msg, Rec: integer;
+
+begin
+  Self.Close;
+  Str := '[Дата] < CDATE("'+DateToStr(DateClear)+'")';
+  Self.OpenRecords (str, nil, false);
+  Self.MoveLast;
+  Rec := Self.RecordCount;
+  if Rec = 0 then
+  begin
+    Self.Refresh;
+    exit;
+  end;
+  if ConfirmClear then
+  begin
+    msg := MessageDlg ('Автоочистка', 'В настройках DX Loger задана автоочистка'+
+    ' всех записей журнала созданных до '+DateToStr(DateClear)+', таких '+
+    'записей найдено: '+IntToStr(Rec)+#13+#13+'Удалить записи журнала?',
+    mtConfirmation, [mbYes, mbNo]);
+    if msg = mrNo then
+    begin
+      Self.Refresh;
+      exit;
+    end;
+  end;
+  while not Self.BoF do
+  begin
+    Self.Delete;
+  end;
+  Self.Refresh;
+end;
+
+
+procedure AutoClearCheckParam (Sender: TObject);
+var
+  Fm: TdxForm;
+  DateClear: TDateTime;
+  ConfirmClear: boolean;
+begin
+  if Self.Params.values['Запуск'] <> null then exit;
+  Self.OnAfterOpen := nil;
+  Self.OnAfterScroll := nil;
+  try
+    Fm := TdxForm.Create ('Log_Config');
+    Fm.Open;
+    if Fm.RecordCount = 0 then exit;
+    if Fm['флажок_автоочистка'] = 1 then
+    begin
+      DateClear := Fm.AsDT['Дата очистки'];
+      ConfirmClear := Fm['Флажок_подтверждение очистки'];
+      AutoClear (DateClear, ConfirmClear);
+    end;
+    LoadDataLabel;
+    Self.OnAfterScroll :=@ VisualComponents;
+  finally
+    Fm.Free;
+  end;
+
+end;
+
+procedure GoToRecord (Sender: TObject);
+begin
+  if TdxButton(Sender).Name = 'dxButton3' then
+    Self.MoveLast
+  else Self.MoveFirst;
+end;
+
+procedure Log_Config (Sender: TObject);
+var
+  Fm: TdxForm;
+  User: String;
+begin
+  try
+    Fm := TdxForm.Create ('Log_Config');
+    Fm.Open;
+    User := trim (Fm.AsS['Пользователь']);
+    if (User <> '') and (User <> GetCurrentUser) then
+    begin
+      msgbox ('Нет прав доступа к парметрам', 'Доступ запрещён!');
+      exit;
+    end;
+    Fm.Edit;
+    if Fm.EditWindow.ShowModal = mrOk then Fm.Post
+      else Fm.Cancel;
+  finally
+    Fm.Free;
+  end;
+end;
+
+procedure VisualEffects;
+begin
+  if Self.Params.values['Запуск'] <> null then exit;
+  dxShape1.OnClick := @Url;
+  dxImage1.OnClick := @Url;
+  dxLabel2.OnClick := @Url;
+  dxLabel22.OnClick := @Url;
+  dxLabel18.OnClick := @Url;
+  dxLabel10.OnClick := @Url;
+  dxLabel11.OnClick := @Url;
+  dxLabel2.ShowHint := true;
+  dxLabel2.Hint := 'Переход к сайту';
+  dxImage1.ShowHint := true;
+  dxImage1.Hint := 'Переход к сайту';
+  dxShape1.ShowHint := true;
+  dxShape1.Hint := 'Переход к сайту';
+  dxCalcEdit1.HideButton := true;
+  dxDateEdit1.HideButton := true;
+end;
+
+var MainFmChange: boolean;
+
+procedure MainWindowConfig(Sender: TObject);
+begin
+  if Self.Params.values['Запуск'] <> null then exit;
+  if not MainWindow.Toolbar.Showing then exit;
+  MainWindow.Toolbar.Buttons[4].visible := false;
+  MainWindow.Toolbar.Buttons[5].visible := false;
+  MainWindow.Toolbar.Buttons[6].visible := false;
+  MainWindow.Toolbar.Buttons[7].visible := false;
+  MainWindow.Toolbar.Buttons[8].visible := false;
+  Self.OnBeforeOpen := nil;
+  MainFmChange := true;
+end;
+
+procedure Form_Create;
+begin
+  VisualEffects;
+  Self.OnBeforeOpen :=@MainWindowConfig;
+  Self.Grid.PopupMenu := nil;
+  Self.Grid.OnDblClick := nil;
+  Self.OnAfterOpen :=@ AutoClearCheckParam;
+  Self.OnAfterScroll :=@ VisualComponents;
+  dxButton1.OnClick := @BrowseRecord;
+  dxButton2.OnClick := @UpdateLog;
+  dxButton3.OnClick := @GoToRecord;
+  dxButton4.OnClick := @GoToRecord;
+  dxButton5.OnClick := @Log_Config;
+end;
+
+procedure Form_Destroy;
+begin
+  IF NOT MainFmChange then exit;
+  MainWindow.Toolbar.Buttons[4].visible := true;
+  MainWindow.Toolbar.Buttons[5].visible := true;
+  MainWindow.Toolbar.Buttons[6].visible := true;
+  MainWindow.Toolbar.Buttons[7].visible := true;
+  MainWindow.Toolbar.Buttons[8].visible := true;
+end;

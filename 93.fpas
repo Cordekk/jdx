@@ -1,0 +1,69 @@
+{$I MyDialogs}
+//{$I StrUtils}
+
+// Импорт
+
+procedure ImportOplaty(Sender: TObject);
+var
+  FileName, S, S1, Search, Str: String;
+  Data, SL, SL1: TStringList;
+  i: Integer;
+begin
+FileName := ImportCsvDialog; //Ооткрываем файл csv
+  if FileName = '' then Exit;
+  SL := TStringList.Create;
+  SL1 := TStringList.Create;
+  Data := TStringList.Create;
+  Data.LoadFromFile(FileName)
+  i := 1;
+
+  While i < Data.Count do // пока есть строки выполняем действие
+  begin
+    S := Data[i];    // Берем вторую строку i=1
+    i := i+1;
+    SplitStr(S, ';', SL);   // создаем список строк, разделенных ";"
+    // если в списке 5 элементов, то продолжаем
+    if SL.Count = 5 then
+    begin
+    // сначала ищем нет ли уже такой записи
+      Search := StringReplace(SL[0],'"','',[rfReplaceAll, rfIgnoreCase]) +  StringReplace(SL[1],'"','',[rfReplaceAll, rfIgnoreCase]) + SL[2];
+      if not Self.Locate('Индекс', [Search], []) then   //если нет. то добавляем
+      begin
+        Self.Append;
+        Self['Индекс'] := Search;
+      end;
+      Self.edit; // потенциальный косяк, надо проверять доступность редактирования
+      // присваиваем значения
+      Self['Номер платежки'] := StringReplace(SL[0],'"','',[rfReplaceAll, rfIgnoreCase]);
+      Self['Дата оплаты'] := StringReplace(SL[1],'"','',[rfReplaceAll, rfIgnoreCase]);
+      Str:= SL[2];
+      Str:=StringReplace(Str, ',' , '.' ,[]);
+      Self['Сумма оплаты'] := Strtofloat(Str);
+      Self['Плательщик'] := StringReplace(SL[3],'"','',[rfReplaceAll, rfIgnoreCase]);
+      Str:=SL[4];
+      Str:=StringReplace(Str,'"','',[rfReplaceAll, rfIgnoreCase]);
+      // проверка на наличие переносов в строке
+      if Length(Str) < 5 then
+        begin
+        S1 := Data[i];
+        SplitStr(S1, ';', SL1);
+        S1 := SL1[0];
+        S1:=StringReplace(S1,'"','',[rfReplaceAll, rfIgnoreCase]);
+        end;
+        // объединяем обе строки
+      Self['Назначение платежа'] := Str+S1;
+      // сохраняем
+      Self.Post;
+    end;
+  end;
+  // освобождаем объекты
+  SL.Free;
+  SL1.Free;
+  Data.Free;
+  MsgBox('DataExpress', 'Импорт выполнен успешно!');
+end;
+
+procedure Form_Create;
+begin
+ //  dxButton2.OnClick := @ImportOplaty;
+end;

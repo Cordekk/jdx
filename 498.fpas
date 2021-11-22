@@ -1,0 +1,67 @@
+procedure AutoClearComponents;
+begin
+  if self['флажок_автоочистка'] = 0  then
+  begin
+    dxDateEdit1.Enabled := false ;
+    dxCheckBox5.Enabled := false;
+    dxCheckBox1.Caption := 'отключена';
+  end
+  else
+  begin
+    dxDateEdit1.Enabled := true;
+    dxCheckBox5.Enabled := true;
+    dxCheckBox1.Caption := 'включена';
+  end;
+
+end;
+
+
+procedure FieldChange (Sender, Control: TObject; const FieldName: String);
+begin
+  if FieldName in ['флажок_автоочистка'] then AutoclearComponents;
+
+end;
+
+
+var ControlMainFmPage : boolean;
+
+procedure CheckForm (Sender: TObject);
+begin
+  if MainWindow.Pages.ActivePage.Caption = 'Log_Config' then
+  begin
+    Self.Close;
+    MsgBox ('DX Loger', 'Запрещено открытие формы Log_Config!'+#13+
+      'Для изменения нестроек модуля "DX Loger" следует открыть форму "Log"'+
+      ' и нажать кнопку "Параметры".'+#13+#13+'Для  нормального продолжения работы '+
+      'закройте вкладку формы "Log_Config".' );
+    MainWindow.Toolbar.Enabled := false;
+    Self.Grid.PopupMenu := nil;
+    Self.Grid.OnDblClick := nil;
+    ControlMainFmPage := true;
+    exit;
+  end;
+  if (Self.RecordCount = 0) then Self.Append;
+  AutoClearComponents;
+end;
+
+procedure TimeLastEdit (Sender: TObject);
+begin
+  Self['Дата последнего изменения'] := date;
+  Self['Время последнего изменения'] := time;
+end;
+
+
+procedure Form_Create;
+begin
+Self.OnFieldChange := @FieldChange;
+Self.OnAfterOpen := @CheckForm;
+Self.OnBeforePost := @TimeLastEdit;
+end;
+
+procedure Form_Destroy;
+begin
+  if not ControlMainFmPage then exit;
+  MainWindow.Toolbar.Enabled := true;
+end;
+
+

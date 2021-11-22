@@ -1,0 +1,35 @@
+procedure SaveFilesFromQuery (Sender: TObject);
+var
+   Q: TdxQueryGrid;
+   Fm: TdxForm;
+   F: TdxFile;
+   FileName: string;
+begin
+    Q := Self.Queries['Запрос3'];
+   Fm := TdxForm.Create('FileStore2');
+   Q.DisableControls;
+   dxQueryGrid4.DisableControls;
+   Q.MoveFirst;
+   while not Q.Eof do
+    begin
+    dxQueryGrid4.refresh;
+    dxQueryGrid4.MoveLast;
+    Fm.OpenRecord(dxQueryGrid4.RecId);
+    if (Fm.RecordCount > 0) and (Self['Имя файла'] <> '') then
+      begin
+         FileName:= Self['Имя файла'];
+         F := Fm.Files['Файл'];
+         F.SaveToFile(GetOutputDir + FileName);
+      end;
+    Fm.Close;
+    Q.MoveNext;
+   end;
+   dxQueryGrid4.EnableControls;
+   Q.EnableControls;
+   Fm.Free;
+end;
+
+procedure Form_Create;
+begin
+   dxButton3.OnClick := @SaveFilesFromQuery;
+end;
