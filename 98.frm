@@ -208,6 +208,96 @@ object Form98: TdxForm
     GroupDigits = True
     PadZeros = True
   end
+  object dxCalcEdit4: TdxCalcEdit
+    Left = 184
+    Height = 24
+    Top = 404
+    Width = 80
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 7
+    HideButton = False
+    CalculatorLayout = clNormal
+    AsInteger = 0
+    ButtonWidth = 24
+    NumGlyphs = 1
+    Flat = True
+    Id = 1821
+    FieldName = 'Полученное значение'
+    Precission = 4
+    Required = False
+    DefaultValue = '0'
+    Editable = False
+    NullToZero = True
+    GroupDigits = True
+    PadZeros = True
+  end
+  object dxLabel6: TdxLabel
+    Left = 52
+    Height = 16
+    Top = 380
+    Width = 256
+    Caption = 'Приписанное и Полученное значения'
+    ParentColor = False
+  end
+  object dxCalcEdit5: TdxCalcEdit
+    Left = 184
+    Height = 24
+    Top = 552
+    Width = 80
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 8
+    HideButton = False
+    CalculatorLayout = clNormal
+    AsInteger = 0
+    ButtonWidth = 24
+    NumGlyphs = 1
+    Flat = True
+    Id = 1822
+    FieldName = 'Отклонение'
+    Precission = 4
+    Expression = 'ABC([Приписанное значение]-[Полученное значение])'
+    Required = False
+    DefaultValue = '0'
+    Editable = True
+    NullToZero = True
+    GroupDigits = True
+    PadZeros = True
+  end
+  object dxCalcEdit6: TdxCalcEdit
+    Left = 52
+    Height = 24
+    Top = 552
+    Width = 80
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 9
+    HideButton = False
+    CalculatorLayout = clNormal
+    AsInteger = 0
+    ButtonWidth = 24
+    NumGlyphs = 1
+    Flat = True
+    Id = 1823
+    FieldName = 'Допустимое отклонение'
+    Precission = 4
+    Expression = 'IIF([БСр]=1,([Приписанное значение]+[Полученное значение])/2, [Приписанное значение])*[КэфБ]+[КэфА]'
+    Required = False
+    DefaultValue = '0'
+    Editable = True
+    NullToZero = True
+    GroupDigits = True
+    PadZeros = True
+  end
+  object dxLabel7: TdxLabel
+    Left = 48
+    Height = 16
+    Top = 532
+    Width = 274
+    Caption = 'Допустимое и Фактическое отклонения'
+    ParentColor = False
+  end
   object dxCalcEdit7: TdxCalcEdit
     Left = 128
     Height = 24
