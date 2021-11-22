@@ -1,0 +1,272 @@
+{@module
+author=Develop-Soft [https://forum.develop-soft.ru]
+version=1.0
+homepage=https://forum.develop-soft.ru/viewtopic.php?*
+description=
+<b>Действия:</b><br>
+1. <i>[кнопки]</i> Печать (список)<br><br>
+
+Изменения:<br>
+v 1.0 от 00.00.2020 - выход первой версии<br>
+...
+<br><br>
+<hr><br> <br>
+<b><a href="https://forum.develop-soft.ru/viewtopic.php?*">Домашняя страница</a>
+ |
+<a href="https://forum.develop-soft.ru/donate">Поблагодарить</a>
+</b>
+<br> <hr>
+@}
+
+{@action
+Id=E0B66748-44C3-43BA-80E3-B3AF404D9EDC
+Target=button
+OrigName=StartPrintList
+Name=Печать (список)
+Group=Печать
+UI=
+<ui>
+<checkbox name="visible_ext" caption="Показать расширение файла в меню"/>
+</ui>
+Description=
+<b>Действие кнопки. Открывает меню печати внутри формы.</b><br><br>
+<img src="base64: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"/>
+<hr><br> <br>
+<b><a href="https://forum.develop-soft.ru/viewtopic.php?*">Домашняя страница</a>
+ |
+<a href="https://forum.develop-soft.ru/donate">Поблагодарить</a>
+
+</b>
+<br> <hr>
+
+@}
+
+
+const PrnImgBase64 = 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAltJREFUeNqMU89PE1EQ/t7u2y2WSpWAlQONFq/iQSnEC4WDBw1WLyb+DRr/AROaktjEk4nRq3+BCcUmBj1I60VRDtZ4FRI9YMVEpYt0fz5nHgVZwsFJJm8y833fzps3K+5X5rCcKMBSPgRChGFU9fywGEQRoLBjApCGAdsyF0zTuKZgwhcWxt06pIKBi51XeNMzDaEEvMAtzt+9jA7xVFdAkEAPndcri0XblFBCak5Ap4xIgIMJUtv8/RMrqUvYJvDKl7jAhSzgU1PnNmroSx/XHOZKBoSKuzXoAlJF1B7zhtNxAQ65xphAGSLq5mUYhtUgCIoU42iqF8K0YFGcSyNmLhOoxhjX87W2lHJBzM7OqnK5rEG3bt+BJU2QIIIwiglI02AC/CDE40cPda5UKnHPEdrOFlZX1zAwMIhEwqahi70HwL+HoJyC63pofvyEXO40mKtnYFsWciOn0N/fTwIJupvAYaYUC7gaa0trpzOeRLvt4O2792g2P/yXQKNxBhP5MT1FyWBny4FtWzg7OopWqwVBS3OoALWcyWQ0ljliV2B726XhWciP5fFtfV3fn8GxGZAo93VyaAie52mOFjCo4Ps+epNHUKs9w4+N7yhMTumXUN1R8lD5BeqNJQwMnsDMzFXNYa7sdDqN6vzTSVZPJgysZm/gwc1pfHXiizScAp6sDSIbvcaLxedamrlcHyE/v+tX7r2kTVNqi9zpOsec49p+LHNFpVLRX6H1wbJdgLfZWjLsZCE88Dea1G7k/anbfZmpca/OK723HweNOzqGw+0X+ef9ib8CDACFvBEKYY958gAAAABJRU5ErkJggg==';
+      OowImgBase64 = 'AAABAAEAEBAAAAAAAABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvHwNwbl7DP+3eQv/tngL/7R2Cv+ydQn/sHMI/65yCP+scAf/q28G/6luBf+nbAX/pWsE/6NpA78AAAAAAAAAAL5+Dv////////////////////////////////////////////////////////////////+mawT/AAAAAAAAAADAgA//////////////////////////////////////////////////////////////////qG0F/wAAAAAAAAAAwoIQ////////////u3wN/7l7DP+3eQv/tngL/7R2Cv+ydQn//////////////////////6tvBv8AAAAAAAAAAMWEEf////////////////////////////////////////////////////////////////+tcQf/AAAAAAAAAADHhhL////////////AgA//vn4O/7x9Df+6ew3/uXoM/7d5C/+1dwr/s3YK////////////sHMI/wAAAAAAAAAAyocT/////////////////////////////////////////////////////////////////7J1Cf8AAAAAAAAAAMyJFP///////////8WEEf/DghD/wYEP/79/D/++fg7/vHwN/7p7DP+4egz///////////+0dwr/AAAAAAAAAADPixX/////////////////////////////////////////////////////////////////t3kL/wAAAAAAAAAA0Y0W////////////yocT/8iGEv/GhRH/xIMR/8KCEP/BgA//////////////////4siZ/7l7DM8AAAAAAAAAANOPF///////////////////////////////////////////////////////7t2//8CAEu26fA4lAAAAAAAAAADWkRj/////////////////////////////////////////////////9u3b/8aKIfrBgA9CAAAAAAAAAAAAAAAA2JMZ////////////////////////////////////////////+/fv/86XNP/FgxJlwIIRPcCAD9gAAAAAAAAAANuVGv///////////////////////////////////////v37/9ioUv/KiBKPx4YRO8WEEfLDghD/AAAAAAAAAADdlxv//////////////////////////////////////+O7dv/NixO4yooUP8mHE/LHhhL/xYQR/wAAAAAAAAAA4JkcvN6XG//clhr/2pQa/9iTGf/Xkhj/1ZAX/9OPF//RjRfLzIgRD8yJFNnMiRT/yocT/8iFEusAAAAAgAEAAIABAACAAQAAgAEAAIABAACAAQAAgAEAAIABAACAAQAAgAEAAIABAACAAwAAgAEAAIABAACAAQAAgAEAAA==';
+      OosImgBase64 = 'AAABAAEAEBAAAAAAAABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFbApwROvKP8Srib/Ea0l/w+sJP8OqyP/Daoh/wupIP8KqB//Cacd/wemHP8GpRv/BaQZ/wOjGL8AAAAAAAAAABexK/////////////////////////////////////////////////////////////////8FpBr/AAAAAAAAAAAYsiz/////////////////////////////////////////////////////////////////B6Yc/wAAAAAAAAAAGrMu////////////FbAp/xOvKP8Srib/Ea0l/w+sJP8OqyP/Daoh/wupIP///////////wmnHf8AAAAAAAAAABy1MP///////////xexK//+//7//v/+/xOuJ//+//7//v/+//7//v8NqiL///////////8KqB//AAAAAAAAAAAetjL///////////8Ysiz/F7Er/xawKv8Uryn/E64n/xKtJv8QrCX/D6sj////////////DKoh/wAAAAAAAAAAILcz////////////GrMu//7//v/+//7/FrEq//7//v/+//7//v/+/xGtJf///////////w6rI/8AAAAAAAAAACG5Nf///////////xy1MP8btC//GbMt/xiyLP8XsSv/FbAp/xSvKP8Trif///////////8QrCT/AAAAAAAAAAAjujf///////////8etjL//v/+//7//v8asy7//v/+//7//v/+//7/FK8p////////////Eq0m/wAAAAAAAAAAJbs4////////////ILcz/x62Mv8dtTH/HLQv/xqzLv8Zsy3/F7Is/xaxKv//////nd6l/xKvJ88AAAAAAAAAACe8Ov////////////7//v/+//7//v/+//7//v/+//7//v/+//7//v/+//7/werH/xuzLu0VsyklAAAAAAAAAAApvjz/////////////////////////////////////////////////3fTg/ym4PPoXsitCAAAAAAAAAAAAAAAAKr8+////////////////////////////////////////////8Prx/z/AUP8cszBlGbQuPRmzLdgAAAAAAAAAACzAP////////////////////////////////////////P78/1vLav8euDKPHrYwOxy1MPIbtC//AAAAAAAAAAAuwkH//////////////////////////////////////37Xiv8juDW4ILY1Px+3M/IetjL/HLUw/wAAAAAAAAAAL8NCvC7CQf8twUD/LMA//yq/Pv8pvjz/KL07/ya8Ov8kuznLIrszDyK4NtkhuDX/ILcz/x62MusAAAAAgAEAAIABAACAAQAAgAEAAIABAACAAQAAgAEAAIABAACAAQAAgAEAAIABAACAAwAAgAEAAIABAACAAQAAgAEAAA==';
+      MswImgBase64 = 'AAABAAEAEBAAAAAAAABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABjSTX/Y0k1/2NJNf9jSTX/Y0k1/2NJNf9jSTX/Y0k1/2NJNf9jSTX/Y0k1/2NJNf9jSTX/AAAAAAAAAAAAAAAAt6KT//ri0v/fuJ7/4LaZ/+K0lf/isZH/5K+M/+WtiP/mq4T/56d//+ilev/ro3f/Y0k1/wAAAAAAAAAAAAAAALmklf/75tr/++fa//vm2f/65dj/++TW//vi0//54ND/+N3M//nbyf/42sf/6aR7/2NJNf8AAAAAAAAAAAAAAAC7ppb/++zi//zs4v/WrpD/1q6Q/9aukP/WrpD/1q6Q/9aukP/43s7/+NvK/+engP9jSTX/AAAAAAAAAAAAAAAAvqiZ//3w6P/98On//fDo//zv5//87eX/++vh//vo3P/65df/+uLT//nezv/mrIX/Y0k1/59ZJv+bVST/mVEj/5dOIf+USiD/kkcf/5BFHf+OQhz/jEAc/4s+G//WrpD/1q6Q//vl1//64dL/5K6K/2NJNf+hXCj///////////////////////////////////////////+NQBv//O/o//zs4v/76Nz/+uTW/+Oxj/9jSTX/pGAp///////AelL/mUoZ///SwP+OOxT/wHpS//+/q///////jkId/9aukP/WrpD/++rh//vm2v/is5X/Y0k1/6djK///////wHpS/7BaO///08H/jzYN/9iaeP//xLD//////5BFHv/99O//1q6Q//zt5P/76d3/4LaZ/2NJNf+pZyz/+PDl/5xLF/+8eyX/mEYV/5RFF/+pYDX//8q3//////+SRx///vby/9aukP/87ub/++rf/964nf9jSTX/rGou///59f+iVyT/9dK4/59QHv//1sT/lEAT/+KqWP//////lEsg//748//WrpD//PDp//zs4f/duqH/Y0k1/7NrMfj88Ob/pVcg//Tn2v+cSxf/5tPE/49BE/+gUhr//////5ZNIv/WrpD/1q6Q//3x6f/cvKX/3buk/2RKNv+5bTTR7NS9///59P//9e///+7i///l2P//4dL//+HR//////+ZUSP//fj0//317/+3opP/ZEo2/2RKNv9kSjb/vm03fdOmf/3s1L3//PDm///59f///fz/////////////////nFQk//739P/99O//uaSV/9TFuv9kSjb/bFU+GgAAAAC+bTd9uW000bNuNf+tai7/qWcs/6djKv+kYCn/olwo/59ZJv/+9/P//fTt/8CrnP9kSjb/bFU+GgAAAAAAAAAAAAAAAAAAAADYwrL/18Gx/9bAsP/Uvq7/0r2t/9G6q//Puar/zbao/8u2pv/KtKX/bFU+GQAAAAAAAAAA4AAAAOAAAADgAAAA4AAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAQAA4AMAAA==';
+      MseImgBase64 = 'AAABAAEAEBAAAAAAAABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABjSTX/Y0k1/2NJNf9jSTX/Y0k1/2NJNf9jSTX/Y0k1/2NJNf9jSTX/Y0k1/2NJNf9jSTX/AAAAAAAAAAAAAAAAt6KT//ri0v/fuJ7/4LaZ/+K0lf/isZH/5K+M/+WtiP/mq4T/56d//+ilev/ro3f/Y0k1/wAAAAAAAAAAAAAAALmklf/75tr/++fa//vm2f/65dj/++TW//vi0//54ND/+N3M//nbyf/42sf/6aR7/2NJNf8AAAAAAAAAAAAAAAC7ppb/++zi/9aukP/WrpD/1q6Q/9aukP/659r/1q6Q/9aukP/WrpD/+NvK/+engP9jSTX/AAAAAAAAAAAAAAAAvqiZ//3w6P/98On//fDo//zv5//87eX/++vh/9aukP/65df/1q6Q//nezv/mrIX/Y0k1/yJ9KP8eeiX/G3gi/xh1H/8Vch3/E28Z/w9tF/8NaxT/C2kT/wpoEf/87OL/++jd/9aukP/64dL/5K6K/2NJNf8kgCv///////////////////////////////////////////8LaRP//O/o//zs4v/76Nz/+uTW/+Oxj/9jSTX/KIIu//////8cVxX/HFcV/xxXFf+U3o7/LJdG/zN+M///////DWsU/9aukP/WrpD/1q6Q//vm2v/is5X/Y0k1/yqEMf//////ptin/xxXFf+j4J//M5xd/zyka/+J3YP//////xBtF//99O///fHq/9aukP/76d3/4LaZ/2NJNf8rhjL//////7/mv/+Swov/HFcV/z+wg/+Y35T/lN6P//////8Sbhn/1q6Q/9aukP/WrpD/++rf/964nf9jSTX/Log0/+/47//R7ND/t+O1/zmnbf89qHT/o+Gf/57fmv//////FXId//748//99O//1q6Q//zs4f/duqH/Y0k1/y6INPji8eH/5fTk/y+SPf86m1j/HFcV/xxXFf+e1Jr//////xh0H//WrpD/1q6Q/9aukP/cvKX/3buk/2RKNv8uiDTRwd/C/zOCJv80gS//0ezQ/6vQqP8cVxX/YYJX//////8beCL//fj0//317/+3opP/ZEo2/2RKNv9kSjb/Log0fYW8iP7B38L/4vHh/+/47//6/fr/////////////////Hnol//739P/99O//uaSV/9TFuv9kSjb/bFU+GgAAAAAuiDR9Log00TOKN/8uiDT/LIYz/yqEMf8ogi7/JH8r/yF9KP/+9/P//fTt/8CrnP9kSjb/bFU+GgAAAAAAAAAAAAAAAAAAAADYwrL/18Gx/9bAsP/Uvq7/0r2t/9G6q//Puar/zbao/8u2pv/KtKX/bFU+GQAAAAAAAAAA4AAAAOAAAADgAAAA4AAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAQAA4AMAAA==';
+      HtmImgBase64 = 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAbBJREFUeNqkU00rRFEYfs+HmTsGMySZ2EhK2ahJw8pPsEWSZCNbG6YsfJVfYCMb6xlMWVixYETJHyALFrKRGWJm7j2v855zRmKDeev2dO69z/M+78dhiAi1hExM5fZ8X42oPwpxxkBKvi+JvDSdhEApYL8kUyrBOSxvX45Iylz2FWwd34NgzP1QdcOMKPuiTEaV/j4z3AnElfTizUcQkhuBQL/QZkwaInKureqHlDgQ2cqWlVOMj2ZwYfcaKXrTefweRa3es3iK5YrCvqUzRJ12YPUCVw5usWU8iyQKpcCKVZzz7vSZwzw0eAKO5pNQJxmkumLGiW4e+GjrMgKBO1yvDRlsqg8ZbIxY7GgO25FJASVdrheWloNOgHEDMLhxZYmedFhn8OSmAI8vFfBC3DQ4JIRuoG23YXJhBVqbbKZY1BLjDtcP7+DptQIx7cjT9nNzfeC7cbKWsQzOTqTg4fn9c0zU/SrSqHh1vAhmSkJPJRH3YHPnXE9I249EQ9AmbE1GFX5idYHA7UVEl0dc1j6ZLQQBawyU+tMq0yYKgUUS76fzP+9SwGq9jRxqjA8BBgDhHLrTIxoPCgAAAABJRU5ErkJggg==';
+
+
+
+function Base64ImgByExt(FileName:string):string;
+var s:string;
+begin
+s := lowercase(ExtractFileExt(FileName));
+if pos(s,'.docx .doc .xml')>0 then
+result := MswImgBase64
+ else
+if pos(s,'.xls .xlsx')>0 then
+result := MseImgBase64
+ else
+if pos(s,'.ods .fods')>0 then
+result := OosImgBase64
+ else
+if pos(s,'.odt .fodt')>0 then
+result := OowImgBase64
+ else
+if pos(s,'.html .htm')>0 then
+result := HtmImgBase64
+else
+ result := PrnImgBase64;
+s:='';
+end;
+
+
+var PrintMenu : TPopupMenu;
+    Templates : TStrings;
+    PrintResult : string;
+    ItsFinal:boolean;
+    VisibleExtention:boolean;
+
+function FileIsOpen(const aFileName : String) : Boolean;
+var
+  Fs : TFileStream;
+begin
+  Result := FileExists(aFileName);
+  if not Result then Exit;
+  Result := False;
+  Fs := nil;
+  try
+    Fs := TFileStream.Create(aFileName, fmOpenReadWrite or fmShareExclusive);
+  except
+    Result := True;
+  finally
+    if Fs<>nil then
+    Fs.Free;
+  end;
+end;
+
+var Fm:TdxForm;
+
+function GetFocusedControl:TWinControl;
+var i:integer;
+begin
+  for i:=0 to Fm.ComponentCount-1 do
+  if (Fm.Components[i] is TWinControl) and
+     (TWinControl(Fm.Components[i]).Focused) then
+    begin
+      result := TWinControl(Fm.Components[i]);
+      break;
+    end
+  else
+    Continue;
+end;
+
+function FocusedButton:TdxButton;
+begin
+   result:=nil;
+   if GetFocusedControl is TdxButton then
+   result :=TdxButton(GetFocusedControl);
+end;
+
+function AutoNumFileName(FFName:string;WithReplace:boolean):string;
+var Path,FileNameNoExt,FileExt,NewName:string;
+i:integer;
+
+begin
+if FileExists(FFName)=false then
+begin
+  result:=FFName;
+  exit;
+end;
+
+Path := ExtractFilePath(FFName);
+FileNameNoExt := ExtractFileNameOnly(FFName);
+FileExt := ExtractFileExt(FFName);
+
+i := 1;
+NewName := FFName;
+while FileExists(NewName) do
+   if WithReplace then
+      begin
+        if FileIsOpen(NewName) then
+        begin
+          inc(i);
+          NewName:=Path+FileNameNoExt+'('+IntToStr(i)+')'+FileExt;
+          result:=NewName;
+        end
+      else
+        begin
+          result:=NewName;
+          exit;
+        end
+      end
+  else
+    begin
+      inc(i);
+      NewName:=Path+FileNameNoExt+'('+IntToStr(i)+')'+FileExt;
+      result:=NewName;
+    end;
+end;
+
+procedure MI_Click(Sender: TObject);
+var MI:TMenuItem;
+    OutPrintFileName,OutputDir, Errors:string;
+    Bn: TdxButton;
+    Cap:string;
+begin
+  try
+    PrintResult:='';
+    MI:=TMenuItem(Sender);
+    Bn := TdxButton(TPopupMenu(Mi.GetParentComponent).Owner);
+    if GetOutputDir = '' then
+    OutputDir := GetTemplatesDir else
+    OutputDir := GetOutputDir;
+    Cap := Bn.Caption;
+    Bn.Caption := 'Печать...';
+    OutPrintFileName := OutputDir+ExtractFileName(Templates[MI.MenuIndex]);
+    Fm.Print(Templates[MI.MenuIndex], OutPrintFileName, Errors, true);
+    if Errors<>'' then MessageDlg('Ошибки "'+Templates[MI.MenuIndex]+'"',Errors,
+    mtError,[]);
+    if FileExists(OutPrintFileName) then
+    PrintResult:=OutPrintFileName else
+    begin
+      MsgBox('Ошибка печати','Не удалось сформировать документ по шаблону "'+
+      Templates[MI.MenuIndex]
+      +'"'+#13#10+
+      'Возможно вы используете неподдерживаемый формат (поддерживаемые: .odt, '+
+      '.ods, .fodt, .fods, .docx, .xml, .html)')
+      PrintResult:='';
+    end;
+  except
+    PrintResult:='';
+  finally
+    Bn.Caption := Cap;
+    MI:=nil;
+    ItsFinal := true;
+  end;
+end;
+
+procedure PrintMenu_Popup(Sender: TObject);
+begin
+  ItsFinal := true;
+end;
+
+function StartPrintList(cb_VisibleExt:integer):string;
+  var MI:TMenuItem;
+      i:integer;
+      IL:TImageList;
+      //SS:TStringStream;
+      Ext:string;
+begin
+  Templates := TStrings(integer(GetPropValue(Self,'templates')));
+  if Templates.Count = 0 then
+  begin
+    Templates:=nil;
+    MsgBox('Печать (список)',
+    'В текущей форме не указано ни одного шаблона для печати');
+    exit;
+  end;
+  if cb_VisibleExt = 1 then
+  VisibleExtention := true else VisibleExtention := false;
+  Templates.Text:=Trim(Templates.Text);
+  PrintResult := '';
+  Fm := Self;
+  if PrintMenu<>nil  then
+  begin
+   PrintMenu.Free;
+   PrintMenu := nil;
+  end;
+  PrintMenu:=TPopupMenu.Create(FocusedButton);
+  IL:=TImageList.Create(PrintMenu);
+  PrintMenu.Images := IL;
+  for i:=0 to Templates.Count-1 do
+    begin
+      MI:=TMenuItem.Create(PrintMenu);
+      if Trim(Templates[i])='-' then
+      MI.Caption := Templates[i] else
+      begin
+        if VisibleExtention then
+        Ext := ' ('+Copy(ExtractFileExt(Templates[i]),2,length(ExtractFileExt(Templates[i]))-1)+')' else
+        Ext := '';
+        MI.Caption := ExtractFileNameOnly(Templates[i])+Ext;
+      end;
+      MI.OnClick := @MI_Click;
+      //убрать комментарий при переходе на новую версию   MI.ImageIndex:= IL.AddFromStringBase64(Base64ImgByExt(Templates[i]));
+      PrintMenu.Items.Add(MI);
+    end;
+      ItsFinal := false
+      PrintMenu.OnPopup := @PrintMenu_Popup;
+      PrintMenu.Popup;
+    repeat
+      Application.ProcessMessages;
+    until
+      ItsFinal;
+      if PrintMenu <> nil then
+        begin
+          PrintMenu.Free
+          PrintMenu := nil;
+        end;
+      if Templates<>nil then
+      Templates := nil;
+      result := PrintResult;
+end;
+
+
+
+
+
+

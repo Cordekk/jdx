@@ -1,0 +1,29 @@
+{@action
+Id=06E2ED05-56CE-4443-A019-EAABF4C96361
+OrigName=ClickAct
+Name=Клик
+Group=Функции WinAPI
+UI=
+<ui>
+  <component name="cmp" caption="Выберите компонент для клика" />
+</ui>
+Description=Действие эмулирует клик по компоненту левой кнопкой мыши.
+@}
+
+const
+WM_LBUTTONDOWN = 513;
+WM_LBUTTONUP = 514;
+
+function SendMessage(hWnd:HWND;Msg,wParam,lParam:LongInt):LongInt;
+external 'SendMessageA@User32.dll stdcall';
+
+procedure ClickAct(Sender:variant);
+var WCtrl:TWinControl;
+begin
+WCtrl:=TWinControl(Self.FindComponent(Sender));
+SendMessage(WCtrl.Handle,WM_LBUTTONDOWN,0,0);
+SendMessage(WCtrl.Handle,WM_LBUTTONUP,0,0)
+end;
+
+
+

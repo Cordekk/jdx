@@ -1,0 +1,293 @@
+{@module
+Author=Stark
+Version=1
+Description=Всплывающее окно настроек.
+@}
+
+{@action
+Id=59E17B88-182D-458B-8888-TRYUD6C33333
+OrigName= CustomizationLbl
+Name= CustomizationLbl
+Group= Настройки
+ui=<ui>
+   <Component  name="dxP" caption="TdxLabel"  filter="TdxLabel;TdxButton" required="1" />
+   <Component  name="dxP2" caption="TdxGroupBox"  filter="TdxGroupBox" required="1" />
+   <checkbox name="CP23" caption="уменьшать высоту формы на высоту TdxGroupBox" />
+</ui>
+description= Всплывающее окно настроек. Выбираете надпись или кнопку при клике на которую будет всплывать окно настроек содержащее
+ выбранный TdxGroupBox. Если указать "Высота формы равна TdxGroupBox.Top + 50" как true
+ при показе окна формы ее размер будет уменьшен по верхней грани группы TdxGroupBox
+ (актуально если размещаем группу внизу формы под всеми элементами).
+ При нажатии на кнопку/надпись TdxGroupBox будет показывать на всплывающем окне.
+@}
+
+type
+    TQTData = record
+    selfT: TdxForm;
+    Lb: TdxLabel;
+    Bt: TdxButton;
+    Gb: TdxGroupBox;
+    Cb, h,w, htop: integer;
+    OnBefCl, QT_OnShow1: TNotifyEvent;
+    ArrH, ArrT: array of integer;
+
+  end;
+
+var
+   QTArr: array of TQTData;
+   QT_OldDBClose: TNotifyEvent;
+   MyW: TWindow;
+
+
+procedure debb (s: string);
+begin
+     debug ('ошибка Модуль=CustomizationLbl; Procedure =' + s + '; ExceptionParam=' + ExceptionParam);
+end;
+
+function QT_GetIndex(T: TObject): Integer;
+var  i: Integer; s: string;
+begin
+    result:=-1;
+
+         s:= TComponent(T).classname;
+
+         if s= 'TdxForm' then
+         try
+            for i:=0  to Length(QTArr) -1  do
+            if QTArr[i].selfT = TdxForm(T) then
+            if QTArr[i].selfT.Params['tagB'] = TdxForm(T).Params['tagB'] then
+            begin
+               Result := i;
+               Exit;
+            end;
+         except debb('ошибка индекс резалт QT_GetIndex TdxForm(T).Params'); end;
+
+         if s = 'TEditWindow' then
+         try
+            for i:=0  to Length(QTArr) -1  do
+            if QTArr[i].selfT = TEditWindow(T).form then
+            if QTArr[i].selfT.Params['tagB'] = TEditWindow(T).form.Params['tagB'] then
+            begin
+               Result := i;
+               Exit;
+            end;
+         except debb('ошибка индекс резалт QT_GetIndex TEditWindow(T).form.Params['); end;
+
+         if s = 'TdxLabel' then
+         try
+                for i:=0  to Length(QTArr) -1  do
+                if  QTArr[i].Lb.tag = TdxLabel(T).tag then
+                begin
+                   Result := i;
+                   Exit;
+                end;
+         except    debb('ошибка индекс резалт  QT_GetIndex if  QTArr[i].Lb.tag = TdxLabel(T).tag then'); end;
+
+         if s = 'TdxGroupBox' then
+         try
+                for i:=0  to Length(QTArr) -1  do
+                if QTArr[i].Gb.tag = TdxGroupBox(T).tag then
+                begin
+                   Result := i;
+                   Exit;
+                end;
+
+         except    debb('ошибка индекс резалт QT_GetIndex if QTArr[i].Gb.tag = TdxGroupBox(T).tag then '); end;
+
+         if s = 'TdxButton' then
+         try
+                for i:=0  to Length(QTArr) -1  do
+                if QTArr[i].Bt.tag = TdxButton(T).tag then
+                begin
+                   Result := i;
+                   Exit;
+                end;
+
+         except    debb('ошибка индекс резалт QT_GetIndex if QTArr[i].Bt.tag = TdxButton(T).tag then  '); end;
+end;
+
+var myQT: TQTData;
+
+
+procedure Dest (Sender: TObject; var Action: TCloseAction);
+var QT: TQTData;
+begin
+  with QT do
+  try
+      QT:= myQT;
+      Gb.Parent:= selfT;
+      Gb.Visible:= false;
+  except
+      debb('CustomizationLbl LbClick');
+  end;
+end;
+
+
+procedure LbClick (Sender: TObject);
+var QT: TQTData;  i: integer;
+begin
+  try
+     i := QT_GetIndex (Sender);
+     if i >= 0 then
+     begin
+         QT:= QTArr[i];
+
+         with QT do
+         if not QT.Gb.Visible then
+         begin
+                myQT:= QT;
+                MyW := TWindow.Create;
+
+                MyW.Width := w;
+                MyW.Height := h;
+
+                Gb.Width:= w;
+                Gb.Height:= h+15;
+                Gb.top:=-10;
+                Gb.left:=0;
+                Gb.Parent:= MyW;
+                Gb.Visible:= true;
+
+                MyW.OnClose:= @Dest;
+                MyW.ShowModal;
+         end;
+     end;
+  except
+      debb('CustomizationLbl LbClick');
+  end;
+end;
+
+procedure QT_OnShow (Sender: TObject);
+var QT: TQTData;  i, k: integer;// bb: array of boolean; an: array of TAnchors;
+begin
+  if length(QTArr)>0 then
+  try
+     i := QT_GetIndex (Sender);
+     if i >= 0 then
+     begin
+         QT:= QTArr[i];
+
+         with QT do
+         begin
+            if Cb=1 then
+            if selfT.EditWindow<>nil then
+            begin
+               k:= selfT.ComponentCount;
+               selfT.EditWindow.height:= htop+50;
+
+               for i:=0 to k-1 do
+               begin
+                 TControl(selfT.Components[i]).Top    := ArrT[i];
+                 TControl(selfT.Components[i]).height := ArrH[i];
+               end;
+               selfT.EditWindow.show;
+            end;
+            Gb.Visible:= false;
+
+            if QT_OnShow1<>nil then QT_OnShow1(Sender);
+         end;
+     end;
+  except  debb('CustomizationLbl QT_OnShow');   end;
+end;
+
+
+procedure QT_DBClose(Sender: TObject);
+begin
+      SetLength(QTArr, 0);
+      if QT_OldDBClose <> nil then QT_OldDBClose (Sender);
+end;
+
+procedure QT_BefCl (Sender: TObject);
+var QT: TQTData; i: integer;
+begin
+  if length(QTArr)>0 then
+  try
+  i := QT_GetIndex (Sender);
+  if i >= 0 then
+  begin
+      QT:= QTArr[i];
+      if MainWindow.FindComponent('DesignFr')<>nil then
+      SetLength(QTArr, 0);   // зануляем масссив созданных форм быстрого доступа
+
+      if QT.OnBefCl <> nil then QT.OnBefCl (Sender);
+  end;
+  except
+      debb('QT_BefCl');
+  end;
+end;
+
+function RandomB (a,b:Integer): Integer;
+begin
+  result:=0;
+  while  (result<a) or (result>b) do
+  result := a + Random(b);
+end;
+
+procedure CustomizationLbl (lbs, Gbs: string; Cbn: integer);
+var n, i, k: integer; QT: TQTData; //TC: TControl;
+begin
+ if not nz(self.Params['BlockALLModules'],false) then
+ begin
+  with QT do
+  try
+    selfT:= self;
+    Cb:= Cbn;
+
+    if Pos('Button',Lbs)>0 then
+    begin
+       Bt:= TdxButton(self.FindComponent(Lbs));
+       Bt.tag:= RandomB(10000, 9999999);
+       Bt.OnClick:=@LbClick;
+    end
+    else
+    begin
+       Lb:= TdxLabel(self.FindComponent(Lbs));
+       Lb.tag:= RandomB(10000, 9999999);
+       Lb.OnClick:=@LbClick;
+    end;
+
+    Gb:= TdxGroupBox(self.FindComponent(Gbs));
+    Gb.tag:= RandomB(10000, 9999999);
+
+    w := Gb.Width;
+    h := Gb.Height-15;
+    htop:= Gb.Top;
+
+
+    k:= self.ComponentCount;
+    SetLength(ArrH, k);
+    SetLength(ArrT, k);
+    for i:=0 to k-1 do
+    begin
+           ArrH[i]:= TControl(self.Components[i]).height;
+           ArrT[i]:= TControl(self.Components[i]).Top;
+    end;
+
+
+    if not self.Params.ParamExists('tagB') then
+    self.Params['tagB']:= RandomB(10000, 9999999);
+
+    if (MainWindow.FindComponent('DesignFr')<>nil) or (self.ViewType=vtGridOnly) then
+    begin
+       Gb.Visible:= true;
+       QT_OnShow1:= self.EditWindow.OnShow;
+       self.EditWindow.OnShow:= @QT_OnShow;
+    end
+    else
+       Gb.Visible:= false;
+
+    OnBefCl:= self.OnBeforeClose;
+    self.OnBeforeClose:= @QT_BefCl;
+
+  except debb('ошибка на старте CustomizationLbl'); end;
+
+  n := Length(QTArr);
+  if n = 0 then
+  begin
+       QT_OldDBClose := MainWindow.OnDatabaseClose;
+       MainWindow.OnDatabaseClose := @QT_DBClose;
+  end;
+  SetLength(QTArr, n + 1);
+  QTArr[n] := QT;
+ end;
+end;

@@ -1,0 +1,350 @@
+{@module
+Author=Stark
+Version=1
+Description= Скрывает группу закладок создавая на месте закладок ссылки.
+@}
+
+{@action
+Id=59E17B88-182D-458B-8888-TRYUD6C44444
+OrigName= CustomizationBookmark
+Name=Закладки CustomizationBookmark
+Group=Настройки
+ui=<ui>
+   <Component  name="dxP2" caption="TdxPageControl"  filter="TdxPageControl" required="1" />
+</ui>
+description= Скрывает группу закладок создавая на месте закладок ссылки.
+<br><br>
+P.S.<br><br>
+Для блокировки подключения расширения. Например при использовании массовых вычислений используйте  <br>
+   MainWindow.Params['BlockALLModules']:= true; // блокирует подключение расширения при создании нового набора данных для вычислений <br>
+   try <br>
+      dxButton5.Click; // кнопка которая проводит массовые вычисления  <br>
+   finally       <br>
+      MainWindow.Params['BlockALLModules']:= false; // снимает блокировку  <br>
+   end;
+   <br>
+   Последнее актуально для расширений где прописано условие в начале процедуры расширения
+   if not nz(MainWindow.Params['BlockALLModules'],false) then
+@}
+
+type
+    TQTData = record
+    selfT: TdxForm;
+    Lb: array of TLabel;
+    Bt: array of TdxButton;
+    PC: TdxPageControl;
+    Cb, h,w, htop: integer;
+    OnBefCl, OnAfterScrollselfT, QT_OnShow: TNotifyEvent;
+    ArrL, ArrT: array of integer;
+    ArrS, ArrSS: array of variant;
+  end;
+
+var
+   QTArr: array of TQTData;
+   QT_OldDBClose: TNotifyEvent;
+   //MyW: TWindow;
+   Lba: integer;
+
+const
+   FColor=$FF8B2D;
+   SColor=clBlue;
+
+
+procedure debb (s: string);
+begin
+     debug ('ошибка Модуль=CustomizationBookmark; Procedure =' + s + '; ExceptionParam=' + ExceptionParam);
+end;
+
+function QT_GetIndex(T: TObject): Integer;
+var  i, j: Integer; s: string;
+begin
+    result:=-1;
+
+         s:= TComponent(T).classname;
+
+         if s= 'TdxForm' then
+         try
+            for i:=0  to Length(QTArr) -1  do
+            if QTArr[i].selfT = TdxForm(T) then
+            if QTArr[i].selfT.Params['tagB'] = TdxForm(T).Params['tagB'] then
+            begin
+               Result := i;
+               Lba := 0;
+               Exit;
+            end;
+         except debb('ошибка индекс резалт QT_GetIndex TdxForm(T).Params'); end;
+
+         if s = 'TEditWindow' then
+         try
+            for i:=0  to Length(QTArr) -1  do
+            if QTArr[i].selfT = TEditWindow(T).form then
+            if QTArr[i].selfT.Params['tagB'] = TEditWindow(T).form.Params['tagB'] then
+            begin
+               Result := i;
+               Exit;
+            end;
+         except debb('ошибка индекс резалт QT_GetIndex TEditWindow(T).form.Params['); end;
+
+         if s = 'TLabel' then
+         try
+                for i:=0  to Length(QTArr) -1  do
+                for j:=0  to Length(QTArr[i].Lb) -1  do
+                if  QTArr[i].Lb[j].tag = TLabel(T).tag then
+                begin
+                   Result := i;
+                   Lba := j;
+                   Exit;
+                end;
+         except    debb('ошибка индекс резалт  QT_GetIndex if  QTArr[i].Lb.tag = TdxLabel(T).tag then'); end;
+end;
+
+
+procedure lbl_OnMouseEnter(Sender: TObject);
+var QT: TQTData;  //j: integer;
+begin
+   try
+    QT := QTArr[QT_GetIndex(Sender)];
+    with QT.Lb[Lba] do
+    begin
+       Font.Color:=SColor;
+       //Font.Style:=Font.Style+[fsUnderline];
+    end;
+  except
+      debb('lbl_OnMouseEnter');
+  end;
+end;
+
+procedure lbl_OnMouseLeave(Sender: TObject);
+var QT: TQTData;  //j: integer;
+begin
+  try
+    QT := QTArr[QT_GetIndex(Sender)];
+    with QT.Lb[Lba] do
+    begin
+       Font.Color:=FColor;
+       //Font.Style:=Font.Style-[fsUnderline];
+    end;
+  except
+      debb('lbl_OnMouseLeave');
+  end;
+end;
+
+var lbl_last: string;
+
+procedure LbClick (Sender: TObject);
+var i, j: integer; o: TControl; s: string;
+begin
+  if vartostr(TLabel(Sender).Name)<>vartostr(lbl_last) then
+  try
+     lbl_last:= TLabel(Sender).Name;
+
+     i := QT_GetIndex (Sender);
+     if i >= 0 then
+     begin
+         with QTArr[i] do
+         begin
+            s:= PC.Name;
+            PC.ActivePageIndex:= Lba;
+
+            for j:=0 to selfT.ComponentCount - 1 do
+            if ArrSS[j] = s then
+            begin
+               o:= TControl(selfT.Components[j]);
+               if o.Parent<>nil then
+               if o.Parent.Name=PC.Pages[Lba].Name then
+               begin
+                   o.left:= PC.left + ArrL[j];
+                   o.top:= PC.top + ArrT[j]+10;
+                   o.Parent:= PC.Parent;
+               end
+               else
+               begin
+                   o.Parent:= TdxTabSheet(selfT.findcomponent(ArrS[j]));
+                   o.left:= ArrL[j];
+                   o.top:= ArrT[j];
+               end;
+            end;
+
+
+            for j:=0 to PC.PageCount -1 do
+            with Lb[j] do
+            if j=Lba then
+            Font.Style:= Font.Style+[fsUnderline]
+            else
+            Font.Style:= Font.Style-[fsUnderline];
+         end;
+     end;
+
+  except  debb('LbClick');   end;
+end;
+
+procedure AfterScrollselfT (Sender: TObject);
+var i: integer;
+begin
+  try
+     i := QT_GetIndex (Sender);
+     if i >= 0 then
+     begin
+
+         with QTArr[i] do              // if selfT.EditWindow<>nil then
+         begin
+            //try
+            if OnAfterScrollselfT<>nil then OnAfterScrollselfT (Sender);
+           // except  debb('AfterScrollselfT 111 ');   end;
+           // try
+            LbClick (Lb[0]);
+          //  except  debb('AfterScrollselfT 222 ');   end;
+         end;
+     end;
+  except  debb('AfterScrollselfT');   end;
+end;
+
+procedure QT_Show (Sender: TObject);
+var i: integer;
+begin
+  try
+     i := QT_GetIndex (Sender);
+     if i >= 0 then
+     begin
+         with QTArr[i] do
+         begin
+           // try
+               LbClick (Lb[0]);
+          //  except  debb('QT_Show 111 ');   end;
+            if QT_OnShow<>nil then QT_OnShow (Sender);
+         end;
+     end;
+  except  debb('QT_Show');   end;
+end;
+
+
+procedure QT_DBClose(Sender: TObject);
+begin
+      SetLength(QTArr, 0);
+      if QT_OldDBClose <> nil then QT_OldDBClose (Sender);
+end;
+
+procedure QT_BefCl (Sender: TObject);
+var QT: TQTData; i: integer;
+begin
+  if length(QTArr)>0 then
+  try
+  i := QT_GetIndex (Sender);
+  if i >= 0 then
+  begin
+      QT:= QTArr[i];
+      if MainWindow.FindComponent('DesignFr')<>nil then
+      SetLength(QTArr, 0);   // зануляем масссив созданных форм быстрого доступа
+
+      if QT.OnBefCl <> nil then QT.OnBefCl (Sender);
+  end;
+  except
+      debb('QT_BefCl');
+  end;
+end;
+
+function RandomB (a,b:Integer): Integer;
+begin
+  result:=0;
+  while  (result<a) or (result>b) do
+  result := a + Random(b);
+end;
+
+procedure CustomizationBookmark (PCs: string);
+var n, i, k: integer; QT: TQTData; o: TControl; s: string;
+begin
+ if not nz(MainWindow.Params['BlockALLModules'],false) then
+ if not nz(self.Params['BlockALLModules'],false) then
+ begin
+  with QT do
+  try
+    selfT:= self;
+    PC:= TdxPageControl(self.FindComponent(PCs));
+    PC.tag:= RandomB(10000, 9999999);
+    // debug(PC.tag);
+    SetLength( Lb, PC.PageCount);
+    for i:=0 to PC.PageCount -1 do
+    begin
+      Lb[i]:= TLabel.Create(self);
+      with Lb[i] do
+      begin
+         try
+
+         tag:= RandomB(10000, 9999999);
+         Name:= 'TLabel'+ vartostr(Lb[i].tag);
+         Parent:= PC.Parent;
+
+         if i=0 then
+         k:= PC.left
+         else
+         k:= k + MainWindow.Canvas.TextWidth(s) + 30;
+
+         s:= PC.Pages[i].Caption;
+         Caption:= s;
+         left:= k;
+         top:=  Pc.top;
+
+         Font.Color:= FColor;
+        // Font.Style:=Font.Style-[fsUnderline];
+
+         OnClick:= @LbClick
+         OnMouseEnter := @lbl_OnMouseEnter;
+         OnMouseLeave := @lbl_OnMouseLeave;
+
+         except debb('ошибка на старте CustomizationLbl 111 '); end;
+      end;
+    end;
+
+    SetLength( ArrS, self.ComponentCount);
+    SetLength( ArrSS, self.ComponentCount);
+    SetLength( ArrL, self.ComponentCount);
+    SetLength( ArrT, self.ComponentCount);
+
+    for i:=0 to self.ComponentCount - 1 do
+    begin
+        o:= TControl(self.Components[i]);
+
+        if o.Parent<>nil then
+        begin
+           ArrS[i]:= o.Parent.Name;
+
+           ArrSS[i]:= '';
+           if o.Parent.Parent<>nil then
+           ArrSS[i]:= o.Parent.Parent.Name;
+        end;
+
+        ArrL[i]:= o.Left;
+        ArrT[i]:= o.Top;
+    end;
+
+    if not self.Params.ParamExists('tagb') then
+    self.Params['tagb']:= RandomB(10000, 9999999);
+
+    PC.Visible:= false;
+
+    if (MainWindow.FindComponent('DesignFr')<>nil) or (self.ViewType=vtGridOnly) then
+    begin
+       QT_OnShow:= self.EditWindow.OnShow;
+       self.EditWindow.OnShow:= @QT_Show;
+    end;
+  //  else
+   // begin
+    OnAfterScrollselfT:= self.OnAfterScroll;
+    self.OnAfterScroll:= @AfterScrollSelfT;
+  //  end;
+
+    OnBefCl:= self.OnBeforeClose;
+    self.OnBeforeClose:= @QT_BefCl;
+
+  except debb('ошибка на старте CustomizationLbl'); end;
+
+  n := Length(QTArr);
+  if n = 0 then
+  begin
+       QT_OldDBClose := MainWindow.OnDatabaseClose;
+       MainWindow.OnDatabaseClose := @QT_DBClose;
+  end;
+  SetLength(QTArr, n + 1);
+  QTArr[n] := QT;
+ end;
+end;

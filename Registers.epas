@@ -1,0 +1,1211 @@
+{@module
+author=DataExpress
+version=1.1
+description=Модуль для работы с формами-регистрами.
+@}
+
+{@action
+Id=FAD4F5C7-2DD6-4DB8-978B-78F51D055019
+Target=form
+OrigName=CopyToRegister
+Name=Копировать в регистр
+Group=Регистры
+ui=<ui>
+  <form name="reg" caption="Форма-регистр*" required="1"/>
+  <object name="regobj" caption="Ссылка на текущую форму в регистре*" source="reg" required="1"/>
+  <grid name="formfields" caption="Копировать поля формы">
+    <field name="formfield" caption="Поле формы" filter="text;number;date;time;object;counter;checkbox" required="1"/>
+    <field name="regfield" caption="Поле регистра" source="reg" filter="text;number;date;time;object;counter;checkbox" required="1"/>
+  </grid>
+  <childform name="table" caption="Таблица формы"/>
+  <grid name="tablefields" caption="Копировать поля таблицы">
+    <field name="tablefield" caption="Поле таблицы" source="table" filter="text;number;date;time;object;counter;checkbox" required="1"/>
+    <field name="regfield2" caption="Поле регистра" source="reg" filter="text;number;date;time;object;counter;checkbox" required="1"/>
+  </grid>
+  <object name="obj" caption="Объект в таблице" source="table"/>
+  <grid name="objfields" caption="Копировать поля объекта">
+    <field name="objfield" caption="Поле объекта" source="obj" required="1"/>
+    <field name="regobjfield" caption="Поле регистра" source="reg" required="1"/>
+  </grid>
+  <childform name="objtable" caption="Таблица объекта" source="obj"/>
+  <grid name="objtablefields" caption="Копировать поля таблицы объекта">
+    <field name="objtablefield" caption="Поле таблицы объекта" source="objtable" filter="text;number;date;time;object;counter;checkbox" required="1"/>
+    <field name="regfield3" caption="Поле регистра" source="reg" filter="text;number;date;time;object;counter;checkbox" required="1"/>
+  </grid>
+  <grid name="calcreg" caption="Вычисления в регистре">
+    <field name="regfield4" caption="Поле регистра" source="reg" filter="text;number;date;time;object;counter;checkbox" required="1"/>
+    <expr name="expr" caption="Выражение" noform="1" required="1"/>
+  </grid>
+  <field name="checkbox" caption="Флажок проведения*" filter="checkbox" required="1"/>
+  <list name="progress" caption="Прогресс проведения" items="Показывать всегда;Показывать только при сетевом подключении;Не показывать" defaultvalue="Показывать только при сетевом подключении" required="1"/>
+</ui>
+description=Действие копирует данные формы и ее подчиненные данные в другую
+форму. Это чем-то (!) похоже на работу с регистрами в программе 1С:Предприятие,
+когда некоторые данные записываются в регистр с целью ускорить и упростить
+обработку данных. Отсюда и название действия. В DataExpress это еще и позволит
+решить некоторые задачи. Например, с помощью этого
+расширения можно реализовать учет на производстве, где надо вести учет
+комплектующих, из которых состоит изделие. Запросы могут делать выборку только
+из двух уровней подчиненности: формы и таблицы. И если в таблице есть объекты,
+которые имеют некоторый состав (т. е. объект имеет некоторую таблицу),
+то выборку этого состава сделать невозможно. Для того, чтобы это сделать надо
+создать дополнительную форму и копировать необходимые данные в нее. После этого
+можно применять обычный запрос.<br><br>
+
+Поля, отмеченные звездочкой, обязательны для заполнения. Действие может копировать
+данные как со всех четырех форм (текущая форма, таблица, форма объекта,
+таблица объекта), так и с одной текущей формы.<br><br>
+
+Немного терминов:<br>
+<b>Проведение данных</b> - это процесс копирования данных в форму-регистр.<br>
+<b>Отмена проведения</b> - это процесс удаления данных из формы-регистра.<br>
+<b>Перепроведение</b> - процесс удаления и копирования данных в форму-регистр.<br><br>
+
+<b>Форма-регистр.</b> Форма, в которую копируются данные. Состав полей этой
+формы должен соответствовать задаче. Обычно в состав входят поля, которые
+будут хранить данные формы, таблицы и таблицы объекта. В связи с тем, что
+расширение обращается напрямую к базе данных для записи в форму-регистр
+прописывание выражений, значений по умолчанию, проверок и прочего будет
+бесполезным. Необходимые расчеты в регистре будут выполняться при помощи
+выражений, прописанных в самом действии (см. ниже).<br><br>
+
+<b>Ссылка на текущую форму в регистре.</b> Это поле типа "объект" в
+форме-регистре, которое ссылается на текущую форму. Таким образом определяются
+записи, которые требуется удалить в случае отмены проведения или
+перепроведения.<br><br>
+
+<b>Копировать поля формы.</b> Выбираются поля формы, которые будут скопированы
+в регистр. Это данные самого верхнего уровня подчиненности.<br><br>
+
+<b>Таблица формы.</b> Подчиненная форма, данные которые должны быть скопированы
+в регистр. Это данные 2-го уровня подчиненности.<br><br>
+
+<b>Копировать поля таблицы.</b> Выбираются поля таблицы, которые будут
+скопированы в регистр.<br><br>
+
+<b>Объект в таблице.</b> Поле типа "объект" в подчиненной форме, данные которого
+должны быть скопированы регистр.<br><br>
+
+<b>Копировать поля объекта.</b> Выбираются поля объекта, которые будут
+скопированы в регистр.<br><br>
+
+<b>Таблица объекта.</b> Подчиненная форма в форме объекта. Данные 3-го уровня
+подчиненности. Тот самый состав объекта.<br><br>
+
+<b>Копировать поля таблицы объекта.</b> Выбираются поля таблицы объекта, которые
+будут скопированы в регистр.<br><br>
+
+<b>Вычисления в регистре.</b> В поле регистра может быть записан результат
+вычисления выражения. В выражении вы можете обращаться к полям форм только через
+переменные. Название переменной составляется по следующему синтаксису:
+название формы|название поля. Пример выражения:<br><br>
+<code>
+getvar('Изделия в производстве|Количество') * getvar('Состав изделия|Количество')
+</code><br><br>
+Допускается таким образом обращаться к полям форм, указанных в действии, кроме
+регистра.<br><br>
+
+<b>Флажок проведения.</b> С помощью флажка на форме, действие определяет
+нужно ли проводить документ или нет. Если флажок установлен, то после сохранения
+изменений будет выполнено проведение данных. Если флажок снят, то будет
+выполнена отмена проведения. Если при установленном флажке были изменения, то
+будет выполнено перепроведение данных.<br><br>
+
+<b>Прогресс проведения.</b> Проведение данных может занимать некоторое
+время, особенно при медленном соединении. Окно прогресса будет сообщать о
+процессе проведения.<br><br>
+
+<b>Замечания.</b><br><br>
+1. Это подключаемое действие, используется только в свойстве формы "Подключить
+действие".<br><br>
+2. После проведения данных вы не сможете удалить запись,
+т. к. на нее будет ссылка в регистре. Удаление будет возможно только после
+отмены проведения.<br><br>
+3. В одной форме может быть несколько действий, если требуется копировать данные
+в несколько форм-регистров.<br><br>
+4. При вычислениях в регистре числовых значений, результат автоматически
+округляется до знаков, указанных в поле регистра.<br><br>
+5. Через переменные вы можете получить значение любого поля формы, кроме
+файлов и изображений. Для формы объекта и таблицы объекта также недоступен тип
+"поле объекта" в связи с тем, что доступ к этим формам осуществляется
+посредством SQL-запросов.
+@}
+
+type
+  TARData = record
+    Fm, Tbl: TdxForm;
+    RegObj, Obj, ObjFmName, ObjTblName, CheckBox, ProgressType: String;
+    FormFields, TableFields, ObjFields, ObjTableFields, Calcs: TVariantArray2d;
+    BeforePost, AfterPost: TNotifyEvent;
+    DestroyForm: TCreateFormEvent;
+    SQL, ObjSQL: String;
+    OldCheck, RegFmId, RegObjFieldId: Integer;
+    Disabled, Modified: Boolean;
+    VarNames, VarTypes: TStringListUtf8;
+    Precisions: TStringList;
+  end;
+
+const
+  ARAvailTypes = 'tdxcalcedit tdxlookupcombobox tdxobjectfield tdxdateedit ' +
+    'tdxtimeedit tdxedit tdxcounter tdxcombobox tdxcheckbox tdxmemo';
+
+var
+  ARArr: array of TARData;
+  ProgressWnd: TForm;
+
+function IsLocalDB: Boolean;
+var
+  S: String;
+begin
+  S := GetCurrentDatabase;
+  Result := (S[1] = '/') or (S[2] = ':');
+end;
+
+procedure ShowProgress(const ProgressType, Msg: String);
+var
+  Sh: TShape;
+  L: TLabel;
+begin
+  if ProgressType = 'Не показывать' then Exit;
+  if IsLocalDB and (ProgressType = 'Показывать только при сетевом подключении') then Exit;
+
+  ProgressWnd := TForm.Create(nil);
+  with ProgressWnd do
+  begin
+    BorderStyle := bsNone;
+    Position := poOwnerFormCenter;
+    Width := 200; Height := 100;
+    Sh := TShape.Create(ProgressWnd);
+    Sh.Brush.Style := bsClear;
+    Sh.Align := alClient;
+    Sh.Parent := ProgressWnd;
+    L := TLabel.Create(ProgressWnd);
+    L.AutoSize := False;
+    L.Alignment := taCenter;
+    L.Layout := tlCenter;
+    L.Align := alClient;
+    L.Caption := Msg;
+    L.Parent := ProgressWnd;
+    Show;
+    Application.ProcessMessages;
+  end;
+end;
+
+procedure CloseProgress;
+begin
+  if ProgressWnd <> nil then
+  begin
+    ProgressWnd.Free;
+    ProgressWnd := nil;
+  end;
+end;
+
+function BrStr(const S: String): String;
+begin
+  Result := '[' + S + ']';
+end;
+
+function ProcessText(const S: String): String;
+var
+  i: Integer;
+  Ch, W: String;
+begin
+  Result := '';
+  W := '';
+  // Привет "Mc'Laren": 'Привет "'+"Mc'Laren"+'"'
+  for i := 1 to Length(S) do
+  begin
+    Ch := S[i];
+    W := W + Ch;
+    if Ch = '"' then
+    begin
+      Result := Result + '''' + W + '''+';
+      W := '';
+    end
+    else if S[i] = '''' then
+    begin
+      Result := Result + '"' + W + '"+';
+      W := '';
+    end;
+  end;
+  Result := Result + '"' + W + '"';
+end;
+
+function FieldValueToVariableValue(S, Cls: String): String;
+begin
+  if S = '' then S := 'null'
+  else if Cls = 'tdxcalcedit' then S := StringReplace(S, ',', '.', [])
+  else if Pos(Cls, 'tdxlookupcombobox tdxcounter tdxcheckbox') > 0 then
+  else if Cls = 'tdxdateedit' then S := 'cdate("' + S + '")'
+  else if Cls = 'tdxtimeedit' then S := 'ctime("' + S + '")'
+  else S := ProcessText(S);
+  Result := S;
+end;
+
+// Ищем данные, принадлежащие действию. Поиск идет с конца, потому что на форме
+// может быть более одного действия, а сначала будет выполняется обработчик события
+// последнего подключенного действия.
+// Т. к. на форме может быть более одного действия, в массиве могут быть
+// элементы с одинаковой ссылкой на форму и чтобы цепочка действий работала
+// корректно в обработчиках событий перед вызовом обработчика предыдущего
+// действия мы должны "отключать" текущий элемент (флаг Disabled).
+
+function FindARData(Fm: TObject): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := High(ARArr) downto 0 do
+    if (ARArr[i].Fm = Fm) and not ARArr[i].Disabled then
+    begin
+      Result := i;
+      Exit;
+    end;
+end;
+
+procedure _CopyToRegFromData(Reg, Data: TdxSQLQuery; var ARD: TARData; var n: Integer);
+var
+  i, idx: Integer;
+  FieldName: String;
+begin
+  for i := 0 to High(ARD.ObjFields) do
+  begin
+    FieldName := ARD.ObjFields[i][0];
+    idx := ARD.VarNames.IndexOf(ARD.ObjFmName + '|' + FieldName);
+    Reg.Field[n].Value := Data.Field[idx+1].Value;
+    Inc(n);
+  end;
+
+  for i := 0 to High(ARD.ObjTableFields) do
+  begin
+    FieldName := ARD.ObjTableFields[i][0];
+    idx := ARD.VarNames.IndexOf(ARD.ObjTblName + '|' + FieldName);
+    Reg.Field[n].Value := Data.Field[idx+1].Value;
+    Inc(n);
+  end;
+end;
+
+procedure _CopyToVarsFromData(Data: TdxSQLQuery; var ARD: TARData);
+var
+  i: Integer;
+  S, Cls: String;
+begin
+  for i := 1 to Data.FieldCount - 1 do
+  begin
+    S := Data.Field[i].AsString;
+    Cls := ARD.VarTypes[i-1];
+    S := FieldValueToVariableValue(S, Cls);
+    EvalExpr(Format('setvar("%s", %s)', [ARD.VarNames[i-1], S]), nil);
+  end;
+end;
+
+procedure _CopyToReg(Reg: TdxSQLQuery; Fm: TdxForm; var Fields: TVariantArray2d; var n: Integer);
+var
+  FieldName: String;
+  i: Integer;
+begin
+  for i := 0 to High(Fields) do
+  begin
+    FieldName := Fields[i][0];
+    Reg.Field[n].Value := Fm[FieldName];
+    Inc(n);
+  end;
+end;
+
+procedure _CopyToVars(Fm: TdxForm);
+var
+  i: Integer;
+  C: TComponent;
+  FieldName, Cls, S: String;
+begin
+  for i := 0 to Fm.ComponentCount - 1 do
+  begin
+    C := Fm.Components[i];
+    FieldName := GetComponentFieldName(C);
+    Cls := LowerCase(C.ClassName);
+    if Pos(Cls, ARAvailTypes) > 0 then
+    begin
+      S := FieldValueToVariableValue(Fm.AsS[FieldName], Cls);
+      EvalExpr(Format('setvar("%s|%s", %s)', [Fm.FormCaption, FieldName, S]), nil);
+    end;
+  end;
+end;
+
+procedure _DoCalc(Reg: TdxSQLQuery; var Calcs: TVariantArray2d; Precisions: TStringList);
+var
+  i, n: Integer;
+  V: Variant;
+  Pr: String;
+begin
+  n := Reg.FieldCount - Length(Calcs);
+  for i := 0 to High(Calcs) do
+  begin
+    V := EvalExpr(Calcs[i][1], nil);
+    Pr := Precisions[i];
+    if Pr <> '' then V := RoundTo(V, StrToInt(Pr));
+    Reg.Field[n+i].Value := V;
+  end;
+end;
+
+function GetSQLFields(Fm: TdxForm; var VarNames, VarTypes: TStringListUtf8): String;
+var
+  S, Cls, FieldName, Als: String;
+  i: Integer;
+  C: TComponent;
+begin
+  S := '';
+  if Fm.ParentForm = nil then Als := 'fm.'
+  else Als := 'tbl.';
+  for i := 0 to Fm.ComponentCount - 1 do
+  begin
+    C := Fm.Components[i];
+    Cls := LowerCase(C.ClassName);
+    if (Pos(Cls, ARAvailTypes) > 0) and (Cls <> 'tdxobjectfield') then
+    begin
+      FieldName := GetComponentFieldName(C);
+      S := S + ',' + Als + BrStr(FieldName);
+      VarNames.Add(Fm.FormCaption + '|' + FieldName);
+      VarTypes.Add(Cls);
+    end;
+  end;
+  Result := S;
+end;
+
+function FormToSQL(Fm: TdxForm; var VarNames, VarTypes: TStringListUtf8): String;
+begin
+  if Fm.ParentForm <> nil then
+    Result := 'select fm.id' + GetSQLFields(Fm.ParentForm, VarNames, VarTypes) +
+      GetSQLFields(Fm, VarNames, VarTypes) + ' from ' + BrStr(Fm.FormCaption) + ' tbl inner join ' +
+      BrStr(Fm.ParentForm.FormCaption) + ' fm on tbl.pid=fm.id where '
+  else
+    Result := 'select fm.id' + GetSQLFields(Fm, VarNames, VarTypes) +
+      ' from ' + BrStr(Fm.FormCaption) + ' fm where ';
+end;
+
+procedure FormBeforePost(Sender: TObject);
+var
+  i: Integer;
+  ARD: TARData;
+begin
+  i := FindARData(Sender);
+  ARD := ARArr[i];
+
+  ARArr[i].Disabled := True;
+  if ARD.BeforePost <> nil then ARD.BeforePost(Sender);
+  ARArr[i].Disabled := False;
+
+  ARArr[i].OldCheck := Nz(ARD.Fm.OldValues[ARD.CheckBox], 0);
+  ARArr[i].Modified := ARD.Fm.Modified;
+end;
+
+procedure FormAfterPost(Sender: TObject);
+var
+  ARD: TARData;
+  Reg, ObjData: TdxSQLQuery;
+  Fm, Tbl: TdxForm;
+  i, n, pid: Integer;
+  Filter: String;
+begin
+  i := FindARData(Sender);
+  ARD := ARArr[i];
+
+  ARArr[i].Disabled := True;
+  if ARD.AfterPost <> nil then ARD.AfterPost(Sender);
+  ARArr[i].Disabled := False;
+
+  Fm := ARD.Fm;
+
+  // Проведения не было и не будет
+  if (Fm.AsI[ARD.CheckBox] = 0) and (ARD.OldCheck = 0) then Exit
+  // Проведено и изменений в форме не было
+  else if (Fm.AsI[ARD.CheckBox] = 1) and (ARD.OldCheck = 1) and not ARD.Modified then Exit;
+
+  // Только отмена проведения
+  if Fm.AsI[ARD.CheckBox] = 0 then
+  begin
+    SQLExecute(Format('delete from t%d where f%d=%d;',
+      [ARD.RegFmId, ARD.RegObjFieldId, Fm.RecId]));
+    Exit;
+  end;
+
+  ShowProgress(ARD.ProgressType, 'Проведение...');
+
+  Reg := SQLSelect(Format(ARD.SQL, [ARD.Fm.RecId]));
+  Reg.UseGenerator := ugApplyUpdates;
+
+  try
+
+  while not Reg.Eof do
+    Reg.Delete;
+
+  // Есть таблица
+  if ARD.Tbl <> nil then
+  begin
+    Tbl := ARD.Tbl;
+    Tbl.DisableControls;
+    Tbl.DisableScrollEvents;
+    Tbl.MoveFirst;
+
+    try
+      // Есть объект таблицы и таблица объекта
+      if ARD.ObjSQL <> '' then
+      begin
+        Filter := '';
+        while not Tbl.EOF do
+        begin
+          if Tbl[ARD.Obj] <> Null then
+            Filter := Filter + 'fm.id=' + Tbl.AsS[ARD.Obj] + ' or ';
+          Tbl.MoveNext;
+        end;
+        Filter := Copy(Filter, 1, Length(Filter) - 4);
+        if Filter <> '' then
+          ObjData := SQLSelect(ARD.ObjSQL + Filter + ' order by 1')
+        else Exit;
+
+        Tbl.MoveFirst;
+        while not Tbl.EOF do
+        begin
+          if Tbl[ARD.Obj] <> Null then
+          begin
+            ObjData.Locate('id', [ Tbl.AsI[ARD.Obj] ], []);
+            pid := ObjData.Field[0].AsInteger;
+            while not ObjData.EOF and (ObjData.Field[0].AsInteger = pid) do
+            begin
+              n := 2;
+              Reg.Append;
+              Reg.Field[1].Value := Fm.RecId;
+              _CopyToReg(Reg, Fm, ARD.FormFields, n);
+              _CopyToReg(Reg, Tbl, ARD.TableFields, n);
+              _CopyToRegFromData(Reg, ObjData, ARD, n);
+              _CopyToVars(Fm);
+              _CopyToVars(Tbl);
+              _CopyToVarsFromData(ObjData, ARD);
+              _DoCalc(Reg, ARD.Calcs, ARD.Precisions);
+              Reg.Post;
+              ObjData.MoveNext;
+            end;
+          end;
+          Tbl.MoveNext;
+        end;
+
+        ObjData.Free;
+
+      end
+      // Нет объекта и таблицы объекта, только поля формы и таблицы
+      else
+        while not Tbl.EOF do
+        begin
+          n := 2;
+          Reg.Append;
+          Reg.Field[1].Value := Fm.RecId;
+          _CopyToReg(Reg, Fm, ARD.FormFields, n);
+          _CopyToReg(Reg, Tbl, ARD.TableFields, n);
+          _CopyToVars(Fm);
+          _CopyToVars(Tbl);
+          _DoCalc(Reg, ARD.Calcs, ARD.Precisions);
+          Reg.Post;
+          Tbl.MoveNext;
+        end;
+    finally
+      Tbl.EnableControls;
+      Tbl.EnableScrollEvents;
+    end;
+  end
+  // Нет таблицы, только поля формы
+  else
+  begin
+    n := 2;
+    Reg.Append;
+    Reg.Field[1].Value := Fm.RecId;
+    _CopyToReg(Reg, Fm, ARD.FormFields, n);
+    _CopyToVars(Fm);
+    _DoCalc(Reg, ARD.Calcs, ARD.Precisions);
+    Reg.Post;
+  end;
+
+  Reg.ApplyUpdates;
+
+  finally
+    Reg.Free;
+    CloseProgress;
+  end;
+end;
+
+procedure FormDestroyHandler(Sender: TObject; Fm: TdxForm);
+var
+  ARD: TARData;
+  i: Integer;
+begin
+  if Fm.PId > 0 then Exit;
+  i := FindARData(Fm);
+  if i < 0 then Exit;
+  ARD := ARArr[i];
+  if ARD.VarNames <> nil then ARD.VarNames.Free;
+  if ARD.VarTypes <> nil then ARD.VarTypes.Free;
+  ARD.Precisions.Free;
+
+  ARArr[i].Disabled := True;
+  if ARD.DestroyForm <> nil then ARD.DestroyForm(Sender, Fm);
+  ARArr[i].Disabled := False;
+end;
+
+function ProcessRegField(Reg: TdxForm; const FieldName: String; SL: TStringList): String;
+var
+  C: TComponent;
+begin
+  C := Reg.FindComponentByFieldName(FieldName);
+  if C is TdxCalcEdit then SL.Add( IntToStr(TdxCalcEdit(C).Precision) )
+  else SL.Add('');
+
+  Result := BrStr(FieldName);
+end;
+
+procedure CopyToRegister(Reg, RegObj: String; FormFields: TVariantArray2d;
+  Table: String; TableFields: TVariantArray2d; Obj: String;
+  ObjFields: TVariantArray2d; ObjTable: String;
+  ObjTableFields, Calcs: TVariantArray2d; CheckBox, ProgressType: String);
+var
+  ARD: TARData;
+  i, n: Integer;
+  S: String;
+  RegFm, ObjFm: TdxForm;
+  Precs: TStringList;
+begin
+  ARD.RegObj := RegObj;
+  ARD.Fm := Self;
+  ARD.FormFields := FormFields;
+  if Table <> '' then
+  begin
+    ARD.Tbl := Self.Forms[Table];
+    ARD.TableFields := TableFields;
+  end;
+  if Obj <> '' then
+  begin
+    ARD.VarNames := TStringListUtf8.Create;
+    ARD.VarTypes := TStringListUtf8.Create;
+    ARD.Obj := Obj;
+    ARD.ObjFmName := TdxLookupComboBox(ARD.Tbl.FindComponentByFieldName(Obj)).SourceFormName;
+    ARD.ObjTblName := ObjTable;
+    ObjFm :=
+      TdxForm.Create(ARD.ObjFmName);
+    if ObjTable <> '' then
+      ARD.ObjSQL := FormToSQL(ObjFm.Forms[ObjTable], ARD.VarNames, ARD.VarTypes)
+    else
+      ARD.ObjSQL := FormToSQL(ObjFm, ARD.VarNames, ARD.VarTypes);
+    ObjFm.Free;
+    ARD.ObjFields := ObjFields;
+    ARD.ObjTableFields := ObjTableFields;
+  end;
+  ARD.Calcs := Calcs;
+  ARD.CheckBox := CheckBox;
+  ARD.ProgressType := ProgressType;
+
+  Precs := TStringList.Create;
+  RegFm := TdxForm.Create(Reg);
+
+  // select id, [RegObj], список полей from [Reg] where [RegObj]=%d
+  S := 'select id,' + BrStr(RegObj);
+  for i := 0 to High(FormFields) do
+    S := S + ',' + BrStr(FormFields[i][1]);
+  for i := 0 to High(TableFields) do
+    S := S + ',' + BrStr(TableFields[i][1]);
+  for i := 0 to High(ObjFields) do
+    S := S + ',' + BrStr(ObjFields[i][1]);
+  for i := 0 to High(ObjTableFields) do
+    S := S + ',' + BrStr(ObjTableFields[i][1]);
+  for i := 0 to High(Calcs) do
+    S := S + ',' + ProcessRegField(RegFm, Calcs[i][0], Precs);
+  S := S + 'from ' + BrStr(Reg) + ' where ' + BrStr(RegObj) + '=%d';
+  ARD.SQL := S;
+  ARD.Precisions := Precs;
+
+  ARD.RegFmId := RegFm.Id;
+  ARD.RegObjFieldId := GetComponentId(RegFm.FindComponentByFieldName(ARD.RegObj));
+  RegFm.Free;
+
+  ARD.AfterPost := Self.OnAfterPost;
+  ARD.BeforePost := Self.OnBeforePost;
+  ARD.DestroyForm := MainWindow.OnDestroyForm;
+  Self.OnAfterPost := @FormAfterPost;
+  Self.OnBeforePost := @FormBeforePost;
+  MainWindow.OnDestroyForm := @FormDestroyHandler;
+
+  n := Length(ARArr);
+  SetLength(ARArr, n + 1);
+  ARArr[n] := ARD;
+end;
+
+////////////////////////////////////////////////////////////////////////////////
+// Регистр остатков
+////////////////////////////////////////////////////////////////////////////////
+
+{@action
+id=245D2473-2037-483E-8B16-2FA012CBA6DD
+target=form
+origname=WriteToRegBalance
+name=Записать в регистр остатков
+group=Регистры
+ui=<ui>
+  <form name="reg" caption="Регистр остатков" required="1"/>
+  <childform name="table" caption="Таблица" required="1"/>
+  <grid name="fields" caption="Сопоставление полей">
+    <field name="regfield" caption="Поле регистра" source="reg" required="1"
+      filter="object;number"/>
+    <field name="formfield" caption="Поле формы" filter="object"/>
+    <field name="tblfield" caption="или Поле таблицы" source="table" filter="object;number"/>
+    <list name="operation" caption="Операция" items="=;+;-" width="70" required="1"/>
+  </grid>
+  <field name="check" caption="Флажок проведения" filter="checkbox" required="1"/>
+  <checkbox name="checkbalance" caption="Предупреждать об отрицательных остатках"/>
+</ui>
+description=Реализация хранения итогов в форме, называемой регистром остатков.
+С помощью этого действия вы сможете, к примеру, вычислять остатки товаров на
+текущий момент. Это альтернатива вычислению остатков с помощью запроса. Запросу
+приходится каждый раз просматривать таблицы, чтобы вычислить остатки. Если данных
+много, это может занимать некоторое время. В регистре остатки уже рассчитаны и
+их получение происходит практически мгновенно. Расчет остатков происходит
+при сохранении и удалении записей. Действие ищет в регистре соответствующую
+запись и меняет в ней числовое поле: увеличивает или уменьшает значение в
+зависимости от выбранной операции. Если запись не найдена, то она добавляется.<br><br>
+<b>Регистр остатков</b> - форма, в которой будут хранится остатки.<br><br>
+<b>Таблица</b> - таблица текущей формы.<br><br>
+<b>Сопоставление полей</b> - определяет какое поле формы или таблицы будет
+копироваться в соответствующее поле регистра и какая операция будет проведена
+над полями. Предусмотрены следующие операции:
+<ul>
+<li>= поле формы или таблицы копируется в поле регистра;</li>
+<li>+ поле таблицы складывается с полем регистра;</li>
+<li>- поле таблицы уменьшает поле регистра.</li>
+</ul>
+Среди полей регистра и таблицы допустимо выбирать объекты и числа. Среди полей
+формы - только объекты.<br><br>
+<b>Флажок проведения</b> - запись в регистр будет произведена только если
+установлен флажок проведения. Это любой флажок с любым названием. Если флажок
+снимается, то происходит обратная операция над числами регистра. Например, если
+при установленном флажке значения регистра увеличивались, то после снятия они будут
+уменьшены на ту же величину. При удалении записи также будет выполнена обраная
+операция над значениями регистра.<br><br>
+<b>Предупреждать об отрицательных остатках</b> - в окне вывода отображаются записи
+регистра с отрицательными остатками, соответствующие проведенной записи. Сообщение
+может появится в том числе и при удалении записи или отмене проведения.
+@}
+
+type
+  TRegBalData = record
+    Fm, Tbl: TdxForm;
+    RegFm: TdxForm;
+    Fields: TVariantArray2d;
+    OnAfterEdit, OnBeforePost, OnAfterPost, OnBeforeDelete, OnAfterDelete: TNotifyEvent;
+    OnDestroyForm: TCreateFormEvent;
+    MergeSQL, UndoSQL, UndoScript, CheckSQL: String;
+    CheckBoxField: String;
+    Modified, Skip, Editing, CheckBalance: Boolean;
+  end;
+
+var
+  RegBalArr: array of TRegBalData;
+
+function FindRegBalData(Fm: TObject): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := High(RegBalArr) downto 0 do
+    if not RegBalArr[i].Skip and (RegBalArr[i].Fm = Fm) then
+    begin
+      Result := i;
+      Exit;
+    end;
+end;
+
+procedure ExecuteScript(const SQL: String);
+begin
+  while True do
+    try
+      SQLExecute(SQL);
+      Exit;
+    except
+      if Pos('-deadlock', ExceptionParam) = 0 then
+        RaiseLastException;
+    end;
+end;
+
+function PasteValues(const S: String; var Vals: array of Variant): String;
+var
+  i: Integer;
+begin
+  Result := S;
+  for i := 0 to High(Vals) do
+    Result := StringReplace(Result, '%' + IntToStr(i), Vals[i], [rfReplaceAll]);
+end;
+
+function MakeUndoScript(var RBD: TRegBalData): String;
+var
+  Vals: array of Variant;
+  Fm, Tbl: TdxForm;
+  i, n, len, OldId: Integer;
+  Ok: Boolean;
+  S: String;
+begin
+  Result := '';
+
+  SetLength(Vals, Length(RBD.Fields));
+  Fm := RBD.Fm;
+  Tbl := RBD.Tbl;
+  OldId := Tbl.RecId;
+
+  Tbl.DisableControls;
+  Tbl.MoveFirst;
+
+  n := 0; len := 0;
+  while not Tbl.Eof do
+  begin
+    Ok := True;
+    for i := 0 to High(RBD.Fields) do
+    begin
+      if RBD.Fields[i][1] <> '' then
+        Vals[i] := Fm[RBD.Fields[i][1]]
+      else if RBD.Fields[i][2] <> '' then
+        Vals[i] := Tbl[RBD.Fields[i][2]];
+
+      // Если есть пустое поле, то пропускаем запись.
+      if Vals[i] = Null then
+      begin
+        Ok := False;
+        Break;
+      end;
+
+      Vals[i] := StringReplace(Vals[i], GetFormatSettings.DecimalSeparator, '.', []);
+    end;
+    if Ok then
+    begin
+      S := PasteValues(RBD.UndoSQL, Vals);
+      len := len + Length(S);
+      Inc(n);
+
+      if (n = 127) or (len > 65000) then
+      begin
+        Result := Result + ' end~ execute block as begin ';
+        n := 0; len := 0;
+      end;
+
+      Result := Result + S;
+    end;
+    Tbl.MoveNext;
+  end;
+
+  Tbl.GotoRecord(OldId);
+  Tbl.EnableControls;
+
+  if Result <> '' then
+    Result := 'execute block as begin ' + Result + ' end~';
+end;
+
+function MakeScript(var RBD: TRegBalData): String;
+var
+  Vals: array of Variant;
+  Fm, Tbl: TdxForm;
+  i, n, len, OldId: Integer;
+  Ok: Boolean;
+  S: String;
+begin
+  Result := '';
+
+  SetLength(Vals, Length(RBD.Fields));
+  Fm := RBD.Fm;
+  Tbl := RBD.Tbl;
+
+  Tbl.DisableControls;
+  OldId := Tbl.RecId;
+  Tbl.MoveFirst;
+
+  n := 0; len := 0;
+  while not Tbl.Eof do
+  begin
+    Ok := True;
+    for i := 0 to High(RBD.Fields) do
+    begin
+      if RBD.Fields[i][1] <> '' then
+        Vals[i] := Fm[RBD.Fields[i][1]]
+      else if RBD.Fields[i][2] <> '' then
+        Vals[i] := Tbl[RBD.Fields[i][2]];
+
+      if Vals[i] = Null then
+      begin
+        Ok := False;
+        Break;
+      end;
+
+      Vals[i] := StringReplace(Vals[i], GetFormatSettings.DecimalSeparator, '.', []);
+    end;
+    if Ok then
+    begin
+      S := PasteValues(RBD.MergeSQL, Vals);
+      len := len + Length(S);
+      Inc(n);
+
+      if (n = 63) or (len > 65000) then
+      begin
+        Result := Result + ' end~ execute block as begin ';
+        n := 0; len := 0;
+      end;
+
+      Result := Result + S;
+    end;
+    Tbl.MoveNext;
+  end;
+
+  Tbl.GotoRecord(OldId);
+  Tbl.EnableControls;
+
+  if Result <> '' then
+    Result := 'execute block as begin ' + Result + ' end~';
+end;
+
+procedure CheckBalance(var RBD: TRegBalData);
+var
+  SQL: String;
+  i: Integer;
+begin
+  SQL := Format(RBD.CheckSQL, [RBD.Fm.RecId]);
+  with SQLSelect(SQL) do
+  begin
+    if RecordCount > 0 then
+      Debug(LineEnding + 'Внимание! Обнаружены отрицательные остатки в регистре "' +
+        RBD.RegFm.FormCaption + '".' + LineEnding);
+    while not Eof do
+    begin
+      for i := 0 to High(RBD.Fields) do
+        Debug(RBD.Fields[i][0] + ': ' + Field[i].AsString);
+      Debug('');
+      MoveNext;
+    end;
+    Free;
+  end;
+end;
+
+procedure RegBal_DestroyForm(Sender: TObject; Form: TdxForm);
+var
+  i: Integer;
+begin
+  i := FindRegBalData(Form);
+  if i >= 0 then
+  begin
+    RegBalArr[i].Fm := nil;
+    if RegBalArr[i].OnDestroyForm <> nil then RegBalArr[i].OnDestroyForm(Sender, Form);
+  end;
+end;
+
+procedure RegBal_AfterDelete(Sender: TObject);
+var
+  i: Integer;
+  RBD: TRegBalData;
+  SQL: String;
+begin
+  i := FindRegBalData(Sender);
+  RBD := RegBalArr[i];
+  if RBD.OnAfterDelete <> nil then
+  begin
+    RegBalArr[i].Skip := True;
+    RBD.OnAfterDelete(Sender);
+    RegBalArr[i].Skip := False;
+  end;
+  if RBD.UndoScript <> '' then
+  begin
+    SQL := 'set term ~;' + RBD.UndoScript + 'set term ;~';
+    ExecuteScript(SQL);
+    if RBD.CheckBalance then CheckBalance(RBD);
+  end;
+end;
+
+procedure RegBal_BeforeDelete(Sender: TObject);
+var
+  i: Integer;
+  RBD: TRegBalData;
+begin
+  i := FindRegBalData(Sender);
+  RBD := RegBalArr[i];
+  if RBD.OnBeforeDelete <> nil then
+  begin
+    RegBalArr[i].Skip := True;
+    RBD.OnBeforeDelete(Sender);
+    RegBalArr[i].Skip := False;
+  end;
+  if RBD.Fm.AsI[RBD.CheckBoxField] = 1 then
+    RegBalArr[i].UndoScript := MakeUndoScript(RBD)
+  else
+    RegBalArr[i].UndoScript := '';
+end;
+
+procedure RegBal_AfterPost(Sender: TObject);
+var
+  i: Integer;
+  RBD: TRegBalData;
+  SQL: String;
+begin
+  i := FindRegBalData(Sender);
+  RBD := RegBalArr[i];
+  if RBD.OnAfterPost <> nil then
+  begin
+    RegBalArr[i].Skip := True;
+    RBD.OnAfterPost(Sender);
+    RegBalArr[i].Skip := False;
+  end;
+
+  if not RBD.Modified then Exit;
+
+  SQL := '';
+  if RBD.Editing then
+    SQL := SQL + RBD.UndoScript;
+  if RBD.Fm.AsI[RBD.CheckBoxField] = 1 then
+    SQL := SQL + MakeScript(RBD);
+  if SQL <> '' then
+    ExecuteScript('set term ~;' + SQL + 'set term ;~');
+
+  if RBD.CheckBalance then CheckBalance(RBD);
+end;
+
+procedure RegBal_BeforePost(Sender: TObject);
+var
+  i: Integer;
+  RBD: TRegBalData;
+begin
+  i := FindRegBalData(Sender);
+  RBD := RegBalArr[i];
+  if RBD.OnBeforePost <> nil then
+  begin
+    RegBalArr[i].Skip := True;
+    RBD.OnBeforePost(Sender);
+    RegBalArr[i].Skip := False;
+  end;
+
+  RegBalArr[i].Editing := RBD.Fm.State = dsEdit;
+  RegBalArr[i].Modified := RBD.Fm.Modified;
+end;
+
+
+procedure RegBal_AfterEdit(Sender: TObject);
+var
+  i: Integer;
+  RBD: TRegBalData;
+begin
+  i := FindRegBalData(Sender);
+  RBD := RegBalArr[i];
+  if RBD.OnAfterEdit <> nil then
+  begin
+    RegBalArr[i].Skip := True;
+    RBD.OnAfterEdit(Sender);
+    RegBalArr[i].Skip := False;
+  end;
+
+  if RBD.Fm.AsI[RBD.CheckBoxField] = 1 then
+    RegBalArr[i].UndoScript := MakeUndoScript(RBD)
+  else
+    RegBalArr[i].UndoScript := '';
+end;
+
+function MakeCheckSQL(RegFm, Fm, Tbl: TdxForm; var Fields: TVariantArray2d): String;
+var
+  i, n: Integer;
+  SQL, FieldList, Wh, Cond, Join, RegFlNm, FlNm, Als: String;
+  C: TComponent;
+  Obj: TdxLookupComboBox;
+  SrcFm: TdxForm;
+  SrcC: TComponent;
+  Forms: TStringList;
+begin
+  Forms := TStringList.Create;
+  GetForms(Forms);
+  SQL := 'select %0:s from t%1:d tb1 inner join t%2:d tb2 on tb1.id=tb2.pid ' +
+    'inner join t%3:d reg on %4:s %5:s where tb1.id=%6:s %7:s';
+  FieldList := ''; Wh := ''; Cond := ''; Join := '';
+  for i := 0 to High(Fields) do
+  begin
+    C := RegFm.FindComponentByFieldName(Fields[i][0]);
+    RegFlNm := 'f' + IntToStr(GetComponentId(C));
+    if Fields[i][3] = '=' then
+    begin
+      Obj := TdxLookupComboBox(C);
+      n := Forms.IndexOf(Obj.SourceFormName);
+      SrcFm := TdxForm(Forms.Objects[n]);
+      SrcC := SrcFm.FindComponentByFieldName(Obj.SourceFieldName);
+      Als := 't' + IntToStr(SrcFm.Id) + '_f' + IntToStr(Obj.Id);
+      Join := Join + 'inner join t' + IntToStr(SrcFm.Id) + ' ' + Als +
+        ' on reg.' + RegFlNm + '=' + Als + '.id ';
+      FieldList := FieldList + Als + '.f' + IntToStr(GetComponentId(SrcC)) + ',';
+
+      if Fields[i][1] <> '' then
+      begin
+        C := Fm.FindComponentByFieldName(Fields[i][1]);
+        FlNm := 'f' + IntToStr(GetComponentId(C));
+        Cond := Cond + 'reg.' + RegFlNm + '=tb1.' + FlNm + ' and ';
+      end
+      else
+      begin
+        C := Tbl.FindComponentByFieldName(Fields[i][2]);
+        FlNm := 'f' + IntToStr(GetComponentId(C));
+        Cond := Cond + 'reg.' + RegFlNm + '=tb2.' + FlNm + ' and ';
+      end;
+    end
+    else
+    begin
+      FieldList := FieldList + 'reg.' + RegFlNm + ',';
+      Wh := Wh + ' and reg.' + RegFlNm + '<0';
+    end;
+  end;
+  FieldList := Copy(FieldList, 1, Length(FieldList) - 1);
+  Cond := Copy(Cond, 1, Length(Cond) - 5);
+  Result := Format(SQL, [FieldList, Fm.Id, Tbl.Id, RegFm.Id, Cond, Join, '%d', Wh]);
+  Forms.Free;
+end;
+
+function MakeUndoSQL(RegFm: TdxForm; var Fields: TVariantArray2d): String;
+var
+  i: Integer;
+  St, Wh, FlNm, Op: String;
+  C: TComponent;
+begin
+  Result := 'update t%d set %s where %s;';
+  St := ''; Wh := '';
+  for i := 0 to High(Fields) do
+  begin
+    C := RegFm.FindComponentByFieldName(Fields[i][0]);
+    FlNm := 'f' + IntToStr(GetComponentId(C));
+    Op := Fields[i][3];
+    if Op = '+' then Op := '-'
+    else if Op = '-' then Op := '+';
+    if Op = '=' then
+      Wh := Wh + FlNm + '=%' + IntToStr(i) + ' and '
+    else
+      St := St + FlNm + '=' + FlNm + Op + '(%' + IntToStr(i) + '),';
+  end;
+  St := Copy(St, 1, Length(St) - 1);
+  Wh := Copy(Wh, 1, Length(Wh) - 5);
+  Result := Format(Result, [RegFm.Id, St, Wh]);
+end;
+
+function MakeMergeSQL(RegFm: TdxForm; var Fields: TVariantArray2d): String;
+var
+  i: Integer;
+  V, Wh, Upd, Fld, Val, FlNm, Op: String;
+  C: TComponent;
+begin
+  Result := 'merge into t%0:d tb1 ' +
+    'using (select %1:s from rdb$database) tb2 ' +
+    'on (%2:s) ' +
+    'when matched then update set %3:s ' +
+    'when not matched then insert (id,%4:s) values (gen_id(gen_t%0:d,1),%5:s);';
+
+  V := ''; Wh := ''; Upd := ''; Fld := ''; Val := '';
+  for i := 0 to High(Fields) do
+  begin
+    C := RegFm.FindComponentByFieldName(Fields[i][0]);
+    FlNm := 'f' + IntToStr(GetComponentId(C));
+    Op := Fields[i][3];
+    Fld := Fld + FlNm + ',';
+    if Op = '=' then
+    begin
+      Val := Val + '%' + IntToStr(i) + ',';
+      V := V + '(%' + IntToStr(i) + ') as ' + FlNm + ',';
+      Wh := Wh + 'tb1.' + FlNm + '=tb2.' + FlNm + ' and ';
+    end
+    else
+    begin
+      Val := Val + '0' + Op + '(%' + IntToStr(i) + '),';
+      Upd := Upd + 'tb1.' + FlNm + '=tb1.' + FlNm + Op + '(%' + IntToStr(i) + '),';
+    end;
+  end;
+  V := Copy(V, 1, Length(V) - 1);
+  Wh := Copy(Wh, 1, Length(Wh) - 5);
+  Upd := Copy(Upd, 1, Length(Upd) - 1);
+  Fld := Copy(Fld, 1, Length(Fld) - 1);
+  Val := Copy(Val, 1, Length(Val) - 1);
+
+  Result := Format(Result, [RegFm.Id, V, Wh, Upd, Fld, Val])
+end;
+
+function CheckParams(RegFm, Fm, Tbl: TdxForm; var Fields: TVariantArray2d): Boolean;
+var
+  i: Integer;
+  Msg: String;
+  C1, C2: TComponent;
+begin
+  Msg := '';
+  for i := 0 to High(Fields) do
+  begin
+    if (Fields[i][1] = '') and (Fields[i][2] = '') then
+    begin
+      Msg := Msg +
+        Format('- В сопоставлении полей в строке %d не выбрано поле формы или таблицы.',
+          [i+1]) + LineEnding;
+      Continue;
+    end;
+    if (Fields[i][1] <> '') and (Fields[i][2] <> '') then
+    begin
+      Msg := Msg +
+        Format('- В сопоставлении полей в строке %d должно быть выбрано только поле формы или только поле таблицы.',
+          [i+1]) + LineEnding;
+      Continue;
+    end;
+    C1 := RegFm.FindComponentByFieldName(Fields[i][0]);
+    if Fields[i][1] <> '' then
+      C2 := Fm.FindComponentByFieldName(Fields[i][1])
+    else
+      C2 := Tbl.FindComponentByFieldName(Fields[i][2]);
+    if C1.ClassName <> C2.ClassName then
+      Msg := Msg +
+        Format('- В сопоставлении полей в строке %d несовместимые поля.', [i+1]) +
+          LineEnding;
+    if not (C1 is TdxCalcEdit) and (Fields[i][3] <> '=') then
+      Msg := Msg +
+        Format('- В сопоставлении полей в строке %d допустима только операция =',
+          [i+1]) + LineEnding;
+  end;
+  if Msg <> '' then
+    Msg := 'Действие: Записать в регистр остатков' + LineEnding +
+      'Форма: ' + Fm.FormCaption + LineEnding +
+      'При провере параметров действия были найдены ошибки:' + LineEnding + Msg;
+  Result := Msg = '';
+  if not Result then MsgBox('Внимание', Msg);
+end;
+
+procedure WriteToRegBalance(const RegName, TableName: String;
+  Fields: TVariantArray2d; const CheckBoxField: String; CheckBalance: Boolean);
+var
+  RBD: TRegBalData;
+  n: Integer;
+  FL: TStringList;
+  RegFm, Tbl: TdxForm;
+begin
+  FL := TStringList.Create;
+  GetForms(FL);
+  RegFm := TdxForm(FL.Objects[ FL.IndexOf(RegName) ]);
+  FL.Free;
+  Tbl := Self.Forms[TableName];
+  if not CheckParams(RegFm, Self, Tbl, Fields) then Exit;
+
+  RBD.MergeSQL := MakeMergeSQL(RegFm, Fields);
+  RBD.UndoSQL := MakeUndoSQL(RegFm, Fields);
+  RBD.CheckSQL := MakeCheckSQL(RegFm, Self, Tbl, Fields);
+  RBD.Fm := Self;
+  RBD.Tbl := Tbl;
+  RBD.RegFm := RegFm;
+  RBD.Fields := Fields;
+  RBD.CheckBoxField := CheckBoxField;
+  RBD.CheckBalance := CheckBalance;
+  RBD.OnAfterEdit := Self.OnAfterEdit;
+  RBD.OnBeforePost := Self.OnBeforePost;
+  RBD.OnAfterPost := Self.OnAfterPost;
+  RBD.OnBeforeDelete := Self.OnBeforeDelete;
+  RBD.OnAfterDelete := Self.OnAfterDelete;
+  RBD.OnDestroyForm := MainWindow.OnDestroyForm;
+  Self.OnAfterEdit := @RegBal_AfterEdit;
+  Self.OnBeforePost := @RegBal_BeforePost;
+  Self.OnAfterPost := @RegBal_AfterPost;
+  Self.OnBeforeDelete := @RegBal_BeforeDelete;
+  Self.OnAfterDelete := @RegBal_AfterDelete;
+  MainWindow.OnDestroyForm := @RegBal_DestroyForm;
+  n := Length(RegBalArr);
+  SetLength(RegBalArr, n + 1);
+  RegBalArr[n] := RBD;
+end;

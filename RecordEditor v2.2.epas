@@ -1,0 +1,723 @@
+{@module
+Author=jurist23rus
+Version=2.2
+Description=В этом модуле содержатся действие для кнопки "Закрыть текущую форму"
+и функции:
+OpenRec - открывает для редактирования (в отдельном окне) указанную запись
+указанной родительской формы.
+AddRec - добавляет новую запись в указанной родительской форме.
+EditRec - вносит изменения, согласно заданным параметрам, в указанное поле,
+указанной записи, указанной родительской формы.
+TAddRec - добавляет новую запись в таблицу.
+TDeleteRec - удаляет записи в таблице согласно заданному фильтру.
+DbMergeA - cоединяет значения нескольких полей в одну строку.
+CreateRec - создаёт запись в родительской форме и заполняет поля формы заданными значениями.
+@}
+
+{@function
+OrigName=OpenRec
+Name=OpenRec
+Args=sv
+Result=
+Group=RecordEditor
+Description=<B>Описание:</B><br>
+Открывает для редактирования (в отдельном окне) указанную запись
+указанной родительской формы. <br><br>
+<B>Параметры:</B><br>
+<u>1 параметр</u>: имя  формы - текст (не может быть пустым).<br>
+<u>2 параметр</u>: идентификатор записи - число или функция, возвращающая число.<br><br>
+<u>Результат</u>: ничего не возвращает.<br><br>
+<B>Примеры:</B><br>
+<code>
+OpenRec ('ИмяФормы', 123)<br> <br>
+</code>
+<code>
+OpenRec ('ИмяФормы', DBGETID ('ИмяФормы2', '[!Фамилия]="Иванов"'))<br>
+</code>
+Если DBGETID возвращает NULL, то есть не находит запись, то OpenRec
+вернёт ошибку, чтобы этого избежать можно поступить следующим образом <br><br>
+<code>
+OpenRec ('ИмяФормы', NZ (DBGETID ('ИмяФормы2', '[!Фамилия]="Иванов"'), 0))<br>
+</code>
+В последнем случае, даже если DBGETID не найдёт записи и вернёт NULL,
+ошибки не будет, а в окне вывода появится сообщение о том, что запись
+не найдена.
+@}
+
+function CheckError2 (FormName: String; id: variant) : String;
+begin
+  Result := ''
+  if FormName='' then
+    Result := 'Параметр "Имя формы" не может быть пустым'
+  else if Vartype(Id) = varNull then
+    Result := 'Id записи не может быть Null.'
+  else if not(vartype(Id) in [varDouble, varInteger]) then
+    Result := 'Неверный Id записи. Id может быть только число.';
+end;
+
+procedure OpenRec (FormName: String; Id: variant);
+var Fm: TdxForm;
+    errmsg : string;
+begin
+  errmsg := CheckError2 (FormName, Id);
+  if errmsg <> '' then RaiseException (ErCustomError, errmsg);
+  try
+    Fm := TdxForm.Create (FormName);
+    Fm.EditWindow.Caption := 'Редактирование записи '+
+      'ID:'+IntToStr(Id)+ ' формы ' +'"'+ FormName+'"';
+    Fm.OpenRecord(Id);
+    if Fm.RecordCount = 0 then
+    begin
+      Debug ('Записи с ID:'+VarToStr(Id)+' не обнаружено.');
+      if Fm<>nil then Fm.Free;
+      exit;
+    end;
+    Fm.Edit;
+    if Fm.EditWindow.ShowModal = mrOk then Fm.Post
+     else Fm.Cancel;
+  except
+    RaiseException (ErCustomError, 'Ошибка создания формы. Проверьте правильность имени формы.');
+  finally
+    if Fm<>nil then Fm.Free;
+  end;
+end;
+
+{@function
+OrigName=AddRec
+Name=AddRec
+Args=s
+Result=
+Group=RecordEditor
+Description=<B>Описание:</B><br>
+Добавляет новую запись в указанной родительской форме. Запись открывается в
+отдельном окне. <br><br>
+<B>Параметры:</B><br>
+<u>1 параметр</u>: имя  формы - текст (не может быть пустым).<br>
+<u>Результат</u>: ничего не возвращает.<br><br>
+<B>Примеры:</B><br>
+<code>
+AddRec ('ИмяФормы')<br>
+</code>
+@}
+function CheckError3 (FormName: String) : String;
+begin
+  Result := ''
+  if FormName='' then
+    Result := 'Параметр "Имя формы" не может быть пустым'
+end;
+
+procedure AddRec (FormName: String);
+var Fm: TdxForm;
+    errmsg : string;
+begin
+  errmsg := CheckError3 (FormName);
+  if errmsg <> '' then
+  begin
+    RaiseException (ErCustomError, errmsg);
+  end;
+  try
+    Fm := TdxForm.Create (FormName);
+    Fm.EditWindow.Caption := 'Новая запись формы ' +'"'+ FormName+'"';
+    Fm.Open;
+    Fm.Append;
+    if Fm.EditWindow.ShowModal = mrOk then Fm.Post;
+    Fm.Close;
+  except
+    RaiseException (ErCustomError, 'Ошибка создания записи. Проверьте правильность имени формы.');
+  finally
+    if Fm<>nil then Fm.Free;
+  end;
+end;
+
+{@function
+OrigName=EditingRec
+Name=EditingRec
+Args=snsv
+Result=
+Group=RecordEditor
+Description=<B>Описание:</B><br>
+Вносит изменения, согласно заданным параметрам, в указанное поле,
+указанной записи, указанной родительской формы.<br><br> Функция, после её вызова, скрытно
+для пользователя (т.е. без доп. уведомлений) находит форму, указанную ей в Параметре №1 и
+открывает указанную ей в "Параметре №2" запись этой формы. После чего,
+находит указанное ей в "Параметре №3" поле и меняет его значение на значение поля,
+указанное в "Параметре №4". Если параметры № 1, 2, 3 или 4 не указаны, или
+указаны не верно, то есть имя не соответствует имени компонента (формы, поля)
+или ID-записи, то функция оповещает пользователя об ошибке. В случае верного
+указания параметров, функция пытается произвести замену значения поля,
+указанного в "Параметре №3" на значение поля, указанного в "Параметре №4".
+При успешной замене функция сохраняет сделанные изменения и прекращает свою работу.
+Если замена произведена не была, то функция возвращает сообщение об ошибке.
+Перед тем как произвести замену функция проверяет: не являются ли значения изменяемого
+и замещающего полей равными, то есть идентичными (одинаковыми). Если функция установит
+что значения полей равны она не будет производить замены и прекратит свою работу без
+вывода какого-либо сообщения или ошибки. Замена будет происходить, только если
+значения полей не равны, то есть в замене есть практический смысл. Функцию
+рекомендуется использовать с кнопкой.<br><br>
+<B>Параметры:</B><br>
+<u>1 параметр</u>: имя  формы - текст (обязательное, не может быть пустым).<br>
+<u>2 параметр</u>: идентификатор записи - число или функция, возвращающая число.
+(обязательное)<br>
+<u>3 параметр</u>: имя изменяемого поля (т.е. поля той формы значение которого
+должно быть изменено) - текст (обязательное, не может быть пустым).<br>
+<u>4 параметр</u>: любое значение (текст, число, дата и т.д.) или ссылка на
+замещающее поле (т.е. поле формы в котором работает сама функция и содержащее
+значение, которое заменит значение изменяемого поля) - любое (обязательное).<br><br>
+<u>Результат</u>: ничего не возвращает.<br><br>
+<B>Примеры:</B><br>
+<code>
+EditingRec ('ИмяФормы', 123, 'Имя изменяемого поля', [Замещающее поле])<br>
+EditingRec ('ИмяФормы', 123, 'Имя изменяемого поля', 'Какой-то текст')<br>
+EditingRec ('ИмяФормы', 123, 'Имя изменяемого поля', 4567)<br>
+</code>
+Как указано в примерах выше Праметр №4 может содержать любое значение как то "Текст"
+(указывается в кавычках), 456 (число, указывается без кавычек, иначе это будет текст),
+или ссылку на поле текущей формы [Замещающее поле] (указывается в квадратных скобках)<br><br>
+<code>
+EditingRec ('ИмяФормы', 123, 'Имя изменяемого поля', DBGET (...))<br>
+</code>
+Показан более сложный случай, когда параметр № 4 - это другая
+функция, которая в свою очередь вернёт какое-то значение для функции EditingRec и
+именно оно будет использоваться для замещения.<br><br>
+<code>
+EditingRec ('ИмяФормы', 123, 'Имя изменяемого поля', null)<br>
+</code>
+В Параметре № 4 - указана функция null, то есть функция очистит изменяемое поле.
+@}
+
+procedure EditingRec (FormName: String; IDRec: integer; FieldName: string; Value: variant);
+var Fm: TdxForm;
+begin
+  try
+    try
+      Fm := TdxForm.Create (FormName);
+    except
+      RaiseException(erCustomError, 'Нет доступа к форме!'+#13+
+      'Проверьте правильность имени формы!');
+    end;
+    Fm.OpenRecord(IDRec);
+    try
+      if Fm[FieldName] <> value then
+      begin
+      end;
+    except
+      RaiseException(erCustomError, 'Замена невозможна!'+#13+
+      'Несоответствие типов данных или неверно указан Параметр №3.');
+    end;
+    if Fm[FieldName] <> value then
+    begin
+      If (Fm.State <> dsInsert) and (Fm.State <> dsEdit) and (Fm.CanEdit = asOk)
+        then Fm.Edit
+      else RaiseException(erCustomError, 'Замена невозможна!'+#13+
+        'Нет доступа к вызываемой записи или запись редактируется другим пользователем!');
+      Fm[FieldName] := value;
+      Fm.Post;
+    end;
+  finally
+    if (Fm <> nil) and (Fm.State = dsEdit) then Fm.Cancel;
+    if Fm <> nil then Fm.Free;
+  end;
+end;
+
+
+{@function
+OrigName=TAddRec
+Name=TAddRec
+Args=s
+Result=
+Group=RecordEditor
+Description=<B>Описание:</B><br>
+Добавляет новую запись в таблицу. Запись открывается в отдельном окне
+для заполнения. <br><br>
+<B>Параметры:</B><br>
+<u>1 параметр</u>: имя  таблицы - текст (не может быть пустым).<br>
+<u>Результат</u>: ничего не возвращает.<br><br>
+<B>Примеры:</B><br>
+<code>
+TAddRec ('ИмяТаблицы')<br>
+Запись, показанная в примере выше, применяется и успешно работает с кнопкой.
+Если Вы хотите использовать функцию в поле формы то разделяйте имя таблицы на
+две части для корректной работы функции.<br>
+<code>
+TAddRec ('Имя'+'Таблицы')<br>
+TAddRec ('Сот'+'рудники')<br>
+TAddRec ('Дет'+'али')<br>
+</code>
+Необходимость разделения связана с особенностями работы DataExpress3
+@}
+function CheckErrorT (FormName: String) : String;
+begin
+  Result := ''
+  if FormName='' then
+    Result := 'Параметр "Имя таблицы" не может быть пустым';
+end;
+
+procedure TAddRec (FormName: String);
+var errmsg : string;
+begin
+  If (Self.State <> dsInsert) and (Self.State <> dsEdit) and (Self.CanEdit = asOk) then
+    RaiseException (ErCustomError, 'Переведите запись в режим редактирования.');
+  errmsg := CheckErrorT (FormName);
+  if errmsg <> '' then RaiseException (ErCustomError, errmsg);
+  try
+    with self.forms[FormName] do
+    begin
+      EditWindow.Caption := 'Новая запись таблицы ' +'"'+ FormName+'"';
+      Append;
+      if EditWindow.ShowModal = mrOk then Post
+        else Cancel;
+    end;
+  except
+    RaiseException (ErCustomError, 'Ошибка создания записи. Проверьте правильность имени формы.');
+  end;
+end;
+
+{@function
+OrigName=TDeleteRec
+Name=TDeleteRec
+Args=ssss
+Result=
+Group=RecordEditor
+Description=<B>ВНИМАНИЕ:</B><br>
+Используйте функцию осторожно! <br>
+Удалённые записи нельзя восстановить!<br>
+Функция используется только с кнопкой!<br>
+Не используйте функцию в полях или надписях - это неизбежно приведёт к ошибкам
+и потере информации! <br><br>
+<B>Описание:</B><br>
+Используется ТОЛЬКО С КНОПКОЙ. Удаляет записи в таблице согласно заданному
+фильтру. Если оставить фильтр пустым - удаляет все записи таблицы. <br><br>
+<B>Параметры:</B><br>
+<u>1 параметр</u>: имя  таблицы - текст (не может быть пустым).<br>
+<u>2 параметр</u>: фильтр - можно оставить пустым, тогда будут удалены все записи
+таблицы<br>
+<u>3 параметр</u>: окно подтверждения перед удалением. YesAccept - показывать окно
+подтверждения, NoAccept - не показывать окно подтверждения. <br>
+<u>4 параметр</u>: сообщение о выполнении функции. YesMsg - показывать
+сообщение, NoMsg - не показывать сообщение.<br>
+<u>Результат</u>: ничего не возвращает.<br><br>
+<B>Рекомендации:</B> если вы не уверены в том, что делаете указывайте в
+параметре 3 и 4 значения YesAccept и YesMsg - это позволит контролировать
+работу функции, иначе функция будет работать скрытно.<br><br>
+
+<B>Примеры:</B><br>
+<code>
+TDeleteRec ('ИмяТаблицы', '[ПолеТаблицы]="Значение"', 'YesAccept', 'YesMsg')
+</code><br><br>
+<code>
+TDeleteRec ('Сотрудники', '[Фамилия]="Иванов"', 'YesAccept', 'YesMsg')
+</code><br>
+Функция удалит из таблицы "Сотрудники" всех сотрудников с фамилией Иванов.
+<code><br><br>
+TDeleteRec ('Сотрудники', '', 'YesAccept', 'YesMsg')
+</code><br>
+Функция удалит из таблицы "Сотрудники" все записи.
+@}
+
+function DeleteErrorT (FormName, Accept, EndMsg: String) : String;
+begin
+  Result := ''
+  if FormName='' then
+    Result := 'Параметр "Имя таблицы" не может быть пустым'
+  else if self.forms[FormName] = nil then
+    Result := 'Таблица с именем '+'"'+FormName+'"'+' не найдена'
+  else if (Accept <> 'yesaccept') and (Accept <> 'noaccept') then
+    Result := 'Неверный формат параметра "Показывать окно подтверждения".'
+  else if (EndMsg <> 'yesmsg') and (EndMsg <> 'nomsg') then
+    Result := 'Неверный формат параметра "Сообщение о выполнении функции".'
+end;
+
+procedure TDeleteRec (NameT, Fltr, Acpt, EndM: String);
+var errmsg, Accept, NameTable, EndMsg : string;
+    bool: boolean;
+    i, dlg: integer;
+begin
+  Accept := LowerCase (Acpt);
+  EndMsg := LowerCase (EndM);
+  If (Self.State <> dsInsert) and (Self.State <> dsEdit) and (Self.CanEdit = asOk) then
+    RaiseException (ErCustomError, 'Переведите запись в режим редактирования.');
+  errmsg := DeleteErrorT (NameTable, Accept, EndMsg);
+  if errmsg <> '' then RaiseException (ErCustomError, errmsg);
+  if Accept = 'yesaccept' then
+    dlg := MessageDlg ('Удаление записей', 'Вы действительно хотите удалить записи?',
+      mtConfirmation, [mbYes,mbNo]);
+  if (Accept = 'noaccept') or (dlg = mrYes) then
+  begin
+    with self.forms[NameTable] do
+    begin
+      i := 0;
+      MoveLast;
+      while BOF <> true do
+      begin
+        if Fltr = '' then bool := true
+          else  bool := EvalExpr (Fltr, self.forms[NameTable]);
+        if bool then
+        begin
+          i := i+1;
+          delete;
+        end
+        else
+        MovePrior;
+      end;
+    end;
+    if EndMsg = 'yesmsg' then
+      MessageDlg ('Рузультат удаления записей', 'Из таблицы '+'"'+NameTable+'"'+
+        ' удалено записей: '+IntToStr(i), mtInformation, [mbOk])
+  end;
+end;
+
+{@action
+Id=CB725E4B-2187-4189-93BF-22F097F99F3B
+OrigName=CloseFormButton
+Name=Закрыть текущую форму
+Group=RecordEditor
+UI=
+Description= Закрывает текущую форму. Перед закрытием проверяет правильность
+заполнения полей, согласно параметрам заданным в свойствах полей: "Проверка
+значения" и "Обязательное". Если проверка прошла успешно, то форма закрывается,
+если нет, то появляется соответствующее информационное сообщение.
+Если форма находилась в режиме
+редактирования или вставки записи, то после проверки заполнения полей запись
+будет сохранена. В случае, если в момент закрытия формы было открыто окно
+редактирования записи, то оно будет закрыто, но только при успешной проверки
+правильности заполнения полей формы.
+<br><br>
+
+@}
+var
+  CloseLag: TTimer;
+  F: TdxForm;
+
+procedure PageDestroy (Sender: TObject);
+var
+  i: integer;
+begin
+  CloseLag.Free;
+  for i:=0 to  MainWindow.Pages.PageCount-1 do
+  begin
+    if MainWindow.Pages.Pages[i].Caption = F.FormCaption then
+      MainWindow.DestroyPage(MainWindow.Pages.Pages[i]);
+  end;
+
+end;
+
+procedure CloseFormButton;
+begin
+  if not Self.Validate then exit;
+  if Self.State in [dsInsert, dsEdit] then Self.Post;
+  If (Self.EditWindow <> nil) and (Self.EditWindow.Showing) then Self.EditWindow.Close;
+  Self.Close;
+  F := Self;
+  CloseLag := TTimer.Create (Self);
+  CloseLag.Interval := 100;
+  CloseLag.Enabled := true;
+  CloseLag.OnTimer := @PageDestroy;
+end;
+
+{@function
+OrigName=DBMERGEA
+Name=DBMERGEA
+Args=ssssn
+Result=v
+Group=RecordEditor
+Description=
+<B>Описание:</B><br>
+Соединяет значения нескольких полей в одну строку. Значения полей разделяются
+пробелом. Значения каждой записи выводятся с новой строки. Если имя таблицы
+(параметр №3) не пусто, то функция работает с полями таблицы, иначе с полями
+формы.<br><br>
+<B>Параметры:</B><br>
+<u>1 параметр</u>: имя  формы источника - текст (обязательный).<br>
+<u>2 параметр</u>: фильтр для формы (не таблицы) - текст (не обязательный).<br>
+<u>3 параметр</u>: имя  таблицы - текст (не обязательный)<br>
+<u>4 параметр</u>: список полей формы источника через запятую - текст (обязательный)<br>
+<u>5 параметр</u>: число (обязательный). Определяет следует ли показывать все
+найденные записи или показать только уникальные записи. 1 - только уникальные записи;
+0 - все записи;<br>
+<u>Результат</u>: любого типа. Если записей соответствующих фильтру не найдено
+- возвращает null<br><br>
+
+<B>Примечания:</B><br>
+Под формой источника подразумевается форма, указанная в параметре №1.<br>
+Фильтр всегда задаётся для формы источника, а не для таблицы.<br><br>
+
+<B>Пример:</B><br>
+<code>
+DBMERGE ('Имя формы', '[Поле формы источник]=[Поле текущей формы]', 'Таблица',
+         'Поле1;Поле2;Поле3', 1)
+</code><br><br>
+@}
+
+type TFilterRecord = record
+  Left,
+  Right: string;
+end;
+
+var
+  CurrFm: TdxForm;
+
+function CreateFList (FieldsList: string): TStringList;
+begin
+  Result := TstringList.Create;
+  Result.DelimitedText := FieldsList;
+end;
+
+function GetObjectValue (Cmp: TComponent; Aft: string): string;
+var
+  FormName, FieldName: string;
+  Fm: TdxForm;
+begin
+  FormName := TdxLookupComboBox (Cmp).SourceFormName;
+  FieldName := TdxLookupComboBox (Cmp).SourceFieldName;
+  Fm := TdxForm.Create (FormName);
+  try
+    Fm.Open;
+    Result := Fm.AsS[FieldName]
+  finally
+    Fm.Free;
+  end;
+end;
+
+function ParseFilter (FFilter: string): string;
+var
+  FL: TStringList;
+  i: integer;
+  Fltr: TFilterRecord;
+  Res: variant;
+  Dlmtr: char;
+begin
+  if pos ('=', FFilter) > 0 then
+    Dlmtr := '='
+  else if pos ('>', FFilter) > 0 then
+    Dlmtr := '>'
+  else if pos ('<', FFilter) > 0 then
+    Dlmtr := '<'
+  else
+    RaiseException (erCustomError, 'Пропущен знак сравнения частей фильтра.');
+  FL := TStringList.Create;
+  try
+    with FL do
+    begin
+      Delimiter := Dlmtr;
+      DelimitedText := FFilter;
+      if Count <> 2 then
+        RaiseException (erCustomError, 'Ошибка при составлении фильтра.');
+      for i:=0 to Count-1 do
+      begin
+        if i=0 then
+          Fltr.Left := Trim(FL[i])
+        else if i = 1 then
+          Fltr.Right := Trim(FL[i])
+      end;
+    end;
+    Res := EvalExpr (Fltr.Right, CurrFm)
+    Result := Fltr.Left + Dlmtr + '"'+VarToStr (Res)+'"';
+  finally
+    if Assigned (FL) then FL.Free;
+  end;
+end;
+
+function  DBMERGEA (FormName, FFilter, Tablename, FieldsList: string; UniqueRecord: byte): variant;
+var
+  Fm: TdxForm;
+  FL, ResLine : TStringList;
+  ChPos: cardinal;
+  i: integer;
+  s, Bef, Aft, Fltr: string;
+
+begin
+  Result := null;
+  if (FormName = '') or (FieldsList = '') then
+    RaiseException (erCustomError, 'Параметра 1 и 3 не могут быть пустыми!');
+  CurrFm := Self;
+  Fltr := ParseFilter (FFilter);
+  Fm := TdxForm.Create (FormName);
+  try
+    with Fm do
+    begin
+      OpenRecords (Fltr,  nil, false);
+      if TableName <> '' then
+        Fm := Forms[TableName];
+      MoveFirst;
+      FL := CreateFList (FieldsList);
+      ResLine := CreateFList ('');
+      ResLine.Delimiter := #13;
+      while not EoF do
+      begin
+        for i:=0 to FL.Count-1 do
+        begin
+          if FL[i] = '' then continue;
+          ChPos := Pos ('|', FL[i]);
+          if ChPos > 0 then
+          begin
+            Bef := Copy (FL[i], 1, ChPos-1);
+            Aft := Copy (FL[i], ChPos+1, Length (FL[i]));
+            s := s + GetObjectValue (FindComponentByFieldName (Bef), Aft) + ' ';
+          end
+          else
+            s := s + AsS [FL[i]] + ' ';
+        end;
+          if (UniqueRecord = 1) then
+          begin
+            if (ResLine.IndexOf (S) = -1) then
+              ResLine.Add (S)
+          end
+          else
+            ResLine.Add (S);
+        s := '';
+        MoveNext;
+      end;
+    end;
+    Result := ResLine.DelimitedText;
+  finally
+    Fm.Free;
+    if FL <> nil then FL.Free;
+    if ResLine <> nil then ResLine.Free;
+  end;
+end;
+
+{@function
+OrigName=CreateRec
+Name=CreateRec
+Args=ss
+Result=
+Group=RecordEditor
+Description=
+<B>Описание:</B><br>
+Создаёт запись в родительской форме и заполняет поля формы заданными значениями.
+<br><br>
+<B>Параметры:</B><br>
+<u>1 параметр</u>: имя  формы - текст (обязательный).<br>
+<u>2 параметр</u>: список записей, состоящих из имён полей и их значений -
+текст (не обязательный). Имя поля от значения отделяется знаком "доллара" ($).
+Записи разделяются символом "решётка" (#).<br>
+<B>Формат записи значений:</B><br>
+Текст - не обособляется кавычками.<br>
+Число - если в числе есть знаки после запятой, то оно может быть записано как
+с запятой (1,5), так и с точкой (1.5). Оба варианта корректны.<br>
+Дата - записывается в формате (чч.мм.гг) или (чч.мм.гггг) или (чч.мм)
+(будет подставлен текущий год) или (чч) (будет подставлен текущий месяц и год).<br>
+Время - (чч:мм:сс) можно сокращать запись по аналогии с датой.<br>
+Флажок - 1 (включен) или 0 (отключен).<br>
+Объект - идентификатор записи (целое число). Можно использовать выражение с функцией
+DBGETID (см. описание функции).<br>
+(~) - символ "тильда" (шифт + буква "Ё" в английской раскладке клавиатуры). Является
+служебным символом и ставится в любое место значения, если оно является выражением.
+Программа, найдя данный символ в значении для поля (то есть после знака ($)), будет
+исходить из того, что данное значение является выражением и будет вычислять его,
+а результат вычисления записывать в поле. Данный символ используется как служебный
+только при указании его в значении для поля в любом месте (в начале, середине, в конце).<br>
+(#) - служебный символ. Разделяет записи "поле+значение" между собой. Данный символ
+не должен использоваться вами в именах полей или в значениях для полей.<br>
+($) - служебный символ. Отделяет имя поля от его значения или выражения.
+Данный символ не должен использоваться вами в именах полей или в значениях
+для полей.<br>
+
+<u>Результат</u>: число. 1 - если запись успешно создана; 0 - в ином случае<br><br>
+
+<br><br>
+
+<B>Пример:</B><br>
+<code>
+CreateRec ('ИмяФормы', 'Рост&1,90 # Имя$Вася')</code><br>
+<code>CreateRec ('Форма 6', 'Текст$Любой текст (кроме служебных символов) # Число$100 # Заметка$Заметка # Дата$10.10.10 # Время$11:11 # Флажок$1')</code><br>
+<code>CreateRec ('Форма 6', 'Объект$~DBGETID("Продажи", "[!дата]=[дата]")'</code><br>
+<code>CreateRec ('Форма 6', 'Дата$~date # Время$~time')</code><br>
+@}
+
+Type TFieldsAndValues = record
+  FldName,
+  ClsName: string;
+  FldValue: Variant;
+end;
+
+var
+  FV: array of TFieldsAndValues;
+
+procedure FillMassiveValue (var Fm: TdxForm; RecStr: string);
+var
+  VL: TStringList;
+  n: integer;
+  p: cardinal;
+  Cmp: TComponent;
+  RightStr: String;
+  ValRes: variant;
+begin
+  n := Length (FV)+1;
+  SetLength (FV, n);
+  n := n - 1;
+  VL := TStringList.Create;
+  try
+    VL.Delimiter := '$';
+    VL.DelimitedText := RecStr;
+    if VL.Count <> 2 then
+     RaiseException (erCustomError, 'Ошибка разбора списка полей и их значений!');
+    FV[n].FldName := Trim (StringReplace (VL[0], #152, ' ', [rfReplaceAll]));
+    RightStr := Trim (StringReplace (VL[1], #152, ' ', [rfReplaceAll]));
+    p := Pos ('~', RightStr);
+    if p > 0 then
+    begin
+      Delete (RightStr, p, 1);
+      ValRes := EvalExpr (RightStr, Fm);
+    end
+    else
+      ValRes := RightStr;
+    Cmp := Fm.FindComponentByFieldName (FV[n].FldName);
+    if not Assigned (Cmp) then
+     RaiseException (erCustomError, 'Поле "'+FV[n].FldName+'" не найдено!');
+    if ValRes = null then
+      FV[n].FldValue := ValRes
+    else
+    begin
+      FV[n].ClsName := LowerCase (Cmp.ClassName);
+      Case FV[n].ClsName of
+       'tdxedit':           FV[n].FldValue := ValRes;
+       'tdxcombobox':       FV[n].FldValue := ValRes;
+       'tdxmemo':           FV[n].FldValue := ValRes;
+       'tdxcalcedit':       FV[n].FldValue := StrToFloat (StringReplace (ValRes, ',', '.', [rfReplaceAll]));
+       'tdxdateedit':       FV[n].FldValue := StrToDate (ValRes);
+       'tdxtimeedit':       FV[n].FldValue := StrToTime (ValRes);
+       'tdxcheckbox':       FV[n].FldValue := StrToInt (ValRes);
+       'tdxlookupcombobox': FV[n].FldValue := ValRes;
+      end;
+    end;
+  finally
+    VL.Free;
+  end;
+end;
+
+function CreateRec (FormName, ValueList: string): byte;
+var
+  Fm: TdxForm;
+  VL: TStringList;
+  i: integer;
+begin
+  Result := 0;
+  VL := TStringList.Create;
+  Fm := TdxForm.Create (FormName);
+  try
+    try
+     VL.Delimiter := '#';
+     VL.DelimitedText := StringReplace (ValueList, ' ', #152, [rfReplaceAll]);
+     for i:=0 to VL.Count-1 do
+     begin
+       FillMassiveValue (Fm, VL[i]);
+     end;
+      Fm.OpenRecord (0);
+      Fm.Append;
+      for i:=0 to Length(FV)-1 do
+      begin
+        Fm[FV[i].FldName] := FV[i].FldValue;
+      end;
+      Fm.Post;
+      Result := 1;
+    finally
+      VL.Free;
+      Fm.Free;
+      SetLength (FV, 0);
+    end;
+  except
+    SetLength (FV, 0);
+    RaiseLastException;
+  end;
+end;

@@ -1,0 +1,35 @@
+procedure TASKEND (Sender: TObject);  // назначение задачи одному исполнителю
+var
+  TASKS: TdxForm;
+
+  //n: Integer;
+begin
+  if Self['Тип задачи'] = 'Исполнение' then
+  begin
+    TASKS := TdxForm.Create('Задачи');
+    TASKS.Open;
+    TASKS.Edit;
+    TASKS.Append;
+    TASKS['Документ1']:= Self['Документ1'];
+    TASKS['Задача1']:= Self.Recid;
+    TASKS['Исполнитель'] := Self['Сотрудник'];
+    TASKS['Тип задачи'] := 'Ознакомление';
+    TASKS['Срок задачи'] := DATE;
+    TASKS['Описание задачи'] := 'Ознакомтесь с выполнением назначенной вами задачи';
+    TASKS.Post;
+    TASKS.free;  //Очищаем формы;
+    dxQueryGrid2.Refresh;
+  end;
+  Self['Выполнено'] := 1;
+  Self['Дата события'] := null;
+  Self['Время события'] := null;
+  Self['Прочитано'] := 1;
+  Self['Ежедневно'] := 0;
+  Self['Еженедельно'] := 0;
+  Self.post;
+end;
+
+procedure Form_Create;
+begin
+  dxButton2.OnClick := @TASKEND; // выполнение задачи и назначение задачи ознакомления с результатом
+  end;

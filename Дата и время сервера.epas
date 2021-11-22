@@ -1,0 +1,46 @@
+{@function
+OrigName=SRV_TIME
+Name=SRV_TIME
+Args=
+Result=t
+Group=Время
+Description=Возвращает текущее время сервера.<br>
+<center><code>SRV_TIME</code></center><br>
+<b>Параметры:</b> нет.<br><br>
+<b>Результат:</b> время.<br><br>
+<font color="#FF0000"><b>Примечание:</b> При использовании функции нужно учитывать место расположение
+сервера относительно текущего часового пояса (к примеру сервер <b><u>demodx.tk</u></b> вернет
+время +11GMT <i>(разница с Мск в 8 часов)</i>).</font>
+@}
+
+function SRV_TIME:TDateTime;
+var qSQL:TdxSQLQuery;
+begin
+qSQL:=sqlSelect('select CURRENT_TIME from rdb$database');
+Result:=qSQL.AsDt['CURRENT_TIME'];
+qSQL.Free;
+end;
+
+{@function
+OrigName=SRV_DATE
+Name=SRV_DATE
+Args=
+Result=d
+Group=Дата
+Description=Возвращает текущую дату сервера.<br>
+<center><code>SRV_DATE</code></center><br>
+<b>Параметры:</b> нет.<br><br>
+<b>Результат:</b> дата.<br><br>
+<font color="#FF0000"><b>Примечание:</b> При использовании функции нужно учитывать место расположение
+сервера относительно текущего часового пояса (к примеру сервер <b><u>demodx.tk</u></b> вернет
+время +11GMT <i>(разница с Мск в 8 часов)</i>).</font>
+@}
+
+function SRV_DATE:TDateTime;
+var qSQL:TdxSQLQuery;
+begin
+qSQL:=sqlSelect('select CURRENT_DATE from rdb$database');
+Result:=qSQL.AsDt['CURRENT_DATE'];
+qSQL.Free;
+end;
+

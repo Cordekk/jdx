@@ -1,0 +1,254 @@
+type
+  TMetaDataField=record
+    id:integer;
+    FieldName:string;
+    objectName:string;
+    fieldSize:integer;
+    TypeName:string;
+    SourceTId:integer;
+    SourceFId:integer;
+    Required:boolean;
+  end;
+  TMetaDataForm=record
+    id:integer;
+    pid:integer;
+    FormCaption:string;
+    Name:String;
+    Fields:array of TMetaDataField;
+    ViewType:TViewType;
+    CountFields:Integer;
+    ConfirmSaveRecord:boolean;
+    ConfirmAutoSaveRecord:boolean;
+    ConfirmCancelEditing:boolean;
+  end;
+
+
+function BoolToStr(val:boolean):string;
+begin
+  if val then
+    result:='True'
+  else
+    result:='False';
+end;
+
+function UnQuotes(S:string):string;
+var
+  a,b:string;
+  x:integer;
+begin
+  a:=utf8copy(s,1,1);
+  x:=utf8length(s);
+  b:=utf8copy(s,x,1);
+  if a=b then
+    result:=utf8copy(s,2,x-2)
+  else
+    result:=s;
+end;
+
+function StrToViewType(s:string):TViewType;
+begin
+  if s='vtGridTop' then result:=vtGridTop
+  else if s='vtGridBottom' then result:=vtGridBottom
+  else if s='vtGridLeft' then result:=vtGridLeft
+  else if s='vtGridRight' then result:=vtGridRight
+  else if s='vtGridOnly' then result:=vtGridOnly
+  else if s='vtWithoutGrid' then result:=vtWithoutGrid
+  else if s='vtSimpleForm' then result:=vtSimpleForm
+  else if s='vtDefault' then result:=vtDefault
+  else result:=vtDefault;
+end;
+
+procedure ReadObject(var MetaData:array of TMetaDataForm; Text:TStrings);
+var
+  i,j:integer;
+  f:TMetaDataForm;
+  field:TMetaDataField;
+  line:string;
+  chars:Array[0..5] of char;
+  indexses:array[0..5] of integer;
+  loadForm, loadfield, loadItem:boolean;
+  skipObject:array[0..32] of boolean;
+  pname,pval,otype:string;
+  GroupObject:integer;
+begin
+  chars[0]:='=';
+  chars[1]:=':';
+  chars[2]:='(';
+  chars[3]:=')';
+  chars[4]:='''';
+  chars[5]:='"';
+  //debug(text.text);
+  GroupObject:=0;
+  skipObject[GroupObject]:=false;
+  f.countfields:=0;
+  try
+  for i:= 0 to text.count-1 do
+    begin
+      line:=Trim(text.strings[i]);
+      if line='' then continue;
+      for j:=0 to 5 do indexses[j]:=Pos(chars[j],line);
+      if copy(line,1,7)='object ' then
+        begin
+          otype:=Trim(copy(line,indexses[1]+1,length(line)-indexses[1]));
+          //x:=Pos('TdxForm',line);
+          if otype='TdxForm' then
+            begin
+              //debug(line);
+              loadform:=true;
+              skipObject[GroupObject]:=false;
+              f.name:=trim(UTF8copy(line,7,Indexses[1]-7));
+            end
+          else if (otype='TdxEdit') or
+                  (otype='TdxCalcEdit') or
+                  (otype='TdxDateEdit') or
+                  (otype='TdxTimeEdit') or
+                  (otype='TdxCounter') or
+                  (otype='TdxMemo') or
+                  (otype='TdxCheckBox') or
+                  (otype='TdxComboBox') or
+                  (otype='TdxLookupComboBox') or
+                  (otype='TdxObjectField') or
+                  (otype='TdxDBImage') or
+                  (otype='TdxFile') then
+            begin
+              //debug(line);
+              loadfield:=true;
+              skipObject[GroupObject]:=false
+              with field do
+                begin
+                  typeName:=otype;
+                  objectname:=trim(UTF8copy(line,7,Indexses[1]-7));
+                  fieldname:='';
+                  fieldSize:=-1;
+                end;
+            end
+          else if otype='TdxGroupBox' then
+            begin
+              //debug(line);
+              GroupObject:=GroupObject+1;
+              skipObject[GroupObject]:=True;
+            end
+          else
+            begin
+              //debug(line);
+              skipObject[GroupObject]:=true;
+            end;
+        end
+      else  if line='item' then
+            begin
+              //debug(line);
+              loadItem:=true;
+            end
+      else if (line='end') or (line='end>') then
+        begin
+          //debug(line+' #loaditem='+booltostr(loaditem)+' loadfield='+booltostr(loadfield)+' loadform='+booltostr(loadform)+' groupobject='+inttostr(groupobject));
+          if LoadItem then
+            loadItem:=false
+          else if skipObject[GroupObject] then
+            skipObject[GroupObject]:=false
+          else if loadField then
+            begin
+              loadfield:=false;
+              f.CountFields:=GetArrayLength(f.Fields)+1;
+              SetArrayLength(f.Fields,f.CountFields);
+              f.fields[f.countFields-1]:=field;
+            end
+          else
+            begin
+              if f.id>0 then
+                begin
+                  if f.id>=GetArrayLength(metadata) then
+                    SetArrayLength(metadata,f.id+1);
+                  MetaData[f.id]:=f;
+                end
+              else
+                begin
+                  debug('Сбой распознавания формы '+f.Name+' строка '+inttostr(i+1));
+                  debug('loaditem='+booltostr(loaditem)+' loadfield='+booltostr(loadfield)+' loadform='+booltostr(loadform)+' groupobject='+inttostr(groupobject));
+                  debug(text.text);
+                end;
+              loadform:=false;
+            end;
+        end
+      else if not skipObject[GroupObject] then
+        begin
+          if indexses[0]>0 then
+            begin
+              pname:=trim(copy(line,1,indexses[0]-1));
+              pval:=trim(copy(line,indexses[0]+1,length(line)-indexses[0]));
+              if loadfield then
+                begin
+                  if pname='Id' then field.id:=StrToInt(pval)
+                  else if pname='FieldName' then field.FieldName:=UnQuotes(pval)
+                  else if pname='FieldSize' then field.FieldSize:=StrToInt(pval)
+                  else if pname='SourceTId' then field.SourceTId:=StrToInt(pval)
+                  else if pname='SourceFId' then field.SourceFId:=StrToInt(pval)
+                  else if pname='Required' then field.Required:=(pval='True');
+                end
+              else if loadform then
+                begin
+                  if pname='Id' then f.id:=StrToInt(pval)
+                  else if pname='PId' Then f.pid:=StrToInt(pval)
+                  else if pname='FormCaption' then f.FormCaption:=UnQuotes(pval)
+                  else if pname='ViewTyp' then f.ViewType:=StrToViewType(pval)
+                  else if pname='ConfirmSaveRecord' then f.ConfirmSaveRecord:=(pval='True')
+                  else if pname='ConfirmAutoSaveRecord' then f.ConfirmAutoSaveRecord:=(pval='True')
+                  else if pname='ConfirmCancelEditing' then f.ConfirmCancelEditing:=(pval='True');
+                end;
+            end;
+        end;
+    end;
+  except
+    debug(ExceptionToString(ExceptionType,ExceptionParam));
+  end;
+end;
+
+procedure CreateMetaData(var MetaData:array of TMetaDataForm);
+var
+q:TdxSqlQuery;
+lfm:TStrings;
+begin
+  q:=sqlselect('select form from dx_forms');
+  if q.eof then begin q.free; exit; end;
+  q.movefirst;
+  lfm:=TstringListUTF8.Create;
+  while not q.eof do
+    begin
+      lfm.clear;
+      lfm.text:=q.ass['form'];
+      readObject(metadata,lfm);
+      q.movenext;
+    end;
+  lfm.free;
+  q.free;
+end;
+
+function PrintMetaData(metaData:Array of TMetaDataForm):TStringlist;
+var
+i,j:integer;
+begin
+result:=TStringlist.Create();
+for i:= 0 to GetArrayLength(MetaData)-1 do
+  begin
+    if Metadata[i].Id=0 then continue;
+    Result.add('Form '+Metadata[i].name+' '+ Metadata[i].FormCaption);
+    Result.add('Id='+IntToStr(Metadata[i].id));
+    Result.add('PId='+IntToStr(Metadata[i].PId));
+    Result.add('ConfirmSaveRecord='+BoolToStr(Metadata[i].ConfirmSaveRecord));
+    Result.add('ConfirmAutoSaveRecord='+BoolToStr(Metadata[i].ConfirmAutoSaveRecord));
+    Result.add('ConfirmCancelEditing='+BoolToStr(Metadata[i].ConfirmCancelEditing));
+    Result.add('Fields');
+    for j:=0 to GetArrayLength(Metadata[i].Fields)-1 do
+      begin
+        Result.add('Field name='+Metadata[i].Fields[j].FieldName+
+                    ' ObjectName='+Metadata[i].Fields[j].ObjectName +
+                    ' TypeName='+ Metadata[i].Fields[j].TypeName +
+                    ' Id='+IntToStr(Metadata[i].Fields[j].Id)+
+                    ' SourceTId='+IntToStr(Metadata[i].Fields[j].SourceTId)+
+                    ' SourceFId='+IntToStr(Metadata[i].Fields[j].SourceFId)+
+                    ' Required='+BoolToStr(Metadata[i].Fields[j].Required));
+      end;
+    Result.add('EndFields');
+    Result.add('EndForm');
+  end;
+end;

@@ -1,0 +1,52 @@
+{@action
+Id=8A314FD3-C6E4-4755-8237-69A30C8880B1
+target=form
+OrigName=RowNums
+Name=Нумератор строк таблицы.
+Group=Свойства компонентов
+UI=<ui>
+<text name="Cap" caption="Название колонки с номером строки:" defaultvalue="#" />
+<number name="Width" caption="Ширина колонки в пикселях:" defaultvalue=40 />
+</ui>
+Description=Действие формы. Нумерует строки татабличной части текущей формы.
+@}
+
+
+var DCCEv:TDrawColumnCellEvent;
+
+procedure SGDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+var Fm:TdxForm;
+    G:TdxGrid;
+    H,W:integer;
+
+begin
+  G:=TdxGrid(Sender);
+  Fm:=G.Form;
+      if Column.Index=0 then
+    begin
+      G.Canvas.Font.Color := clGray;
+      if Fm.Recno>0 then
+      begin
+      H := (G.DefaultRowHeight-G.Canvas.TextHeight(IntToStr(Fm.Recno)))/2;
+      W := (Column.Width-G.Canvas.TextWidth(IntToStr(Fm.Recno)))/2;
+      G.Canvas.TextOut(Rect.Left+W,H+Rect.Top,IntToStr(Fm.Recno));
+      DCCEv(Sender,rect,DataCol,Column,State);
+      end;
+    end;
+end;
+
+procedure RowNums(ColCaption:string;ColWidth:integer);
+  var Col:TColumn;
+begin
+  if Self.Params.ParamExists('RowNumsInitialized') then exit;
+  Self.Grid.Columns.Add;
+  Col := Self.Grid.Columns[Self.Grid.Columns.Count-1];
+  Col.Title.Caption:=ColCaption
+  Col.Index:=0;
+  Col.Width:=ColWidth;
+  DCCEv:=Self.Grid.OnDrawColumnCell;
+  Self.Grid.OnDrawColumnCell:=@SGDrawColumnCell;
+  Self.Params['RowNumsInitialized']:='RunOnce';
+end;
+
+

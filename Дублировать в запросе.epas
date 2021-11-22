@@ -1,0 +1,52 @@
+{@action
+ID=62900B52-9BF5-4E72-833F-9B47AB4F4399
+OrigName=QG_DUPLICATE
+Name="Дублировать" в запросе
+Group=Расширение возможностей компонентов
+UI=<ui>
+<query name="_qg" caption="Выберите запрос"/>
+<form name="_fm" caption="Выберите форму" source=_qg/>
+<list name="_ls" caption="Режим копирования"
+items="Только форма;Форма+Подчиненные таблицы"
+defaultvalue="Родитель+Подчиненные таблицы"/>
+</ui>
+Description=<b>Действие дублирует запись указанного запроса.<b><br>
+<i>(работает только если в запросе указан 1 источник без группировок)</i><p>
+@}
+
+procedure QG_DUPLICATE(query,form,modedp:string);
+var
+  Fm:TdxForm;
+  ID,RCount:integer;
+  QG:TdxQueryGrid;
+begin
+  if (query='') or (form='') then exit;
+    QG:=Self.Queries[query];
+    ID:=QG.Recid;
+    QG.MoveLast;
+    RCount:=QG.RecordCount;
+    QG.GotoRecord(ID);
+    Fm:=TdxForm.Create(form);
+    Fm.Open;
+    Fm.GotoRecord(ID);
+    if ID<>Fm.Recid then
+   begin
+      MsgBox('Ошибка копирования',
+      'Копируемая запись уже удалена другим пользователем.');
+      QG.Refresh;
+      exit;
+   end;
+  if Fm.CanEdit = asLocked then
+    MsgBox('Внимание!','Копируемая запись открыта другим пользователем.'+
+    ' Данные могут быть неактуальны.');
+  if modedp='Только форма' then
+    Fm.Grid.PopupMenu.Items[MI_FORM_DUPLICATE].Click
+  else Fm.Grid.PopupMenu.Items[MI_FORM_DUPLICATEALL].Click;
+    Fm.Free;
+    QG.Refresh;
+  if QG.RecordCount>RCount then
+    QG.MoveLast else QG.GotoRecord(ID);
+end;
+
+
+

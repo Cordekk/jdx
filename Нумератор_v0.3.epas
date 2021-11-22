@@ -1,0 +1,211 @@
+{@module
+author=Develop-Soft
+version=0.3
+homepage=https://forum.develop-soft.ru/viewtopic.php?p=1274
+description=
+<b>Функции типового учета [Нумератор документов]</b>
+<br><br>
+<b>История версий:</b><br><br>
+v 0.1 от 06.03.2019 - выход первой версии<br>
+v 0.2 от 07.03.2019 (! несовместима с v0.1, требуется отдельная настройка)<br>
+- добавлена блокировка полей "Номер", "Дата" (защита от изменений вручную или установки "Задним числом")<br>
+- добавлена проверка и исключение дубликатов действия в одной форме.<br>
+v 0.3 от 21.06.2020 - добавлен "Зависимый нумератор"<br><br>
+<hr><br> <br>
+<b><a href="https://forum.develop-soft.ru/viewtopic.php?p=1274">Домашняя страница</a>
+ |
+<a href="https://forum.develop-soft.ru/donate">Поблагодарить</a>
+</b>
+<br> <hr>
+@}
+
+{@action
+Id=478D4C2F-AD93-440A-8F61-2A976EEC2D9E
+Target=form
+OrigName=PeriodicNumerator
+Name=Периодический нумератор
+Group=Функции типового учета
+UI=
+<ui>
+   <divider caption="Номер"/>
+  1. <field name="Numerator" caption="Выберите поле номера:" filter="number" required=1/>
+  2. <checkbox name="Allow_Edit_Number" caption="Разрешить редактирование"/>
+   <divider caption="Дата"/>
+  3. <field name="DateDoc" caption="Выберите поле даты:" filter="date" required=1/>
+  4. <checkbox name="Allow_Edit_Date" caption="Разрешить редактирование"/>
+  <divider/>
+   <list name="Period" caption="Нумерация в пределах:" items=";Год;Квартал;Месяц;Неделя;День;Сквозная нумерация;Условие (выражение ниже)"
+   defaultvalue="Год" required=1/>
+</ui>
+Description=<b>Периодический нумератор</b>.<br><br>
+Действие формы. Позволяет создать в поле "число" нумерацию записей формы,
+зависимую от указанного периода (год, квартал, месяц, неделя, день), либо
+выполнять сквозную нумерацию (при указании параметра "сквозная нумерация").
+<br><br>
+<hr><br><br>
+<b><a href="https://forum.develop-soft.ru/viewtopic.php?p=1274">Домашняя страница расширения</a>
+ |
+<a href="https://forum.develop-soft.ru/donate">Поблагодарить</a>
+</b>
+<br> <hr>
+@}
+
+var Numerator,Dt,Period,D_Numerator,DependNumCond:string;
+    OldBeforePost,OldAfterOpen,
+    D_OldBeforePost, D_OldAfterOpen
+    :TNotifyEvent;
+
+procedure SetPermissions(Sender: TObject);
+var Fm:TdxForm;
+    dxD:TdxDateEdit;
+    dxC:TdxCalcEdit;
+begin
+  if OldAfterOpen<> nil then OldAfterOpen(Sender);
+  Fm:=TdxForm(Sender);
+  if Fm.Params.Values['Number_Allow_Edit']<>1 then
+  begin
+    dxC := TdxCalcEdit(Fm.FindComponentByFieldName(Fm.Params.Values['Number']));
+    dxC.ReadOnly:=true;
+  end;
+  if Fm.Params.Values['DateDoc_Allow_Edit']<>1 then
+  begin
+    dxD := TdxDateEdit(Fm.FindComponentByFieldName(Fm.Params.Values['DateDoc']));
+    dxD.ReadOnly:=true;
+  end;
+end;
+
+procedure SetNumber(Sender:TObject);
+  var OldN:integer;
+  Fm:TdxForm;
+  SetPeriod:string;
+begin
+    if OldBeforePost <> nil then OldBeforePost(Sender);
+    Fm:=TdxForm(Sender);
+    Numerator:=Fm.Params['Number'];
+    Dt:=Fm.Params['DateDoc'];
+    Period:=Fm.Params['Period'];
+      if TdxCalcEdit(Fm.FindComponentByFieldName(Numerator)).Field.OldValue=null then
+      OldN:=0 else
+      exit;
+    if Fm.State=dsInsert then
+    begin
+    case Period of
+    'Год' : SetPeriod:='[!'+Dt+']>=BeginYear(['+Dt+']) & [!'+Dt+']<=EndYear(['+Dt+'])';
+    'Квартал' : SetPeriod:='[!'+Dt+']>=BeginQuarter(['+Dt+']) & [!'+Dt+']<=EndQuarter(['+Dt+'])';
+    'Месяц' : SetPeriod:='[!'+Dt+']>=BeginMonth(['+Dt+']) & [!'+Dt+']<=EndMonth(['+Dt+'])';
+    'Неделя' : SetPeriod:='[!'+Dt+']>=BeginWeek(['+Dt+']) & [!'+Dt+']<=EndWeek(['+Dt+'])';
+    'День' : SetPeriod:= Format('[!'+Dt+']=['+Dt+']',[Dt]);
+    'Сквозная нумерация' : SetPeriod:='';
+    end
+  if Fm.Params.Values['DateDoc_Allow_Edit']<>1 then
+  Fm[Dt]:=Now;
+  OldN:=EvalExpr('nz(dbmax("'+Fm.FormCaption+'", "'+Numerator+'", "'+SetPeriod+'"), 0)',Fm);
+  Fm[Numerator]:=OldN+1;
+  end;
+end;
+
+procedure PeriodicNumerator(N:string;NE:integer;DD:string;DDE:integer;PC:string);
+begin
+  if Self.Params.ParamExists('RunOnceInFm_'+Self.FormCaption) then
+  begin
+    MsgBox('Ошибка использования расширения',
+    'Действие "нумератор" допустимо подключать к форме только один раз!'+#13#10+
+    'Отключите дубликат(ы) действия в форме "'+Self.FormCaption+'"');
+    exit;
+  end;
+  Self.Params['RunOnceInFm_'+Self.FormCaption]:=1;
+  Self.Params['Number']:=N;
+  Self.Params['Number_Allow_Edit']:=NE;
+  Self.Params['DateDoc']:=DD;
+  Self.Params['DateDoc_Allow_Edit']:=DDE;
+  Self.Params['Period']:=PC;
+  OldBeforePost := Self.OnBeforePost;
+  OldAfterOpen := Self.OnAfterOpen;
+  Self.OnBeforePost:=@SetNumber;
+  Self.OnAfterOpen:=@SetPermissions;
+end;
+
+
+{@action
+Id=65D407B7-2CFE-4F4D-9BE4-800461F09FE4
+Target=form
+OrigName=DependNumerator
+Name=Зависимый нумератор
+Group=Функции типового учета
+UI=
+<ui>
+   <divider caption="Номер"/>
+  1. <field name="Numerator" caption="Выберите поле номера:" filter="number" required=1/>
+  2. <checkbox name="Allow_Edit_Number" caption="Разрешить редактирование"/>
+  3. <grid name="DependFields" caption="Поля зависимости нумерации" required=1>
+     <field name="DependField"/>
+  </grid>
+</ui>
+Description=<b>Зависимый нумератор</b><br><br>
+Действие формы. Позволяет создать в поле "число" нумерацию записей формы,
+зависимую от указанных полей (клиент, договор, проект и т.п.).
+Можно указать несколько полей зависимости - нумерация будет выполняться по условию "И".<br><br>
+<hr><br><br>
+<b><a href="https://forum.develop-soft.ru/viewtopic.php?p=1274">Домашняя страница расширения</a>
+ |
+<a href="https://forum.develop-soft.ru/donate">Поблагодарить</a>
+</b>
+<br> <hr>
+@}
+
+procedure D_SetPermissions(Sender: TObject);
+var Fm:TdxForm;
+    dxC:TdxCalcEdit;
+begin
+  if D_OldAfterOpen<> nil then D_OldAfterOpen(Sender);
+  Fm:=TdxForm(Sender);
+  if Fm.Params.Values['D_Number_Allow_Edit']<>1 then
+  begin
+    dxC := TdxCalcEdit(Fm.FindComponentByFieldName(Fm.Params.Values['D_Number']));
+    dxC.ReadOnly:=true;
+  end;
+end;
+
+procedure D_SetNumber(Sender:TObject);
+  var OldN:integer;
+  Fm:TdxForm;
+begin
+    if D_OldBeforePost <> nil then D_OldBeforePost(Sender);
+    Fm:=TdxForm(Sender);
+    D_Numerator:=Fm.Params['D_Number'];
+      if TdxCalcEdit(Fm.FindComponentByFieldName(D_Numerator)).Field.OldValue=null then
+      OldN:=0 else
+      exit;
+  OldN:=EvalExpr('nz(dbmax("'+Fm.FormCaption+'", "'+D_Numerator+'", "'+DependNumCond+'"), 0)',Fm);
+  Fm[D_Numerator]:=OldN+1;
+end;
+
+
+procedure DependNumerator(N:string;NE:integer;DependFields:TVariantArray2d);
+var i:integer;
+    d:string;
+begin
+  if Self.Params.ParamExists('RunOnceInFm_'+Self.FormCaption) then
+  begin
+    MsgBox('Ошибка использования расширения',
+    'Действие "нумератор" допустимо подключать к форме только один раз!'+#13#10+
+    'Отключите дубликат(ы) действия в форме "'+Self.FormCaption+'"');
+    exit;
+  end;
+  Self.Params['RunOnceInFm_'+Self.FormCaption]:=1;
+  Self.Params['D_Number']:=N;
+  Self.Params['D_Number_Allow_Edit']:=NE;
+  d:='';
+  for i:=0 to GetArrayLength(DependFields)-1 do
+  begin
+    if i>0 then d:= ' & ';
+    DependNumCond := DependNumCond + d + '[!'+DependFields[i][0]+'] = ['+DependFields[i][0]+']';
+  end;
+  D_OldBeforePost := Self.OnBeforePost;
+  D_OldAfterOpen := Self.OnAfterOpen;
+  Self.OnBeforePost:=@D_SetNumber;
+  Self.OnAfterOpen:=@D_SetPermissions;
+end;
+
+
+

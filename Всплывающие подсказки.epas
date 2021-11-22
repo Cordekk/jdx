@@ -1,0 +1,46 @@
+{@action
+Id=244F02CB-C541-4A44-B997-57368822EF37
+OrigName=SetHints
+Name=Всплывающие подсказки
+Group=Свойства компонентов
+UI=<ui>
+<grid name="g" caption="Выберите компоненты для подсказки при наведении">
+<component name="c" caption="Компонент"/>
+<text name="t" caption="Текст подсказки:"/>
+<expr name="e" caption="и(или) выражение:"/>
+</grid>
+</ui>
+Description=Действие устанавливает всплывающие подсказки для указанных
+компонентов при наведении мыши.
+@}
+
+function TryEvalExpr(V:Variant;Sender:TObject):boolean;
+begin
+  try
+    EvalExpr(VarToStr(V),Self);
+    result:=true;
+  except
+    result:=false;
+  end;
+end;
+
+procedure SetHints(Table:TVariantArray2D);
+var i:integer;
+Comp:TComponent;
+begin
+if Length(Table) = 0 then exit;
+ for i:=0 to Length(Table)-1 do
+  begin
+    Comp:=Self.FindComponent(Table[i][0]);
+    if Comp=nil then Continue else
+      begin
+        if TryEvalExpr(Table[i][2],Self) then
+        begin
+          TControl(Comp).Hint:=Table[i][1]+VarToStr(EvalExpr(Table[i][2],Self));
+          TControl(Comp).ShowHint:=true;
+        end
+        else
+         debug(TControl(Comp).Name+': Ошибка в выражении подсказки');
+      end;
+  end;
+end;

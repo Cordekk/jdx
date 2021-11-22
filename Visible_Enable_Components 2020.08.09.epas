@@ -1,0 +1,291 @@
+{@module
+Author=Павел Дуборкин
+Version=1.5.1  HomePage=https://forum.mydataexpress.ru/viewtopic.php?f=16&t=2733
+Description=Видимость/доступность компонентов по условию.
+@}
+
+
+{@action
+Id=BE798939-0563-4DC7-8789-BBB636BD45FA
+Target=form
+OrigName=VisibleEnableByCondition
+Name=Видимость компонентов по условию
+Group=Свойства компонентов
+UI=<ui>
+  <expr name="condition" caption="Условие" required="1"/>
+  <grid name="grid" caption="Компоненты" height=400>
+    <component name="cmp" caption="Компонент" required="1"/>
+    <list name="ve_prop" caption="Управление свойством"
+    items="Доступность;Видимость;Редактирование" required="1"/>
+  </grid>
+  <checkbox name="stateevents" caption="Реагировать на события добавления/изменения записи"/>
+</ui>
+Description=Управляение доступностью/видимостью компонентов по условию.
+Компонент видим (доступен), если условие истинно. Пример условия:<br><br>
+<center><сode>[дата]<>null</сode></center><br><br>
+Действие срабатывает всякий раз, когда изменяется какое-нибудь поле,
+переходят на другую запись, при сохранении или отмене изменений.<br><br>
+Флажок "Реагировать на события добавления/изменения записи" позволяет управлять
+видимостью/доступностью в момент добавления или изменения записи. В условии можно
+использовать такие функции как NEWREC и EDITREC. Например можно делать доступными
+кнопки только при редактировании записи, а при просмотре эти кнопки недоступны.
+@}
+
+type
+  TVCRec = record
+    Fm: TdxForm;
+    Expr: String;
+    Cmps: TVariantArray2d;
+    AfterScroll, AfterCancel, AfterPost, AfterInsert, AfterEdit,
+    AfterDuplicate: TNotifyEvent;
+    FieldChange: TFieldChangeEvent;
+    Skip: Boolean;
+  end;
+
+var
+  VCData: array of TVCRec;
+  VC_OldDBClose: TNotifyEvent;
+
+// Обработчик события закрытия базы данных
+procedure VC_DBClose(Sender: TObject);
+begin
+  SetLength(VCData, 0);
+  if VC_OldDBClose <> nil then VC_OldDBClose(Sender);
+end;
+
+// Поиск нужного элемента массива по форме
+function VC_GetIndex(Fm: TObject): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := Length(VCData) - 1 downto 0 do
+    if (VCData[i].Fm = Fm) and not VCData[i].Skip then
+    begin
+      Result := i;
+      Exit;
+    end;
+end;
+
+// Само действие
+procedure VC_SetEnableOrVisible(var VC: TVCRec);
+var
+  b: Boolean;
+  i,j: Integer;
+  C: TControl;
+  Prop:string;
+  PM:TPopupMenu;
+  MI:TMenuItem;
+  dxFile:TdxFile;
+  dxDBImage:TdxDBImage;
+  dxPageControl:TdxPageControl;
+  dxTabSheet:TdxTabSheet;
+begin
+  // Результат вычисления выражения должен быть логического типа
+  b := EvalExpr(VC.Expr, VC.Fm);
+  for i := 0 to Length(VC.Cmps) - 1 do
+  begin
+    // Находим компонент по имени (в Cmps хранятся имена компонентов).
+    C := TControl( VC.Fm.FindComponent(VC.Cmps[i][0]));
+    Prop := VarToStr(VC.Cmps[i][1]);
+    if C = nil then Continue;
+
+    if (Prop = 'Доступность') or (Prop = 'Редактирование') then
+    begin
+      // Если компонент - файл
+      if C.ClassName = 'TdxFile' then
+      begin
+        dxFile := TdxFile(C);
+        PM := TPopupMenu(dxFile.Components[1])
+        for j:=0 to PM.Items.Count-1 do
+        begin
+          MI:=TMenuItem(PM.Items[j]);
+          if j <> MI_FILE_OPEN then MI.Visible:=b;
+        end;
+      end
+      // иначе если компонент -  изображение
+      else if C.ClassName = 'TdxDBImage' then
+      begin
+        dxDBImage := TdxDBImage(C);
+        PM := TPopupMenu(dxDBImage.Components[0])
+        for j:=0 to PM.Items.Count-1 do
+        begin
+          MI:=TMenuItem(PM.Items[j]);
+          if j <> MI_DBIMAGE_OPEN then MI.Visible:=b;
+        end;
+      end
+      // не файл и не изображение
+      else
+      begin
+        if Prop = 'Доступность' then
+          C.Enabled := b
+        else
+          try
+            SetPropValue(C, 'ReadOnly', not b);
+          except
+            MsgBox('Управление видимостью/доступностью', 'Для компонента ' + C.Caption + ' (' + C.ClassName + ') нельзя управлять свойством "Редактирование".');
+          end;
+      end;
+    end  // if Prop = 'Доступность'
+    else
+    begin
+      //  if Prop = 'Видимость'
+      C.Visible := b;
+      // если компонент -  закладки
+      if C.ClassName = 'TdxTabSheet' then
+      begin
+        dxTabSheet:= TdxTabSheet(C);
+        dxPageControl:=TdxPageControl(dxTabSheet.PageControl);
+        dxTabSheet.TabVisible := b;
+        dxPageControl.Visible := dxPageControl.ActivePage <> nil;
+      end;
+    end;
+  end;
+end;
+
+// Действие при переходе на запись
+procedure VC_AfterScroll(Sender: TObject);
+var
+  VC: TVCRec;
+  i: Integer;
+begin
+  // Находим наш элемент
+  i := VC_GetIndex(Sender);
+  VC := VCData[i];
+  VCData[i].Skip := True;
+  // Вызываем старый обработчик события, если он есть
+  if VC.AfterScroll <> nil then VC.AfterScroll(Sender);
+  VCData[i].Skip := False;
+  // Само действие
+  VC_SetEnableOrVisible(VC);
+end;
+
+// Действие при отмене изменений записи
+procedure VC_AfterCancel(Sender: TObject);
+var
+  VC: TVCRec;
+  i: Integer;
+begin
+  i := VC_GetIndex(Sender);
+  VC := VCData[i];
+  VCData[i].Skip := True;
+  if VC.AfterCancel <> nil then VC.AfterCancel(Sender);
+  VCData[i].Skip := False;
+  VC_SetEnableOrVisible(VC);
+end;
+
+// Действие при сохранении записи
+procedure VC_AfterPost(Sender: TObject);
+var
+  VC: TVCRec;
+  i: Integer;
+begin
+  i := VC_GetIndex(Sender);
+  VC := VCData[i];
+  VCData[i].Skip := True;
+  if VC.AfterPost <> nil then VC.AfterPost(Sender);
+  VCData[i].Skip := False;
+  VC_SetEnableOrVisible(VC);
+end;
+
+// Действие при изменении поля
+procedure VC_FieldChange(Sender, Control: TObject; const FieldName: String);
+var
+  VC: TVCRec;
+  i: Integer;
+begin
+  i := VC_GetIndex(Sender);
+  VC := VCData[i];
+  VCData[i].Skip := True;
+  if VC.FieldChange <> nil then VC.FieldChange(Sender, Control, FieldName);
+  VCData[i].Skip := False;
+  VC_SetEnableOrVisible(VC);
+end;
+
+// Действие при вставке записи
+procedure VC_AfterInsert(Sender: TObject);
+var
+  VC: TVCRec;
+  i: Integer;
+begin
+  i := VC_GetIndex(Sender);
+  VC := VCData[i];
+  VCData[i].Skip := True;
+  if VC.AfterInsert <> nil then VC.AfterInsert(Sender);
+  VCData[i].Skip := False;
+  VC_SetEnableOrVisible(VC);
+end;
+
+// Действие при копировании записи
+procedure VC_AfterDuplicate(Sender: TObject);
+var
+  VC: TVCRec;
+  i: Integer;
+begin
+  i := VC_GetIndex(Sender);
+  VC := VCData[i];
+  VCData[i].Skip := True;
+  if VC.AfterDuplicate <> nil then VC.AfterDuplicate(Sender);
+  VCData[i].Skip := False;
+  VC_SetEnableOrVisible(VC);
+end;
+
+// Действие при редактировании записи
+procedure VC_AfterEdit(Sender: TObject);
+var
+  VC: TVCRec;
+  i: Integer;
+begin
+  i := VC_GetIndex(Sender);
+  VC := VCData[i];
+  VCData[i].Skip := True;
+  if VC.AfterEdit <> nil then VC.AfterEdit(Sender);
+  VCData[i].Skip := False;
+  VC_SetEnableOrVisible(VC);
+end;
+
+// Эту функцию вызывает программа, когда выполняет подключаемое действие.
+function VisibleEnableByCondition(aExpr: String; aCmps: TVariantArray2d;
+  StateEvents: Boolean): Boolean;
+var
+  i: Integer;
+begin
+  Result := True;
+
+  i := Length(VCData);
+  // При первом использовании действия устанавливаем обработчик закрытия базы,
+  // чтобы можно было выполнить какие-либо завершающие действия, например,
+  // освободить память.
+  if i = 0 then
+  begin
+    VC_OldDBClose := MainWindow.OnDatabaseClose;
+    MainWindow.OnDatabaseClose := @VC_DBClose;
+  end;
+  // Каждый вызов действия увеличивает массив на один элемент.
+  SetLength(VCData, i+1);
+  // Сохраняем в последний элемент все необходимое для дальнейшей работы действия,
+  // подключаемся к событиям.
+  with VCData[i] do
+  begin
+    Fm := Self;
+    Expr := aExpr;
+    Cmps := aCmps;
+    AfterPost := Self.OnAfterPost;
+    AfterScroll := Self.OnAfterScroll;
+    AfterCancel := Self.OnAfterCancel;
+    FieldChange := Self.OnFieldChange;
+    AfterDuplicate := Self.OnAfterDuplicate;
+    Self.OnAfterPost := @VC_AfterPost;
+    Self.OnAfterScroll := @VC_AfterScroll;
+    Self.OnAfterCancel := @VC_AfterCancel;
+    Self.OnFieldChange := @VC_FieldChange;
+    Self.OnAfterDuplicate := @VC_AfterDuplicate;
+    if StateEvents then
+    begin
+      AfterInsert := Self.OnAfterInsert;
+      AfterEdit := Self.OnAfterEdit;
+      Self.OnAfterInsert := @VC_AfterInsert;
+      Self.OnAfterEdit := @VC_AfterEdit;
+    end;
+  end;
+end;

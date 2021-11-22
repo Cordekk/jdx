@@ -1,0 +1,173 @@
+{@module
+Author=Дуборкин Павел
+Version=1.0
+Description=В этом модуле содержится функция для установки подсветки активного поля.
+@}
+
+procedure SM_PivotGridToExcel(Grid: TdxPivotGrid);
+var
+  E, WB, Sheet: Variant;
+  i, j: Integer;
+  AA, BB: String;
+  Span: TKGridCellSpan;
+begin
+  Debug('Ok');
+  // Создаем объект приложения Excel.
+  E := CreateOleObject('Excel.Application');
+  // Создаем рабочую книгу
+  WB := E.WorkBooks.Add;
+  Sheet := WB.ActiveSheet;
+
+  // Устанавливаем ширину колонок. В эксель ширина указывается в символах,
+  // поэтому ширина устанавливается примерная.
+  for j := 0 to Grid.ColCount - 1 do
+    Sheet.Columns(j+1).ColumnWidth :=
+      (Grid.ColWidths[j] / Grid.Canvas.TextWidth('W')) * 1.8;
+
+  for i := 0 to Grid.RowCount - 1 do
+    for j := 0 to Grid.ColCount - 1 do
+    begin
+      // Объединяем некоторые ячейки.
+      Span := Grid.CellSpan[j, i];
+      if (Span.ColSpan > 1) or (Span.RowSpan > 1) then
+      begin
+        AA := Sheet.Cells(i+1, j+1).Address(False, False);
+        BB := Sheet.Cells(i+Span.RowSpan, j+Span.ColSpan).Address(False, False);
+        // Например: A1:B2
+        Sheet.Range(AA + ':' + BB).Merge;
+      end;
+      // Устанавливаем цвет фиксированных ячеек.
+      if (i < Grid.FixedRows) or (j < Grid.FixedCols) then
+        Sheet.Cells(i+1, j+1).Interior.Color := Grid.Colors.FixedCellBkGnd;
+      // Границы ячеек.
+      Sheet.Cells(i+1, j+1).Borders(7).Weight := 2;
+      Sheet.Cells(i+1, j+1).Borders(8).Weight := 2;
+      Sheet.Cells(i+1, j+1).Borders(9).Weight := 2;
+      Sheet.Cells(i+1, j+1).Borders(10).Weight := 2;
+      // Записываем в ячейку значение.
+      Sheet.Cells(i+1, j+1).Value := Grid.Cells[j, i];
+    end;
+
+  // Задаем фиксированную область.
+  Sheet.Cells(Grid.FixedRows+1, Grid.FixedCols+1).Select;
+  Sheet.Application.ActiveWindow.FreezePanes := True;
+
+  E.Visible := True;
+end;
+
+{@function
+OrigName=SM_PivotTableToExcel
+Name=SMART_PivotToXls
+Args=s
+Result=s
+Group=SmartFuncs
+Description=Экспортирует сводную таблицу в эксель. Пример: <br><br>
+Smart_PivotToXls('dxPivotGrid1')<br><br>
+Единственный параметр - имя компонента сводной таблицы (имя можно посмотреть в
+свойстве компонента или в строке статуса).
+@}
+function SM_PivotTableToExcel(GridName: String): String;
+var
+  Gr: TdxPivotGrid;
+begin
+  Result := '';
+  Debug('Ok');
+  Gr := TdxPivotGrid(Self.FindComponent(GridName));
+  if Gr = nil then
+    RaiseException(erCustomError, 'Сводная таблица не найдена: ' + GridName);
+  SM_PivotGridToExcel(Gr);
+end;
+
+{@function
+OrigName=SM_SetFieldValue
+Name=SMART_SetFieldValue
+Args=ssvs
+Result=s
+Group=SMARTFuncs
+Description=Устанавливает значение в указанном поле в тех записях формы,
+которые выбрал запрос.<br>
+<center><code>SMART_SETFIELDVALUE(Имя формы, Имя поля, Значение поля, Имя запроса)</code></center><br>
+Параметры: <br>
+Имя формы - текст - имя родительской формы.<br>
+Имя поля - текст - имя поля в родительской форме.<br>
+Значение поля - любой тип - значение, записываемое в поле.<br>
+Имя запроса - текст - редактируемый запрос, который отображает определенные
+записи формы, указанной в первом параметре. Пример: <br>
+<center><code>SMART_SETFIELDVALUE('Задачи', 'Статус', 'Готово', 'Мои задачи')</code></center><br>
+@}
+function SM_SetFieldValue(const FormName, FieldName: String; FieldValue: Variant;
+  const QueryName: String): String;
+var
+  Id: Integer;
+  Q: TdxQueryGrid;
+  Fm: TdxForm;
+begin
+  Result := '';
+  Q := Self.Queries[QueryName];
+  Id := Q.RecId;
+  Q.DisableControls;
+  Q.MoveFirst;
+  Fm := TdxForm.Create(FormName);
+  try
+    while not Q.Eof do
+    begin
+      Fm.OpenRecord(Q.RecId);
+      Fm.Edit;
+      Fm[FieldName] := FieldValue;
+      Fm.Post;
+      Fm.Close;
+      Q.MoveNext;
+    end;
+  finally
+    Q.GotoRecord(Id);
+    Q.EnableControls;
+    Fm.free;
+  end;
+end;
+
+procedure SM_ControlEnter(Sender: TObject);
+begin
+  with TControl(Sender) do
+    Color := TdxForm(Owner).Params.Values['FocusColor'];
+end;
+
+procedure SM_ControlExit(Sender: TObject);
+begin
+  with TControl(Sender) do
+    Color := TdxForm(Owner).Params.Values[Name + 'Color'];
+end;
+
+{@function
+OrigName=SM_SetFocusColor
+Name=SMART_FocusColor
+Args=nnn
+Result=s
+Group=SmartFuncs
+Description=Просто добавьте эту функцию в выражение надписи, чтобы активное поле
+подсвечивалось. Пример:<br><br>
+<code>Smart_FocusColor(10, 200, 10)</code><br>
+Указывается три составляющие цвета: красный, зеленый и синий. Значение составляющей
+должно быть в пределах 0-255.
+@}
+function SM_SetFocusColor(R, G, B: Byte): String;
+var
+  i: Integer;
+  C: TComponent;
+begin
+  Result := '';
+  // Функция должна сработать только один раз.
+  if Self.Params.Values['FocusColor'] <> Null then Exit;
+  Self.Params.Values['FocusColor'] := RGBToColor(R, G, B);
+  for i := 0 to Self.ComponentCount - 1 do
+  begin
+    C := Self.Components[i];
+    if (Pos(LowerCase(C.ClassName), 'tdxedit tdxcalcedit tdxdateedit tdxtimeedit ' +
+      'tdxcombobox tdxlookupcombobox tdxmemo tdxfile') > 0) then
+      with TWinControl(C) do
+      begin
+        Self.Params.Values[Name + 'Color'] := Color;
+        OnEnter := @SM_ControlEnter;
+        OnExit := @SM_ControlExit;
+      end;
+  end;
+end;

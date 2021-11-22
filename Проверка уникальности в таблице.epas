@@ -1,0 +1,162 @@
+         {@module
+Author=Stark
+Version=1
+Description=Модуль валидации на уникальность поля в несохраненной подчиненной записи несохраненой формы.
+@}
+
+{@action
+Id=59E17B88-5678-458B-JKHG-ED9BD6CT9878
+Target=form
+OrigName=ExistsValueInGrid
+Name=Проверка уникальности поля таблицы
+Group=Записи
+ui=<ui>
+     <field  name="SQL_p456"  caption="Поле" required="1"/>
+</ui>
+description= Проверка валидации на уникальность поля в несохраненной подчиненной записи несохраненной формы.
+Расширение проверки уникальности поля в таблице нужно добавлять на форме таблицы.
+@}
+
+type
+    TQTData = record
+    selfT: TdxForm;
+    OnBE, OnIN: TNotifyEvent;
+    OnVL: TValidateEvent;
+    s22:string;
+    Arr: array of string;
+    Arr2: array of integer;
+  end;
+
+var
+  QTArr: array of TQTData;
+  QT_OldDBClose: TNotifyEvent;
+
+procedure debb (s: string);
+begin
+     debug ('Модуль Проверка уникальности поля таблицы ExistsValueInGrid ошибка: ' + s + ' ' + ExceptionParam);
+end;
+
+procedure QT_DBClose(Sender: TObject);
+begin
+  try
+      SetLength(QTArr, 0);
+      if QT_OldDBClose <> nil then QT_OldDBClose(Sender);
+  except
+      debb('QT_DBClose ' + ExceptionParam);
+  end;
+end;
+
+function QT_GetIndex(T: TObject): Integer;
+var  i: Integer; s: string;
+begin
+  s:= TComponent(T).classname;
+  result:=-1;
+
+         if s= 'TdxForm' then
+         try
+              for i:=0 to Length(QTArr)-1 do
+              if  (QTArr[i].selfT =  TComponent(T)) then
+              begin
+                 Result := i;
+                 Exit;
+              end;
+
+         except debb('ошибка индекс резалт'); end;
+end;
+
+
+procedure QT_ValPost (Sender: TObject; var Ok: Boolean);
+var   QT: TQTData; T: TdxForm; i: integer;
+begin
+   try
+   QT := QTArr[QT_GetIndex(Sender)];
+
+   T:= QT.selfT;
+   for i:=0 to length(QT.Arr)-1 do
+   if (vartostr(T[QT.s22])=QT.Arr[i]) and (T.RecID<>QT.Arr2[i]) then
+   begin
+      Ok:= false;
+      msgbox('','Такое значение поля уже существует для поля '+ QT.s22);
+      exit;
+   end;
+
+   except debb('QT_BeforeEdit'); end;
+
+   if QT.OnVL<>nil then QT.OnVL (Sender,Ok);
+end;
+
+procedure WriteArr (QT: TQTData; n: integer);
+var i: integer; T: TdxForm;
+begin
+   try
+   T:= QT.selfT;
+   SetLength(QTArr[n].Arr, 0);
+   SetLength(QTArr[n].Arr2, 0);
+   T.MoveLast;
+   T.MoveFirst;
+   for i:= 0 to T.RecordCount - 1 do
+   begin
+        SetLength(QT.Arr, length(QT.Arr)+1);
+        SetLength(QT.Arr2, length(QT.Arr2)+1);
+        QT.Arr[length(QT.Arr)-1]:= vartostr(T[QT.s22]);
+        QT.Arr2[length(QT.Arr2)-1]:= T.Recid;
+        T.MoveNext;
+   end;
+   QTArr[n]:= QT;
+
+   except debb('WriteArr'); end;
+end;
+
+procedure QT_BeforeEdit (Sender: TObject);
+var QT: TQTData;  n,m: integer; T: TdxForm;
+begin
+   try
+   n:= QT_GetIndex(Sender);
+   QT := QTArr[n];
+   T:=QT.selfT;
+   m:= T.recno;
+   WriteArr (QT,n);
+   T.MoveFirst;
+   T.MoveTo(m);
+
+   except debb('QT_BeforeEdit'); end;
+
+   if QT.OnBE<>nil then QT.OnBE (Sender);
+end;
+
+procedure QT_BeforeInsert (Sender: TObject);
+var QT: TQTData;  n: integer; //T: TdxForm;
+begin
+   n:= QT_GetIndex(Sender);
+   QT := QTArr[n];
+   WriteArr (QT,n);
+
+   if QT.OnIN<>nil then QT.OnIN (Sender);
+end;
+
+
+procedure ExistsValueInGrid (s22: string);
+var n: Integer; QT: TQTData;
+begin
+     QT.s22:= s22;
+     QT.selfT:= self;
+
+     QT.OnBE:= self.OnBeforeEdit;
+     self.OnBeforeEdit:= @QT_BeforeEdit;
+
+     QT.OnIN:= self.OnBeforeInsert;
+     self.OnBeforeInsert:= @QT_BeforeInsert;
+
+     QT.OnVL:= self.OnValidate;
+     self.OnValidate:= @QT_ValPost;
+
+     n := Length(QTArr);
+     if n=0 then
+     begin
+       QT_OldDBClose := MainWindow.OnDatabaseClose;
+       MainWindow.OnDatabaseClose := @QT_DBClose;
+     end;
+
+     SetLength(QTArr, n + 1);
+     QTArr[n] := QT;
+end;

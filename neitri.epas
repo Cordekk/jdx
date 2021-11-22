@@ -1,0 +1,1043 @@
+{@module
+Author=neitri
+Version=0.15
+Description=Пользовательские функции для управления объектами
+2.09.2017 v0.15 OBJECTENABLE - Функция для управления доступностью объектов. Совместно с YurAnt.
+29.08.2017 v0.14 SETMAINICONFILE, SETFORMICONFILE - Загрузка иконки в главного окна или в окно формы.
+21.08.2017 v0.13 SECONDSTOTIMESTR, MINUTESTOTIMESTR - количество секунд или минут конвертирует в строку времени.
+21.08.2017 v0.12 DLGOPENFILE, DLGSAVEFILE, DLGSELECTDIR - диалоги открыть файл, сохранить файл, выбрать каталог.
+20.08.2017 v0.11 TIMESBETWEEN - Возвращает временной интервал
+18.08.2017 v0.10 Исправлена ошибка в выражении ObjectVisible
+19.06.2017 v0.09 изменен выхов ExpandFileName
+08.04.2017 v0.08 RAWURLENCODE - кодирование строки в URL
+31.03.2017 v0.07 *REPORTSAVE - используется штатный диалог вывода ошибок, всегда создавался файл '.doc' 
+29.03.2017 v0.06 QUOTESL,QUOTES - Экранирование спецсимволов 
+27.03.2017 v0.05 *REPORTSAVE - автоматическая подстановка расширения выходного файла и проверка существования файла шаблона. 
+26.03.2017 v0.03 OUTLOOKMAILSEND,OUTLOOKMAILSENDEX,THUNDERBIRDMAILSEND,THUNDERBIRDMAILSENDEX,MAILSENDEX,MAILSEND
+@}
+
+{@function
+OrigName=findobject
+Name=findobject
+Args=s
+Result=s
+Group=neitri
+Description=Поиск объекта по имени поля<br><br>
+FINDOBJECT(текст)<br><br>
+<B>Параметры:</B> текст - имя поля <br><br>
+<B>Результат:</B> текст - имя объекта <br><br>
+<B>Пример:</B><br><br>
+FINDOBJECT('Сумма')<br><br>
+Результат: dxCalcEdit1
+@}
+function getFieldName(Obj:TComponent):String;
+var
+  s:string;
+begin
+  s:=LowerCase(Obj.Classname);
+  if s='tdxedit' then
+    result:=tdxedit(Obj).Fieldname
+  else if s='tdxcalcedit' then
+    result:=tdxcalcedit(Obj).Fieldname
+  else if s='tdxdateedit' then
+    result:=tdxdateedit(Obj).Fieldname
+  else if s='tdxtimeedit' then
+    result:=tdxtimeedit(Obj).Fieldname
+  else if s='tdxcombobox' then
+    result:=tdxcombobox(Obj).Fieldname
+  else if s='tdxlookupcombobox' then
+    result:=tdxlookupcombobox(Obj).Fieldname
+  else if s='tdxmemo' then
+    result:=tdxmemo(Obj).Fieldname
+  else if s='tdxcounter' then
+    result:=tdxcounter(Obj).Fieldname
+  else if s='tdxobjectfield' then
+    result:=tdxobjectfield(Obj).Fieldname
+  else if s='tdxfile'then
+    result:=tdxfile(Obj).Fieldname
+  else
+    result:='';
+end;
+function findobject(name:String): String;
+var
+  i: Integer;
+  fn: string;
+begin
+  result:='';
+  // Функция должна сработать только один раз.
+  for i := 0 to Self.ComponentCount - 1 do
+  begin
+    fn:=LowerCase(getFieldName(Self.Components[i]));
+    if fn=LowerCase(name) then
+      begin
+        Result:=Self.Components[i].name;
+        exit;
+      end;
+  end;
+end;
+
+{@function
+OrigName=TabOff
+Name=TabOff
+Args=s
+Result=v
+Group=neitri
+Description=Функция для отключения перехода на объект по нажатию кнопки Tab.<br><br>
+TABOFF(текст)<br><br>
+<B>Параметры:</B> текст - имя объекта <br><br>
+<B>Результат:</B> null <br><br>
+<B>Пример:</B><br><br>
+TABOFF('dxCalcEdit1')<br><br>
+@}
+Function TabOff(name: string): variant;
+var
+  o:TComponent;
+Begin
+  o:=self.FindComponent(name);
+  if o<> nil then
+    TWinControl(o).TabStop:=false;
+  Result:=Null;
+End;
+
+{@function
+OrigName=SkipReadOnly
+Name=SkipReadOnly
+Args=
+Result=
+Group=neitri
+Description=Отключает переход для объектов не доступных для редактирования.
+<br> параметров вызова не имеет<br><br>
+<B>пример</B> <br><br> SKIPREADONLY
+@}
+function FieldReadOnly(Obj:TComponent):boolean;
+var
+  s:string;
+begin
+  s:=LowerCase(Obj.Classname);
+  if s='tdxedit' then
+    result:=tdxedit(Obj).ReadOnly
+  else if s='tdxcalcedit' then
+    result:=tdxcalcedit(Obj).ReadOnly
+  else if s='tdxdateedit' then
+    result:=tdxdateedit(Obj).ReadOnly
+  else if s='tdxtimeedit' then
+    result:=tdxtimeedit(Obj).ReadOnly
+  else if s='tdxcombobox' then
+    result:=tdxcombobox(Obj).ReadOnly
+  else if s='tdxlookupcombobox' then
+    result:=tdxlookupcombobox(Obj).ReadOnly
+  else if s='tdxmemo' then
+    result:=tdxmemo(Obj).ReadOnly
+  else if s='tdxcounter' then
+    result:=tdxcounter(Obj).ReadOnly
+  else if s='tdxobjectfield' then
+    result:=tdxobjectfield(Obj).ReadOnly
+  else if s='tdxfile'then
+    result:=tdxfile(Obj).ReadOnly
+  else
+    result:=false;
+end;
+
+
+procedure SkipReadOnly;
+var
+  i: Integer;
+begin
+  // Функция должна сработать только один раз.
+  for i := 0 to Self.ComponentCount - 1 do
+  begin
+    if FieldReadOnly(Self.Components[i]) then
+      begin
+        TWinControl(Self.Components[i]).TabStop:=false;
+      end;
+  end;
+end;
+
+{@function
+OrigName=ObjectVisible
+Name=ObjectVisible
+Args=sb
+Result=
+Group=neitri
+Description=Функция для управления видимостью объектов.<br>
+Если условие иснинно, указанный объект отображается иначе будет скрыт.<br><br>
+OBJECTVISIBLE(текст, условие)<br><br>
+<B>Параметры:</B> текст - имя объекта. условие - условие отображения элемента <br><br>
+<B>Пример:</B><br><br>
+OBJECTVISIBLE('dxEdit1',USER='Admin')<br><br>
+Поле dxEdit1 будет видно только пользователю Admin.
+@}
+procedure ObjectVisible(name: string; Visible:boolean);
+var
+  o:TComponent;
+Begin
+  o:=self.FindComponent(name);
+  if o<> nil then
+    TControl(o).Visible:=Visible;
+End;
+
+{@function
+OrigName=ReturnTrue
+Name=True
+Args=
+Result=b
+Group=neitri
+Description=Возвращает значение Истина<br><br>
+<B>Результат:</B> условие - Истина (True) <br><br>
+<B>Пример:</B><br><br>
+IIF(TRUE,'Сумма','Итог')<br><br>
+Результат: Всегда будет возвращать 'Сумма'
+@}
+function ReturnTrue:boolean;
+Begin
+  result:=true;
+End;
+
+{@function
+OrigName=ReturnFalse
+Name=False
+Args=
+Result=b
+Group=neitri
+Description=Возвращает значение Ложь<br><br>
+<B>Результат:</B> условие - Ложь (False) <br><br>
+<B>Пример:</B><br><br>
+IIF(FALSE,'Сумма','Итог')<br><br>
+Результат: Всегда будет возвращать 'Итог'
+@}
+function ReturnFalse:boolean;
+Begin
+  result:=false;
+End;
+
+{@function
+OrigName=REPORTSAVE
+Name=REPORTSAVE
+Args=ssb
+Result=
+Group=neitri
+Description=Печать шаблона в файл.<br><br>
+REPORTSAVE(текст, текст, условие)<br><br>
+<B>Параметры:</B> текст - имя шаблона, текст - имя файла, условие - условие показа результата <br><br>
+<B>Результат:</B> текст - ошибки выполнения <br><br>
+<B>Пример:</B><br><br>
+REPORTSAVE('Счет.doc','Счет'+CSTR(RECNO(имя формы))+'.doc',True)<br><br>
+@}
+
+procedure REPORTSAVE(tname,fname:String; open:boolean);
+var
+  msgerr,oname: string;
+begin
+  if not FileExists(GetTemplatesDir+tname) then
+      debug ('Не найден файл шаблона '+tname);
+  if (fname<>'') and (ExtractFileExt(fname)='') then
+    oname:=fname+ExtractFileExt(tname)
+  else
+    oname:=fname;
+  Self.Print(tname,oname,msgerr,open);
+  if msgerr<>'' then
+    ShowPrintErrors(msgerr);
+end;                           
+
+{@function
+OrigName=OUTLOOKMAILSENDEX
+Name=OUTLOOKMAILSENDEX
+Args=ssssssb
+Result=
+Group=neitri
+Description=Создание и отправка электронной почты через Microsoft Outlook<br><br>
+OUTLOOKMAILSENDEX(текст, текст, текст, текст, условие)<br><br>
+<B>Параметры:</B> текст - список адресов получателей,<br>
+ текст - список адресов копий письма,<br>
+ текст - список адресов скрытых копий письма,<br>
+ текст - тема письма,<br>
+ текст - тело письма, текст - список файлов,<br>
+ условие - показать созданное письмо или только отправить <br><br>
+<B>Результат:</B> ни чего не возвращает <br><br>
+В теле письма можно использовать html теги. Новая строка автоматически заменяется на тэг &lt;br&gt;.<br>
+Список адресов и файлов представляет собой текс в каждой строке которой записан адрес или путь к файлу.<br>
+Путь к файлам может быть абсолютный или только имя файла в папке вывода или в текущей папке DataExpress. <br><br>
+<B>Пример:</B><br><br>
+OUTLOOKMAILSENDEX('user1@mail.com'+newline+'user2@mail.com',
+'copy@mail.ru',
+'bcc@mail.ru',
+'test',
+'&lt;h1&gt;Приветствую.&lt;/h1&gt; '+newline+'&lt;span style="color:#0000FF"&gt;Тестовое&lt;/span&gt; &lt;i&gt;письмо&lt;/i&gt;'+newline+'С &lt;b&gt;уважением&lt;/b&gt;, автор.',
+'files','C:\file1.txt'+newline+'C:\file2.txt'+newline+'file3.txt',
+false)
+@}
+
+procedure OUTLOOKMAILSENDEX(emailsto,emailscc,emailsbcc, subject, body, Files:string;bShowDialog:boolean);
+var
+   objOutlook           : Variant;  // Outlook.Application
+   objOutlookMsg        : Variant;  // Outlook.MailItem
+   objOutlookRecip      : Variant;  // Outlook.Recipient
+   objOutlookAttach     : Variant;  // Outlook.Attachment
+
+   iLine                : integer;
+   str:string;
+   list:TStringList;
+begin
+   objOutlook := Unassigned;
+   objOutlookMsg := Unassigned;
+   objOutlookRecip := Unassigned;
+   objOutlookAttach := Unassigned;
+   try
+      // Create the Outlook session.
+      objOutlook := CreateOleObject('Outlook.Application');
+      // Create the new message instance.
+      objOutlookMsg := objOutlook.CreateItem(0);
+      List:=TStringList.Create;
+      list.text:=Emailsto;
+      for iLine:=0 to List.count-1 do
+        objOutlookRecip:=objOutlookMsg.Recipients.Add(List.Strings[iLine]);
+      //cc
+      list.text:=Emailscc;
+      if list.count>0 then
+        begin
+          str:='';
+          for iLine:=0 to List.count-1 do
+            begin
+              if iLine>0 then str:=str+',';
+              str:=str+List.Strings[iLine];
+            end;
+          objOutlookMsg.CC:=str;
+        end;
+      //bcc
+      list.text:=Emailsbcc;
+      if list.count>0 then
+        begin
+          str:='';
+          for iLine:=0 to List.count-1 do
+            begin
+              if iLine>0 then str:=str+',';
+              str:=str+List.Strings[iLine];
+            end;
+          objOutlookMsg.bcc:=str;
+        end;
+      objOutlookMsg.Subject := Subject;
+      List.text:=Body;
+      str:='';
+      for iLine:=0 to List.count-1 do
+        begin
+          if iLine>0 then
+            str:=str+'<br>';
+          str:=str+List.Strings[iLine];
+        end;
+      objOutlookMsg.htmlBody := str;
+
+      // Add attachments to the message.
+      List.text:=Files;
+      for iLine:=0 to List.Count-1 do
+        begin
+        if FileExists(GetOutputDir+List.Strings[iLine]) then
+          begin
+            //debug('Файл '+ExpandFileName(GetOutputDir+List.Strings[iLine])+' Добавлен из директории вывода');
+            objOutlookAttach := objOutlookMsg.Attachments.Add(ExpandFileName(GetOutputDir+List.Strings[iLine],GetCurrentDir));
+          end
+        else if FileExists(List.Strings[iLine]) then
+          begin
+            //debug('Файл '+ExpandFileName(List.Strings[iLine])+' Добавлен');
+            objOutlookAttach := objOutlookMsg.Attachments.Add(ExpandFileName(List.Strings[iLine],GetCurrentDir));
+          end
+        else debug('Файл '+ExpandFileName(List.Strings[iLine],GetCurrentDir)+' не найден.');
+        end;
+      list.free;
+      // Should we display the message before sending?
+      if bShowDialog then
+      begin
+         try
+            objOutlookMsg.Display; // Show Outlook Message Window
+         except
+         end;
+      end
+      else
+      begin
+         try
+            objOutlookMsg.Send; // Send it without showing
+         except
+            debug(ExceptionToString(ExceptionType, ExceptionParam));
+         end;
+      end;
+   finally
+
+      try objOutlookAttach := Unassigned; except end;
+      try objOutlookRecip := Unassigned; except end;
+      try objOutlookMsg := Unassigned; except end;
+      try objOutlook := Unassigned; except end;
+   end;
+end;
+
+{@function
+OrigName=OUTLOOKMAILSEND
+Name=OUTLOOKMAILSEND
+Args=ssssb
+Result=
+Group=neitri
+Description=Создание и отправка электронной почты через Microsoft Outlook<br><br>
+OUTLOOKMAILSEND(текст, текст, текст, текст, условие)<br><br>
+<B>Параметры:</B> текст - список адресов получателей,<br>
+ текст - тема письма,<br>
+ текст - тело письма, текст - список файлов,<br>
+ условие - показать созданное письмо или только отправить <br><br>
+<B>Результат:</B> ни чего не возвращает <br><br>
+В теле письма можно использовать html теги. Новая строка автоматически заменяется на тэг &lt;br&gt;.<br>
+Список адресов и файлов представляет собой текс в каждой строке которой записан адрес или путь к файлу.<br>
+Путь к файлам может быть абсолютный или только имя файла в папке вывода или в текущей папке DataExpress. <br><br>
+<B>Пример:</B><br><br>
+OUTLOOKMAILSEND('user1@mail.com'+newline+'user2@mail.com',
+'test',
+'&lt;h1&gt;Приветствую.&lt;/h1&gt; '+newline+'&lt;span style="color:#0000FF"&gt;Тестовое&lt;/span&gt; &lt;i&gt;письмо&lt;/i&gt;'+newline+'С &lt;b&gt;уважением&lt;/b&gt;, автор.',
+'C:\file1.txt'+newline+'C:\file2.txt'+newline+'file3.txt',
+false)
+@}
+
+procedure OUTLOOKMAILSEND(emails, subject, body, Files:string;bShowDialog:boolean);
+begin
+  OUTLOOKMAILSENDEX(emails,'','',subject, body, Files, bShowDialog);
+end;
+
+
+{@function
+OrigName=THUNDERBIRDMAILSENDEX
+Name=THUNDERBIRDMAILSENDEX
+Args=ssssssb
+Result=
+Group=neitri
+Description=Создание и отправка электронной почты через Mozilla Thunderbird<br><br>
+THUNDERBIRDMAILSENDEX(текст, текст, текст, текст, текст, текст, условие)<br><br>
+<B>Параметры:</B> текст - список адресов получателей,<br>
+ текст - список адресов копий письма,<br>
+ текст - список адресов скрытых копий письма,<br>
+ текст - тема письма,<br>
+ текст - тело письма,<br> текст - список файлов,<br>
+ условие - оставлен для совместимости <br><br>
+<B>Результат:</B> ни чего не возвращает <br><br>
+В теле письма можно использовать html теги. Новая строка автоматически заменяется на тэг &lt;br&gt;.<br>
+Список адресов и файлов представляет собой текс в каждой строке которой записан адрес или путь к файлу.<br>
+Путь к файлам может быть абсолютный или только имя файла в папке вывода или в текущей папке DataExpress. <br><br>
+<B>Пример:</B><br><br>
+THUNDERBIRDMAILSENDEX('user1@mail.com'+newline+'user2@mail.com',
+'copy@mail.ru',
+'bcc@mail.ru',
+'test',
+'&lt;h1&gt;Приветствую.&lt;/h1&gt; '+newline+'&lt;span style="color:#0000FF"&gt;Тестовое&lt;/span&gt; &lt;i&gt;письмо&lt;/i&gt;'+newline+'С &lt;b&gt;уважением&lt;/b&gt;, автор.',
+'C:\file1.txt'+newline+'C:\file2.txt'+newline+'file3.txt',
+false)
+@}
+
+procedure THUNDERBIRDMAILSENDEX(emailsto,emailscc,emailsbcc, subject, body, Files:string;bShowDialog:boolean);
+var
+   iLine                : integer;
+   params            : string;
+   list:TStringList;
+   r:variant;
+   exe,ex,par,str:string;
+begin
+  try
+    r:=CreateOleObject('WScript.Shell');
+    exe:=r.regread('HKEY_LOCAL_MACHINE\SOFTWARE\Clients\Mail\Mozilla Thunderbird\Protocols\mailto\shell\open\command\');
+  except
+    debug(ExceptionToString(ExceptionType, ExceptionParam));
+    exit;
+  end;
+
+  params:='';
+  List:=TStringList.Create;
+  list.text:=Emailsto;
+  if list.count>0 then
+    begin
+      str:='to=''';
+      for iLine:=0 to List.count-1 do
+        begin
+          if iLine>0 then str:=str+',';
+          str:=str+List.Strings[iLine];
+        end;
+      params:=params+str+'''';
+    end;
+  //cc
+  list.text:=Emailscc;
+  if list.count>0 then
+    begin
+      str:=',cc=''';
+      for iLine:=0 to List.count-1 do
+        begin
+          if iLine>0 then str:=str+',';
+          str:=str+List.Strings[iLine];
+        end;
+      params:=params+str+'''';
+    end;
+  //bcc
+  list.text:=Emailsbcc;
+  if list.count>0 then
+    begin
+      str:=',bcc=''';
+      for iLine:=0 to List.count-1 do
+        begin
+          if iLine>0 then str:=str+',';
+          str:=str+List.Strings[iLine];
+        end;
+      params:=params+str+'''';
+    end;
+  params:=params+',subject='''+Subject+''',body=''';
+  List.text:=Body;
+  for iLine:=0 to List.count-1 do
+    begin
+      if iLine>0 then
+        params:=params+'<br>';
+      params:=params+List.Strings[iLine];
+    end;
+  params:=params+'''';
+  List.text:=Files;
+  if list.count>0 then
+    begin
+      params:=params+',attachment=''';
+      for iLine:=0 to List.Count-1 do
+        begin
+          if FileExists(GetOutputDir+List.Strings[iLine]) then
+          begin
+            if iLine>0 then params:=params+',';
+            params:=params+ExpandFileName(GetOutputDir+List.Strings[iLine],GetCurrentDir);
+          end
+          else if FileExists(List.Strings[iLine]) then
+          begin
+            if iLine>0 then params:=params+',';
+            params:=params+ExpandFileName(List.Strings[iLine],GetCurrentDir);
+          end
+        else debug('Файл '+ExpandFileName(List.Strings[iLine],GetCurrentDir)+' не найден.');
+        end;
+      params:=params+'''';
+    end;
+
+
+  List.QuoteChar:='"';
+  list.Delimiter:=' ';
+  list.DelimitedText:=exe;
+  ex:=ExpandFileName(list.strings[0],GetCurrentDir);
+  for iLine:=1 to List.count-1 do
+    if list.strings[iLine]='%1' then
+      par:=par+'"'+params+'" '
+    else
+      par:=par+list.strings[iLine]+' ';
+  list.free;
+
+  ShellExecute('open', ex, Par, ExtractFilePath(ex), 0);
+
+end;
+
+{@function
+OrigName=THUNDERBIRDMAILSEND
+Name=THUNDERBIRDMAILSEND
+Args=ssssb
+Result=
+Group=neitri
+Description=Создание и отправка электронной почты через Mozilla Thunderbird<br><br>
+THUNDERBIRDMAILSEND(текст, текст, текст, текст, условие)<br><br>
+<B>Параметры:</B> текст - список адресов получателей,<br>
+ текст - тема письма,<br>
+ текст - тело письма,<br> текст - список файлов,<br>
+ условие - оставлен для совместимости <br><br>
+<B>Результат:</B> ни чего не возвращает <br><br>
+В теле письма можно использовать html теги. Новая строка автоматически заменяется на тэг &lt;br&gt;.<br>
+Список адресов и файлов представляет собой текс в каждой строке которой записан адрес или путь к файлу.<br>
+Путь к файлам может быть абсолютный или только имя файла в папке вывода или в текущей папке DataExpress. <br><br>
+<B>Пример:</B><br><br>
+THUNDERBIRDMAILSEND('user1@mail.com'+newline+'user2@mail.com',
+'&lt;h1&gt;Приветствую.&lt;/h1&gt; '+newline+'&lt;span style="color:#0000FF"&gt;Тестовое&lt;/span&gt; &lt;i&gt;письмо&lt;/i&gt;'+newline+'С &lt;b&gt;уважением&lt;/b&gt;, автор.',
+'C:\file1.txt'+newline+'C:\file2.txt'+newline+'file3.txt',
+false)
+@}
+
+procedure THUNDERBIRDMAILSEND(emailsto, subject, body, Files:string;bShowDialog:boolean);
+begin
+  THUNDERBIRDMAILSENDEX(emailsto, '', '', subject, body, Files, bShowDialog);
+end;
+
+{@function
+OrigName=MAILSENDEX
+Name=MAILSENDEX
+Args=ssssssb
+Result=
+Group=neitri
+Description=Создание и отправка электронной почты с автоматическим определением клиентскогоприложения. Поддерживается только Microsoft Outlook и Mozilla Thunderbird.<br><br>
+MAILSENDEX(текст, текст, текст, текст, текст, текст, условие)<br><br>
+<B>Параметры:</B> текст - список адресов получателей, <br>
+ текст - список адресов копий письма,<br>
+ текст - список адресов скрытых копий письма,<br>
+ текст - тема письма,<br>
+ текст - тело письма,<br> текст - список файлов,<br>
+ условие - показать созданное письмо или только отправить <br><br>
+<B>Результат:</B> ни чего не возвращает <br><br>
+В теле письма можно использовать html теги. Новая строка автоматически заменяется на тэг &lt;br&gt;.<br>
+Список адресов и файлов представляет собой текс в каждой строке которой записан адрес или путь к файлу.<br>
+Путь к файлам может быть абсолютный или только имя файла в папке вывода или в текущей папке DataExpress. <br><br>
+<B>Пример:</B><br><br>
+MAILSENDEX('user1@mail.com'+newline+'user2@mail.com',
+'copy@mail.ru',
+'bcc@mail.ru',
+'test',
+'&lt;h1&gt;Приветствую.&lt;/h1&gt; '+newline+'&lt;span style="color:#0000FF"&gt;Тестовое&lt;/span&gt; &lt;i&gt;письмо&lt;/i&gt;'+newline+'С &lt;b&gt;уважением&lt;/b&gt;, автор.',
+'C:\file1.txt'+newline+'C:\file2.txt'+newline+'file3.txt',
+false)
+@}
+
+procedure MAILSENDEX(emailsto,emailscc,emailsbcc, subject, body, Files:string;bShowDialog:boolean);
+var
+   r:variant;
+   exe:string;
+begin
+  try
+    r:=CreateOleObject('WScript.Shell');
+    exe:=LowerCase(r.regread('HKEY_CURRENT_USER\Software\Clients\Mail\'));
+    if exe='' then
+      exe:=LowerCase(r.regread('HKEY_LOCAL_MACHINE\SOFTWARE\Clients\Mail\'));
+  except
+    debug(ExceptionToString(ExceptionType, ExceptionParam));
+    exit;
+  end;
+    if exe='microsoft outlook' then
+      OUTLOOKMAILSENDEX(emailsto,emailscc,emailsbcc, subject, body, Files, bShowDialog)
+    else if exe='mozilla thunderbird' then
+      THUNDERBIRDMAILSENDEX(emailsto,emailscc,emailsbcc, subject, body, Files, bShowDialog);
+end;
+
+{@function
+OrigName=MAILSEND
+Name=MAILSEND
+Args=ssssb
+Result=
+Group=neitri
+Description=Создание и отправка электронной почты с автоматическим определением клиентскогоприложения. Поддерживается только Microsoft Outlook и Mozilla Thunderbird.<br><br>
+MAILSEND(текст, текст, текст, текст, условие)<br><br>
+<B>Параметры:</B> текст - список адресов получателей,<br>
+ текст - тема письма,<br>
+ текст - тело письма,<br> текст - список файлов,<br>
+ условие - показать созданное письмо или только отправить <br><br>
+<B>Результат:</B> ни чего не возвращает <br><br>
+В теле письма можно использовать html теги. Новая строка автоматически заменяется на тэг &lt;br&gt;.<br>
+Список адресов и файлов представляет собой текс в каждой строке которой записан адрес или путь к файлу.<br>
+Путь к файлам может быть абсолютный или только имя файла в папке вывода или в текущей папке DataExpress. <br><br>
+<B>Пример:</B><br><br>
+MAILSEND('user1@mail.com'+newline+'user2@mail.com',
+'test',
+'&lt;h1&gt;Приветствую.&lt;/h1&gt; '+newline+'&lt;span style="color:#0000FF"&gt;Тестовое&lt;/span&gt; &lt;i&gt;письмо&lt;/i&gt;'+newline+'С &lt;b&gt;уважением&lt;/b&gt;, автор.',
+'C:\file1.txt'+newline+'C:\file2.txt'+newline+'file3.txt',
+false)
+@}
+
+procedure MAILSEND(emailsto, subject, body, Files:string;bShowDialog:boolean);
+begin
+  MAILSENDEX(emailsto,'','' , subject, body, Files, bShowDialog);
+end;
+
+
+{@function
+OrigName=QUOTES
+Name=QUOTES
+Args=s
+Result=s
+Group=neitri
+Description=Экранирование спец символов html кода<br><br>
+QUOTES(текст)<br><br>
+<B>Параметры:</B> текст - текст содержащий спецсимволы.<br><br>
+<B>Результат:</B> текст - текст содержит спецкоды.<br><br>
+<B>Пример:</B><br><br>
+QUOTES('ТОО "Рога&amp;Копыта"')<br><br>
+<B>Результат:</B>ТОО &amp;quot;Рога&amp;amp;Копыта&amp;quot;
+@}
+
+function QUOTES(text:string):string;
+begin
+result:=StringReplace(text,'&','&amp;',[rfReplaceAll]);
+result:=StringReplace(Result,'"','&quot;',[rfReplaceAll]);
+result:=StringReplace(Result,'<','&lt;',[rfReplaceAll]);
+result:=StringReplace(Result,'>','&gt;',[rfReplaceAll]);
+end;
+
+{@function
+OrigName=QUOTESL
+Name=QUOTESL
+Args=s
+Result=s
+Group=neitri
+Description=Экранирование символа &amp; для отображения в надписях.<br><br>
+QUOTES(текст)<br><br>
+<B>Параметры:</B> текст - текст содержащий спецсимволы.<br><br>
+<B>Результат:</B> текст - текст содержит спецкоды.<br><br>
+<B>Пример:</B><br><br>
+QUOTESL('ТОО "Рога &amp; Копыта"')<br><br>
+<B>Результат:</B>ТОО "Рога &amp;&amp; Копыта"
+@}
+
+function QUOTESL(text:string):string;
+begin
+result:=StringReplace(text,'&','&&',[rfReplaceAll]);
+end;   
+
+{@function
+OrigName=rawurlencode
+Name=rawurlencode
+Args=s
+Result=s
+Group=neitri
+Description=Кодирование строки в URL<br><br>
+RAWURLENCODE(текст)<br><br>
+<B>Параметры:</B> текст - текст содержащий спецсимволы.<br><br>
+<B>Результат:</B> текст - закодированная строка<br><br>
+<B>Пример:</B><br><br>
+RAWURLENCODE('Проверка! Это часть url адреса')<br><br>
+<B>Результат:</B>%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0%21%20%D0%AD%D1%82%D0%BE%20%D1%87%D0%B0%D1%81%D1%82%D1%8C%20url%20%D0%B0%D0%B4%D1%80%D0%B5%D1%81%D0%B0
+@}
+const
+  hex='0123456789ABCDEF';
+
+function IntToHexN(val,len:integer):string;
+var
+  i,x,y:integer;
+begin
+  result:='';
+  x:=val;
+  for I:=1 to len do
+    begin
+      y:=x mod 16;
+      result:=hex[y+1]+result;
+      x:=x div 16;
+    end;
+end;
+
+function rawurlencode(text:string):string;
+var
+  I: Integer;
+begin
+  Result := '';
+  for I := 1 to Length(text)do
+  if Pos(text[i],'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.')>0 then
+    Result := Result + text[i]
+  else
+    Result := Result + '%' + IntToHex(Ord(text[i]), 2);
+end;
+
+{@function
+OrigName=TIMESBETWEEN
+Name=TIMESBETWEEN
+Args=tt
+Result=t
+Group=neitri
+Description=Возвращает временной интервал. Возращается время по модулю.
+TIMESBETWEEN(время1,время2)<br><br>
+<B>Параметры:</B> время1,время2 - время для вычисления интервала.<br><br>
+<B>Результат:</B> время - время интервала .<br><br>
+<B>Пример:</B><br><br>
+TIMESBETWEEN([Время1],[Время2])<br><br>
+@}
+
+function TIMESBETWEEN(T1,T2:Variant):Variant;
+var
+  t:Tdatetime;
+begin
+//  VarAsType(result,varDate);
+  if VarIsNull(t1) or VarIsNull(T2) then
+    result:=null
+  else
+    begin
+      t:=ABS(t1-t2);
+      result:=t;
+    end;
+end;
+
+{@function
+OrigName=DLGOPENFILE
+Name=DLGOPENFILE
+Args=ssss
+Result=s
+Group=neitri
+Description=Открывает диалог открытия файла.<br><br>
+DLGOPENFILE(текст1, текст2, текст3, текст4)<br><br>
+<B>Параметры:</B> текст1 - Заголовок<br>
+текст2 - Имя файла по умолчанию, оно же возращается в случае отмены<br>
+текст3 - Каталог по умолчанию<br>
+текст4 - Строка с Фильтром<br><br>
+<B>Результат:</B> текст - туть к указанному файлу<br><br>
+<B>Пример:</B><br><br>
+DLGOPENFILE('Выбирте файл',[Текст1],'D:\','Word|*.doc;*.docx')<br><br>
+@}
+
+function DLGOPENFILE(Title,FileName,InitDir,Filter:string):string;
+var
+  dlg:TOpenDialog;
+begin
+  dlg:=TOpenDialog.Create(nil);
+  dlg.title:=title;
+  dlg.filename:=FileName;
+  dlg.InitialDir:=InitDir;
+  dlg.Filter:=Filter;
+  dlg.filterindex:=0;
+  if dlg.Execute then
+    begin
+      result:=dlg.filename;
+    end
+  else
+    result:=FileName;
+  dlg.free;
+end;
+
+{@function
+OrigName=DLGSAVEFILE
+Name=DLGSAVEFILE
+Args=ssss
+Result=s
+Group=neitri
+Description=Открывает диалог открытия файла.  <br><br>
+DLGSAVEFILE(текст1, текст2, текст3, текст4)<br><br>
+<B>Параметры:</B> текст1 - Заголовок<br>
+текст2 - Имя файла по умолчанию, оно же возращается в случае отмены<br>
+текст3 - Каталог по умолчанию<br>
+текст4 - Строка с Фильтром<br><br>
+<B>Результат:</B> текст - туть к указанному файлу<br><br>
+<B>Пример:</B><br><br>
+DLGSAVEFILE('Выбирте файл',[Текст1],'D:\','Word|*.doc;*.docx')<br><br>
+@}
+
+function DLGSAVEFILE(Title,FileName,InitDir,Filter:string):string;
+var
+  dlg:TSaveDialog;
+begin
+  dlg:=TSaveDialog.Create(nil);
+  dlg.title:=title;
+  dlg.filename:=FileName;
+  dlg.InitialDir:=InitDir;
+  dlg.Filter:=Filter;
+  dlg.filterindex:=0;
+  if dlg.Execute then
+    begin
+      result:=dlg.filename;
+    end
+  else
+    result:=FileName;
+  dlg.free;
+end;
+
+{@function
+OrigName=DLGSELECTDIR
+Name=DLGSELECTDIR
+Args=ss
+Result=s
+Group=neitri
+Description=Открывает диалог выбора каталога. <br><br>
+DLGSELECTDIR(текст1, текст2)<br><br>
+<B>Параметры:</B> текст1 - Заголовок<br>
+текст2 - Каталог по умолчанию, оно же возращается в случае отмены<br><br>
+<B>Результат:</B> текст - туть к указанному каталогу<br><br>
+<B>Пример:</B><br><br>
+DLGSELECTDIR('Выбирте каталог','D:\')<br><br>
+@}
+
+function DLGSELECTDIR(Title,InitDir:string):string;
+var
+  dlg:TSelectDirectoryDialog;
+begin
+  dlg:=TSelectDirectoryDialog.Create(nil);
+  dlg.title:=title;
+  dlg.filename:=InitDir;
+  //dlg.InitialDir:=InitDir;
+  //dlg.Filter:=Filter;
+  //dlg.filterindex:=0;
+  if dlg.Execute then
+    begin
+      result:=dlg.filename;
+    end
+  else
+    result:=InitDir;
+  dlg.free;
+end;
+
+{@function
+OrigName=SECONDSTOTIMESTR
+Name=SECONDSTOTIMESTR
+Args=n
+Result=s
+Group=neitri
+Description=Конвертирует количество секунд в строку формата DDd HH:MM:SS<br>
+где DD количество дней, HH - часов, MM - минут, SS - секунд
+SECONDSTOTIMESTR(число)<br><br>
+<B>Параметры:</B> число - количество секунд.<br><br>
+<B>Результат:</B> строка.<br><br>
+<B>Пример:</B><br><br>
+SECONDSTOTIMESTR(315968)<br><br>
+<B>Результат:</B> 3d 15:46:08
+@}
+
+function SECONDSTOTIMESTR(Sec:Variant):string;
+var
+  t:int64;
+  s,m,h,d:integer;
+begin
+  if VarIsNull(Sec) then exit;
+//  VarAsType(result,varDate);
+  t:=sec;
+  s:=t mod 60;
+  t:=t div 60;
+  m:=t mod 60;
+  t:=t div 60;
+  h:=t mod 24;
+  d:=t div 24;
+  if d>0 then
+    result:=inttostr(d)+'d ';
+  result:=result+inttostr(h)+':'+fillzeros(m,2)+':'+fillzeros(s,2);
+end;
+
+
+{@function
+OrigName=MINUTESTOTIMESTR
+Name=MINUTESTOTIMESTR
+Args=n
+Result=s
+Group=neitri
+Description=Конвертирует количество минут в строку формата DDd HH:MM<br>
+где DD количество дней, HH - часов, MM - минут
+MINUTESTOTIMESTR(число)<br><br>
+<B>Параметры:</B> число - количество минут.<br><br>
+<B>Результат:</B> строка.<br><br>
+<B>Пример:</B><br><br>
+SECONDSTOTIMESTR(12345)<br><br>
+<B>Результат:</B> 8d 13:45
+@}
+
+function MINUTESTOTIMESTR(Sec:variant):string;
+var
+  t:int64;
+  m,h,d:integer;
+begin
+  if VarIsNull(Sec) then exit;
+  t:=sec;
+  m:=t mod 60;
+  t:=t div 60;
+  h:=t mod 24;
+  d:=t div 24;
+  if d>0 then
+    result:=inttostr(d)+'d ';
+  result:=result+inttostr(h)+':'+fillzeros(m,2);
+end;
+
+{@function
+OrigName=SETFORMICONFILE
+Name=SETFORMICONFILE
+Args=s
+Result=s
+Group=neitri
+Description=Загружает иконку окна формы из файла
+SETFORMICONFILE(строка)<br><br>
+<B>Параметры:</B> строка - путь к файлу.<br><br>
+<B>Результат:</B> пустая строка.<br><br>
+@}
+
+function SETFORMICONFILE(SourceIcon:string):string;
+begin
+  result:='';
+  if self.EditWindow=nil then exit;
+  if self.Params.Values['IconForm']=SourceIcon then exit;
+  self.Params.Values['IconForm']:=SourceIcon;
+  if not FileExists(SourceIcon) then exit;
+  try
+    self.EditWindow.Icon.LoadFromFile(SourceIcon);
+  except
+    //debug('Ошибка загрузки иконки');
+  end;
+end;
+
+{@function
+OrigName=SETMAINICONFILE
+Name=SETMAINICONFILE
+Args=s
+Result=s
+Group=neitri
+Description=Загружает иконку главного окна из файла
+SETMAINICONFILE(строка)<br><br>
+<B>Параметры:</B> строка - путь к файлу.<br><br>
+<B>Результат:</B> пустая строка.<br><br>
+@}
+
+function SETMAINICONFILE(SourceIcon:string):string;
+begin
+  result:='';
+  if MainWindow.Params.Values['IconForm']=SourceIcon then exit;
+  MainWindow.Params.Values['IconForm']:=SourceIcon;
+  if not FileExists(SourceIcon) then exit;
+  try
+    MainWindow.Icon.LoadFromFile(SourceIcon);
+  except
+    //debug('Ошибка загрузки иконки');
+  end;
+end;
+
+{@function
+OrigName=ObjectEnable
+Name=ObjectEnable
+Args=sb
+Result=
+Group=neitri
+Description=Функция для управления доступностью объектов.<br>
+Если условие истинно, указанный объект отображается иначе будет скрыт.<br><br>
+OBJECTENABLE(текст, условие)<br><br>
+<B>Параметры:</B> текст - имя объекта. условие - условие доступности элемента <br><br>
+<B>Пример:</B><br><br>
+OBJECTENABLE('dxEdit1',USER='Admin')<br><br>
+Поле dxEdit1 будет доступно только пользователю Admin.
+@}
+procedure ObjectEnable(name: string; Enabled:boolean);
+var
+  o:TComponent;
+  s:string;
+  i:integer;
+Begin
+  o:=self.FindComponent(name);
+  if o<> nil then
+    begin
+      s:=LowerCase(o.Classname);
+      if s='tdxedit' then
+        tdxedit(o).Enabled:=Enabled
+      else if s='tdxcalcedit' then
+        begin
+          tdxcalcedit(o).Enabled:=Enabled;
+          tdxcalcedit(o).HideButton:=not Enabled;
+        end
+      else if s='tdxdateedit' then
+        begin
+          tdxdateedit(o).Enabled:=Enabled
+          tdxdateedit(o).HideButton:=not Enabled;
+        end
+      else if s='tdxtimeedit' then
+        begin
+          tdxtimeedit(o).Enabled:=Enabled;
+          tdxtimeedit(o).HideButton:=not Enabled;
+        end
+      else if s='tdxcombobox' then
+        tdxcombobox(o).Enabled:=Enabled
+      else if s='tdxlookupcombobox' then
+        begin
+          tdxlookupcombobox(o).Enabled:=Enabled;
+          tdxlookupcombobox(o).Button.Enabled:=Enabled;
+        end
+      else if s='tdxmemo' then
+        tdxmemo(o).Enabled:=Enabled
+      else if s='tdxcounter' then
+        tdxcounter(o).Enabled:=Enabled
+      else if s='tdxchekbox' then
+        tdxcheckbox(o).Enabled:=Enabled
+      else if s='tdxobjectfield' then
+          tdxobjectfield(o).Enabled:=Enabled
+      else if s='tdxfile'then
+        begin
+          tdxfile(o).Enabled:=Enabled;
+          tdxfile(o).Button.Enabled:=Enabled;
+        end
+      else if s='tdximage'then
+        begin
+          tdxfile(o).Enabled:=Enabled;
+          for i:=0 to tdxfile(o).PopUpMenu.Items.count -1 do
+            tdxfile(o).PopUpMenu.Items[i].Enabled:=Enabled;
+        end
+      else
+        TControl(o).Enabled:=Enabled;
+    end;
+End;

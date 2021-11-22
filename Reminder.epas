@@ -1,0 +1,1539 @@
+const
+TrayIcoStr1 ='AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA ' +
+'AAD/////+/3//9Hu//+V1Pr/ecL3/4jP+/+y4/7/0u7//+74///6/f////////////////////////// ' +
+'////////+PHu/+7t7v+U1vX/RpbT/xA1sP8YTsr/K3Di/0ma8P+HzPX/wd/x/+3t7v/38O7/+PHu//jx ' +
+'7v/48e7/+PHu//Hk3f/m4d7/hczt/1nk+v8yY7D/BxmQ/wAXpv8AI7//Bzzc/y587f94u+z/wNbj/+ri ' +
+'3f/x5N3/8eTd//Hk3f/r1sz/4tTN/4/F4v925/v/ceL2/zKUy/8HFof/AA+R/w9u3/8ITt3/ElLj/0KY ' +
+'6f+yydj/4dPO/+vWzP/r1sz/5Mm7/97IvP+Su9T/c933/4b0/v9H5v7/Nr7s/yBis/8hnOb/DEu2/wAc ' +
+'sP8BKMr/JXXh/4e31f/cx73/5Mm7/927qv/Wuqz/hbTN/2fd9/9Z7f7/Xen+/07a/f89wvj/JJfm/xlV ' +
+'rv8BD4r/ABSd/wIovf8gadf/przI/9i8r//WrZn/yKyf/2+wz/9q6Pv/MuL+/zra/f9R1/z/VdP8/0rB ' +
+'+/8oqPr/F5bq/whowf8GPKz/IUa4/2We3P+/u7r/zqCI/7qgk/9mstP/aOz+/zbg/f8z0/z/MsT7/zq/ ' +
+'+/9IxPz/Ob78/xq6/P8Xufz/FIXw/0mP6P+ezeb/vq+n/8aSeP+plIz/ZL3f/2bs/v842/3/Ms38/ym7 ' +
+'+v8hrfn/Fpv5/xim+/8SqPv/EZ/6/yKo8f9VrdX/naCk/8SUff++hWn/moqF/2bQ6/9i6f7/K9D8/yG/ ' +
+'+/8Xqvn/EZn5/wmK+f8Dhfn/Am32/yOg5f9plaz/l4uH/7WHcP/AhWf/uHhZ/5WKh/+C2/H/Ud39/x/F ' +
+'/P8atPr/FKH5/w2P+f8Fi/n/Amr3/yqW1/96ho//rXlh/7h3V/+7d1X/u3dV/7NsSf+hi4P/uOX1/1bQ ' +
+'+/8cufr/GK35/xGX+f8KlPn/AnX3/xiN4/9zfof/om5W/7JpRf+0aUT/tGlE/7RpRP+sXzf/m2pT/26g ' +
+'vP9Buvb/Epr4/w2J+P8Jg/j/BHj3/ySL0v9rd3//oGFC/6tcNP+tXDP/rVwz/61cM/+tXDP/p04i/6BR ' +
+'K/9xa23/L4DQ/wt79/8Fcvf/Bnbz/yiDyf9ua2z/lVY5/6VOJP+nTiL/p04i/6dOIv+nTiL/p04i/6BB ' +
+'Ef+fQRH/lEch/3xVRf9XZX3/TnCK/2djZf+CUjz/mUUb/55BEv+gQRH/oEER/6BBEf+gQRH/oEER/6BB ' +
+'Ef+ZMwD/mTMA/5czAv+TNgn/izwW/4o9Gf+PORD/lTUG/5gzAf+ZMwD/mTMA/5kzAP+ZMwD/mTMA/5kz ' +
+'AP+ZMwD/AACsQQAArEEAAKxBAACsQQAArEEAAKxBAACsQQAArEEAAKxBAACsQQAArEEAAKxBAACsQQAA ' +
+'rEEAAKxBAACsQQ== ';
+
+TrayIcoStr2 = 'AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA ' +
+'AAD////////////////////////////////6/f//7vj//9Lu//+y4/7/iM/7/3nC9/+V1Pr/0e7///v9 ' +
+'////////+PHu//jx7v/48e7/+PHu//fw7v/t7e7/wd/x/4fM9f9JmvD/K3Di/xhOyv8QNbD/RpbT/5TW ' +
+'9f/u7e7/+PHu//Hk3f/x5N3/8eTd/+ri3f/A1uP/eLvs/y587f8HPNz/ACO//wAXpv8HGZD/MmOw/1nk ' +
+'+v+FzO3/5uHe//Hk3f/r1sz/69bM/+HTzv+yydj/Qpjp/xJS4/8ITt3/D27f/wAPkf8HFof/MpTL/3Hi ' +
+'9v925/v/j8Xi/+LUzf/r1sz/5Mm7/9zHvf+Ht9X/JXXh/wEoyv8AHLD/DEu2/yGc5v8gYrP/Nr7s/0fm ' +
+'/v+G9P7/c933/5K71P/eyLz/5Mm7/9i8r/+mvMj/IGnX/wIovf8AFJ3/AQ+K/xlVrv8kl+b/PcL4/07a ' +
+'/f9d6f7/We3+/2fd9/+FtM3/1rqs/927qv+/u7r/ZZ7c/yFGuP8GPKz/CGjB/xeW6v8oqPr/SsH7/1XT ' +
+'/P9R1/z/Otr9/zLi/v9q6Pv/b7DP/8isn//WrZn/vq+n/57N5v9Jj+j/FIXw/xe5/P8auvz/Ob78/0jE ' +
+'/P86v/v/MsT7/zPT/P824P3/aOz+/2ay0/+6oJP/zqCI/8SUff+doKT/Va3V/yKo8f8Rn/r/Eqj7/xim ' +
+'+/8Wm/n/Ia35/ym7+v8yzfz/ONv9/2bs/v9kvd//qZSM/8aSeP/AhWf/tYdw/5eLh/9plaz/I6Dl/wJt ' +
+'9v8Dhfn/CYr5/xGZ+f8Xqvn/Ib/7/yvQ/P9i6f7/ZtDr/5qKhf++hWn/u3dV/7t3Vf+4d1f/rXlh/3qG ' +
+'j/8qltf/Amr3/wWL+f8Nj/n/FKH5/xq0+v8fxfz/Ud39/4Lb8f+Viof/uHhZ/7RpRP+0aUT/tGlE/7Jp ' +
+'Rf+iblb/c36H/xiN4/8Cdff/CpT5/xGX+f8Yrfn/HLn6/1bQ+/+45fX/oYuD/7NsSf+tXDP/rVwz/61c ' +
+'M/+tXDP/q1w0/6BhQv9rd3//JIvS/wR49/8Jg/j/DYn4/xKa+P9Buvb/bqC8/5tqU/+sXzf/p04i/6dO ' +
+'Iv+nTiL/p04i/6dOIv+lTiT/lVY5/25rbP8og8n/Bnbz/wVy9/8Le/f/L4DQ/3Frbf+gUSv/p04i/6BB ' +
+'Ef+gQRH/oEER/6BBEf+gQRH/oEER/55BEv+ZRRv/glI8/2djZf9OcIr/V2V9/3xVRf+URyH/n0ER/6BB ' +
+'Ef+ZMwD/mTMA/5kzAP+ZMwD/mTMA/5kzAP+ZMwD/mDMB/5U1Bv+PORD/ij0Z/4s8Fv+TNgn/lzMC/5kz ' +
+'AP+ZMwD/AACsQQAArEEAAKxBAACsQQAArEEAAKxBAACsQQAArEEAAKxBAACsQQAArEEAAKxBAACsQQAA ' +
+'rEEAAKxBAACsQQ== ';
+
+TrayIcoStr3 = 'AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA ' +
+'AAD///////////////////////////7+///8/f///f7///7+/v/+/v7//v7///////////////////// ' +
+'////////+PHu//jx7v/48e7/+PHu/+js7//X5vD/zOLw/87j8P/T5PD/2Obv/+Pq7//r7O7/9O/u//fw ' +
+'7v/48e7/+PHu//Dj3f/l4N7/tdDj/43B5v9mquf/TZfn/z+K6P86hen/Oofq/0CR6v9YpOn/drTo/6HJ ' +
+'5f/H2OP/5+Lg/+/j3f/e087/m7/Z/0eE0P8nXsf/ET3A/woyv/8GN8j/DFja/wZE0/8DLsj/CTjK/xJH ' +
+'zP8ubNT/ZZ/d/7vQ3//j1tD/x8XD/2a74P8vcb//HUep/w0wnP8IJJb/CTKh/xd91P8RWbr/AxyX/wEg ' +
+'nv8BJ6P/D0S3/0J2zv+bx+P/0crH/8i5sv92utb/Wcnp/2HC5P83qNj/KZTO/yWFzP8mlN7/Hn7R/xVs ' +
+'x/8Od9H/CIHW/xOC4f9AmOr/kL7Z/8e7t//PrJz/pqqw/27E4/+D6/r/Zuz9/1Di+/9M1Pn/SMn5/0S/ ' +
+'+v82tPr/IrH6/xW0+f8Ynfb/Pq3l/5+rtP/LrJ7/zaCI/76gkf95p7//adXv/17r/f9J4v3/Stf7/0zN ' +
+'+v9Fwvr/Orn5/x+0+v8PnPj/H5/s/2ujwP+7oJP/zaCI/8mSd//Gknj/l5aZ/1y62f9W5vz/Nd39/zLO ' +
+'+/8uwfr/JK/5/xWa+f8Gi/j/AXL1/zib1f+XlZj/xZJ5/8mSd//ChWb/woVm/6WJfP9mpb//YOP5/z3f ' +
+'/f8xz/v/KL75/xak+f8Mj/n/A4P4/wZ08v9WlLj/pYl8/8GFZv/ChWb/u3dV/7t3Vf+semL/d4uX/27Y ' +
+'7/9M4fz/Lc77/x65+f8Tovn/DJH5/wSB9v8Sgej/dIaU/616Yf+7d1X/u3dV/7RpRP+0aUT/rGtL/4J5 ' +
+'eP9nwdv/W+H6/yXL+/8aufn/E6P5/wyT+P8Fg/T/JYnT/4Z3cv+takr/tGlE/7RpRP+tXDP/rVwz/6pc ' +
+'Nf+UZlD/aKO4/3PZ8P8zy/r/Grb5/xKd+P8KjPf/Dnvo/0l+pv+XZEv/qlw1/61cM/+tXDP/p04i/6dO ' +
+'Iv+mTiL/nVUy/4SKjv+azuD/Ucj3/xuq+P8Liff/BXX0/yJ+zf9pa3L/n1Es/6ZOIv+nTiL/p04i/6BB ' +
+'Ef+gQRH/oEER/59DFP+XYEb/g4WJ/1ahzP8jkuf/Enbk/yR2xv9jY2r/jUws/55BEv+gQRH/oEER/6BB ' +
+'Ef+ZMwD/mTMA/5kzAP+ZMwH/lTsO/4VGKP9kXF//TGSC/0xgff9xTEH/jTsS/5Y1Bf+ZMwD/mTMA/5kz ' +
+'AP+ZMwD/AACsQQAArEEAAKxBAACsQQAArEEAAKxBAACsQQAArEEAAKxBAACsQQAArEEAAKxBAACsQQAA ' +
+'rEEAAKxBAACsQQ== ';
+
+remImgStr = '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 ' +
+'/0E= ';
+
+fixedMenuItems=3;
+
+type remData = record
+  fm,remDate,remTime,remCaption,remText,remDone,
+  everyDay,everyWeek,everyMonth,everyQuarter,everyYear,fieldUser:string;
+
+  showCountIcon,showMsgBox,showMsgIsLocate,showInToolBar,showInTray:boolean;
+
+  Bn: TToolButton;
+  RemPopup:TPopupMenu;
+  tIco:TTrayIcon;
+  myIcon:tIcon;
+end;
+
+var
+  remOldPgChange,oldDbCloseReminder: TNotifyEvent;
+  remDt:remData;
+
+procedure ReminderDBClose(Sender: TObject);
+begin
+  if oldDbCloseReminder <> nil then oldDbCloseReminder(Sender);
+
+  if remDt.tIco<>nil then remDt.tIco.free;
+  if remDt.MyIcon<>nil then remDt.MyIcon.free;
+  if remDt.Bn<>nil then remDt.Bn.free;
+  if remDt.RemPopup<>nil then remDt.RemPopup.free;
+
+end;
+
+function AddToImageList(IL: TCustomImageList; const S: String): Integer;
+var
+  SS: TStringStream;
+  Img: TdxImage;
+begin
+  SS := TStringStream.Create(DecodeBase64(S, False));
+  Img := TdxImage.Create(nil);
+  try
+    Img.LoadFromStream(SS);
+    Result := IL.Add(Img.Bitmap, nil);
+  finally
+    Img.Free;
+    SS.Free;
+  end;
+end;
+
+// Установка надписи на иконку кнопки в панели инструментов
+procedure addTextToBtn(Btn:tToolButton;Str:string);
+var
+  SS: TStringStream;
+  Img,bufImg: TdxImage;
+  TB: TToolBar;
+  i,x1, y1, x2, y2: integer;
+  bufIL:TImageList;
+begin
+  if(remDt.showCountIcon=false) OR (remDt.showInToolBar=false)then exit;
+
+
+  TB := MainWindow.ToolBar;
+  SS := TStringStream.Create(DecodeBase64(remImgStr, false));
+  Img := TdxImage.Create(nil);
+  bufImg := TdxImage.Create(nil);
+  bufIL:=TImageList.create(nil);
+  bufIL.Width := 24;
+  bufIL.Height := 24;
+  bufIl.Clear;
+
+  try
+    if(Btn.imageIndex>0)then
+    begin
+      for i:=0 to TB.Images.Count-1 do
+      begin
+        if (i=Btn.imageIndex)then
+        begin
+          Img.LoadFromStream(SS);
+          if(Str<>'0')then
+          begin
+            with img.bitmap.canvas do
+            begin
+              Font.color:=clRed;
+              Font.size:=8;
+              Font.Style := [fsBold];
+
+              brush.Color:=clYellow; //цвет заливки прямоугольника
+              x1 := 0; y1 := 0; //координаты левой верхней вершины
+              x2 := TextWidth(Str)+3; y2 := TextHeight(Str)+1; //координаты правой нижней вершины
+              rectangle(x1, y1, x2, y2);
+              textOut(1,1,Str);
+            end;
+          end;
+          bufIL.Add(img.bitmap,nil);
+        end
+        else
+        begin
+          TB.Images.GetBitmap(i,bufImg.Bitmap);
+          //bufImg.Bitmap.SaveToFile('D:\Вова\БД\скрины\'+intToStr(i)+'.bmp');
+          bufIL.Add(bufImg.bitmap, nil);
+        end;
+      end;
+      //TB.Images:=bufIL;
+      //TB.Images:=TImageList.create(bufIL);
+      TB.Images.Clear();
+      for i:=0 to bufIL.Count-1 do
+      begin
+       bufIL.GetBitmap(i,bufImg.Bitmap);
+       //bufImg.Bitmap.SaveToFile('D:\Вова\БД\скрины\buf_'+intToStr(i)+'.bmp');
+       TB.Images.Add(bufImg.Bitmap,nil);
+      end;
+
+    end
+    else
+    begin
+      Btn.imageIndex := TB.Images.Add(Img.bitmap, nil);
+    end;
+  finally
+    bufIL.free;
+    Img.Free;
+    bufImg.free;
+    SS.Free;
+  end;
+end;
+
+function moveToNextQuarter(StartDate,EndDate: Variant):tDateTime;
+var
+  SD,ED,tempD:TDateTime;
+  SQuMonth,EQuMonth:integer;
+begin
+  if (StartDate=null) OR (EndDate=null) then
+  begin
+    RaiseException(erCustomError, 'Не указана дата');
+  end;
+
+  SD:=TDateTime(StartDate); // Начальная дата
+  ED:=TDateTime(EndDate);   // Конечная дата (дата проведения расчета)
+
+  // запоминаем месяц по счету в квартале по начальной дате
+  if(MonthOf(SD)=MonthOf(beginQuarter(SD)))then
+    SQuMonth:=0
+  else if(MonthOf(SD)=MonthOf(endQuarter(SD)))then
+    SQuMonth:=2
+  else
+    SQuMonth:=1;
+
+  EQuMonth:=MonthOf(AddMonth(beginQuarter(ED),SQuMonth));// Запоминаем месяц по счету в текущем квартале
+  // Т.е. месяц в текщем квартале который соответствует месяцу в начальном квартале.
+
+  if(tryEncodeDate(YearOf(ED),EQuMonth,DayOf(SD),tempD))then
+  // Пытаемся переместится в нужный месяц в текущем квартале, на заданое число
+  begin
+    tempD:=tempD+Frac(SD);
+    //debug('Encode-OK  '+varToStr(tempD));
+  end
+  else
+  begin
+  // Если не получилось, перемещаемся в последний день месяца
+    tempD:=EncodeDate(YearOf(ED),EQuMonth,DayOf(EndMonth(ED)));
+    tempD:=tempD+Frac(SD);
+    //debug('Encode-NOT '+varToStr(tempD));
+  end;
+
+  // Проверяем наступление события в текущем квартале.
+  if(tempD<ED)then // Если дата уже прошла
+  begin
+    tempD:=addMonth(tempD,3); // Перемещаемся в следующий квартал (на 3 месяца вперед)
+    //debug('Add_OK  '+varToStr(tempD));
+  end;
+
+  Result:=tempD;
+end;
+
+function moveToNextMonth(StartDate,EndDate: Variant):tDateTime;
+var
+  SD,ED,tempD:TDateTime;
+begin
+  if (StartDate=null) OR (EndDate=null) then
+  begin
+    RaiseException(erCustomError, 'Не указана дата');
+  end;
+
+  SD:=TDateTime(StartDate);
+  ED:=TDateTime(EndDate);
+
+  if(tryEncodeDate(YearOf(ED),MonthOf(ED),DayOf(SD),tempD))then
+  // Пытаемся переместится в текущий месяц, на заданое число
+  begin
+    tempD:=tempD+Frac(SD);
+    //debug('Encode-OK  '+varToStr(tempD));
+  end
+  else
+  begin
+  // Если не получилось, перемещаемся в последний день месяца
+    tempD:=EncodeDate(YearOf(ED),MonthOf(ED),DayOf(EndMonth(ED)));
+    tempD:=tempD+Frac(SD);
+    //debug('Encode-NOT '+varToStr(tempD));
+  end;
+
+  if(tempD<ED)then // Если дата уже прошла
+  begin
+    tempD:=addMonth(tempD,1); // Перемещаемся на следующий месяц
+    //debug('Add_OK  '+varToStr(tempD));
+  end;
+
+  Result:=tempD;
+end;
+
+// Проверка на наличие цикличных событий, помеченных как выполненные
+// При обнаружении, снимаем галочку "готово",
+// и переносим дату на нужный период
+procedure checkCircleMem();
+var
+  sel:TdxSQLQuery;
+  SQL:string;
+  DtTm:TdateTime;
+begin
+  if(remDt.everyDay='')AND
+    (remDt.everyWeek='')AND
+    (remDt.everyMonth='')AND
+    (remDt.everyQuarter='')AND
+    (remDt.everyYear='') then exit;
+
+  try
+    SQL := 'select id,['+remDt.remCaption+'] as caption , ['+remDt.remText+'] as Msg, '+
+      ' ['+remDt.remDate+'] as dt, ' +
+      ' ['+remDt.remTime+'] as tm, ' ;
+      if(remDt.fieldUser<>'')then
+        SQL:=SQL + ' ['+remDt.fieldUser+'] as usr, ';
+      if(remDt.everyDay<>'')then
+        SQL:=SQL + ' ['+remDt.everyDay+'] as d, ' ;
+      if(remDt.everyWeek<>'')then
+        SQL:=SQL + ' ['+remDt.everyWeek+'] as w, ' ;
+      if(remDt.everyMonth<>'')then
+        SQL:=SQL + ' ['+remDt.everyMonth+'] as m, ' ;
+      if(remDt.everyQuarter<>'')then
+        SQL:=SQL + ' ['+remDt.everyQuarter+'] as q, ' ;
+      if(remDt.everyYear<>'')then
+        SQL:=SQL + ' ['+remDt.everyYear+'] as y, ' ;
+
+      SQL:=SQL + ' ['+remDt.remDone+'] as dn ' +
+        ' from ['+remDt.Fm+'] ' +
+        ' where ((['+remDt.remDate+'] <=  CURRENT_DATE ' +
+        ' AND ['+remDt.remTime+'] <= CURRENT_TIME) OR ['+remDt.remDate+'] <  CURRENT_DATE) ' ;
+
+      SQL:=SQL + ' AND (';
+      if(remDt.everyDay<>'')then
+        SQL:=SQL + ' ['+remDt.everyDay+']=1  OR' ;
+      if(remDt.everyWeek<>'')then
+        SQL:=SQL + ' ['+remDt.everyWeek+']=1  OR' ;
+      if(remDt.everyMonth<>'')then
+        SQL:=SQL + ' ['+remDt.everyMonth+']=1  OR' ;
+      if(remDt.everyQuarter<>'')then
+        SQL:=SQL + ' ['+remDt.everyQuarter+']=1  OR' ;
+      if(remDt.everyYear<>'')then
+        SQL:=SQL + ' ['+remDt.everyYear+']=1 ' ;
+      SQL:=SQL + ')';
+
+      SQL:=StringReplace(SQL,'OR)',')',[rfReplaceAll, rfIgnoreCase]);
+      SQL:=StringReplace(SQL,'AND ()','',[rfReplaceAll, rfIgnoreCase]);
+
+      SQL:=SQL + ' AND ['+remDt.remDone+']=1 ';
+      if(remDt.fieldUser<>'')then
+        SQL:=SQL + ' AND ['+remDt.fieldUser+'] = '''+GetCurrentUser()+'''';
+
+      //debug(sql);
+
+      sel:=SQLSelect(SQL);
+      //debug(sel.recordcount);
+
+      while not sel.Eof do
+      begin
+        sel.Edit();
+        DtTm:= sel.AsDt['dt'] + sel.AsDt['tm'];
+        if (remDt.everyDay<>'')then
+          if(sel['d']=1)then
+          begin
+            //sel.AsDt['dt']:=AddDay(sel.AsDt['dt'],DaysBetween(Date,sel.AsDt['dt'])+1);
+            sel.AsDt['dt']:=AddDay(sel.AsDt['dt'],DaysBetween(Now,DtTm)+1);
+          end;
+        if (remDt.everyWeek<>'')then
+          if(sel['w']=1)then
+          begin
+            sel.AsDt['dt']:=AddWeek(sel.AsDt['dt'],WeeksBetween(Now,DtTm)+1);
+          end;
+        if (remDt.everyMonth<>'')then
+          if(sel['m']=1)then
+          begin
+            sel.AsDt['dt']:=moveToNextMonth(DtTm,Now);
+            //sel.AsDt['dt']:=AddMonth(sel.AsDt['dt'],MonthsBetween(Now,DtTm)+1);
+          end;
+        if (remDt.everyQuarter<>'')then
+          if(sel['q']=1)then
+          begin
+            sel.AsDt['dt']:=moveToNextQuarter(DtTm,Now);
+          end;
+        if (remDt.everyYear<>'')then
+          if(sel['y']=1) AND (remDt.everyYear<>'')then
+          begin
+            sel.AsDt['dt']:=AddYear(sel.AsDt['dt'],YearsBetween(Now,DtTm)+1);
+          end;
+
+        sel['dn']:=0;
+        sel.post;
+        sel.ApplyUpdates;
+
+        sel.MoveNext;
+      end;
+    finally
+      sel.Free();
+    end;
+
+end;
+
+// Очистка списка menuItem под кнопкой в панели инструментов
+// удаляются все, кроме фиксированных сверху.
+function ClearBtns():integer;
+var
+  n:integer;
+begin
+  n:=0;
+  while remDt.RemPopup.Items.Count>fixedMenuItems do
+  begin
+   remDt.RemPopup.Items.Delete(remDt.RemPopup.Items.Count-1);
+   inc(n);
+  end;
+  result:=n;
+end;
+
+procedure refreshDataEvent();forward;
+// Событие клика по menuItem "Редактировать" ,
+// подменю конкретного напоминания
+procedure Rem_ShowBtnClick(Sender: TObject);
+var
+  fm:tdxForm;
+begin
+  if(remDt.showInTray=true)then
+  begin
+    MainWindow.WindowState:=wsMaximized;
+    MainWindow.Show;
+    MainWindow.SetFocus();
+  end;
+
+  fm:=tdxForm.create(remDt.fm);
+  fm.Open;
+  if(fm.Locate(remDt.remCaption+';'+remDt.remDone,
+    [tMenuItem(sender).Hint,0],[loCaseInsensitive]))then
+  begin
+    fm.edit;
+    if fm.EditWindow.ShowModal = mrOk then
+      fm.Post
+    else
+      fm.Cancel;
+    refreshDataEvent();
+  end;
+  fm.free;
+end;
+
+// Событие клика по menuItem "Пометить как готовое" ,
+// подменю конкретного напоминания
+procedure Rem_DoneBtnClick(Sender: TObject);
+var
+  fm:tdxForm;
+begin
+  fm:=tdxForm.create(remDt.fm);
+  fm.Open;
+  if(fm.Locate(remDt.remCaption+';'+remDt.remDone,
+    [tMenuItem(sender).Hint,0],[loCaseInsensitive]))then
+  begin
+    fm.edit;
+    fm[remDt.remDone]:=1;
+    fm.post;
+    refreshDataEvent();
+  end;
+
+  if(remDt.showInTray=true)then
+  begin
+    remDt.tIco.ShowIcon:=true;
+  end;
+
+  fm.free;
+
+end;
+
+// Создание подменю конкретного напоминания, с его подменю
+procedure AddItemMems(caption,text:string);
+var
+  MI,child: TMenuItem;
+begin
+  MI := TMenuItem.Create(remDt.RemPopup);
+  MI.Caption := caption;
+  //MI.OnClick := @Rem_ItemBtnClick;
+  MI.Hint:=text;
+  remDt.RemPopup.Items.Add(MI);
+
+  child := TMenuItem.Create(MI);
+  //child.Hint:=caption;
+  child.Caption := text;
+  child.Enabled:=false;
+  MI.Add(child);
+
+  child := TMenuItem.Create(MI);
+  child.Caption := '-';
+  MI.Add(child);
+
+  child := TMenuItem.Create(MI);
+  child.Hint:=caption;
+  child.Caption := 'Редактировать';
+  child.OnClick := @Rem_ShowBtnClick;
+  MI.Add(child);
+
+  child := TMenuItem.Create(MI);
+  child.Hint:=caption;
+  child.Caption := 'Пометить как выполненно';
+  child.OnClick := @Rem_DoneBtnClick;
+  MI.Add(child);
+
+  //MI.Free();
+  //child.free();
+end;
+
+// Обновление списка актуальных уведомлений
+procedure refreshDataEvent();
+var
+  sel:TdxSQLQuery;
+  SQL:string;
+  cnt:integer;
+begin
+  checkCircleMem();
+  try
+    SQL := 'select ['+remDt.remCaption+'] as caption , ['+remDt.remText+'] as Msg from ['+remDt.Fm+'] ' +
+      'where ((['+remDt.remDate+'] <=  CURRENT_DATE ' +
+      ' AND ['+remDt.remTime+'] <= CURRENT_TIME ) OR ([' + remDt.remDate+'] <  CURRENT_DATE ))'+
+      'AND ['+remDt.remDone+']=0 ';
+      if(remDt.fieldUser<>'')then
+        SQL:=SQL + ' AND ['+remDt.fieldUser+'] = '''+GetCurrentUser()+'''';
+      SQL:=SQL + ' ORDER BY ['+remDt.remDate+'], ['+remDt.remTime+']';
+      sel:=SQLSelect(SQL);
+
+    cnt:=ClearBtns(); // запоминаем количество непрочитанных уведомлений
+    while not sel.Eof do
+    begin
+      AddItemMems(sel.AsS['caption'],sel.AsS['Msg']);
+      sel.MoveNext;
+    end;
+
+    if(cnt<>sel.RecordCount)then // если количество изменилось выводим надпись
+    begin
+      addTextToBtn(remDt.Bn,intToStr(sel.RecordCount));
+    end;
+
+    if(cnt<sel.RecordCount)then // если количество Увеличилось выводим сообщение
+    begin
+      if(remDT.showMsgBox=true)then
+      begin
+        msgBox('Напоминание!','Появились новые уведомления!');
+      end;
+    end;
+
+    if(remDt.showInTray=true)then
+    begin
+      remDt.tIco.Hint := 'DataExpress Оповещания ( '+intToStr(sel.RecordCount)+' )';
+      if(cnt<sel.RecordCount)then // если количество Увеличилось выводим сообщение в трей
+      begin
+         //Set up a hint balloon.
+        remDt.tIco.BalloonTitle := 'DataExpress Напоминание!';
+        remDt.tIco.BalloonHint :=
+          'Появились новые уведомления!';
+        remDt.tIco.BalloonFlags := bfWarning;//bfInfo;
+        remDt.tIco.BalloonTimeOut:=15000;
+        remDt.tIco.ShowBalloonHint();
+      end;
+
+      if(sel.RecordCount>0)then
+      begin
+        remDt.tIco.Animate:=true;
+      end
+      else
+      begin
+        remDt.tIco.Animate:=false;
+        remDt.tIco.Icon.Assign(remDt.MyIcon);
+        remDt.tIco.ShowIcon:=true;
+      end;
+    end;
+
+  finally
+    sel.Free();
+  end;
+end;
+
+// Событие клика по кнопке в панели инструментов (обновление)
+procedure Rem_ToolBtnClick(Sender: TObject);
+begin
+  refreshDataEvent();
+end;
+
+// Событие клика по menuItem "Добавить событие"
+procedure Rem_AddBtnClick(Sender: TObject);
+var
+  fm:tdxForm;
+begin
+  if(remDt.showInTray=true)then
+  begin
+    MainWindow.WindowState:=wsMaximized;
+    MainWindow.Show;
+    MainWindow.SetFocus();
+  end;
+
+  fm:=tdxForm.create(remDt.fm);
+  fm.Open;
+  fm.Append;
+  if(remDt.fieldUser<>'')then
+    fm[remDt.fieldUser] := GetCurrentUser() ;
+  if fm.EditWindow.ShowModal = mrOk then
+    fm.Post
+  else
+    fm.Cancel;
+  refreshDataEvent();
+  fm.free;
+end;
+
+// Событие клика по menuItem "Перейти к форме"
+procedure Rem_GoToFormBtnClick(Sender: TObject);
+var
+  i:integer;
+begin
+  if(remDt.showInTray=true)then
+  begin
+    MainWindow.WindowState:=wsMaximized;
+    MainWindow.Show;
+    MainWindow.SetFocus();
+  end;
+
+  for i:=0 to  MainWindow.Pages.PageCount-1 do
+  begin
+    if MainWindow.Pages.Pages[i].Caption=remDt.fm then
+    begin
+      MainWindow.Pages.ActivePageIndex:=i;
+      exit;
+    end;
+  end;
+  i:=MainWindow.CreatePage(remDt.fm, vtDefault).TabIndex;
+  MainWindow.Pages.ActivePageIndex := i;
+end;
+
+procedure IcoCreate();
+var
+  SS: TStringStream;
+  Img: TdxImage;
+begin
+   //Load the tray icons.
+  remDt.tIco:=TTrayIcon.create(nil);
+  remDt.tIco.Icons := TImageList.Create(nil);
+
+  remDt.tIco.OnClick:=@Rem_ToolBtnClick;
+
+  remDt.MyIcon := TIcon.Create;
+  SS := TStringStream.Create(DecodeBase64(TrayIcoStr3, False));
+  remDt.MyIcon.LoadFromStream(SS);
+  remDt.tIco.Icon.Assign(remDt.MyIcon);
+
+  Img := TdxImage.Create(nil);
+  SS := TStringStream.Create(DecodeBase64(TrayIcoStr1, False));
+  Img.LoadFromStream(SS);
+  //img.LoadFromFile('D:\Вова\DOWNLOAD\2.ico');
+  remDt.tIco.Icons.Add(img.bitmap,nil);
+
+  Img := TdxImage.Create(nil);
+  SS := TStringStream.Create(DecodeBase64(TrayIcoStr3, False));
+  Img.LoadFromStream(SS);
+  //img.LoadFromFile('D:\Вова\DOWNLOAD\2.ico');
+  remDt.tIco.Icons.Add(img.bitmap,nil);
+
+  SS := TStringStream.Create(DecodeBase64(TrayIcoStr2, False));
+  Img.LoadFromStream(SS);
+  //img.LoadFromFile('D:\Вова\DOWNLOAD\22.ico');
+  remDt.tIco.Icons.Add(img.bitmap,nil);
+
+  Img := TdxImage.Create(nil);
+  SS := TStringStream.Create(DecodeBase64(TrayIcoStr3, False));
+  Img.LoadFromStream(SS);
+  //img.LoadFromFile('D:\Вова\DOWNLOAD\2.ico');
+  remDt.tIco.Icons.Add(img.bitmap,nil);
+
+  // Set up a hint message and the animation interval.
+  remDt.tIco.Hint := 'DataExpress Оповещания';
+  remDt.tIco.AnimateInterval := 200;
+  remDt.tIco.Animate:=false;
+
+  remDt.tIco.visible:=true;
+  remDt.tIco.ShowIcon:=true;
+
+  //Set up a hint balloon.
+  remDt.tIco.BalloonTitle := 'DataExpress Оповещания';
+  remDt.tIco.BalloonHint :=
+    'Оповещаний нет';
+  remDt.tIco.BalloonFlags := bfInfo;//bfNone;//bfInfo;
+  remDt.tIco.BalloonTimeOut:=3000;
+  remDt.tIco.ShowBalloonHint();
+
+  remDt.tIco.PopUpMenu:=remDt.RemPopup;
+
+  ss.free;
+  img.free;
+  //MyIcon.free;
+end;
+
+// Добавление кнопки в панель инструментов
+procedure AddButton();
+var
+  TB: TToolBar;
+  MI: TMenuItem;
+begin
+  remDt.RemPopup:=TPopupMenu.Create(nil);
+
+  if(remDt.showInTray=true)then IcoCreate();
+
+  if(remDt.showInToolBar=true)then
+  begin
+    TB := MainWindow.ToolBar;
+    //tb.onPaint:=@timer_Tick;
+    remDt.Bn := TToolButton.Create(TB);
+    remDt.Bn.Left := TB.Buttons[TB.ButtonCount - 1].Left + TB.ButtonWidth;
+    remDt.Bn.Parent := TB;
+    remDt.Bn.OnClick := @Rem_ToolBtnClick;
+    remDt.Bn.Hint := 'Напоминание';
+    remDt.Bn.ImageIndex := AddToImageList(TB.Images, remImgStr);
+    remDt.Bn.Style := tbsDropDown;
+
+    remDt.Bn.DropDownMenu := remDt.RemPopup;
+  end;
+
+  MI := TMenuItem.Create(remDt.RemPopup);
+  MI.Caption := 'Добавить напоминание';
+  MI.OnClick := @Rem_AddBtnClick;
+  remDt.RemPopup.Items.Add(MI);
+
+  MI := TMenuItem.Create(remDt.RemPopup);
+  MI.Caption := 'Перейти к форме';
+  MI.OnClick := @Rem_GoToFormBtnClick;
+  remDt.RemPopup.Items.Add(MI);
+
+  MI := TMenuItem.Create(remDt.RemPopup);
+  MI.Caption := '-';
+  remDt.RemPopup.Items.Add(MI);
+
+  //MI.free();
+end;
+
+// Проверка на уникальность уведомления по полю заголовка
+function isLocateRem(fm:TdxForm;caption:string): string;
+var
+  dr:integer;
+  msgText,locateText:string;
+  typeMsg:boolean;
+  locateArr:array of Variant;
+begin
+  if(remDt.showMsgIsLocate=false)then
+  begin
+  result:='notFound';
+  exit;
+  end;
+
+  if(remDt.fieldUser<>'')then
+  begin
+    locateText:=remDT.remCaption+';'+ remDt.fieldUser;
+    SetLength(locateArr, 2);
+    locateArr[0]:=caption;
+    locateArr[1]:=GetCurrentUser();
+  end
+  else
+  begin
+    locateText:=remDT.remCaption;
+    SetLength(locateArr, 1);
+    locateArr[0]:=caption;
+  end;
+
+//  if(fm.locate(remDT.remCaption,[caption],[loCaseInsensitive]))then
+  if(fm.locate(locateText,locateArr,[loCaseInsensitive]))then
+  begin
+    typeMsg:=false;
+
+    msgText:='Запись уже существует: '+ LineEnding+LineEnding;
+      if(remDt.fieldUser<>'')then
+      begin
+        msgText:=msgText+'ПОЛЬЗОВАТЕЛЬ: "'+ fm[remDt.fieldUser]+'"; '+LineEnding;
+      end;
+      msgText:=msgText+'ЗАГОЛОВОК: "'+ caption+'"; '+LineEnding+
+      'ТЕКСТ: "'+ fm.AsS[remDT.remText]+'"; '+ LineEnding+
+      'ДАТА/ВРЕМЯ: "'+ fm.AsS[remDT.remDate]+'/'+fm.AsS[remDT.remTime]+'"; '+LineEnding ;
+      msgText:=msgText+'ТИП: ';
+
+      if(remDT.everyDay<>'')then
+        if(fm[remDT.everyDay]=1)then
+        begin
+          msgText:=msgText+' "'+ remDT.everyDay+'"; '+ LineEnding;
+          typeMsg:=true;
+        end;
+      if(remDT.everyWeek<>'')then
+        if(fm[remDT.everyWeek]=1)then
+        begin
+          msgText:=msgText+' "'+ remDT.everyWeek+'"; '+ LineEnding;
+          typeMsg:=true;
+        end;
+      if(remDT.everyMonth<>'')then
+        if(fm[remDT.everyMonth]=1)then
+        begin
+          msgText:=msgText+' "'+ remDT.everyMonth+'"; '+ LineEnding;
+          typeMsg:=true;
+        end;
+      if(remDT.everyQuarter<>'')then
+        if(fm[remDT.everyQuarter]=1)then
+        begin
+          msgText:=msgText+' "'+ remDT.everyQuarter+'"; '+ LineEnding;
+          typeMsg:=true;
+        end;
+      if(remDT.everyYear<>'')then
+        if(fm[remDT.everyYear]=1)then
+        begin
+          msgText:=msgText+' "'+ remDT.everyYear+'"; '+ LineEnding;
+          typeMsg:=true;
+        end;
+      if(typeMsg=false)then
+        msgText:=msgText+' "Не цикличное"'+ LineEnding;
+
+      if(fm[remDT.RemDone]=1)then
+        msgText:=msgText+'СТАТУС: "Завершено".'
+      else
+        msgText:=msgText+'СТАТУС: "Активно".';
+
+      msgText:=msgText+LineEnding+LineEnding+' Обновить данные записи? ';
+
+    dr:=messageDlg(fm.FormCaption+' : Внимание',
+      msgText,
+      mtInformation,
+      [mbYes,mbNo]);
+      if(dr=6)then
+      begin
+        result:='Update';
+      end
+      else
+      begin
+        result:='Cancel';
+      end;
+  end
+  else
+  begin
+    result:='notFound';
+  end;
+
+  SetLength(locateArr, 0);
+end;
+
+{@function
+OrigName=OneMemo
+Name=One_Memo
+Args=ssssn
+Result=b
+Group=Напоминания
+Description= Данная функция работает только с расширением Reminder.
+Добавляет новую запись в форму с напоминаниями.<br>
+Дату записывать в формате: 10.01.2020 <br>
+Время записывать в формате: 12:30:00 <br>
+Последний параметр отвечает за показ окна редактирования:
+1-показывать, 0-не показывать.
+Пример:<br><br>
+<code>One_Memo(CSTR([дата]),CSTR([время]),'Заголовок','Текст напоминания',1)</code><br>
+@}
+function OneMemo(dt,tm,caption,text:string;ShowEdtWin:integer):boolean;
+var
+  fm:tdxForm;
+  resLocate:string;
+begin
+  if(remDT.fm='')then
+  begin
+    RaiseException(erCustomError, 'Расширение "Напоминания о событиях" не подключено, или настроено неверно.');
+  end;
+
+  if(trim(caption)='')then
+  begin
+    RaiseException(erCustomError, 'Заголовок напоминания не может быть пустым.');
+  end;
+
+  try
+    fm:=tdxForm.create(remDt.fm);
+    fm.Open;
+    resLocate:=isLocateRem(fm,caption);
+    if(resLocate='notFound') then
+    begin
+      fm.Append;
+    end
+    else if(resLocate='Update')then
+    begin
+      fm.Edit;
+    end
+    else if(resLocate='Cancel')then
+    begin
+      EXIT;
+    end;
+
+    fm[remDT.remDate]:=StrToDate(dt);
+    fm[remDT.remTime]:=StrToTime(tm);
+    fm[remDT.remCaption]:=caption;
+    fm[remDT.remText]:=text;
+
+    if(remDt.fieldUser<>'')then
+      fm[remDt.fieldUser] := GetCurrentUser() ;
+    if(remDT.everyDay<>'')then
+      fm[remDT.everyDay]:=0;
+    if(remDT.everyWeek<>'')then
+      fm[remDT.everyWeek]:=0;
+    if(remDT.everyMonth<>'')then
+      fm[remDT.everyMonth]:=0;
+    if(remDT.everyQuarter<>'')then
+      fm[remDT.everyQuarter]:=0;
+    if(remDT.everyYear<>'')then
+      fm[remDT.everyYear]:=0;
+
+    fm[remDT.remDone]:=0;
+
+    if(ShowEdtWin=1)then
+    begin
+      if (fm.EditWindow.ShowModal = mrOk) then
+        fm.Post
+      else
+        fm.Cancel;
+    end
+    else if(ShowEdtWin=0) then
+    begin
+      fm.post;
+    end;
+
+    refreshDataEvent();
+    result:=true;
+  except
+   debug('Ошибка в процедуре "OneMemo" ');
+   result:=false;
+  finally
+    fm.close;
+    fm.free;
+  end;
+end;
+
+{@function
+OrigName=EveryDayMemo
+Name=Every_Day_Memo
+Args=ssssn
+Result=b
+Group=Напоминания
+Description= Данная функция работает только с расширением Reminder.
+Добавляет новую запись в форму с напоминаниями, будет выполняться каждый день.<br>
+Дату записывать в формате: 10.01.2020 <br>
+Время записывать в формате: 12:30:00 <br>
+Последний параметр отвечает за показ окна редактирования:
+1-показывать, 0-не показывать.
+Пример:<br><br>
+<code>Every_Day_Memo(CSTR([дата]),CSTR([время]),'Заголовок','Текст напоминания',1)</code><br>
+@}
+function EveryDayMemo(dt,tm,caption,text:string;ShowEdtWin:integer):boolean;
+var
+  fm:tdxForm;
+  resLocate:string;
+begin
+  if(remDT.fm='')then
+  begin
+    RaiseException(erCustomError, 'Расширение "Напоминания о событиях" не подключено, или настроено неверно.');
+  end;
+
+  if(trim(caption)='')then
+  begin
+    RaiseException(erCustomError, 'Заголовок напоминания не может быть пустым.');
+  end;
+
+  try
+    fm:=tdxForm.create(remDt.fm);
+    fm.Open;
+    resLocate:=isLocateRem(fm,caption);
+
+    if(resLocate='notFound') then
+    begin
+      fm.Append;
+    end
+    else if(resLocate='Update')then
+    begin
+      fm.Edit;
+    end
+    else if(resLocate='Cancel')then
+    begin
+      EXIT;
+    end;
+
+    fm[remDT.remDate]:=StrToDate(dt);
+    fm[remDT.remTime]:=StrToTime(tm);
+    fm[remDT.remCaption]:=caption;
+    fm[remDT.remText]:=text;
+
+    if(remDt.fieldUser<>'')then
+      fm[remDt.fieldUser] := GetCurrentUser() ;
+    if(remDT.everyDay<>'')then
+      fm[remDT.everyDay]:=1
+    else
+      RaiseException(erCustomError,'В расширении не указано поле "каждый день"');
+    if(remDT.everyWeek<>'')then
+      fm[remDT.everyWeek]:=0;
+    if(remDT.everyMonth<>'')then
+      fm[remDT.everyMonth]:=0;
+    if(remDT.everyQuarter<>'')then
+      fm[remDT.everyQuarter]:=0;
+    if(remDT.everyYear<>'')then
+      fm[remDT.everyYear]:=0;
+
+    fm[remDT.remDone]:=0;
+
+    if(ShowEdtWin=1)then
+    begin
+      if (fm.EditWindow.ShowModal = mrOk) then
+        fm.Post
+      else
+        fm.Cancel;
+    end
+    else if(ShowEdtWin=0) then
+    begin
+      fm.post;
+    end;
+
+    refreshDataEvent();
+    result:=true;
+  except
+   debug('Ошибка в процедуре "Every_Day_Memo" ');
+   result:=false;
+  finally
+    fm.close;
+    fm.free;
+  end;
+end;
+
+{@function
+OrigName=everyWeekMemo
+Name=every_Week_Memo
+Args=ssssn
+Result=b
+Group=Напоминания
+Description= Данная функция работает только с расширением Reminder.
+Добавляет новую запись в форму с напоминаниями, будет выполняться каждую неделю.<br>
+Дату записывать в формате: 10.01.2020 <br>
+Время записывать в формате: 12:30:00 <br>
+Последний параметр отвечает за показ окна редактирования:
+1-показывать, 0-не показывать.
+Пример:<br><br>
+<code>every_Week_Memo(CSTR([дата]),CSTR([время]),'Заголовок','Текст напоминания',1)</code><br>
+@}
+function everyWeekMemo(dt,tm,caption,text:string;ShowEdtWin:integer):boolean;
+var
+  fm:tdxForm;
+  resLocate:string;
+begin
+  if(remDT.fm='')then
+  begin
+    RaiseException(erCustomError, 'Расширение "Напоминания о событиях" не подключено, или настроено неверно.');
+  end;
+
+  if(trim(caption)='')then
+  begin
+    RaiseException(erCustomError, 'Заголовок напоминания не может быть пустым.');
+  end;
+
+  try
+    fm:=tdxForm.create(remDt.fm);
+    fm.Open;
+
+    resLocate:=isLocateRem(fm,caption);
+    if(resLocate='notFound') then
+    begin
+      fm.Append;
+    end
+    else if(resLocate='Update')then
+    begin
+      fm.Edit;
+    end
+    else if(resLocate='Cancel')then
+    begin
+      EXIT;
+    end;
+
+    fm.Append;
+    fm[remDT.remDate]:=StrToDate(dt);
+    fm[remDT.remTime]:=StrToTime(tm);
+    fm[remDT.remCaption]:=caption;
+    fm[remDT.remText]:=text;
+
+    if(remDt.fieldUser<>'')then
+      fm[remDt.fieldUser] := GetCurrentUser() ;
+    if(remDT.everyDay<>'')then
+      fm[remDT.everyDay]:=0;
+    if(remDT.everyWeek<>'')then
+      fm[remDT.everyWeek]:=1
+    else
+      RaiseException(erCustomError,'В расширении не указано поле "каждую неделю"');
+    if(remDT.everyMonth<>'')then
+      fm[remDT.everyMonth]:=0;
+    if(remDT.everyQuarter<>'')then
+      fm[remDT.everyQuarter]:=0;
+    if(remDT.everyYear<>'')then
+      fm[remDT.everyYear]:=0;
+
+    fm[remDT.remDone]:=0;
+
+    if(ShowEdtWin=1)then
+    begin
+      if (fm.EditWindow.ShowModal = mrOk) then
+        fm.Post
+      else
+        fm.Cancel;
+    end
+    else if(ShowEdtWin=0) then
+    begin
+      fm.post;
+    end;
+
+    refreshDataEvent();
+    result:=true;
+  except
+   debug('Ошибка в процедуре "every_Week_Memo" ');
+   result:=false;
+  finally
+    fm.close;
+    fm.free;
+  end;
+end;
+
+{@function
+OrigName=everyMonthMemo
+Name=every_Month_Memo
+Args=ssssn
+Result=b
+Group=Напоминания
+Description= Данная функция работает только с расширением Reminder.
+Добавляет новую запись в форму с напоминаниями, будет выполняться каждый месяц.<br>
+Дату записывать в формате: 10.01.2020 <br>
+Время записывать в формате: 12:30:00 <br>
+Последний параметр отвечает за показ окна редактирования:
+1-показывать, 0-не показывать.
+Пример:<br><br>
+<code>every_Month_Memo(CSTR([дата]),CSTR([время]),'Заголовок','Текст напоминания',1)</code><br>
+@}
+function everyMonthMemo(dt,tm,caption,text:string;ShowEdtWin:integer):boolean;
+var
+  fm:tdxForm;
+  resLocate:string;
+begin
+  if(remDT.fm='')then
+  begin
+    RaiseException(erCustomError, 'Расширение "Напоминания о событиях" не подключено, или настроено неверно.');
+    //exit;
+  end;
+
+  if(trim(caption)='')then
+  begin
+    RaiseException(erCustomError, 'Заголовок напоминания не может быть пустым.');
+  end;
+
+  try
+    fm:=tdxForm.create(remDt.fm);
+    fm.Open;
+
+    resLocate:=isLocateRem(fm,caption);
+    if(resLocate='notFound') then
+    begin
+      fm.Append;
+    end
+    else if(resLocate='Update')then
+    begin
+      fm.Edit;
+    end
+    else if(resLocate='Cancel')then
+    begin
+      EXIT;
+    end;
+
+    fm[remDT.remDate]:=StrToDate(dt);
+    fm[remDT.remTime]:=StrToTime(tm);
+    fm[remDT.remCaption]:=caption;
+    fm[remDT.remText]:=text;
+
+    if(remDt.fieldUser<>'')then
+      fm[remDt.fieldUser] := GetCurrentUser() ;
+    if(remDT.everyDay<>'')then
+      fm[remDT.everyDay]:=0;
+    if(remDT.everyWeek<>'')then
+      fm[remDT.everyWeek]:=0;
+    if(remDT.everyMonth<>'')then
+      fm[remDT.everyMonth]:=1
+    else
+      RaiseException(erCustomError,'В расширении не указано поле "каждый месяц"');
+    if(remDT.everyQuarter<>'')then
+      fm[remDT.everyQuarter]:=0;
+    if(remDT.everyYear<>'')then
+      fm[remDT.everyYear]:=0;
+
+    fm[remDT.remDone]:=0;
+
+    if(ShowEdtWin=1)then
+    begin
+      if (fm.EditWindow.ShowModal = mrOk) then
+        fm.Post
+      else
+        fm.Cancel;
+    end
+    else if(ShowEdtWin=0) then
+    begin
+      fm.post;
+    end;
+
+    refreshDataEvent();
+    result:=true;
+  except
+   debug('Ошибка в процедуре "every_Month_Memo" ');
+   result:=false;
+  finally
+    fm.close;
+    fm.free;
+  end;
+end;
+
+{@function
+OrigName=everyQuarterMemo
+Name=every_Quarter_Memo
+Args=ssssn
+Result=b
+Group=Напоминания
+Description= Данная функция работает только с расширением Reminder.
+Добавляет новую запись в форму с напоминаниями, будет выполняться каждый квартал.<br>
+Дату записывать в формате: 10.01.2020 <br>
+Время записывать в формате: 12:30:00 <br>
+Последний параметр отвечает за показ окна редактирования:
+1-показывать, 0-не показывать.
+Пример:<br><br>
+<code>every_Quarter_Memo(CSTR([дата]),CSTR([время]),'Заголовок','Текст напоминания',1)</code><br>
+@}
+function everyQuarterMemo(dt,tm,caption,text:string;ShowEdtWin:integer):boolean;
+var
+  fm:tdxForm;
+  resLocate:string;
+begin
+  if(remDT.fm='')then
+  begin
+    RaiseException(erCustomError, 'Расширение "Напоминания о событиях" не подключено, или настроено неверно.');
+    //exit;
+  end;
+
+  if(trim(caption)='')then
+  begin
+    RaiseException(erCustomError, 'Заголовок напоминания не может быть пустым.');
+  end;
+
+  try
+    fm:=tdxForm.create(remDt.fm);
+    fm.Open;
+
+    resLocate:=isLocateRem(fm,caption);
+    if(resLocate='notFound') then
+    begin
+      fm.Append;
+    end
+    else if(resLocate='Update')then
+    begin
+      fm.Edit;
+    end
+    else if(resLocate='Cancel')then
+    begin
+      EXIT;
+    end;
+
+    fm[remDT.remDate]:=StrToDate(dt);
+    fm[remDT.remTime]:=StrToTime(tm);
+    fm[remDT.remCaption]:=caption;
+    fm[remDT.remText]:=text;
+
+    if(remDt.fieldUser<>'')then
+      fm[remDt.fieldUser] := GetCurrentUser() ;
+    if(remDT.everyDay<>'')then
+      fm[remDT.everyDay]:=0;
+    if(remDT.everyWeek<>'')then
+      fm[remDT.everyWeek]:=0;
+    if(remDT.everyMonth<>'')then
+      fm[remDT.everyMonth]:=0;
+    if(remDT.everyQuarter<>'')then
+      fm[remDT.everyQuarter]:=1
+    else
+      RaiseException(erCustomError,'В расширении не указано поле "каждый квартал"');
+    if(remDT.everyYear<>'')then
+      fm[remDT.everyYear]:=0;
+
+    fm[remDT.remDone]:=0;
+
+    if(ShowEdtWin=1)then
+    begin
+      if (fm.EditWindow.ShowModal = mrOk) then
+        fm.Post
+      else
+        fm.Cancel;
+    end
+    else if(ShowEdtWin=0) then
+    begin
+      fm.post;
+    end;
+
+    refreshDataEvent();
+    result:=true;
+  except
+   debug('Ошибка в процедуре "every_Month_Memo" ');
+   result:=false;
+  finally
+    fm.close;
+    fm.free;
+  end;
+end;
+
+{@function
+OrigName=everyYearMemo
+Name=every_Year_Memo
+Args=ssssn
+Result=b
+Group=Напоминания
+Description= Данная функция работает только с расширением Reminder.
+Добавляет новую запись в форму с напоминаниями, будет выполняться каждый год.<br>
+Дату записывать в формате: 10.01.2020 <br>
+Время записывать в формате: 12:30:00 <br>
+Последний параметр отвечает за показ окна редактирования:
+1-показывать, 0-не показывать.
+Пример:<br><br>
+<code>every_Year_Memo(CSTR([дата]),CSTR([время]),'Заголовок','Текст напоминания',1или0)</code><br>
+@}
+function everyYearMemo(dt,tm,caption,text:string;ShowEdtWin:integer):boolean;
+var
+  fm:tdxForm;
+  resLocate:string;
+begin
+  if(remDT.fm='')then
+  begin
+    RaiseException(erCustomError, 'Расширение "Напоминания о событиях" не подключено, или настроено неверно.');
+  end;
+
+  if(trim(caption)='')then
+  begin
+    RaiseException(erCustomError, 'Заголовок напоминания не может быть пустым.');
+  end;
+
+  try
+    fm:=tdxForm.create(remDt.fm);
+    fm.Open;
+
+    resLocate:=isLocateRem(fm,caption);
+    if(resLocate='notFound') then
+    begin
+      fm.Append;
+    end
+    else if(resLocate='Update')then
+    begin
+      fm.Edit;
+    end
+    else if(resLocate='Cancel')then
+    begin
+      EXIT;
+    end;
+
+    fm[remDT.remDate]:=StrToDate(dt);
+    fm[remDT.remTime]:=StrToTime(tm);
+    fm[remDT.remCaption]:=caption;
+    fm[remDT.remText]:=text;
+
+    if(remDt.fieldUser<>'')then
+      fm[remDt.fieldUser] := GetCurrentUser() ;
+    if(remDT.everyDay<>'')then
+      fm[remDT.everyDay]:=0;
+    if(remDT.everyWeek<>'')then
+      fm[remDT.everyWeek]:=0;
+    if(remDT.everyMonth<>'')then
+      fm[remDT.everyMonth]:=0;
+    if(remDT.everyQuarter<>'')then
+      fm[remDT.everyQuarter]:=0;
+    if(remDT.everyYear<>'')then
+      fm[remDT.everyYear]:=1
+    else
+      RaiseException(erCustomError,'В расширении не указано поле "каждый год"');
+
+    fm[remDT.remDone]:=0;
+
+    if(ShowEdtWin=1)then
+    begin
+      if (fm.EditWindow.ShowModal = mrOk) then
+        fm.Post
+      else
+        fm.Cancel;
+    end
+    else if(ShowEdtWin=0) then
+    begin
+      fm.post;
+    end;
+
+    refreshDataEvent();
+    result:=true;
+  except
+   debug('Ошибка в процедуре "every_Year_Memo" ');
+   result:=false;
+  finally
+    fm.close;
+    fm.free;
+  end;
+end;
+
+// Событие перехода между вкладками осноного окна
+procedure remMainPageChange(Sender: TObject);
+begin
+  if remOldPgChange <> nil then remOldPgChange(Sender);
+  try
+    refreshDataEvent();
+  finally
+  end;
+end;
+
+{@module
+author=Vofka18
+version=1.3
+description=Напоминания о событиях.
+@}
+
+{@action
+id=1F4C0FA0-0CFB-459B-839B-E311D487573E
+target=main
+origname=Reminder
+name=Напоминания о событиях
+group=Инструменты
+ui=
+  <ui>
+    <divider caption="Поля формы для хранения событий" />
+    <form name="fm" caption="*Форма хранения событий" required="1"/>
+    <field name="remDate" caption="*Поле даты напоминания" source="fm" filter="date" required="1"/>
+    <field name="remTime" caption="*Поле времени напоминания" source="fm" filter="time" required="1"/>
+    <field name="remCaption" caption="*Поле заголовка напоминания" source="fm" filter="text" required="1"/>
+    <field name="remText" caption="*Поле текста напоминания" source="fm" filter="text" required="1"/>
+    <field name="remDone" caption="*Флажок 'Задание выполнено'" source="fm" filter="checkbox" required="1"/>
+    <divider caption="Пометки для определения цикличности" />
+    <field name="everyDay" caption="Повторять каждый день(флажок)" source="fm" filter="checkbox" required="0"/>
+    <field name="everyWeek" caption="Повторять каждую неделю(флажок)" source="fm" filter="checkbox" required="0"/>
+    <field name="everyMonth" caption="Повторять каждый месяц(флажок)" source="fm" filter="checkbox" required="0"/>
+    <field name="everyQuarter" caption="Повторять каждый квартал(флажок)" source="fm" filter="checkbox" required="0"/>
+    <field name="everyYear" caption="Повторять каждый год(флажок)" source="fm" filter="checkbox" required="0"/>
+    <divider caption="По каким событиям производить обновление" />
+    <checkbox name="afterOpen" caption="При запуске базы" defaultvalue="1"/>
+    <checkbox name="onPageChange" caption="При переходе между вкладками" defaultvalue="0"/>
+    <divider caption="Дополнительно" />
+    <field name="fieldUser" caption="Пользователь" source="fm" filter="text" required="0"/>
+    <checkbox name="showInToolBar" caption="Использовать кнопку в панели инструментов" defaultvalue="1"/>
+    <checkbox name="showInTray" caption="Использовать системный трей" defaultvalue="1"/>
+    <checkbox name="showCountIcon" caption="Отображать 'количество' в панели инструментов" defaultvalue="1"/>
+    <checkbox name="showMsgBox" caption="Оповещать при появлении новых событий (MsgBox)" defaultvalue="1"/>
+    <checkbox name="showMsgIsLocate" caption="Предупреждать если запись уже существует" defaultvalue="1"/>
+  </ui>
+description=Данное расширение дает возможность, создавать текстовые напоминания, которые могут быть как цикличные
+(каждый день, неделя, месяц, год), так и единоразовыми.<br>
+В панель инструментов будет выведена соответствующая кнопка,
+в углу которой будет отображаться количество не прочтенных заданий.
+Позиции помеченные * - Обязательны для заполнения. <br>
+При подключении выбор флажков "цикличности" не обязателен,
+нужно выбрать поля которые Вам будут необходимы для дальнейшего использования<br>
+(например если не планируете создавать напоминания цикличностью в один день, то поле можно оставить пустым)<br>
+В выражениях также появятся соответствующие функции, для автоматического добавления напоминаний.<br>
+Например, при выписке счета, можно добавить напоминание, через неделю "Проверить оплату по такому-то счету".<br>
+Пока есть возможность проверять новые уведомления по двум событиям, это открытие базы и смена вкладки
+ в основном окне программы. По необходимости можно отключать данные события. <br>
+ Также можно проверить новые уведомления кликом по кнопке в панеле инструментов.
+<br>
+<b>Отображать 'количество' в панели инструментов: </b> Отображение количества событий на кнопке в панели инструментов
+(Может замедлить работу программы, т.к. происходит постоянное обновление списка иконок панели инструментов)<br>
+<b>Оповещать при появлении новых событий: </b> Показывать сообщение при появлении нового события.<br>
+<b>Предупреждать если запись уже существует: </b> Работает только при добавлении записи через выражение.
+Показывает диалог, если запись с таким заголовком уже существует. Также запрещает дублировать записи.
+Если не установлено, то записи, через выражение, добавляются безусловно.<br>
+<br>
+Немного про организацию цикличности:<br>
+Если Вы пометили цикличное событие как "Выполненное", то в дальнейшем программа найдет это задание, и перенесет
+дату выполнения на определенный период, и так-же снимет галочку "Выполнено". Таким образом, такое поведение дает возможность
+настроить сортировку, в форме заданий, так, что можно будет видеть ближайшие задания.
+
+@}
+
+procedure Reminder(_fm,_remDate,_remTime,_remCaption,_remText,
+_remDone,_everyDay,_everyWeek,_everyMonth,_everyQuarter,_everyYear:string;
+_afterOpen,_onPageChange:boolean;_fieldUser:string;
+_showInToolBar,_showInTray,_showCountIcon,_showMsgBox,_showMsgIsLocate:boolean);
+begin
+  if(remDt.fm<>'')then RaiseException(erCustomError, 'Возможно подключать только один екземпляр действия "Напоминания".');
+
+  if(_showInToolBar=false) and (_showInTray=false)then
+    RaiseException(erCustomError, 'Для правильной работы расширения напоминаний, требуется включить хоть один из типов отображения (В Тулбаре или системном трее)');
+
+  oldDbCloseReminder := MainWindow.onDatabaseClose;
+  MainWindow.onDatabaseClose := @ReminderDBClose;
+
+  with remDt do
+  begin
+    fm:=_fm;
+
+    remDate:=_remDate;
+    remTime:=_remTime;
+    remCaption:=_remCaption;
+    remText:=_remText;
+    remDone:=_remDone;
+    everyDay:=_everyDay;
+    everyWeek:=_everyWeek;
+    everyMonth:=_everyMonth;
+    everyQuarter:=_everyQuarter;
+    everyYear:=_everyYear;
+    showCountIcon:=_showCountIcon;
+    showMsgBox:=_showMsgBox;
+    showMsgIsLocate:=_showMsgIsLocate;
+    fieldUser:=_fieldUser;
+    showInToolBar:=_showInToolBar;
+    showInTray:=_showInTray;
+  end;
+
+  if(_onPageChange=true)then
+  begin
+    remOldPgChange := MainWindow.Pages.OnChange;
+    MainWindow.Pages.OnChange := @remMainPageChange;
+  end;
+
+  AddButton();
+
+  if(_afterOpen=true)then
+  begin
+    refreshDataEvent();
+  end;
+end;
+

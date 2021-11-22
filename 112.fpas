@@ -1,0 +1,108 @@
+procedure TASKFORALL (Sender: TObject); // назначение задачи группе исполнителей
+var
+  TASKS, Fields1: TdxForm;
+
+  //n: Integer;
+begin
+  TASKS := TdxForm.Create('Задачи');
+  TASKS.Open;
+  TASKS.Edit;
+  Fields1:= Self.Forms['Исполнители'];
+  Fields1.MoveFirst;
+  while Fields1.EOF = False do  //  Log1.EOF = False      n<10
+  begin
+   TASKS.Append;
+   TASKS['Документ1']:= Self.recid;
+   TASKS['Исполнитель'] := Fields1['Исполнитель'];
+   TASKS['Важность'] := Self['Важность']; //Важность
+   TASKS['Тип задачи'] := Self['Тип задачи2'];
+   TASKS['Срок задачи'] := Self['Срок задачи'];
+   TASKS['Описание задачи'] := Self['Описание задачи'];
+   TASKS.Post;
+   Fields1.MoveNext;
+  end;
+    //Очищаем формы;
+  TASKS.free;
+  dxQueryGrid1.Refresh;
+end;
+procedure TASK (Sender: TObject);  // назначение задаи одному исполнителю
+var
+  TASKS: TdxForm;
+
+  //n: Integer;
+begin
+  TASKS := TdxForm.Create('Задачи');
+  TASKS.Open;
+  TASKS.Edit;
+  TASKS.Append;
+  TASKS['Важность'] := Self['Важность']; //Важность
+  TASKS['Документ1']:= Self.recid;
+  TASKS['Исполнитель'] := Self['Исполнитель'];
+  TASKS['Тип задачи'] := Self['Тип задачи2'];
+  TASKS['Срок задачи'] := Self['Срок задачи'];
+  TASKS['Описание задачи'] := Self['Описание задачи'];
+  TASKS.Post;
+  TASKS.free;  //Очищаем формы;
+  dxQueryGrid1.Refresh;
+end;
+
+// Процедура открытия файла по клику на запросе формы хранения файлов
+procedure OpenFile(Sender: TObject);
+var Fm:TdxForm;
+    F:TdxFile;
+    QG:TdxQueryGrid;
+begin
+
+QG := TdxQueryGrid(Sender);
+if QG.RecordCount=0 then exit;
+Fm:=TdxForm.Create('FIleStore2');
+Fm.OpenRecord(QG.Recid);
+F :=TdxFile(Fm.FindComponentByFieldName('Файл'));
+F.PopupMenu.Items[MI_FILE_OPEN].Click;
+Fm.Free;
+end;
+
+
+// Процедура проверки запроса при отрытии приложенных файлов (и внесение количества приложенных файлов в имя закладки)
+procedure dxQueryGrid1OnAfterScroll(Sender: TObject);
+var QG:TdxQueryGrid;
+s:string;
+begin
+try
+QG := TdxQueryGrid(Sender);
+QG.OnDblClick:=@OpenFile;
+except
+debug('В запросе "'+
+QG.QueryName+'" установлено более одного источника.'+#13#10+
+'Открытие файлов кликом невозможно.'+#13#10+
+'Удалите лишние источники или отключите действие.'+#13#10);
+end;
+ if QG.RecordCount>0 then
+ s := ' ('+IntToStr(QG.RecordCount)+' шт.)' else
+ s := '';
+ dxPageControl1.Pages[6].Caption:= 'Файлы'+s;  // Указать номер закладки (нумерация начинатеся с 0)
+end;
+
+
+procedure Create9 (Sender: TObject);
+
+begin
+  Self.Edit;
+  while not Self.EOF do //для редактирования всех документов по очереди
+  begin
+    Self.Params['Текст_put']:= Self.Ass['Описание']; // скопировали текст
+    self.Validate;
+    Self.Post; //сохраняем, чтобы сработала запись в Мемо
+    Self.MoveNext; //для перехода на следующую запись
+    Self.Edit;
+  end;
+   end;
+
+
+procedure Form_Create;
+begin
+  dxButton11.OnClick := @TASKFORALL; // назначение задачи группе исполнителей
+  dxButton9.OnClick := @TASK; // назначение задаи одному исполнителю
+  dxQueryGrid9.OnAfterScroll:=@dxQueryGrid1OnAfterScroll; // Указать номер запроса!! открытие приложенных файлов
+  //dxButton13.OnClick := @Create9;
+  end;

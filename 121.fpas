@@ -1,0 +1,83 @@
+procedure Click(Sender: TObject);
+var fm: tdxForm;
+    s, p: String;
+begin
+  dxMemo1.Clear;
+  p:=GetTemplatesDir;
+  fm:=tdxForm.Create('Шаблон печати');
+  fm.Open;
+  fm.MoveFirst;
+  while not fm.Eof do
+  begin
+    s:=fm.Files['Файл1'].Description;
+    if s <> nil then
+    begin
+    if (FileExists(p+s)=true) and (StrToDate(DateToStr(FileDateToDateTime(FileAge(p+s)))) >= StrToDate(fm.Ass['Дата']))
+    then dxMemo1.Text:=dxMemo1.Text+p+s+' - норм'+Chr(13)
+    else begin
+      fm.Files['Файл1'].SaveToFile(p+s);
+      dxMemo1.Text:=dxMemo1.Text+p+s+' - обновлен'+Chr(13);
+    end;
+    end;
+    fm.MoveNext;
+  end;
+  fm.Free;
+end;
+
+
+
+// procedure CopyTable (Sender: TObject);
+//var
+//  Log1, Fields1, Log, Fields: TdxForm;
+//
+  //n: Integer;
+//begin
+//  Log1 := TdxForm.Create('Log1');
+//  Log := TdxForm.Create('Log');
+//  Log.Open;
+//  Log.Edit;
+//  Log1.Open;
+//  Log1.MoveFirst;
+//  Log1.Edit;
+//  Fields1:= Log1.Forms['Fields1'];
+//  Fields:= Log.Forms['Fields'];
+  //n  := 0;
+//  while Log1.EOF = False do  //  Log1.EOF = False      n<10
+//  begin
+   //n :=n+1;
+   //Log1.MoveFirst;
+//   Log.Append;
+//   Log['Номер записи'] := Log1['Номер записи'];
+//   Log['Дата'] := Log1['Дата'];
+//   Log['Наименование события'] := Log1['Наименование события'];
+//   Log['Время начала редактирования'] := Log1['Время начала редактирования'];
+//   Log['Время сохранения записи'] := Log1['Время сохранения записи'];
+//   Log['Пользователь'] := Log1['Пользователь'];
+//   Log['Форма'] := Log1['Форма'];
+//   Log['Тип формы'] := Log1['Тип формы'];
+//   Log['ИД'] := Log1['ИД'];
+//   Fields1.MoveFirst;
+//      while Fields1.EOF = False do  //  Log1.EOF = False
+//      begin
+//      Fields.Append;
+//      Fields['Имя поля'] := Fields1['Имя поля'];
+//      Fields['Значение до'] := Fields1['Значение до'];
+//      Fields['Значение после'] := Fields1['Значение после'];
+//      Fields.Post;
+//      Fields1.MoveNext;
+//      end;
+//   Log.Post;
+   //Log.Close;
+//   Log1.MoveNext;
+//  end;
+    //Очищаем формы;
+//  Log.free;
+//  Log1.free;
+//end;
+
+
+procedure Form_Create;
+begin
+  dxButton2.OnClick := @Click; // копирование шаблонов  по кнопке
+ // Self.EditWindow.OnShow := @Click;  // копирование шаблонов автоматически при открывании базы
+  end;

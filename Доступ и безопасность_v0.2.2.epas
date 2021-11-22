@@ -1,0 +1,442 @@
+{@module
+author=Develop-Soft [ https://forum.develop-soft.ru ]
+version=0.2.2
+description=Доступ и безопасность
+Функции:
+1. CHECK_PASSWORD - Проверяет пароль текущего пользователя.
+2. CHECK_USER_PASSWORD - Проверяет пароль указанного пользователя.
+
+Действия:
+1. Сменить пароль текущего пользователя (кнопка).
+
+История версий:
+v 0.1 от 07.03.2019 - выход первой версии
+v 0.2 от 09.04.2019 - добавлено действие: "смена пароля текущего пользователя"
+...
+@}
+
+procedure Sleep(dwMilliseconds:cardinal);
+external 'Sleep@kernel32.dll stdcall';
+
+function GetKeyboardLayout(dwLayout:cardinal):THandle;
+external 'GetKeyboardLayout@user32.dll stdcall';
+
+function GetKeyState(nVirtKey:longint):smallint;
+external 'GetKeyState@user32.dll stdcall';
+
+const VK_CAPITAL = 20;
+
+type TdxUser = record
+  id:integer;
+  name,
+  password:string;
+  roleid:integer;
+  singlemode,
+  multiauth,
+  visible:shortint;
+end;
+
+type TdxUsers = array of TdxUser;
+
+var dxUsers:TdxUsers;
+
+procedure GetAllTdxUsers;
+var
+  SQL,F_USERS : string;
+  qSQL : TdxSQLQuery;
+  xmlDoc,root,NodeAt : variant;
+  UserCount,Uc : integer;
+  dxUser : TdxUser;
+begin
+  SQL := 'select users from dx_users';
+  xmlDoc := CreateOleObject('Microsoft.XMLDOM');
+  qSQL:=sqlSelect(SQL);
+  F_USERS := qSQL.Ass['USERS'];
+  xmlDoc.LoadXML(F_USERS);
+  root := xmlDoc.selectSingleNode('//users');
+  userCount := root.childNodes.length;
+    for uc:=0 to userCount-1 do
+    begin
+      NodeAt :=       root.childNodes.item[uc];
+      with dxUser do begin
+        id :=         NodeAt.getAttribute('id');
+        name :=       NodeAt.getAttribute('name');
+        password :=   NodeAt.getAttribute('password');
+        roleid :=     NodeAt.getAttribute('roleid');
+        singlemode := NodeAt.getAttribute('singlemode');
+        multiauth :=  NodeAt.getAttribute('multiauth');
+        visible :=    NodeAt.getAttribute('visible');
+      end;
+      SetArrayLength(dxUsers,uc+1)
+      dxUsers[uc]:=dxUser;
+    end;
+  SQL:=#0;
+  root:=#0;
+  F_USERS:=#0;
+  NodeAt := Unassigned;
+  xmlDoc := Unassigned;
+  qSQL.Free;
+  qSQL:=nil;
+end;
+
+function CheckSpecifiedUserPassword(Username,Password:string):boolean;
+ var i:integer;
+begin
+   GetAllTdxUsers;
+   for i:=0 to GetArrayLength(dxUsers)-1 do
+   if dxUsers[i].name = Username then
+   if dxUsers[i].password = EncodeMD5(Password) then
+   begin
+     result:=true;
+     exit;
+   end;
+   result:=false;
+end;
+
+{@function
+OrigName=CHECK_PASSWORD
+Name=CHECK_PASSWORD
+Args=v
+Result=b
+Group=Доступ и безопасность
+Description=
+<b><font color="#0000A0">Функция проверяет пароль текущего пользователя и выдает
+ в результате истину или ложь.</font></b><p>
+<code><b>CHECK_PASSWORD(</b><font color="#008040">'*Пароль*'</font><b>)</b></code>
+<hr> <p>
+<b>Параметры:</b><p>
+1. <i>[любой тип]</i> Пароль текущего пользователя.<p>
+<b>Результат:</b><p> булево <i>(истина - если пароль указан верно, и ложь - при
+неверно указанном или пустом пароле)</i><p>
+<b>Примеры:</b><br><br>
+<code>
+<b>IIF( CHECK_PASSWORD(</b><font color="#008040">'123446'</font><b>))</b>,<br>
+&#160;&#160;&#160;<b>MsgBox(</b><font color="#008040">'Ошибка авторизации'</font>,
+<font color="#008040">'Указан неверный пароль'</font><b>),</b> <br>
+&#160;&#160;&#160;<b>MsgBox(</b><font color="#008040">'Успешная авторизация'</font>,
+<font color="#008040">'Пароль пользователя указан верно.'</font><b>)</b><br>
+<b>)</b></code><br><br>
+<code>
+<b>OBJECTVISIBLE(</b><font color="#008040">'dxEdit1'</font>,<b>
+CHECK_PASSWORD([</b>Поле проверки пароля<b>]))</b>
+</code>
+@}
+
+function CHECK_PASSWORD(Password:variant):boolean;
+  var S:String;
+begin
+  S:=VarToStr(Password);
+  if Trim(S)='' then begin result := false; exit; end;
+  result:=CheckSpecifiedUserPassword(GetCurrentUser,S);
+end;
+
+{@function
+OrigName=CHECK_USER_PASSWORD
+Name=CHECK_USER_PASSWORD
+Args=vv
+Result=b
+Group=Доступ и безопасность
+Description=
+<b><font color="#0000A0">Функция проверяет логин и пароль указанного пользователя
+и выдает в результате истину или ложь.</font></b><p>
+<code><b>CHECK_USER_PASSWORD(</b><font color="#008040">'Логин'</font>,
+<font color="#008040">'Пароль'</font><b>)</b></code>
+<hr> <p>
+<b>Параметры:</b><p>
+1. <i>[любой тип]</i> Логин пользователя.<br>
+2. <i>[любой тип]</i> Пароль пользователя.<p>
+<b>Результат:</b><p> булево <i>(истина - если пара логин-пароль указан верно,
+и ложь - при неверно указанном или пустом логине или пароле)</i><p>
+<b>Примеры:</b><br><br>
+<code>
+<b>IIF( CHECK_USER_PASSWORD(</b><font color="#008040">'Админ'</font>,
+<font color="#008040">'123446'</font><b>))</b>,<br>
+&#160;&#160;&#160;<b>MsgBox(</b><font color="#008040">'Ошибка авторизации'</font>,
+<font color="#008040">'Указаны неверное имя пользователя или пароль'</font><b>),</b> <br>
+&#160;&#160;&#160;<b>MsgBox(</b><font color="#008040">'Успешная авторизация'</font>,
+<font color="#008040">'Логин и пароль пользователя указаны верно.'</font><b>)</b><br>
+<b>)</b></code><br><br><code><b>OBJECTVISIBLE(</b><font color="#008040">'dxEdit1'</font>,<b>
+CHECK_USER_PASSWORD(<b>[</b>Поле пароля<b>]</b>
+</font>, [Поле пароля]))</b></code>
+@}
+
+function CHECK_USER_PASSWORD(User,Password:variant):boolean;
+  var P,U:String;
+begin
+  U:=VarToStr(User);
+  P:=VarToStr(Password);
+  if (Trim(U)='') or (Trim(P)='') then begin result := false; exit; end;
+  result:=CheckSpecifiedUserPassword(U,P);
+end;
+
+{@action
+Id=371EC03D-1746-45EA-B57C-35BFF067D541
+Target=all
+OrigName=ChangeCurrentPassword
+Name=Сменить пароль текущего пользователя
+Group=Доступ и безопасность
+UI=<ui>
+<divider/><divider caption="Это действие пока не имеет настроек"/><divider/>
+</ui>
+Description=<b>Действие для кнопки.
+Вызывает окно смены пароля для текущего пользователя.</b>
+@}
+
+procedure TryApplyUpdates(SQ:TdxSQLQuery);
+begin
+ while True do
+    try
+      SQ.ApplyUpdates;
+      Exit;
+    except
+      if Pos('-deadlock', ExceptionParam) = 0 then
+      RaiseLastException;
+      Sleep(Random(100)+1);
+    end;
+end;
+
+procedure WriteNewPassword(User,NewPassword:string);
+var
+  SQL,F_USERS : string;
+  qSQL : TdxSQLQuery;
+  xmlDoc,root,NodeAt : variant;
+  UserCount,Uc : integer;
+begin
+  SQL := 'select ID,USERS from DX_USERS';
+  xmlDoc := CreateOleObject('Microsoft.XMLDOM');
+  qSQL:=sqlSelect(SQL);
+  F_USERS := qSQL.Ass['USERS'];
+  xmlDoc.LoadXML(F_USERS);
+  root := xmlDoc.selectSingleNode('//users');
+  userCount := root.childNodes.length;
+    for uc:=0 to userCount-1 do
+    begin
+      NodeAt := root.childNodes.item[uc];
+      if NodeAt.getAttribute('name') = User then
+      begin
+        NodeAt.setAttribute('password',EncodeMD5(NewPassword));
+        qSQL.Open;
+        qSQL.Edit;
+        qSQL.Ass['USERS']:=''''+xmlDoc.Xml+'''';
+        qSQL.Post;
+        TryApplyUpdates(qSQL);
+        qSQL.Close;
+        break;
+      end;
+    end;
+  SQL:=#0;
+  root:=#0;
+  F_USERS:=#0;
+  NodeAt := Unassigned;
+  xmlDoc := Unassigned;
+  qSQL.Free;
+  qSQL:=nil;
+end;
+
+var TmpOldPass,TmpNewPass,TmpConfPass:string;
+
+procedure SetLabelInfo(Sender: TObject);
+var KeybCurrLang,CL:string;
+LblInfo:TLabel;
+begin
+ LblInfo := TLabel(TForm(TControl(Sender).Parent).FindComponent('InfoLabel'));
+ if GetKeyboardLayout(0) = 68748313 then KeybCurrLang := 'RU' else
+ if GetKeyboardLayout(0) = 67699721 then KeybCurrLang := 'EN' else
+ KeybCurrLang := 'Хз...';
+ if GetKeyState(VK_CAPITAL)=1 then
+   begin
+     LblInfo.Font.Color:=clRed;
+     CL :='   Caps Lock: [ ВКЛ! ]';
+   end
+ else
+   begin
+     LblInfo.Font.Color:=clGrayText;
+     CL := '';
+   end;
+ LblInfo.Caption := 'Раскладка клавиатуры: [ '+KeybCurrLang+' ]'+CL;
+end;
+
+procedure EdOnKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  SetLabelInfo(Sender);
+end;
+
+function ChangeCurrentPassword:boolean;
+var Fm:TForm;
+    l1,l2,l3,l4,l5:TLabel;
+    OldPassEdit,NewPassEdit,ConfPassEdit:TEdit;
+    BPan:TButtonPanel;
+begin
+
+Fm:=TForm.Create(Self);
+with Fm do
+  begin
+    Caption := 'Изменение пароля'
+    Position := poOwnerFormCenter;
+    BorderStyle := bsDialog;
+    Height:=180;
+  end;
+
+l1:=TLabel.Create(Fm);
+with l1 do
+  begin
+    Parent:=Fm;
+    Left := 10;
+    Top := 10;
+    Font.Style:=Font.Style+[fsBold];
+    Caption:='Пользователь: '+GetCurrentUser;
+  end;
+
+l2:=TLabel.Create(Fm);
+with l2 do
+  begin
+    Parent:=Fm;
+    Left := 10;
+    Top := 38;
+    Caption:='Текущий пароль:';
+  end;
+
+l3:=TLabel.Create(Fm);
+with l3 do
+  begin
+    Parent:=Fm;
+    Left := 10;
+    Top := 66;
+    Caption:='Новый пароль:';
+  end;
+
+l4:=TLabel.Create(Fm);
+with l4 do
+  begin
+    Parent:=Fm;
+    Left := 10;
+    Top := 94;
+    Caption:='Проверка пароля:';
+  end;
+
+l5:=TLabel.Create(Fm);
+with l5 do
+  begin
+    Parent:=Fm;
+    Left := 10;
+    Top := 122;
+    Name := 'InfoLabel';
+    Caption := '';
+    Font.Color:=clGrayText;
+  end;
+
+BPan:=TButtonPanel.Create(Fm);
+with BPan do
+  begin
+    Parent := Fm;
+    HelpButton.Hide;
+    CloseButton.Hide;
+  end;
+
+OldPassEdit:=TEdit.Create(Fm);
+with OldPassEdit do
+  begin
+    Parent:=Fm;
+    Left := 120;
+    Top := 34;
+    Width:=186;
+    Font.Size:=10;
+    PasswordChar:= #7
+    Text := TmpOldPass;
+    OnEnter:=@SetLabelInfo;
+    OnKeyUp:=@EdOnKeyDown;
+  end;
+
+NewPassEdit:=TEdit.Create(Fm);
+with NewPassEdit do
+  begin
+    Parent:=Fm;
+    Left := 120;
+    Top := 62;
+    Width:=186;
+    Font.Size:=10;
+    PasswordChar:= #7
+    Text := TmpNewPass;
+    OnEnter:=@SetLabelInfo;
+    OnKeyUp:=@EdOnKeyDown;
+  end;
+
+ConfPassEdit:=TEdit.Create(Fm);
+with ConfPassEdit do
+  begin
+    Parent:=Fm;
+    Left := 120;
+    Top := 90;
+    Width:=186;
+    Font.Size:=10;
+    PasswordChar:= #7
+    Text:=TmpConfPass;
+    OnEnter:=@SetLabelInfo;
+    OnKeyUp:=@EdOnKeyDown;
+  end;
+Fm.ShowModal;
+if Fm.ModalResult=mrOk then
+  begin
+  if Trim(OldPassEdit.Text)+Trim(NewPassEdit.Text)+ Trim(ConfPassEdit.Text)=''
+  then exit;
+  TmpOldPass:=OldPassEdit.Text;
+  TmpNewPass:=NewPassEdit.Text;
+  TmpConfPass:=ConfPassEdit.Text;
+  if Trim(OldPassEdit.Text)='' then
+    begin
+      MsgBox('Ошибка','Не указан текущий пароль!');
+      ChangeCurrentPassword;
+      exit;
+    end
+  else
+  if Trim(NewPassEdit.Text)='' then
+    begin
+      MsgBox('Ошибка','Не указан новый пароль!');
+      ChangeCurrentPassword;
+      exit;
+    end
+  else
+  if Trim(ConfPassEdit.Text)='' then
+    begin
+      MsgBox('Ошибка','Не указанo подтверждение пароля!');
+      ChangeCurrentPassword;
+      exit;
+    end;
+  if not CHECK_PASSWORD(OldPassEdit.Text) then
+      begin
+        MsgBox('Ошибка','Введен неверный текущий пароль!');
+        ChangeCurrentPassword;
+        exit;
+      end
+    else
+  if Trim(NewPassEdit.Text)<> Trim(ConfPassEdit.Text) then
+      begin
+        MsgBox('Ошибка','Новый пароль и подтверждение пароля не совпадают!');
+        ChangeCurrentPassword;
+        exit;
+      end;
+  if Trim(NewPassEdit.Text) = Trim(OldPassEdit.Text) then
+      begin
+        MsgBox('Ошибка','Новый пароль не должен совпадать со старым!');
+        ChangeCurrentPassword;
+        exit;
+      end;
+     WriteNewPassword(GetCurrentUser,NewPassEdit.Text);
+     MsgBox('Информация','Пароль успешно изменен!');
+     TmpOldPass:='';
+     TmpNewPass:='';
+     TmpConfPass:='';
+     Fm.Free;
+     result:=true;
+  end
+else
+  begin
+    TmpOldPass:='';
+    TmpNewPass:='';
+    TmpConfPass:='';
+    Fm.Free;
+    result:=false;
+  end;
+end;
+
+

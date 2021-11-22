@@ -1,0 +1,85 @@
+{@module
+author=Develop-Soft [ https://forum.develop-soft.ru ]
+version=0.1
+description=Главное меню
+Функции:
+1. CLICK_MENU - Нажать пункт главного меню.
+
+Действия:
+1. Кликнуть пункт главного меню.
+
+История версий:
+v 0.1 от 19.05.2019 - выход первой версии
+...
+@}
+
+
+{@function
+OrigName=CLICK_MENU
+Name=CLICK_MENU
+Args=s
+Result=b
+Group=Главное меню
+Description=
+<b><font color="#0000A0">Функция ищет пункт меню главного окна по указанному
+пути и выполняет клик.</font></b><p><code><b>
+CLICK_MENU(</b><font color="#008040">'Путь|к|пункту|меню'</font><b>)</b></code>
+<hr><p>
+<b>Параметры:</b><p>
+1. <i>[текст]</i> Путь к пункту главного меню через разделитель &quot;|&quot;
+(вертикальная черта).<p>
+<b>Результат:</b><p> булево <i>(истина - если пункт меню был найден и нажат,
+и ложь - при неверно указанном или пустом пути)</i><p>
+<b>Примеры:</b><br><br>
+<code><b>CLICK_MENU(</b><font color="#008040">'Документы|Продажа'</font><b>)</b>
+</code><br><code><b>CLICK_MENU(</b><font color="#008040">'Файл|Настройки'
+</font><b>)</b></code>
+@}
+
+{@action
+Id=D2CA8896-A1FE-4C42-AB79-EDD43F87B9E7
+Target=all
+OrigName=Click_Menu
+Name=Кликнуть пункт меню
+Group=Главное меню
+UI=<ui>
+<text name="ls"
+caption="Путь к пункту меню через разделитель &quot;|&quot;
+(вертикальная черта)."
+/></ui>
+Description=<b>
+Действие ищет пункт меню главного окна по указанному пути и выполняет клик.</b>
+@}
+
+function Click_Menu(MiPath:string):boolean;
+var i:integer;
+    SL:TStrings;
+    mi:TMenuItem;
+begin
+SL := TstringList.Create;
+  try
+  SplitStr(MiPath,'|',SL);
+  MI:=MainWindow.Menu.Items;
+  for i:=0 to SL.Count-1 do
+    begin
+      MI:=TMenuItem(MI.Find(SL[i]))
+      if MI=nil then
+      exit;
+    end;
+    MI.Click;
+    result := true;
+  except
+    result := false;
+  finally
+    SL.Free;
+    MI:=nil;
+  end;
+end;
+
+
+
+
+
+
+
+
