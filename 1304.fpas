@@ -1,0 +1,143 @@
+//var OldOnFieldChange: TFieldChangeEvent;
+
+
+procedure MarkTable (Sender: TObject);
+ var
+  Fm: TdxForm;
+begin
+   // Открываем форму и отмечаем галочку
+   Fm := Self.Forms['Таблица']
+   if Fm.RecordCount > 0 then
+   Fm.Edit;
+   if Fm['О'] = 0 then Fm['О'] := 1 else Fm['О'] := 0;
+end;
+
+ procedure OpenTable (Sender: TObject);
+ var
+  Form1, Fm: TdxForm;
+  ID: Integer;
+begin
+   // Открываем Форму данные по ID
+    Fm := Self.Forms['Таблица'];
+    if Fm.RecordCount = 0 then exit;
+    ID := Fm['Образец'];
+    Form1 := TdxForm.Create('Образцы');
+    Form1.OpenRecord(ID);
+    If (Form1.State <> dsInsert) and (Form1.State <> dsEdit) and (Form1.CanEdit = asOk) then Form1.Edit;
+    if Form1.EditWindow.ShowModal = mrOk then Form1.Post //сохраняем
+    else    Form1.Cancel;  // Отменяем изменения
+    Form1.Free;
+end;
+
+procedure CreateTable (Sender: TObject);
+var
+  Fm: TdxForm;
+  Q: TdxQueryGrid;
+  j, i, n, m: Integer;
+begin
+   // создаем таблицу из запроса.
+   If (Self.State <> dsInsert) and (Self.State <> dsEdit) and (Self.CanEdit = asOk) then Self.Edit;
+    Q := Self.Queries['Образцы21'];
+    Q.Refresh;
+    if Q.RecordCount > 0 then
+    begin
+    Q.MoveFirst;
+    Q.DisableControls;
+    Fm := Self.Forms['Таблица'];
+      with Fm do
+      begin
+        if RecordCount > 0 then
+        DisableControls;
+        MoveLast;
+        while not BoF do
+        begin
+          delete;
+        end;
+        EnableControls;
+        end;
+      m := Self['M'];
+      i := (Self['Страница']- 1) * m;
+      n := Self['Страница'] * m;
+      j := 0;
+      while Q.Eof = False do  // идем по записям и добавляем М записей
+        begin
+       j := j + 1;
+       If (j > i) and (j <= n) then
+        begin
+         Fm.Append;
+         Fm['Образец'] := Q.Recid;
+         end;
+        Q.MoveNext;
+         end;
+          //освобождаем запрос;
+       Q.EnableControls;
+       end;
+      Self['Число страниц'] := 1+j/m;
+
+end;
+
+procedure Proc1 (Sender, Control: TObject; const FieldName: String);
+begin
+   // if OldOnFieldChange<>nil then OldOnFieldChange(Sender, Control, FieldName);
+   if (FieldName = 'Страница') or (FieldName = 'M') then CreateTable(Sender)
+end;
+
+
+procedure CreateResearch(Sender: TObject);
+var
+  Sm, Pk, Fm1, Fm: TdxForm;
+  begin
+  Fm := Self.Forms['Таблица'];
+  Fm1:= Self.Forms['Образцы41']
+  Fm.DisableControls;
+  Fm.MoveFirst;
+  // Создаем экземпляр формы "Исследование".
+   Sm := TdxForm.Create('Исследование');
+   Pk := Self.Forms['Показатель41'];
+   Pk.DisableControls;
+    while Fm.Eof = False do  // пока есть строки в таблице выполняется действие
+     begin
+       // Считываем из базы конкретную запись, которая выделена в таблицу.
+       Pk.MoveFirst;
+       If Fm['О'] = 1 then
+       begin
+        Fm1.Append;
+        Fm1['Образец'] := Fm['Образец'];
+        while Pk.Eof = False do  // пока есть строки в таблице выполняется действие
+          begin
+           Sm.OpenRecord(0);
+           Sm.Append;
+           Sm['Проба'] := Fm['Проба'];
+           Sm['Номер_образца'] := Fm['Номер образца'];
+           Sm['Образец'] := Fm['Образец'];
+           Sm['Нормативный документ'] := Self['Нормативный документ'];
+           Sm['Методика из ОА'] := Pk['Показатель'];
+           Sm['Норматив'] := Pk['Нормативное значение'];
+            Sm['Лаборатория'] := Pk['Лаборатория'];
+            Sm['Сотрудник'] := Self['Сотрудник'];
+            Sm['Задание'] := Self.RecId;
+            if Sm['Уникальность']= 1 then Sm.Post;
+            Sm.Close;
+            Pk.MoveNext;
+            end;
+        end;
+        Fm.MoveNext;
+        end;
+    //Очищаем формы;
+    Sm.free;
+    Pk.EnableControls;
+    Fm.EnableControls;
+    dxQueryGrid2.refresh;
+    dxQueryGrid3.refresh;
+    MsgBox('JDX', 'Исследования назначены');
+    end;
+
+procedure Form_Create;
+begin
+  dxButton1.OnClick := @CreateResearch;
+  //OldOnFieldChange := Self.OnFieldChange;
+  //Self.OnFieldChange := @Proc1;
+  dxButton4.onClick := @CreateTable;
+  dxGrid3.onClick := @MarkTable;
+  dxGrid3.OnDblClick  := @OpenTable;
+  end;

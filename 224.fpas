@@ -1,0 +1,10 @@
+procedure FileChange(Sender, Control: TObject; FieldName: String);
+begin
+  if FieldName='Файл1'
+  then dxEdit5.Field.Value:=DateToStr(FileDateToDateTime(FileAge(dxFile1.SourceFileName)));
+end;
+
+procedure Form_Create;
+begin
+  self.OnFieldChange:=@FileChange;
+end;

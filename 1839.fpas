@@ -1,0 +1,650 @@
+procedure CreateResult(Sender: TObject);
+var
+  Sm, Pk: TdxForm;
+  Q: TdxQueryGrid;
+  ID: Integer;
+begin
+  Q := Self.Queries['Исследования10'];
+   // Считываем из базы конкретную запись, которая выделена в запросе.
+   ID := Q.RecId;
+   // Создаем экземпляр формы Результат испытаний и результат общий.
+   Sm := TdxForm.Create('Результат испытаний');
+   Pk := Self.Forms['Результат общий'];
+   Pk.DisableControls;
+   Pk.MoveFirst;
+        while Pk.Eof = False do  // пока есть строки в таблице выполняется действие
+        begin
+        If  Q['Методика из ОА'] = Pk['Показатель'] then
+        begin
+          Sm.OpenRecord(0);
+          Sm.Append;
+          Sm['Исследование'] := ID;
+          Sm['Вид организма'] := Pk['Вид организма'];
+          Sm['Анализная карта'] := Self.Recid;
+          Sm['Не обнаружено'] := Pk['Не обнаружено'];
+          Sm['Форма'] := Pk['Форма'];
+          Sm['Значение'] := Pk['Значение'];
+          Sm['Ед.изм'] := Pk['Ед.изм'];
+          Sm['Неопределенность'] := Pk['Погрешность'];
+          //добавить примечание
+          Sm.Post;
+          Sm.Close;
+          end;
+          Pk.MoveNext;
+        end;
+   //Очищаем формы;
+    Sm.free;
+    Pk.EnableControls;
+    dxQueryGrid3.Refresh;
+    dxQueryGrid7.Refresh;
+    dxQueryGrid12.Refresh;
+    MsgBox('JDX', 'Результат внесен');
+    end;
+
+
+procedure CreateResultToALL(Sender: TObject);
+var
+  Sm, Pk: TdxForm;
+  Q: TdxQueryGrid;
+  ID: Integer;
+begin
+  // Начинаем просмотр формы запроса
+  Q := Self.Queries['Исследования10'];
+  Q.Refresh;
+  Q.DisableControls;
+  Q.MoveFirst;
+  // Создаем экземпляр формы Результат испытаний и результат общий.
+   Sm := TdxForm.Create('Результат испытаний');
+   Pk := Self.Forms['Результат общий'];
+   Pk.DisableControls;
+    while Q.Eof = False do  // пока есть строки в запросе выполняется действие
+     begin
+       // Считываем из базы конкретную запись, которая выделена в запросе.
+       ID := Q.RecId;
+       Pk.MoveFirst;
+        while Pk.Eof = False do  // пока есть строки в таблице выполняется действие
+        begin
+        If  Q['Методика из ОА'] = Pk['Показатель'] then
+        begin
+          Sm.OpenRecord(0);
+          Sm.Append;
+          Sm['Исследование'] := ID;
+          Sm['Анализная карта'] := Self.Recid;
+          Sm['Вид организма'] := Pk['Вид организма'];
+          Sm['Не обнаружено'] := Pk['Не обнаружено'];
+          Sm['Форма'] := Pk['Форма'];
+          Sm['Значение'] := Pk['Значение'];
+          Sm['Ед.изм'] := Pk['Ед.изм'];
+          Sm['Неопределенность'] := Pk['Погрешность'];
+          // добавить примечание
+          Sm.Post;
+          Sm.Close;
+          end;
+          Pk.MoveNext;
+        end;
+        Q.MoveNext;
+        end;
+    //Очищаем формы;
+    Sm.free;
+    Pk.EnableControls;
+    Q.EnableControls;
+    dxQueryGrid3.Refresh;
+    dxQueryGrid7.Refresh;
+    dxQueryGrid12.Refresh;
+    MsgBox('JDX', 'Результаты внесены');
+    end;
+
+
+procedure CreateResultEmpty (Sender: TObject);
+var
+  Sm: TdxForm;
+  Q: TdxQueryGrid;
+begin
+  Q := Self.Queries['Исследования8'];
+   // Создаем экземпляр формы Результат испытаний.
+   Sm := TdxForm.Create('Результат испытаний');
+   Sm.OpenRecord(0);
+   Sm.Append;
+   Sm['Исследование'] := Q.RecId; // Считываем из базы конкретную запись, которая выделена в запросе.
+   Sm['Анализная карта'] := Self.Recid;
+   //добавить примечание
+   Sm.Post;
+   Sm.Close;
+   //Очищаем формы;
+    Sm.free;
+    dxQueryGrid3.Refresh;
+    dxQueryGrid7.Refresh;
+    dxQueryGrid12.Refresh;
+    MsgBox('JDX', 'Результат добавлен к анализной карте');
+    end;
+
+
+procedure CreateResultToALLEmpty(Sender: TObject);
+var
+  Sm: TdxForm;
+  Q: TdxQueryGrid;
+begin
+  // Начинаем просмотр формы запроса
+  Q := Self.Queries['Исследования10'];
+  Q.Refresh;
+  Q.DisableControls;
+  Q.MoveFirst;
+  // Создаем экземпляр формы Результат испытаний и результат общий.
+   Sm := TdxForm.Create('Результат испытаний');
+    while Q.Eof = False do  // пока есть строки в запросе выполняется действие
+     begin
+       // Считываем из базы конкретную запись, которая выделена в запросе.
+       Sm.OpenRecord(0);
+       Sm.Append;
+       Sm['Исследование'] := Q.RecId;
+       Sm['Анализная карта'] := Self.Recid;
+        // добавить примечание
+       Sm.Post;
+       Sm.Close;
+      Q.MoveNext;
+      end;
+    //Очищаем формы;
+    Sm.free;
+    Q.EnableControls;
+    dxQueryGrid3.Refresh;
+    dxQueryGrid7.Refresh;
+    dxQueryGrid12.Refresh;
+    MsgBox('JDX', 'Результаты добавлены к анализной карте');
+    end;
+
+
+
+procedure DeleteResult (Sender: TObject); //Удаление незаполненного результата
+var
+  Sm: TdxForm;
+  Q, Rs: TdxQueryGrid;
+begin
+   Q := Self.Queries['Результаты исследований'];
+   Q.DisableControls;
+   // Считываем из базы конкретную запись, которая выделена в запросе.
+   Rs := Self.Queries['Запрос результатов для удаления'];
+   Rs.MoveFirst;
+	while Rs.Eof = False do
+		begin
+		// Создаем экземпляр формы Результат испытаний
+		Sm := TdxForm.Create('Результат испытаний');
+		Sm.OpenRecord(Rs.Recid);
+		If (Sm.State <> dsInsert) and (Sm.State <> dsEdit) and (Sm.CanEdit = asOk) then
+		Sm.Delete;
+		Sm.Close;
+		Rs.MoveNext;
+		end;
+   //Очищаем формы;
+    Sm.free;
+	Q.EnableControls;
+    dxQueryGrid3.Refresh;
+    dxQueryGrid7.Refresh;
+    dxQueryGrid12.Refresh;
+    MsgBox('JDX', 'Результат удален');
+    end;
+
+procedure DeleteResultToAll (Sender: TObject); //Удаление незаполненных результатов
+var
+  Sm: TdxForm;
+  Q, Rs: TdxQueryGrid;
+begin
+   Q := Self.Queries['Результаты исследований'];
+   Q.DisableControls;
+   Q.MoveFirst
+   while Q.Eof = False do
+	begin
+    // Считываем из базы конкретную запись, которая выделена в запросе.
+    Rs := Self.Queries['Запрос результатов для удаления'];
+    Rs.MoveFirst;
+	while Rs.Eof = False do
+		begin
+		// Создаем экземпляр формы Результат испытаний
+		Sm := TdxForm.Create('Результат испытаний');
+		Sm.OpenRecord(Rs.Recid);
+		If (Sm.State <> dsInsert) and (Sm.State <> dsEdit) and (Sm.CanEdit = asOk) then
+		Sm.Delete;
+		Sm.Close;
+		Rs.MoveNext;
+		end;
+	Q.MoveNext;
+	end;
+   //Очищаем формы;
+    Sm.free;
+	Q.EnableControls;
+    dxQueryGrid3.Refresh;
+    dxQueryGrid7.Refresh;
+    dxQueryGrid12.Refresh;
+    MsgBox('JDX', 'Результаты удалены');
+    end;
+
+
+ procedure Sign(Sender: TObject);
+var
+  Rs: TdxForm;    //
+  Q: TdxQueryGrid;
+begin
+  Q := Self.Queries['Результаты исследований2'];
+  Rs := TdxForm.Create('Исследование');
+  Self['Завершено'] := 1;
+  Self['Дата окончания'] := DATE; //поменять на время и дату сервера!!!
+  Q.Refresh;
+  Q.DisableControls;
+  Q.MoveFirst;
+    while Q.Eof = False do  // пока есть строки в запросе выполняется действие
+     begin
+       Rs.OpenRecord(Q['Исследование_ид']);
+       If (Rs.State <> dsInsert) and (Rs.State <> dsEdit) and (Rs.CanEdit = asOk) then
+       Rs.Edit;
+       Rs['Дата изменения'] := DATE; //поменять на время и дату сервера!!!
+       Rs['Значение'] := EvalExpr(' IIF(COUNT("Результаты испытаний")>0,  IIF(MERGE("Результаты испытаний", "Значение общее", "") =  "" ,  "Карантинные виды " +  IIF(MERGE("Результаты испытаний", "Карантинные виды", "")= "" ,"не обнаружены,", MERGE("Результаты испытаний", "Карантинные виды", ",")) +  " Не карантинные виды " +   IIF(MERGE("Результаты испытаний", "Не карантинные виды", "")= "", "не обнаружены", MERGE("Результаты испытаний", "Не карантинные виды", ",")),   MERGE("Результаты испытаний", "Значение общее", "")),   "")', Rs);
+       Rs.Post;
+       Rs.Close;
+       Q.MoveNext;
+        end;
+    //Очищаем формы;
+    Rs.free;
+    Q.EnableControls;
+    Q.Refresh;
+    dxQueryGrid9.Refresh;
+    dxQueryGrid12.Refresh;
+    MsgBox('JDX', ' Результаты завершены');
+    end;
+
+ procedure SignEnd(Sender: TObject);
+var
+  Rs: TdxForm;    //
+  Q: TdxQueryGrid;
+begin
+  Q := Self.Queries['Результаты исследований3'];
+  Rs := TdxForm.Create('Исследование');
+  Q.Refresh;
+  Q.DisableControls;
+  Q.MoveFirst;
+    while Q.Eof = False do  // пока есть строки в запросе выполняется действие
+     begin
+       Rs.OpenRecord(Q['Исследование_ид']);
+       If (Rs.State <> dsInsert) and (Rs.State <> dsEdit) and (Rs.CanEdit = asOk) then
+       Rs.Edit;
+       Rs['Доработка'] := 0;
+       Rs['Контроль'] := 1;
+       Rs.Queries['Результаты испытаний'].refresh;
+       Rs.Post;
+       Rs.Close;
+       Q.MoveNext;
+        end;
+    //Очищаем формы;
+    Rs.free;
+    Self['Подписано'] := 1;
+    Self['Доработка'] := 0;
+    Self['Печать'] := 1;
+    Q.EnableControls;
+    dxQueryGrid9.Refresh;
+    dxQueryGrid12.Refresh;
+    Self.Post;
+    Self.Edit;
+    MsgBox('JDX', ' Результаты подписаны');
+    end;
+
+    procedure RebuildAll(Sender: TObject);      //переделать все
+var
+  Rs: TdxForm;    //
+  Q: TdxQueryGrid;
+begin
+  Q := Self.Queries['Результаты исследований3'];
+  Rs := TdxForm.Create('Исследование');
+  // Self['Подписал'] := Self['Исполнитель1'];  добавить автоматику в поле!!
+  Self['Подписано'] := 0;
+  Self['Доработка'] := 1;
+  Q.Refresh;
+  Q.DisableControls;
+  Q.MoveFirst;
+    while Q.Eof = False do  // пока есть строки в запросе выполняется действие
+     begin
+       Rs.OpenRecord(Q['Исследование_ид']);
+       If (Rs.State <> dsInsert) and (Rs.State <> dsEdit) and (Rs.CanEdit = asOk) then
+       Rs.Edit;
+       Rs['Доработка'] := 1;
+       Rs['Контроль'] := 0;
+       Rs.Post;
+       Rs.Close;
+       Q.MoveNext;
+        end;
+    //Очищаем формы;
+    Rs.free;
+    Q.EnableControls;
+    Self['Печать'] := 0;
+    dxQueryGrid9.Refresh;
+    dxQueryGrid12.Refresh;
+    MsgBox('JDX', ' Результаты отправлены на доработку исполнителю');
+    end;
+
+
+
+    procedure RebuildOne(Sender: TObject);   //переделать одно
+var
+  Rs: TdxForm;    //
+  Q: TdxQueryGrid;
+begin
+  Q := Self.Queries['Результаты исследований3'];
+  Rs := TdxForm.Create('Исследование');
+  // Self['Подписал'] := Self['Исполнитель1'];  добавить автоматику в поле!!
+  Self['Подписано'] := 0;
+  Self['Доработка'] := 1;
+  Rs.OpenRecord(Q['Исследование_ид']);
+   If (Rs.State <> dsInsert) and (Rs.State <> dsEdit) and (Rs.CanEdit = asOk) then
+     Rs.Edit;
+     Rs['Доработка'] := 1;
+     Rs['Контроль'] := 0;
+     Rs.Post;
+     Rs.Close;
+    //Очищаем формы;
+    Rs.free;
+    Q.EnableControls;
+    Self['Печать'] := 0;
+    dxQueryGrid9.Refresh;
+    dxQueryGrid12.Refresh;
+    MsgBox('JDX', ' Результат отправлен на доработку исполнителю');
+    end;
+
+
+    procedure CreateWork(Sender: TObject);  //создадим ход работы по шаблону
+var
+  Rt: TdxQueryGrid;
+  Sh, ShWr, Wr: TdxForm;
+begin
+  Rt := Self.Queries['Исследования в работе'];
+  Rt.Refresh;
+  Rt.DisableControls;
+  Rt.DisableScrollEvents;
+  dxQueryGrid5.DisableControls;
+  dxQueryGrid5.DisableScrollEvents;
+  Wr := TdxForm.Create('Ход испытаний');
+  Sh := TdxForm.Create('Шаблон анализной карты');
+  Sh.OpenRecord(Self['Шаблон']);
+  ShWr := Sh.Forms['Шаблон хода испытаний'];
+  ShWr.MoveFirst;
+  while ShWr.Eof = False do  // пока есть строки в таблице выполняется действие
+  begin
+    if  ShWr['Общее'] = 1 then
+     begin
+      Wr.OpenRecord(0);
+      Wr.Append;
+      Wr['Анализная карта'] := Self.Recid;
+      Wr['Шаблон АК'] := Self['Шаблон'];// для проверки на уникальность
+      Wr['Шаблон ХИ'] := ShWr['ИД'];   // для проверки на уникальность
+      if  Wr['Уникальность']=1  then    // Проверка на уникальность!!!
+       begin
+        Wr['Общее'] := 1;
+        Wr['Оборудование'] := ShWr['Оборудование'];
+        Wr['Проверка оборудования'] := ShWr['Проверка оборудования'];//   Проверка оборудования
+        Wr['Номер этапа'] := ShWr['Номер этапа'];
+        Wr['Проведение измерения'] := ShWr['Проведение измерения'];
+        Wr['Измеренная величина'] := ShWr['Измеренная величина'];
+        Wr['Градуировка'] := ShWr['Градуировка'];
+        Wr['Формула'] := ShWr['Формула'];
+        Wr['Значение'] := ShWr['Значение'];
+        Wr['Постоянная'] := ShWr['Постоянная'];
+        Wr['Основной результат'] := ShWr['Основной результат'];
+        Wr['Ед.изм'] := ShWr['Ед.изм'];
+        Wr['Неопределенность'] := ShWr['Неопределенность'];
+        Wr.Post;
+         end;
+      end
+      else
+      begin
+        Rt.MoveFirst;
+        while Rt.Eof = False do  // пока есть строки в запросе выполняется действие
+          begin
+            if Rt['Методика из ОА'] = ShWr['Методика из ОА'] then
+            begin
+              Wr.OpenRecord(0);
+              Wr.Append;
+              Wr['Анализная карта'] := Self.Recid;
+              Wr['Результат'] := Rt.Recid;
+              Wr['Шаблон АК'] := Self['Шаблон']; // для проверки на уникальность
+              Wr['Шаблон ХИ'] := ShWr['ИД']; // для проверки на уникальность
+              if  Wr['Уникальность']=1  then   // проверкa на уникальность!!!
+                begin
+                Wr['Общее'] := 0;
+                Wr['Оборудование'] := ShWr['Оборудование'];
+                Wr['Проверка оборудования'] := ShWr['Проверка оборудования'];//   Проверка оборудования
+                Wr['Номер этапа'] := ShWr['Номер этапа'];
+                Wr['Проведение измерения'] := ShWr['Проведение измерения'];
+                Wr['Измеренная величина'] := ShWr['Измеренная величина'];
+                Wr['Градуировка'] := ShWr['Градуировка'];
+                Wr['Формула'] := ShWr['Формула'];
+                Wr['Значение'] := ShWr['Значение'];
+                Wr['Постоянная'] := ShWr['Постоянная'];
+                Wr['Основной результат'] := ShWr['Основной результат'];
+                Wr['Ед.изм'] := ShWr['Ед.изм'];
+                Wr['Неопределенность'] := ShWr['Неопределенность'];
+                Wr.Post;
+                end;
+             end;
+             Rt.MoveNext;
+            end;
+          end;
+       ShWr.MoveNext;
+      end;
+    //Очищаем формы;
+    Wr.free;
+    Sh.free;
+    Rt.EnableControls;
+    Rt.EnableScrollEvents;
+    dxQueryGrid5.EnableControls;
+    dxQueryGrid5.EnableScrollEvents;
+    dxQueryGrid5.Refresh;
+    dxQueryGrid8.Refresh;
+    MsgBox('JDX', ' Ход работы по шаблону создан');
+    end;
+
+procedure WorkAfterScroll(Sender:TObject);
+begin
+if Self.State in [dsInsert,dsEdit] then
+  if Self['Печать'] = 0 then
+  begin
+    Self['Исследование']:=dxQueryGrid5['Исследование'];
+	Self['Оборудование']:=dxQueryGrid5['Оборудование'];
+	Self['Номер этапа']:=dxQueryGrid5['Номер этапа'];
+	Self['Проведение измерения']:=dxQueryGrid5['Проведение измерения'];
+	Self['Измеренная величина']:=dxQueryGrid5['Измеренная величина'];
+	Self['Градуировка']:=dxQueryGrid5['Градуировка'];
+	Self['Формула1']:=dxQueryGrid5['Формула'];
+	Self['Значение1']:=dxQueryGrid5['Значение'];
+	Self['Ед.изм']:=dxQueryGrid5['Ед.изм'];
+	Self['Неопределенность']:=dxQueryGrid5['Неопределенность'];
+	Self['Проверено']:=dxQueryGrid5['Проверено'];
+	Self['Постоянная1']:=dxQueryGrid5['Постоянная'];
+	Self['Основной результат']:=dxQueryGrid5['Основной результат'];
+	Self['X']:=dxQueryGrid5['X'];
+      end;
+  end;
+
+
+ procedure SaveWorkAndGo(Sender:TObject);
+var
+  Rt, Wrq: TdxQueryGrid;
+  Wr: TdxForm;
+  ID: Integer;
+   begin
+	Rt := Self.Queries['Исследования в работе'];
+	Rt.DisableControls;
+	Wrq := Self.Queries['Ход испытаний2'];
+	if Wrq.RecordCount=0 then exit;
+  Wrq.DisableScrollEvents;
+	ID := Wrq.Recid;
+	Wr := TdxForm.Create('Ход испытаний');
+	Wr.OpenRecord(ID);
+	If (Wr.State <> dsInsert) and (Wr.State <> dsEdit) and (Wr.CanEdit = asOk) then
+    begin
+	Wr.Edit;
+	Wr['Оборудование']:=Self['Оборудование'];
+	Wr['Градуировка']:=Self['Градуировка'];
+	Wr['Значение']:=Self['Значение1'];
+	Wr['Ед.изм']:=Self['Ед.изм'];
+	Wr['Неопределенность']:=Self['Неопределенность'];
+	Wr['Проверено']:=Self['Проверено'];
+	Wr['X']:=Self['X'];
+	Wr.Post;
+	Wr.Free;
+	Wrq.Refresh;
+	Wrq.GotoRecord(ID);
+	end;
+	Wrq.EnableScrollEvents;
+	Rt.EnableControls;
+	if Wrq.Eof = False then Wrq.MoveNext; // переход на следующий этап
+   end;
+
+ procedure SaveWorkAndGoOver(Sender:TObject);
+var
+  Rt, Wrq: TdxQueryGrid;
+  Wr: TdxForm;
+  ID: Integer;
+   begin
+	Rt := Self.Queries['Исследования в работе'];
+	Rt.DisableControls;
+	Wrq := Self.Queries['Ход испытаний2'];
+	Wrq.DisableScrollEvents;
+	Wr := TdxForm.Create('Ход испытаний');
+	if Wrq.RecordCount=0 then exit;
+	ID := Wrq.Recid;
+	Wr.OpenRecord(ID);
+	If (Wr.State <> dsInsert) and (Wr.State <> dsEdit) and (Wr.CanEdit = asOk) then
+    begin
+	Wr.Edit;
+	Wr['Оборудование']:=Self['Оборудование'];
+	Wr['Градуировка']:=Self['Градуировка'];
+	Wr['Значение']:=Self['Значение1'];
+	Wr['Ед.изм']:=Self['Ед.изм'];
+	Wr['Неопределенность']:=Self['Неопределенность'];
+	Wr['Проверено']:=Self['Проверено'];
+	Wr['X']:=Self['X'];
+	Wr.Post;
+	Wr.Free;
+	Wrq.Refresh;
+	Wrq.GotoRecord(ID);
+	end;
+	Wrq.EnableScrollEvents;
+	Rt.EnableControls;
+	if Rt.Eof = False then Rt.MoveNext; // Переход на следующее исследование
+   end;
+
+   procedure SaveWorkTesting(Sender:TObject);
+ begin
+	SaveWorkAndGo(Self);
+	Self['Проверка оборудования'] := 0;
+   end;
+
+
+procedure ResultAfterScroll(Sender:TObject);
+begin
+if Self.State in [dsInsert,dsEdit] then
+  if (Self['Печать'] = 0)  then
+  begin
+    Self['Исследование2']:=dxQueryGrid12['Исследование2'];
+	Self['Среднее значение']:=dxQueryGrid12['Значение'];
+	Self['Ед.изм2']:=dxQueryGrid12['Ед.изм2'];
+	Self['Неопределенность2']:=dxQueryGrid12['Неопределенность2'];
+	Self['Повторяемость']:=dxQueryGrid12['Повторяемость'];
+	Self['Предел повторяемости']:=dxQueryGrid12['Предел повторяемости'];
+	Self['Оперативный контроль']:=dxQueryGrid12['Оперативный контроль'];
+	Self['Положительный']:=dxQueryGrid12['Положительный'];
+	Self['Вид организма']:=dxQueryGrid12['Вид организма2'];
+	Self['Форма']:=dxQueryGrid12['Форма'];
+	Self['Не обнаружено']:=dxQueryGrid12['Не обнаружено'];
+	Self['Отменен']:=dxQueryGrid12['Отменен'];
+	Self['Мин.предел']:=dxQueryGrid12['Мин.предел'];
+	Self['Макс.предел']:=dxQueryGrid12['Макс.предел'];
+	Self['Примечание']:=dxQueryGrid12['Примечание'];
+	Self['Редактирование']:=dxQueryGrid12['Редактирование'];
+      end;
+  end;
+
+
+ procedure SaveResult(Sender:TObject);
+var
+ Rs: TdxForm;
+
+begin
+Rs := TdxForm.Create('Результат испытаний');
+Rs.OpenRecord(dxQueryGrid12.Recid);
+If (Rs.State <> dsInsert) and (Rs.State <> dsEdit) and (Rs.CanEdit = asOk) and (Self['Редактирование'] = 1) then
+    begin
+	Rs.Edit;
+    Rs['Исследование']:=Self['Исследование2'];
+	Rs['Значение']:=Self['Среднее значение'];
+	Rs['Ед.изм']:=Self['Ед.изм2'];
+	Rs['Неопределенность']:=Self['Неопределенность2'];
+	Rs['Повторяемость']:=Self['Повторяемость'];
+	Rs['Предел повторяемости']:=Self['Предел повторяемости'];
+	Rs['Оперативный контроль']:=Self['Оперативный контроль'];
+	Rs['Положительный']:=Self['Положительный'];
+	Rs['Вид организма']:=Self['Вид организма'];
+	Rs['Форма']:=Self['Форма'];
+	Rs['Не обнаружено']:=Self['Не обнаружено'];
+	Rs['Отменен']:=Self['Отменен'];
+	Rs['Мин.предел']:=Self['Мин.предел'];
+	Rs['Макс.предел']:=Self['Макс.предел'];
+	Rs['Примечание']:=Self['Примечание'];
+	Rs.Post;
+	Rs.Close;
+	Rs.Free;
+      end;
+	if dxQueryGrid12.Eof = False then dxQueryGrid12.MoveNext; // Переход на следующее исследование
+  end;
+
+ procedure SaveNewResult(Sender:TObject);
+var
+ Rs: TdxForm;
+
+begin
+Rs := TdxForm.Create('Результат испытаний');
+Rs.OpenRecord(0);
+If (Rs.State <> dsInsert) and (Rs.State <> dsEdit) and (Rs.CanEdit = asOk) and (Self['Редактирование'] = 1) then
+    begin
+	Rs.Edit;
+  Rs['Исследование']:=Self['Исследование2'];
+	Rs['Значение']:=Self['Среднее значение'];
+	Rs['Ед.изм2']:=Self['Ед.изм2'];
+	Rs['Неопределенность']:=Self['Неопределенность2'];
+	Rs['Повторяемость']:=Self['Повторяемость'];
+	Rs['Предел повторяемости']:=Self['Предел повторяемости'];
+	Rs['Оперативный контроль']:=Self['Оперативный контроль'];
+	Rs['Положительный']:=Self['Положительный'];
+	Rs['Вид организма']:=Self['Вид организма2'];
+	Rs['Форма']:=Self['Форма'];
+	Rs['Не обнаружено']:=Self['Не обнаружено'];
+	Rs['Отменен']:=Self['Отменен'];
+	Rs['Мин.предел']:=Self['Мин.предел'];
+	Rs['Макс.предел']:=Self['Макс.предел'];
+	Rs['Примечание']:=Self['Примечание'];
+	Rs.Post;
+	Rs.Close;
+	Rs.Free;
+      end;
+  end;
+
+procedure Form_Create;
+begin
+    dxButton9.OnClick := @CreateResult; // добавление результатов в одно исследование
+    dxButton10.OnClick := @CreateResultToALL; // добавление результатов во все исследования
+    dxButton6.OnClick := @Sign; // завершить
+    dxButton7.OnClick := @SignEnd; // и подписать
+    dxButton11.OnClick := @RebuildAll; // на доработку
+    dxButton20.OnClick := @RebuildOne   //на доработку одно исследование!
+    dxButton12.OnClick := @CreateWork; // создание Хода работы из шаблона (переделать)!
+    dxQueryGrid5.OnAfterScroll:=@WorkAfterScroll; // заполнение хода испытания
+	  dxButton3.OnClick := @CreateResultEmpty; // создание пустого результата для одного исследования!
+	  dxButton4.OnClick := @CreateResultToALLEmpty; // создание пустого результата для всех исследований!
+	  dxButton5.OnClick := @DeleteResult; // удаление пустого результата для одного исследования
+	  dxButton21.OnClick := @DeleteResultToAll; // удаление пустого результата для всех исследований
+	  dxButton13.OnClick := @SaveWorkAndGo;  //   Сохранение записи хода испытания и переход к следующему
+    dxButton16.OnClick := @SaveWorkAndGoOver;  //  Сохранение записи хода испытания и переход к другому образцу
+	  dxButton14.OnClick :=@WorkAfterScroll; // Отмена записи хода испытания и обновление
+	  dxButton19.OnClick := @SaveWorkTesting; //  Завершение проверки оборудования (запись хода испытания и обновление хода испытаний)
+    dxQueryGrid12.OnAfterScroll:=@ResultAfterScroll; // заполнение результата
+	  dxButton23.OnClick := @ResultAfterScroll;    	// отмена сохранения результата
+	  dxButton22.OnClick := @SaveResult;  // сохранение результата
+	  dxButton24.OnClick := @SaveNewResult;  // создание нового результата
+end;
+

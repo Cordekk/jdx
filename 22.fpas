@@ -1,0 +1,33 @@
+procedure CreateSamples(Sender: TObject);
+var
+  Sm: TdxForm;
+  ii, n, ID: Integer;
+begin
+   Sm := TdxForm.Create('Образцы');
+   ID := Self.RecId;
+   n := Self.AsI['Количество_образцов'];
+   ii := Self.AsI['I'];
+     // Создаем новые записи в цикле.
+          while ii < n do
+           begin
+           Sm.OpenRecord(0);
+           Sm.Append;
+           ii := ii + 1;
+           Sm['Проба'] := ID;
+           // IF n = 1 Then Sm['Номер_образца'] := 0
+           // else
+            Sm['Номер_образца'] := ii;
+            Sm.Post;
+            Sm.Close;
+           end;
+        IF ii >= Self.AsI['I'] Then
+        IF Self['Пробы приняты'] = 0 Then Self['Пробы приняты'] := 1;
+        dxQueryGrid2.refresh;
+       //Очищаем формы;
+        Sm.free;
+    end;
+
+procedure Form_Create;
+begin
+ dxButton1.OnClick := @CreateSamples;
+end;

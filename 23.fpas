@@ -1,0 +1,65 @@
+ procedure Refresh_sm(Sender: TObject);
+  var
+  Sm: TdxForm;
+  begin
+  if (Self.State <> dsEdit) and (Self.State <> dsInsert) then
+  begin
+    MsgBox('Внимание!', 'Запись должна быть в режиме изменения ' +
+      'прежде чем Вы начнете обновление цен.');
+    Exit;
+  end;
+  Sm := Self.Forms['Услуги'];
+  Sm.DisableControls;
+  Sm.MoveFirst;
+     while Sm.Eof = False do  // пока есть строки в таблице выполняется действие
+        begin
+          Sm.Edit;
+          Sm['I'] := 1 ;
+          Sm.Post;
+          Sm.MoveNext;
+        end;
+  Sm.EnableControls;
+  end;
+
+  // Процедура открытия файла по клику на запросе формы хранения файлов
+procedure OpenFile(Sender: TObject);
+var Fm:TdxForm;
+    F:TdxFile;
+    QG:TdxQueryGrid;
+begin
+
+QG := TdxQueryGrid(Sender);
+if QG.RecordCount=0 then exit;
+Fm:=TdxForm.Create('FIleStore2');
+Fm.OpenRecord(QG.Recid);
+F :=TdxFile(Fm.FindComponentByFieldName('Файл'));
+F.PopupMenu.Items[MI_FILE_OPEN].Click;
+Fm.Free;
+end;
+
+// Процедура проверки запроса при отрытии приложенных файлов (и внесение количества приложенных файлов в имя закладки)
+procedure dxQueryGrid1OnAfterScroll(Sender: TObject);
+var QG:TdxQueryGrid;
+s:string;
+begin
+try
+QG := TdxQueryGrid(Sender);
+QG.OnDblClick:=@OpenFile;
+except
+debug('В запросе "'+
+QG.QueryName+'" установлено более одного источника.'+#13#10+
+'Открытие файлов кликом невозможно.'+#13#10+
+'Удалите лишние источники или отключите действие.'+#13#10);
+end;
+ if QG.RecordCount>0 then
+ s := ' ('+IntToStr(QG.RecordCount)+' шт.)' else
+ s := '';
+ dxPageControl1.Pages[3].Caption:= 'Файлы'+s;  // Указать номер закладки (нумерация начинатеся с 0)
+end;
+
+
+procedure Form_Create;
+begin
+  dxButton8.OnClick := @Refresh_sm;
+  dxQueryGrid9.OnAfterScroll:=@dxQueryGrid1OnAfterScroll; // открытие приложенных файлов
+  end;
