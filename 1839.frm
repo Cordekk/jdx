@@ -1,6 +1,6 @@
 object Form231: TdxForm
   Left = 10
-  Height = 876
+  Height = 829
   Top = 10
   Width = 1092
   Id = 1839
@@ -159,12 +159,12 @@ object Form231: TdxForm
   end
   object dxPageControl1: TdxPageControl
     Left = 8
-    Height = 765
+    Height = 718
     Top = 108
     Width = 1084
-    ActivePage = dxTabSheet1
+    ActivePage = dxTabSheet4
     Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 1
+    TabIndex = 5
     TabOrder = 5
     object dxTabSheet5: TdxTabSheet
       Caption = 'Фитосанитария'
@@ -295,7 +295,7 @@ object Form231: TdxForm
         ParentColor = False
       end
       object dxLabel21: TdxLabel
-        Left = 104
+        Left = 160
         Height = 16
         Top = 76
         Width = 97
@@ -316,7 +316,7 @@ object Form231: TdxForm
       end
       object dxGrid1: TdxGrid
         Left = 540
-        Height = 604
+        Height = 489
         Top = 104
         Width = 528
         Anchors = [akTop, akRight, akBottom]
@@ -350,8 +350,8 @@ object Form231: TdxForm
       end
       object dxQueryGrid1: TdxQueryGrid
         Left = 4
-        Height = 656
-        Top = 100
+        Height = 545
+        Top = 96
         Width = 532
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoAdvance = aaNone
@@ -384,9 +384,9 @@ object Form231: TdxForm
         ManualRefresh = True
       end
       object dxButton9: TdxButton
-        Left = 540
+        Left = 544
         Height = 30
-        Top = 716
+        Top = 609
         Width = 240
         Anchors = [akRight, akBottom]
         Caption = 'Прописать в одно исследование'
@@ -394,9 +394,9 @@ object Form231: TdxForm
         ActionOnClick = '<actions><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Утверждено;1" ignoreaccess="1" saverec="0" /></actions>'
       end
       object dxButton10: TdxButton
-        Left = 796
+        Left = 792
         Height = 30
-        Top = 716
+        Top = 609
         Width = 240
         Anchors = [akRight, akBottom]
         Caption = 'Прописать во все исследования'
@@ -417,7 +417,7 @@ object Form231: TdxForm
       end
       object dxQueryGrid2: TdxQueryGrid
         Left = -2
-        Height = 574
+        Height = 507
         Top = 130
         Width = 611
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -452,7 +452,7 @@ object Form231: TdxForm
       end
       object dxQueryGrid3: TdxQueryGrid
         Left = 630
-        Height = 326
+        Height = 251
         Top = 342
         Width = 439
         Anchors = [akTop, akRight, akBottom]
@@ -715,6 +715,7 @@ object Form231: TdxForm
         TabOrder = 10
         HideButton = False
         CalculatorLayout = clNormal
+        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -724,6 +725,8 @@ object Form231: TdxForm
         Precission = 0
         Expression = 'COUNT(''Результаты исследований'')'
         Required = False
+        MinValue =  0.00000000000000000000E+0000
+        MaxValue =  0.00000000000000000000E+0000
         DefaultValue = '0'
         Editable = False
         NullToZero = True
@@ -731,9 +734,9 @@ object Form231: TdxForm
         PadZeros = True
       end
       object dxLabel37: TdxLabel
-        Left = 667
+        Left = 671
         Height = 16
-        Top = 699
+        Top = 628
         Width = 72
         Anchors = [akRight, akBottom]
         Caption = 'Задвоение'
@@ -764,9 +767,9 @@ object Form231: TdxForm
         TabOrder = 12
       end
       object dxQueryGrid11: TdxQueryGrid
-        Left = 751
+        Left = 755
         Height = 58
-        Top = 687
+        Top = 596
         Width = 288
         Anchors = [akRight, akBottom]
         AutoAdvance = aaNone
@@ -844,9 +847,9 @@ object Form231: TdxForm
         ParentColor = False
       end
       object dxGrid2: TdxGrid
-        Left = 0
-        Height = 470
-        Top = 292
+        Left = 4
+        Height = 323
+        Top = 288
         Width = 1068
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoAdvance = aaNone
@@ -880,7 +883,7 @@ object Form231: TdxForm
       object dxLabel22: TdxLabel
         Left = 4
         Height = 16
-        Top = 272
+        Top = 260
         Width = 157
         Caption = 'Материалы и реактивы'
         ParentColor = False
@@ -891,11 +894,12 @@ object Form231: TdxForm
       object dxCheckBox9: TdxCheckBox
         Left = 866
         Height = 23
-        Top = 730
+        Top = 623
         Width = 194
         Anchors = [akRight, akBottom]
         Caption = 'Проверка оборудования'
         TabOrder = 20
+        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131028
@@ -917,9 +921,9 @@ object Form231: TdxForm
         ActionOnClick = '<actions><action type="7" expression="Setfield(''Проверка оборудования'', 1)"/><action type="7" expression="QUERYUPDATE(''Ход испытаний2'')"/></actions>'
       end
       object dxQueryGrid5: TdxQueryGrid
-        Left = 16
-        Height = 546
-        Top = 212
+        Left = 12
+        Height = 439
+        Top = 216
         Width = 540
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoAdvance = aaNone
@@ -1059,6 +1063,7 @@ object Form231: TdxForm
         TabOrder = 4
         HideButton = False
         CalculatorLayout = clNormal
+        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -1067,6 +1072,8 @@ object Form231: TdxForm
         FieldName = 'Номер этапа'
         Precission = 0
         Required = False
+        MinValue =  0.00000000000000000000E+0000
+        MaxValue =  0.00000000000000000000E+0000
         DefaultValue = '0'
         Editable = False
         NullToZero = True
@@ -1147,6 +1154,7 @@ object Form231: TdxForm
         Anchors = [akTop, akRight]
         Caption = 'Основной результат'
         TabOrder = 8
+        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131016
@@ -1176,6 +1184,7 @@ object Form231: TdxForm
         TabOrder = 9
         HideButton = False
         CalculatorLayout = clNormal
+        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -1185,6 +1194,8 @@ object Form231: TdxForm
         Precission = 6
         Expression = 'IIF([Постоянная1]=0,'#13#10'JS_EVAL('#13#10'Merge(''Ход испытаний2'', ''Строка кода'', newline)'#13#10'+ text(''var b = [B];'') + newline'#13#10'+ text(''var a = [A];'') + newline'#13#10'+ text(''var X = [X];'') + newline'#13#10'+cstr([Формула1]))'#13#10', 0)'
         Required = False
+        MinValue =  0.00000000000000000000E+0000
+        MaxValue =  0.00000000000000000000E+0000
         Editable = True
         NullToZero = False
         GroupDigits = True
@@ -1198,6 +1209,7 @@ object Form231: TdxForm
         Anchors = [akTop, akRight]
         Caption = 'Постоянная'
         TabOrder = 10
+        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131018
@@ -1262,6 +1274,7 @@ object Form231: TdxForm
         TabOrder = 12
         HideButton = False
         CalculatorLayout = clNormal
+        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -1270,6 +1283,8 @@ object Form231: TdxForm
         FieldName = 'Неопределенность'
         Precission = 6
         Required = False
+        MinValue =  0.00000000000000000000E+0000
+        MaxValue =  0.00000000000000000000E+0000
         DefaultValue = '0'
         Editable = False
         NullToZero = True
@@ -1331,6 +1346,7 @@ object Form231: TdxForm
         Anchors = [akTop, akRight]
         Caption = 'Проверка успешна'
         TabOrder = 14
+        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131025
@@ -1382,36 +1398,36 @@ object Form231: TdxForm
         UpdateTree = False
       end
       object dxButton13: TdxButton
-        Left = 574
+        Left = 570
         Height = 30
-        Top = 649
+        Top = 542
         Width = 236
         Anchors = [akRight, akBottom]
         Caption = 'Записать  и продолжить'
         TabOrder = 16
       end
       object dxButton14: TdxButton
-        Left = 574
+        Left = 570
         Height = 30
-        Top = 689
+        Top = 578
         Width = 96
         Anchors = [akRight, akBottom]
         Caption = 'Отменить'
         TabOrder = 17
       end
       object dxButton16: TdxButton
-        Left = 822
+        Left = 818
         Height = 30
-        Top = 649
+        Top = 542
         Width = 244
         Anchors = [akRight, akBottom]
         Caption = 'Перейти к следующему образцу'
         TabOrder = 19
       end
       object dxLabel35: TdxLabel
-        Left = 32
+        Left = 116
         Height = 16
-        Top = 192
+        Top = 188
         Width = 293
         Caption = 'Проверка оборудования и испытания проб'
         ParentColor = False
@@ -1419,7 +1435,7 @@ object Form231: TdxForm
       object dxButton8: TdxButton
         Left = 570
         Height = 30
-        Top = 728
+        Top = 621
         Width = 196
         Anchors = [akRight, akBottom]
         Caption = 'Печать анализной карты 1'
@@ -1436,13 +1452,14 @@ object Form231: TdxForm
         TabOrder = 22
       end
       object dxCheckBox11: TdxCheckBox
-        Left = 786
+        Left = 782
         Height = 23
-        Top = 730
+        Top = 623
         Width = 74
         Anchors = [akRight, akBottom]
         Caption = 'Печать'
         TabOrder = 23
+        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131058
@@ -1454,9 +1471,9 @@ object Form231: TdxForm
         DefaultValue = '0'
       end
       object dxButton19: TdxButton
-        Left = 822
+        Left = 814
         Height = 30
-        Top = 689
+        Top = 586
         Width = 160
         Anchors = [akRight, akBottom]
         Caption = 'Закончить проверку'
@@ -1488,6 +1505,7 @@ object Form231: TdxForm
         TabOrder = 25
         HideButton = False
         CalculatorLayout = clNormal
+        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -1497,6 +1515,8 @@ object Form231: TdxForm
         Precission = 0
         Expression = 'NZ([Градуировка|B],0)'
         Required = False
+        MinValue =  0.00000000000000000000E+0000
+        MaxValue =  0.00000000000000000000E+0000
         DefaultValue = '0'
         Editable = True
         NullToZero = True
@@ -1513,6 +1533,7 @@ object Form231: TdxForm
         TabOrder = 26
         HideButton = False
         CalculatorLayout = clNormal
+        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -1522,6 +1543,8 @@ object Form231: TdxForm
         Precission = 0
         Expression = 'NZ([Градуировка|A],0)'
         Required = False
+        MinValue =  0.00000000000000000000E+0000
+        MaxValue =  0.00000000000000000000E+0000
         DefaultValue = '0'
         Editable = True
         NullToZero = True
@@ -1538,6 +1561,7 @@ object Form231: TdxForm
         TabOrder = 27
         HideButton = False
         CalculatorLayout = clNormal
+        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -1546,6 +1570,8 @@ object Form231: TdxForm
         FieldName = 'X'
         Precission = 4
         Required = False
+        MinValue =  0.00000000000000000000E+0000
+        MaxValue =  0.00000000000000000000E+0000
         DefaultValue = '0'
         Editable = False
         NullToZero = True
@@ -1571,7 +1597,7 @@ object Form231: TdxForm
       object dxButton25: TdxButton
         Left = 980
         Height = 30
-        Top = 436
+        Top = 389
         Width = 100
         Anchors = [akRight, akBottom]
         Caption = 'Пересчитать'
@@ -1583,7 +1609,7 @@ object Form231: TdxForm
       Caption = 'Результаты'
       object dxQueryGrid12: TdxQueryGrid
         Left = 2
-        Height = 627
+        Height = 516
         Top = 22
         Width = 596
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -1627,18 +1653,18 @@ object Form231: TdxForm
       object dxButton22: TdxButton
         Left = 620
         Height = 30
-        Top = 557
+        Top = 569
         Width = 184
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         Caption = 'Записать  и продолжить'
         TabOrder = 1
       end
       object dxButton23: TdxButton
         Left = 828
         Height = 30
-        Top = 557
+        Top = 569
         Width = 96
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         Caption = 'Отменить'
         TabOrder = 2
       end
@@ -1647,7 +1673,7 @@ object Form231: TdxForm
         Height = 16
         Top = 16
         Width = 97
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         Caption = 'Исследование'
         ParentColor = False
       end
@@ -1656,7 +1682,7 @@ object Form231: TdxForm
         Height = 24
         Top = 12
         Width = 320
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
@@ -1682,7 +1708,7 @@ object Form231: TdxForm
         Height = 16
         Top = 44
         Width = 65
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         Caption = 'Норматив'
         ParentColor = False
       end
@@ -1691,7 +1717,7 @@ object Form231: TdxForm
         Height = 24
         Top = 44
         Width = 320
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         CharCase = ecNormal
         MaxLength = 0
         TabOrder = 4
@@ -1705,7 +1731,7 @@ object Form231: TdxForm
         Height = 16
         Top = 84
         Width = 125
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         Caption = 'Среднее значение'
         ParentColor = False
       end
@@ -1714,12 +1740,13 @@ object Form231: TdxForm
         Height = 24
         Top = 80
         Width = 172
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         CharCase = ecNormal
         MaxLength = 0
         TabOrder = 5
         HideButton = False
         CalculatorLayout = clNormal
+        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -1729,6 +1756,8 @@ object Form231: TdxForm
         Precission = 0
         Expression = 'IIF(COUNT(''Ход испытаний3'')>0, AVG(''Ход испытаний3'', ''Значение''), NULL)'
         Required = False
+        MinValue =  0.00000000000000000000E+0000
+        MaxValue =  0.00000000000000000000E+0000
         Editable = True
         NullToZero = False
         GroupDigits = True
@@ -1739,7 +1768,7 @@ object Form231: TdxForm
         Height = 16
         Top = 116
         Width = 50
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         Caption = 'Ед.изм.'
         ParentColor = False
       end
@@ -1748,7 +1777,7 @@ object Form231: TdxForm
         Height = 24
         Top = 112
         Width = 100
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         CharCase = ecNormal
         MaxLength = 0
         TabOrder = 6
@@ -1775,7 +1804,7 @@ object Form231: TdxForm
         Height = 16
         Top = 144
         Width = 231
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         Caption = 'Погрешность (неопределенность)'
         ParentColor = False
       end
@@ -1784,7 +1813,7 @@ object Form231: TdxForm
         Height = 24
         Top = 140
         Width = 156
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         CharCase = ecNormal
         MaxLength = 0
         TabOrder = 7
@@ -1800,7 +1829,7 @@ object Form231: TdxForm
         Height = 16
         Top = 172
         Width = 103
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         Caption = 'Повторяемость'
         ParentColor = False
       end
@@ -1809,12 +1838,13 @@ object Form231: TdxForm
         Height = 24
         Top = 168
         Width = 104
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         CharCase = ecNormal
         MaxLength = 0
         TabOrder = 8
         HideButton = False
         CalculatorLayout = clNormal
+        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -1824,6 +1854,8 @@ object Form231: TdxForm
         Precission = 0
         Expression = 'MAX(''Ход испытаний3'', ''Значение'')- MIN(''Ход испытаний3'', ''Значение'')'
         Required = False
+        MinValue =  0.00000000000000000000E+0000
+        MaxValue =  0.00000000000000000000E+0000
         DefaultValue = '0'
         Editable = True
         NullToZero = True
@@ -1835,12 +1867,13 @@ object Form231: TdxForm
         Height = 24
         Top = 196
         Width = 100
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         CharCase = ecNormal
         MaxLength = 0
         TabOrder = 9
         HideButton = False
         CalculatorLayout = clNormal
+        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -1849,6 +1882,8 @@ object Form231: TdxForm
         FieldName = 'Предел повторяемости'
         Precission = 0
         Required = False
+        MinValue =  0.00000000000000000000E+0000
+        MaxValue =  0.00000000000000000000E+0000
         DefaultValue = '0'
         Editable = False
         NullToZero = True
@@ -1860,7 +1895,7 @@ object Form231: TdxForm
         Height = 32
         Top = 192
         Width = 108
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         Caption = 'Предел'#13#10' повторяемости'
         ParentColor = False
       end
@@ -1869,9 +1904,10 @@ object Form231: TdxForm
         Height = 23
         Top = 224
         Width = 234
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         Caption = 'Повторяемость соответствует'
         TabOrder = 10
+        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131090
@@ -1886,7 +1922,7 @@ object Form231: TdxForm
         Height = 16
         Top = 272
         Width = 99
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         Caption = 'Вид организма'
         ParentColor = False
       end
@@ -1895,7 +1931,7 @@ object Form231: TdxForm
         Height = 24
         Top = 272
         Width = 296
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         CharCase = ecNormal
         MaxLength = 0
         TabOrder = 11
@@ -1921,9 +1957,10 @@ object Form231: TdxForm
         Height = 23
         Top = 248
         Width = 222
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         Caption = 'Положительный'
         TabOrder = 12
+        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131092
@@ -1939,7 +1976,7 @@ object Form231: TdxForm
         Height = 24
         Top = 304
         Width = 296
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         AutoComplete = True
         AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
         ItemHeight = 16
@@ -1972,9 +2009,10 @@ object Form231: TdxForm
         Height = 23
         Top = 336
         Width = 278
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         Caption = 'Соответствует (не обнаружено)'
         TabOrder = 14
+        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131096
@@ -1986,10 +2024,10 @@ object Form231: TdxForm
       end
       object dxMemo3: TdxMemo
         Left = 620
-        Height = 28
+        Height = 44
         Top = 436
         Width = 436
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         ScrollBars = ssBoth
         TabOrder = 15
         Id = 131097
@@ -2007,13 +2045,13 @@ object Form231: TdxForm
         Height = 16
         Top = 364
         Width = 135
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         Caption = 'Пределы измерений'
         ParentColor = False
       end
       object dxLabel48: TdxLabel
         Left = 620
-        Height = 16
+        Height = 0
         Top = 392
         Width = 15
         Anchors = [akTop, akRight, akBottom]
@@ -2025,12 +2063,13 @@ object Form231: TdxForm
         Height = 24
         Top = 388
         Width = 88
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         CharCase = ecNormal
         MaxLength = 0
         TabOrder = 16
         HideButton = False
         CalculatorLayout = clNormal
+        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -2039,6 +2078,8 @@ object Form231: TdxForm
         FieldName = 'Мин.предел'
         Precission = 0
         Required = False
+        MinValue =  0.00000000000000000000E+0000
+        MaxValue =  0.00000000000000000000E+0000
         DefaultValue = '0'
         Editable = False
         NullToZero = True
@@ -2050,7 +2091,7 @@ object Form231: TdxForm
         Height = 16
         Top = 392
         Width = 16
-        Anchors = [akRight, akBottom]
+        Anchors = [akTop, akRight]
         Caption = 'до'
         ParentColor = False
       end
@@ -2059,12 +2100,13 @@ object Form231: TdxForm
         Height = 24
         Top = 388
         Width = 88
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         CharCase = ecNormal
         MaxLength = 0
         TabOrder = 17
         HideButton = False
         CalculatorLayout = clNormal
+        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -2073,6 +2115,8 @@ object Form231: TdxForm
         FieldName = 'Макс.предел'
         Precission = 0
         Required = False
+        MinValue =  0.00000000000000000000E+0000
+        MaxValue =  0.00000000000000000000E+0000
         DefaultValue = '0'
         Editable = False
         NullToZero = True
@@ -2084,9 +2128,10 @@ object Form231: TdxForm
         Height = 23
         Top = 336
         Width = 90
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         Caption = 'Отменено'
         TabOrder = 18
+        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131100
@@ -2097,18 +2142,18 @@ object Form231: TdxForm
         DefaultValue = '0'
       end
       object dxLabel50: TdxLabel
-        Left = 620
+        Left = 720
         Height = 16
         Top = 416
         Width = 82
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         Caption = 'Примечание'
         ParentColor = False
       end
       object dxQueryGrid13: TdxQueryGrid
         Left = 4
-        Height = 113
-        Top = 648
+        Height = 93
+        Top = 537
         Width = 592
         Anchors = [akLeft, akRight, akBottom]
         AutoAdvance = aaNone
@@ -2141,11 +2186,11 @@ object Form231: TdxForm
         ManualRefresh = False
       end
       object dxButton24: TdxButton
-        Left = 620
+        Left = 616
         Height = 30
-        Top = 600
+        Top = 608
         Width = 208
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         Caption = 'Добавить новый результат'
         TabOrder = 20
       end
@@ -2156,6 +2201,7 @@ object Form231: TdxForm
         Width = 150
         Caption = 'Редактирование'
         TabOrder = 21
+        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131103
@@ -2167,19 +2213,20 @@ object Form231: TdxForm
         DefaultValue = '0'
       end
       object dxLabel55: TdxLabel
-        Left = 620
+        Left = 680
         Height = 16
-        Top = 472
+        Top = 480
         Width = 68
-        Anchors = [akTop, akRight, akBottom]
+        Anchors = [akTop, akRight]
         Caption = 'Результат'
         ParentColor = False
       end
       object dxEdit8: TdxMemo
         Left = 620
         Height = 56
-        Top = 492
+        Top = 508
         Width = 432
+        Anchors = [akTop, akRight]
         ScrollBars = ssBoth
         TabOrder = 22
         Id = 131122
@@ -2195,8 +2242,9 @@ object Form231: TdxForm
       object dxButton26: TdxButton
         Left = 616
         Height = 30
-        Top = 640
+        Top = 648
         Width = 212
+        Anchors = [akTop, akRight]
         Caption = 'Заполнить все результаты'
         TabOrder = 23
       end
@@ -2204,13 +2252,14 @@ object Form231: TdxForm
     object dxTabSheet4: TdxTabSheet
       Caption = 'Завершение'
       object dxCheckBox3: TdxCheckBox
-        Left = 13
+        Left = 17
         Height = 23
-        Top = 672
+        Top = 573
         Width = 98
         Anchors = [akRight, akBottom]
         Caption = 'Завершено'
         TabOrder = 0
+        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 52386
@@ -2222,13 +2271,14 @@ object Form231: TdxForm
         DefaultValue = '0'
       end
       object dxCheckBox4: TdxCheckBox
-        Left = 441
+        Left = 445
         Height = 23
-        Top = 676
+        Top = 577
         Width = 118
         Anchors = [akRight, akBottom]
         Caption = 'Подписано'
         TabOrder = 1
+        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 52387
@@ -2240,9 +2290,9 @@ object Form231: TdxForm
         DefaultValue = '0'
       end
       object dxLookupComboBox9: TdxLookupComboBox
-        Left = 117
+        Left = 121
         Height = 24
-        Top = 672
+        Top = 573
         Width = 228
         Anchors = [akRight, akBottom]
         CharCase = ecNormal
@@ -2267,9 +2317,9 @@ object Form231: TdxForm
         UpdateTree = False
       end
       object dxLookupComboBox10: TdxLookupComboBox
-        Left = 545
+        Left = 549
         Height = 24
-        Top = 676
+        Top = 577
         Width = 228
         Anchors = [akRight, akBottom]
         CharCase = ecNormal
@@ -2294,18 +2344,18 @@ object Form231: TdxForm
         UpdateTree = False
       end
       object dxButton6: TdxButton
-        Left = 13
+        Left = 17
         Height = 30
-        Top = 712
+        Top = 613
         Width = 160
         Anchors = [akRight, akBottom]
         Caption = 'Завершить'
         TabOrder = 4
       end
       object dxButton7: TdxButton
-        Left = 441
+        Left = 445
         Height = 30
-        Top = 704
+        Top = 605
         Width = 228
         Anchors = [akRight, akBottom]
         Caption = 'Подписать (контроль пройден)'
@@ -2313,7 +2363,7 @@ object Form231: TdxForm
       end
       object dxQueryGrid7: TdxQueryGrid
         Left = 10
-        Height = 631
+        Height = 536
         Top = 34
         Width = 436
         Anchors = [akTop, akLeft, akBottom]
@@ -2356,7 +2406,7 @@ object Form231: TdxForm
       end
       object dxQueryGrid9: TdxQueryGrid
         Left = 446
-        Height = 627
+        Height = 532
         Top = 34
         Width = 620
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -2399,22 +2449,23 @@ object Form231: TdxForm
         ParentColor = False
       end
       object dxButton11: TdxButton
-        Left = 441
+        Left = 449
         Height = 22
-        Top = 740
+        Top = 645
         Width = 228
         Anchors = [akRight, akBottom]
         Caption = 'На доработку (все переделать)'
         TabOrder = 9
       end
       object dxCheckBox5: TdxCheckBox
-        Left = 269
+        Left = 273
         Height = 23
-        Top = 713
+        Top = 614
         Width = 146
         Anchors = [akRight, akBottom]
         Caption = 'На доработке'
         TabOrder = 10
+        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131010
@@ -2428,7 +2479,7 @@ object Form231: TdxForm
       object dxButton20: TdxButton
         Left = 681
         Height = 22
-        Top = 740
+        Top = 645
         Width = 168
         Anchors = [akRight, akBottom]
         Caption = 'На доработку одно'
@@ -2507,12 +2558,13 @@ object Form231: TdxForm
         ActionOnClick = '<actions><action type="9" id="0AABDA55-EC7B-453E-9ECF-BD99CEB2D42E" _express="[Описание файла]" /></actions>'
       end
       object dxCheckBox1: TdxCheckBox
-        Left = 30
+        Left = 750
         Height = 37
-        Top = 672
+        Top = 604
         Width = 90
         Caption = 'Архив'
         TabOrder = 3
+        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 34823
@@ -2652,6 +2704,7 @@ object Form231: TdxForm
     Anchors = [akTop, akRight]
     Caption = 'Утверждено'
     TabOrder = 10
+    TabStop = True
     ValueChecked = '1'
     ValueUnchecked = '0'
     Id = 52336
