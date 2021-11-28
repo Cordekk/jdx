@@ -1,0 +1,362 @@
+{@module
+Author=Pavel Duborkin
+Version=1.3
+Description=Модуль дает возможность представить данные запроса в виде дерева и использовать его как фильтр для другого запроса.
+@}
+
+{@action
+Id=59E17B88-182D-458B-86EA-ED9BD6C2CB27
+OrigName=QueryTree
+Name=Дерево для запроса
+Group=Компоненты
+ui=<ui>
+  <query name="src_qry" caption="Запрос - источник для дерева"  required="1"/>
+  <grid name="fields" caption="Поля запроса-источника (в порядке подчиненности)">
+    <field name="f" caption="Поле запроса" source="src_qry" required="1"/>
+    <text name="var" caption="Имя переменной" required="1"/>
+  </grid>
+  <number name="levels" caption="Раскрыть узлы до уровня" required="1"/>
+  <query name="dest_qry" caption="Целевой запрос" required="1"/>
+</ui>
+description=Данное подключаемое действие позволит вам представить данные в
+виде дерева и использовать его как фильтр для целевого запроса. Исходные данные
+для построения дерева берутся из запроса-источника (первый параметр). При
+выделении узла происходит обновление и фильтрация целевого запроса.
+Когда выделяется узел, данные узла и его родителей сохраняются в переменных,
+которые затем используются в фильтре целевого запроса.<br><br>
+
+По сути действие создает дерево, похожее на дерево формы, но для запроса. Обычно
+источником данных для запроса-источника и целевого запроса служит одна и та же форма.
+Запрос-источник является как бы упрощенной версией целевого запроса. Хотя
+ничто не мешает выбирать данные из разных форм.<br><br>
+
+Действие допускается использовать только в свойстве формы "Подключить действие".
+Количество действий неограничено. Предполагается использование действия в формах
+с представлением "Простая форма", но его можно использовать и в других
+представлениях.<br><br>
+
+<b>Запрос - источник для дерева.</b> Для правильного построения дерева
+необходимо выполнить следующие требования: <br><br>
+<ol>
+<li>Запрос должен выбирать только данные, необходимые для построения дерева.</li>
+<li>Данные должны быть упорядочены, т. е. должна быть настроена сортировка.
+Сначала идет сортировка по полю первого уровня, затем второго, далее третьего и
+т. д. Допустима сортировка по убыванию.</li>
+</ol><br>
+Запрос-источник, как и любой запрос, тоже может фильтроваться.<br><br>
+
+<b>Поля запроса-источника.</b> Поля запроса должны добавляться в том же порядке,
+что и сортировка. Напротив каждого поля введите имя переменной, которая будет
+использована в целевом запросе для фильтрации данных.<br><br>
+
+<b>Раскрыть узлы до уровня.</b> Введите значение большие или равное 0, которое
+соответствует уровню, до которого должны быть раскрыты узлы. Если введен 0,
+то дерево будет полностью свернуто.<br><br>
+
+<b>Целевой запрос.</b> Запрос, содержимое которого завит от выбранного узла в
+дереве. Для успешной фильрации целевого запроса необходимо добавить в фильтр
+источника (источников) условия с необязательными полями. Например:<br><br>
+<code>
+[?!поле целевого запроса]=getvar("уровень 1") &
+[?!объект целевого запроса|поле объекта]=getvar("уровень 2")
+</code><br><br>
+В переменных (getvar) хранятся значения выбранного узла и его родителей. Если
+узел имеет подчиненные узлы, то в соответствующих переменных будет null и
+эти данные будут исключены из отбора. Например, если выбран узел только
+первого уровня, то в предыдущем примере из фильтра исключается вторая строка и
+фильтр будет иметь вид:<br><br>
+<code>
+[?!поле целевого запроса]=getvar("уровень 1")
+</code><br><br>
+
+<b>Копирование свойств запроса-источника.</b> Дерево копирует следующие
+свойства запроса-источника: цвет фона, шрифт, якоря, порядок перехода,
+положение и размеры.
+@}
+
+type
+  TQTData = record
+    Tree: TTreeView;
+    SrcQ, DestQ: TdxQueryGrid;
+    SrcQAfterScroll, DestQAfterClose: TNotifyEvent;
+    Fields: TVariantArray2d;
+    Levels: Integer;
+  end;
+
+var
+  QTArr: array of TQTData;
+
+// Подобные функции используются почти во всех подключаемых действиях в
+// обработчиках событий. Они предназначены для поиска данных, которые были
+// сохранены в массив при подключении действия.
+function FindDataBySourceQuery(SrcQ: TObject): TQTData;
+var
+  i: Integer;
+begin
+  for i := 0 to Length(QTArr) - 1 do
+    if QTArr[i].SrcQ = SrcQ then
+    begin
+      Result := QTArr[i];
+      Exit;
+    end;
+  RaiseException(erCustomError, 'Не удается найти запрос-источник.');
+end;
+
+// Подобные функции используются почти во всех подключаемых действиях в
+// обработчиках событий. Они предназначены для поиска данных, которые были
+// сохранены в массив при подключении действия.
+function FindDataByDestQuery(DestQ: TObject): TQTData;
+var
+  i: Integer;
+begin
+  for i := 0 to Length(QTArr) - 1 do
+    if QTArr[i].DestQ = DestQ then
+    begin
+      Result := QTArr[i];
+      Exit;
+    end;
+  RaiseException(erCustomError, 'Не удается найти целевой запрос.');
+end;
+
+// Подобные функции используются почти во всех подключаемых действиях в
+// обработчиках событий. Они предназначены для поиска данных, которые были
+// сохранены в массив при подключении действия.
+function FindDataByTree(Tree: TObject): TQTData;
+var
+  i: Integer;
+begin
+  for i := 0 to Length(QTArr) - 1 do
+    if QTArr[i].Tree= Tree then
+    begin
+      Result := QTArr[i];
+      Exit;
+    end;
+  RaiseException(erCustomError, 'Не удается найти дерево.');
+end;
+
+function EscapeQuotes(S: String): String;
+begin
+  Result := StringReplace(S, '"', '"+''"''+"', [rfReplaceAll]);
+end;
+
+procedure SetVars(QT: TQTData);
+var
+  N: TTreeNode;
+  i, lvl: Integer;
+  VarName: String;
+begin
+  N := QT.Tree.Selected;
+  lvl := N.Level;
+
+  for i := lvl - 1 downto 0 do
+  begin
+    VarName := QT.Fields[i][1];
+    EvalExpr(Format('setvar("%s", "%s")', [VarName, EscapeQuotes(N.Text)]), nil);
+    N := N.Parent;
+  end;
+  // Остальные переменные обнуляем, чтобы они не участвовали в отборе
+  for i := lvl to Length(QT.Fields) - 1 do
+  begin
+    VarName := QT.Fields[i][1];
+    EvalExpr(Format('setvar("%s", null)', [VarName]), nil);
+  end;
+end;
+
+// Построение дерева
+procedure UpdateTree(QT: TQTData);
+var
+  Tr: TTreeView;
+  Q: TdxQueryGrid;
+  FL: TVariantArray2d;
+  N, Root: TTreeNode;
+  // Цепочка узлов, с которыми будет сравниваться очередная запись, чтобы
+  // определить с какого узла данные изменились
+  Nodes: array of TTreeNode;
+  //
+  S, FieldName: String;
+  i, StartIdx: Integer;
+  NodePath: TStringList;
+begin
+  Tr := QT.Tree;
+  Q := QT.SrcQ;
+  FL := QT.Fields;
+  SetLength(Nodes, Length(FL));
+
+  // Сохраняем путь к узлу
+  NodePath := TStringList.Create;
+  N := Tr.Selected;
+  if N <> nil then
+    while N.Parent <> nil do
+    begin
+      NodePath.Insert(0, N.Text);
+      N := N.Parent;
+    end;
+
+  Tr.LockSelectionChangeEvent;
+  Tr.Items.Clear;
+  Root := Tr.Items.AddChild(nil, '[Все]');
+  N := Root;
+
+  Q.DisableScrollEvents;
+  Q.DisableControls;
+
+  Q.MoveFirst;
+  while not Q.Eof do
+  begin
+      // Первая запись запроса
+    if Nodes[0] = nil then
+      for i := 0 to Length(FL) - 1 do
+      begin
+        FieldName := FL[i][0];
+        S := Q.AsS[FieldName];
+        N := Tr.Items.AddChild(N, S);
+        Nodes[i] := N;
+      end
+    else
+    begin
+      StartIdx := 1000;
+      // Определяем с какого узла будем добавлять подчиненные узлы
+      for i := 0 to Length(FL) - 1 do
+      begin
+        FieldName := FL[i][0];
+        S := Q.AsS[FieldName];
+        N := Nodes[i];
+        if N.Text <> S then
+        begin
+          N := N.Parent;
+          StartIdx := i;
+          Break;
+        end;
+      end;
+      // Добавляем подчиненные узлы
+      for i := StartIdx to Length(FL) - 1 do
+      begin
+        FieldName := FL[i][0];
+        S := Q.AsS[FieldName];
+        N := Tr.Items.AddChild(N, S);
+        Nodes[i] := N;
+      end;
+    end;
+    Q.MoveNext;
+  end;
+
+  Q.EnableScrollEvents;
+  Q.EnableControls;
+  SetLength(Nodes, 0);
+
+  // Раскрываем узлы
+  if QT.Levels > 0 then
+    for i := 0 to Tr.Items.Count - 1 do
+    begin
+      N := Tr.Items.Item[i];
+      if N.Level < QT.Levels then N.Expand(False);
+    end;
+
+  N := Root;
+  // Пытаемся найти узел, который был выделен до обновления дерева.
+  for i := 0 to NodePath.Count - 1 do
+  begin
+    N := N.FindNode(NodePath[i]);
+    if N = nil then
+    begin
+      N := Root;
+      Break;
+    end;
+  end;
+
+  NodePath.Free;
+  N.Selected := True;
+  Tr.UnlockSelectionChangeEvent;
+end;
+
+procedure SourceQueryAfterScroll(Sender: TObject);
+var
+  QT: TQTData;
+begin
+  QT := FindDataBySourceQuery(Sender);
+  if QT.SrcQAfterScroll <> nil then QT.SrcQAfterScroll(Sender);
+  UpdateTree(QT);
+end;
+
+procedure DestQueryAfterClose(Sender: TObject);
+var
+  QT: TQTData;
+begin
+  QT := FindDataByDestQuery(Sender);
+  if QT.DestQAfterClose <> nil then QT.DestQAfterClose(Sender);
+  SetVars(QT);
+end;
+
+// Идея заключается в том, чтобы сохранять значения узлов в переменных и
+// затем использовать их в отборе запроса.
+procedure TreeSelectionChanged(Sender: TObject);
+var
+  QT: TQTData;
+begin
+  QT := FindDataByTree(Sender);
+  SetVars(QT);
+  QT.DestQ.Refresh;
+end;
+
+procedure QueryTree(SourceQuery: String; Fields: TVariantArray2d; Levels: Integer;
+  DestQuery: String);
+var
+  n: Integer;
+  QT: TQTData;
+  Tr: TTreeView;
+  SrcQ, DestQ: TdxQueryGrid;
+  MI, QMI: TMenuItem;
+begin
+  // Если ни одного поля не выбрано, то действие не сработает.
+  if Length(Fields) = 0 then Exit;
+
+  SrcQ := Self.Queries[SourceQuery];
+  DestQ := Self.Queries[DestQuery];
+
+  // Скрываем запрос, а на его месте создаем дерево. Несмотря на то, что запрос
+  // скрыт он полностью работоспособен.
+  SrcQ.Visible := False;
+  Tr := TTreeView.Create(Self);
+  with Tr do
+  begin
+    Parent := SrcQ.Parent;
+    ReadOnly := True;
+    TabOrder := SrcQ.TabOrder;
+    Color := SrcQ.Color;
+    Font := SrcQ.Font;
+    Anchors := SrcQ.Anchors;
+    SetBounds(SrcQ.Left, SrcQ.Top, SrcQ.Width, SrcQ.Height);
+    OnSelectionChanged := @TreeSelectionChanged;
+
+    PopupMenu := TPopupMenu.Create(Tr);
+    MI := TMenuItem.Create(PopupMenu);
+    //QMI := SrcQ.PopupMenu.Items[MI_QUERY_REFRESH];
+    QMI := SrcQ.PopupMenu.Items.Find('Обновить');
+    if QMI <> nil then
+    begin
+      MI.Assign(QMI);
+      PopupMenu.Items.Add(MI);
+    end
+    else Debug('Пункт меню "Обновить" не найден');
+  end;
+
+  // Сохраняем в структуре необходимые данные и добавляем в глобальный массив.
+  // Эти данные нам пригодятся, когда будем обрабатывать события компонентов.
+  QT.Tree := Tr;
+  QT.SrcQ := SrcQ;
+  // Когда мы подключаемся к какому-нибудь событию компонента, очень важно
+  // сохранить его старый обработчик. Старый обработчик будет вызываться из
+  // нового. Таким образом мы не нарушим нормальную работу скрипта и других
+  // действий, которые тоже могут использовать это событие.
+  QT.SrcQAfterScroll := SrcQ.OnAfterScroll;
+  SrcQ.OnAfterScroll := @SourceQueryAfterScroll;
+  QT.DestQAfterClose := DestQ.OnAfterClose;
+  DestQ.OnAfterClose := @DestQueryAfterClose;
+  QT.Fields := Fields;
+  QT.DestQ := DestQ;
+  QT.Levels := Levels;
+
+  n := Length(QTArr);
+  SetLength(QTArr, n + 1);
+  QTArr[n] := QT;
+end;

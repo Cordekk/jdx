@@ -1,6 +1,6 @@
 object Form119: TdxForm
   Left = 10
-  Height = 366
+  Height = 443
   Top = 10
   Width = 686
   Id = 119
@@ -25,20 +25,20 @@ object Form119: TdxForm
     Left = 24
     Height = 24
     Top = 96
-    Width = 608
+    Width = 640
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 1949
     FieldName = 'Вид документа'
-    FieldSize = 50
+    FieldSize = 150
     Required = False
     Editable = False
   end
   object dxEdit2: TdxEdit
-    Left = 500
+    Left = 432
     Height = 24
-    Top = 216
+    Top = 148
     Width = 144
     CharCase = ecNormal
     MaxLength = 0
@@ -50,9 +50,9 @@ object Form119: TdxForm
     Editable = False
   end
   object dxLabel1: TdxLabel
-    Left = 500
+    Left = 432
     Height = 16
-    Top = 180
+    Top = 128
     Width = 166
     Caption = 'Уровень документа СМК'
     ParentColor = False
@@ -91,9 +91,9 @@ object Form119: TdxForm
     UpdateTree = False
   end
   object dxMemo1: TdxMemo
-    Left = 32
+    Left = 24
     Height = 102
-    Top = 168
+    Top = 148
     Width = 398
     ScrollBars = ssBoth
     TabOrder = 3
@@ -108,17 +108,17 @@ object Form119: TdxForm
     UpdateTree = False
   end
   object dxLabel3: TdxLabel
-    Left = 32
+    Left = 416
     Height = 16
-    Top = 136
+    Top = 20
     Width = 92
     Caption = 'Кодификация'
     ParentColor = False
   end
   object dxEdit3: TdxEdit
-    Left = 152
+    Left = 528
     Height = 24
-    Top = 136
+    Top = 16
     Width = 100
     CharCase = ecNormal
     MaxLength = 0
@@ -130,17 +130,17 @@ object Form119: TdxForm
     Editable = False
   end
   object dxLabel4: TdxLabel
-    Left = 296
+    Left = 432
     Height = 16
-    Top = 136
+    Top = 176
     Width = 97
     Caption = 'Номенклатура'
     ParentColor = False
   end
   object dxEdit4: TdxEdit
-    Left = 412
+    Left = 432
     Height = 24
-    Top = 132
+    Top = 196
     Width = 100
     CharCase = ecNormal
     MaxLength = 0
@@ -152,9 +152,9 @@ object Form119: TdxForm
     Editable = False
   end
   object dxEdit5: TdxEdit
-    Left = 228
+    Left = 168
     Height = 24
-    Top = 296
+    Top = 284
     Width = 392
     CharCase = ecNormal
     MaxLength = 0
@@ -166,17 +166,17 @@ object Form119: TdxForm
     Editable = False
   end
   object dxLabel5: TdxLabel
-    Left = 80
+    Left = 24
     Height = 16
-    Top = 300
+    Top = 288
     Width = 134
     Caption = 'Шаблон для печати'
     ParentColor = False
   end
   object dxCalcEdit1: TdxCalcEdit
-    Left = 424
+    Left = 580
     Height = 24
-    Top = 344
+    Top = 416
     Width = 100
     CharCase = ecNormal
     MaxLength = 0
@@ -197,6 +197,66 @@ object Form119: TdxForm
     NullToZero = True
     GroupDigits = True
     PadZeros = True
+  end
+  object dxLabel6: TdxLabel
+    Left = 24
+    Height = 16
+    Top = 124
+    Width = 82
+    Caption = 'Примечание'
+    ParentColor = False
+  end
+  object dxEdit6: TdxEdit
+    Left = 168
+    Height = 24
+    Top = 324
+    Width = 388
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 8
+    Id = 262412
+    FieldName = 'Шаблон_номера'
+    FieldSize = 50
+    Required = False
+    Editable = False
+  end
+  object dxLabel7: TdxLabel
+    Left = 24
+    Height = 112
+    Top = 328
+    Width = 293
+    Caption = 'Шаблон нумератора'#13#10'№ - номер документа по порядку'#13#10'NN - номенклатурный номер'#13#10'KOD - кодификация документа'#13#10'URD - уровень документа СМК'#13#10'MM - месяц,    YYYY - год, DD - день'#13#10'И любые знаки и любой текст между ними'
+    ParentColor = False
+  end
+  object dxLabel8: TdxLabel
+    Left = 432
+    Height = 16
+    Top = 224
+    Width = 134
+    Caption = 'Срок хранения, лет'
+    ParentColor = False
+  end
+  object dxEdit7: TdxEdit
+    Left = 432
+    Height = 24
+    Top = 240
+    Width = 100
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 9
+    Id = 262414
+    FieldName = 'Срок хранения'
+    FieldSize = 50
+    Required = False
+    Editable = False
+  end
+  object dxLabel9: TdxLabel
+    Left = 24
+    Height = 16
+    Top = 80
+    Width = 101
+    Caption = 'Вид документа'
+    ParentColor = False
   end
   object Grid: TdxGrid
     Left = 0
@@ -253,6 +313,18 @@ object Form119: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262316'
+      end    
+      item
+        Tag = 262412
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262412'
+      end    
+      item
+        Tag = 262414
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262414'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

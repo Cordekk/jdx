@@ -715,7 +715,6 @@ object Form231: TdxForm
         TabOrder = 10
         HideButton = False
         CalculatorLayout = clNormal
-        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -725,8 +724,6 @@ object Form231: TdxForm
         Precission = 0
         Expression = 'COUNT(''Результаты исследований'')'
         Required = False
-        MinValue =  0.00000000000000000000E+0000
-        MaxValue =  0.00000000000000000000E+0000
         DefaultValue = '0'
         Editable = False
         NullToZero = True
@@ -899,7 +896,6 @@ object Form231: TdxForm
         Anchors = [akRight, akBottom]
         Caption = 'Проверка оборудования'
         TabOrder = 20
-        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131028
@@ -1063,7 +1059,6 @@ object Form231: TdxForm
         TabOrder = 4
         HideButton = False
         CalculatorLayout = clNormal
-        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -1072,8 +1067,6 @@ object Form231: TdxForm
         FieldName = 'Номер этапа'
         Precission = 0
         Required = False
-        MinValue =  0.00000000000000000000E+0000
-        MaxValue =  0.00000000000000000000E+0000
         DefaultValue = '0'
         Editable = False
         NullToZero = True
@@ -1154,7 +1147,6 @@ object Form231: TdxForm
         Anchors = [akTop, akRight]
         Caption = 'Основной результат'
         TabOrder = 8
-        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131016
@@ -1184,7 +1176,6 @@ object Form231: TdxForm
         TabOrder = 9
         HideButton = False
         CalculatorLayout = clNormal
-        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -1194,8 +1185,6 @@ object Form231: TdxForm
         Precission = 6
         Expression = 'IIF([Постоянная1]=0,'#13#10'JS_EVAL('#13#10'Merge(''Ход испытаний2'', ''Строка кода'', newline)'#13#10'+ text(''var b = [B];'') + newline'#13#10'+ text(''var a = [A];'') + newline'#13#10'+ text(''var X = [X];'') + newline'#13#10'+cstr([Формула1]))'#13#10', 0)'
         Required = False
-        MinValue =  0.00000000000000000000E+0000
-        MaxValue =  0.00000000000000000000E+0000
         Editable = True
         NullToZero = False
         GroupDigits = True
@@ -1209,7 +1198,6 @@ object Form231: TdxForm
         Anchors = [akTop, akRight]
         Caption = 'Постоянная'
         TabOrder = 10
-        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131018
@@ -1274,7 +1262,6 @@ object Form231: TdxForm
         TabOrder = 12
         HideButton = False
         CalculatorLayout = clNormal
-        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -1283,8 +1270,6 @@ object Form231: TdxForm
         FieldName = 'Неопределенность'
         Precission = 6
         Required = False
-        MinValue =  0.00000000000000000000E+0000
-        MaxValue =  0.00000000000000000000E+0000
         DefaultValue = '0'
         Editable = False
         NullToZero = True
@@ -1346,7 +1331,6 @@ object Form231: TdxForm
         Anchors = [akTop, akRight]
         Caption = 'Проверка успешна'
         TabOrder = 14
-        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131025
@@ -1459,7 +1443,6 @@ object Form231: TdxForm
         Anchors = [akRight, akBottom]
         Caption = 'Печать'
         TabOrder = 23
-        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131058
@@ -1505,7 +1488,6 @@ object Form231: TdxForm
         TabOrder = 25
         HideButton = False
         CalculatorLayout = clNormal
-        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -1515,8 +1497,6 @@ object Form231: TdxForm
         Precission = 0
         Expression = 'NZ([Градуировка|B],0)'
         Required = False
-        MinValue =  0.00000000000000000000E+0000
-        MaxValue =  0.00000000000000000000E+0000
         DefaultValue = '0'
         Editable = True
         NullToZero = True
@@ -1533,7 +1513,6 @@ object Form231: TdxForm
         TabOrder = 26
         HideButton = False
         CalculatorLayout = clNormal
-        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -1543,8 +1522,6 @@ object Form231: TdxForm
         Precission = 0
         Expression = 'NZ([Градуировка|A],0)'
         Required = False
-        MinValue =  0.00000000000000000000E+0000
-        MaxValue =  0.00000000000000000000E+0000
         DefaultValue = '0'
         Editable = True
         NullToZero = True
@@ -1561,7 +1538,6 @@ object Form231: TdxForm
         TabOrder = 27
         HideButton = False
         CalculatorLayout = clNormal
-        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -1570,8 +1546,6 @@ object Form231: TdxForm
         FieldName = 'X'
         Precission = 4
         Required = False
-        MinValue =  0.00000000000000000000E+0000
-        MaxValue =  0.00000000000000000000E+0000
         DefaultValue = '0'
         Editable = False
         NullToZero = True
@@ -1746,7 +1720,6 @@ object Form231: TdxForm
         TabOrder = 5
         HideButton = False
         CalculatorLayout = clNormal
-        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -1756,8 +1729,6 @@ object Form231: TdxForm
         Precission = 0
         Expression = 'IIF(COUNT(''Ход испытаний3'')>0, AVG(''Ход испытаний3'', ''Значение''), NULL)'
         Required = False
-        MinValue =  0.00000000000000000000E+0000
-        MaxValue =  0.00000000000000000000E+0000
         Editable = True
         NullToZero = False
         GroupDigits = True
@@ -1844,7 +1815,6 @@ object Form231: TdxForm
         TabOrder = 8
         HideButton = False
         CalculatorLayout = clNormal
-        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -1854,8 +1824,6 @@ object Form231: TdxForm
         Precission = 0
         Expression = 'MAX(''Ход испытаний3'', ''Значение'')- MIN(''Ход испытаний3'', ''Значение'')'
         Required = False
-        MinValue =  0.00000000000000000000E+0000
-        MaxValue =  0.00000000000000000000E+0000
         DefaultValue = '0'
         Editable = True
         NullToZero = True
@@ -1873,7 +1841,6 @@ object Form231: TdxForm
         TabOrder = 9
         HideButton = False
         CalculatorLayout = clNormal
-        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -1882,8 +1849,6 @@ object Form231: TdxForm
         FieldName = 'Предел повторяемости'
         Precission = 0
         Required = False
-        MinValue =  0.00000000000000000000E+0000
-        MaxValue =  0.00000000000000000000E+0000
         DefaultValue = '0'
         Editable = False
         NullToZero = True
@@ -1907,7 +1872,6 @@ object Form231: TdxForm
         Anchors = [akTop, akRight]
         Caption = 'Повторяемость соответствует'
         TabOrder = 10
-        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131090
@@ -1960,7 +1924,6 @@ object Form231: TdxForm
         Anchors = [akTop, akRight]
         Caption = 'Положительный'
         TabOrder = 12
-        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131092
@@ -2012,7 +1975,6 @@ object Form231: TdxForm
         Anchors = [akTop, akRight]
         Caption = 'Соответствует (не обнаружено)'
         TabOrder = 14
-        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131096
@@ -2069,7 +2031,6 @@ object Form231: TdxForm
         TabOrder = 16
         HideButton = False
         CalculatorLayout = clNormal
-        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -2078,8 +2039,6 @@ object Form231: TdxForm
         FieldName = 'Мин.предел'
         Precission = 0
         Required = False
-        MinValue =  0.00000000000000000000E+0000
-        MaxValue =  0.00000000000000000000E+0000
         DefaultValue = '0'
         Editable = False
         NullToZero = True
@@ -2106,7 +2065,6 @@ object Form231: TdxForm
         TabOrder = 17
         HideButton = False
         CalculatorLayout = clNormal
-        AsFloat =  0.00000000000000000000E+0000
         AsInteger = 0
         ButtonWidth = 24
         NumGlyphs = 1
@@ -2115,8 +2073,6 @@ object Form231: TdxForm
         FieldName = 'Макс.предел'
         Precission = 0
         Required = False
-        MinValue =  0.00000000000000000000E+0000
-        MaxValue =  0.00000000000000000000E+0000
         DefaultValue = '0'
         Editable = False
         NullToZero = True
@@ -2131,7 +2087,6 @@ object Form231: TdxForm
         Anchors = [akTop, akRight]
         Caption = 'Отменено'
         TabOrder = 18
-        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131100
@@ -2201,7 +2156,6 @@ object Form231: TdxForm
         Width = 150
         Caption = 'Редактирование'
         TabOrder = 21
-        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131103
@@ -2259,7 +2213,6 @@ object Form231: TdxForm
         Anchors = [akRight, akBottom]
         Caption = 'Завершено'
         TabOrder = 0
-        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 52386
@@ -2278,7 +2231,6 @@ object Form231: TdxForm
         Anchors = [akRight, akBottom]
         Caption = 'Подписано'
         TabOrder = 1
-        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 52387
@@ -2465,7 +2417,6 @@ object Form231: TdxForm
         Anchors = [akRight, akBottom]
         Caption = 'На доработке'
         TabOrder = 10
-        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 131010
@@ -2564,7 +2515,6 @@ object Form231: TdxForm
         Width = 90
         Caption = 'Архив'
         TabOrder = 3
-        TabStop = True
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 34823
@@ -2704,7 +2654,6 @@ object Form231: TdxForm
     Anchors = [akTop, akRight]
     Caption = 'Утверждено'
     TabOrder = 10
-    TabStop = True
     ValueChecked = '1'
     ValueUnchecked = '0'
     Id = 52336
