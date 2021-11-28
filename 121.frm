@@ -21,7 +21,7 @@ object Form121: TdxForm
   Tree = Tree.Owner
   Index = 8
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' | ROLE = ''Администратор''" grid="cmp;ve_prop|dxButton7;Видимость|dxTabSheet3;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''''" grid="cmp;ve_prop|dxButton6;Доступность" stateevents="0" /><action type="9" id="8E1C0618-DC18-4F21-A621-456E55767869" bn="dxButton2" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' | ROLE = ''Администратор''" grid="cmp;ve_prop|dxButton7;Видимость|dxTabSheet3;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''''" grid="cmp;ve_prop|dxButton6;Доступность" stateevents="0" /><action type="9" id="8E1C0618-DC18-4F21-A621-456E55767869" bn="dxButton2" /><action type="9" id="59E17B88-182D-458B-86EA-ED9BD6C2CB27" src_qry="Дерево_документов" fields="f;var|Уровень1;level1|Уровень2;level2" levels="2" dest_qry="Документооборот1" /></actions>'
   object dxPageControl2: TdxPageControl
     Left = 4
     Height = 696
@@ -387,9 +387,9 @@ object Form121: TdxForm
         UpdateTree = False
       end
       object dxLabel2: TdxLabel
-        Left = 168
+        Left = 415
         Height = 16
-        Top = 48
+        Top = 26
         Width = 75
         Caption = 'Документы'
         ParentColor = False
@@ -404,10 +404,10 @@ object Form121: TdxForm
         ActionOnClick = '<actions><action type="7" expression="Setfield(''Вид документа'',GET(''Документооборот1'', ''Вид документа1''))"/></actions>'
       end
       object dxQueryGrid1: TdxQueryGrid
-        Left = 4
+        Left = 196
         Height = 582
-        Top = 72
-        Width = 982
+        Top = 92
+        Width = 802
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
@@ -428,7 +428,7 @@ object Form121: TdxForm
         VisibleCaptions = [gbnAppend, gbnEdit, gbnRefresh]
         FlatButtons = False
         ButtonsColor = clBtnFace
-        ButtonSize = 25
+        ButtonSize = 20
         ButtonFont.Height = -13
         ButtonFont.Name = 'Verdana'
         AlignmentButtons = taLeftJustify
@@ -469,6 +469,41 @@ object Form121: TdxForm
         UnCheckedText = 'Нет'
         Editable = False
         DefaultValue = '0'
+      end
+      object dxQueryGrid9: TdxQueryGrid
+        Left = -5
+        Height = 582
+        Top = 85
+        Width = 202
+        Anchors = [akTop, akLeft, akBottom]
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 7
+        SelectedColor = clHighlight
+        GridLineStyle = psSolid
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = False
+        VisibleButtons = [gbnAppend, gbnEdit, gbnRefresh]
+        VisibleCaptions = [gbnAppend, gbnEdit, gbnRefresh]
+        FlatButtons = False
+        ButtonsColor = clBtnFace
+        ButtonSize = 20
+        ButtonFont.Height = -13
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 2927
+        ManualRefresh = False
       end
     end
     object dxTabSheet3: TdxTabSheet
