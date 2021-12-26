@@ -26,7 +26,7 @@ object Form24: TdxForm
   Tree = Tree.Owner
   Index = 47
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' " grid="cmp;ve_prop|dxEdit5;Редактирование" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' | ROLE = ''Администратор''" grid="cmp;ve_prop|dxLookupComboBox1;Редактирование|dxCheckBox4;Редактирование|dxCheckBox5;Редактирование|dxCheckBox2;Редактирование|dxCheckBox3;Редактирование|dxCheckBox1;Редактирование|dxCheckBox8;Редактирование" stateevents="0" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' " grid="cmp;ve_prop|dxEdit5;Редактирование" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' | ROLE = ''Администратор''" grid="cmp;ve_prop|dxLookupComboBox1;Редактирование|dxCheckBox4;Редактирование|dxCheckBox5;Редактирование|dxCheckBox2;Редактирование|dxCheckBox3;Редактирование|dxCheckBox1;Редактирование|dxCheckBox8;Редактирование" stateevents="1" /></actions>'
   object dxEdit1: TdxEdit
     Left = 180
     Height = 28

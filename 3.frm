@@ -69,7 +69,7 @@ object Form3: TdxForm
   Tree = Tree.Owner
   Index = 14
   SoftCheck = False
-  ActionOnCreate = '<actions><action disabled="1" type="9" id="478D4C2F-AD93-440A-8F61-2A976EEC2D9E" disabled="1" disabled="1" disabled="1" disabled="1" numerator="№" allow_edit_number="0" datedoc="Дата" allow_edit_date="0" period="Год" /><action type="9" id="9A42E20C-39FB-403A-B04A-CA5904B07376" allfields="1" logfields="Field" users="User" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Номер]&lt;&gt;null" grid="cmp;ve_prop|dxButton4;Видимость|dxButton11;Видимость|dxButton12;Видимость|dxButton9;Видимость|dxButton8;Видимость|DuplicateBn;Видимость|dxLookupComboBox14;Доступность" stateevents="0" /><action disabled="1" type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" condition="//[Направление2|Префикс_направление] = ''К''  '#13#10'1=1" grid="cmp;ve_prop|dxTabSheet3;Видимость" stateevents="0" /><action type="9" id="0D75186F-C6BB-4B69-BCF9-092FD2C316A3" fields="field|" queries="query|Пробы1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''''  | ROLE = ''Администратор''" grid="cmp;ve_prop|dxLookupComboBox21;Редактирование|dxCheckBox4;Редактирование|dxCheckBox5;Редактирование|dxCheckBox6;Редактирование|dxCalcEdit7;Редактирование" stateevents="0" /><action type="9" id="244F02CB-C541-4A44-B997-57368822EF37" g="c;t;e|dxButton19;Создать новый счет для этого клиента;|dxButton7;Записать Нормативный документ в задание;|dxLookupComboBox14;выберите заявку из которой хотите копировать пробу;" /></actions>'
+  ActionOnCreate = '<actions><action disabled="1" type="9" id="478D4C2F-AD93-440A-8F61-2A976EEC2D9E" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" numerator="№" allow_edit_number="0" datedoc="Дата" allow_edit_date="0" period="Год" /><action type="9" id="9A42E20C-39FB-403A-B04A-CA5904B07376" allfields="1" logfields="Field" users="User" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Номер]&lt;&gt;null" grid="cmp;ve_prop|dxButton4;Видимость|dxButton11;Видимость|dxButton12;Видимость|dxButton9;Видимость|dxButton8;Видимость|DuplicateBn;Видимость|dxLookupComboBox14;Доступность" stateevents="0" /><action disabled="1" type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" condition="//[Направление2|Префикс_направление] = ''К''  '#13#10'1=1" grid="cmp;ve_prop|dxTabSheet3;Видимость" stateevents="0" /><action type="9" id="0D75186F-C6BB-4B69-BCF9-092FD2C316A3" fields="field|" queries="query|Пробы1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''''  | ROLE = ''Администратор''" grid="cmp;ve_prop|dxLookupComboBox21;Редактирование|dxCheckBox4;Редактирование|dxCheckBox5;Редактирование|dxCheckBox6;Редактирование|dxCalcEdit7;Редактирование" stateevents="0" /><action type="9" id="244F02CB-C541-4A44-B997-57368822EF37" g="c;t;e|dxButton19;Создать новый счет для этого клиента;|dxButton7;Записать Нормативный документ в задание;|dxLookupComboBox14;выберите заявку из которой хотите копировать пробу;" /></actions>'
   object dxCalcEdit5: TdxCalcEdit
     Left = 224
     Height = 28
@@ -139,8 +139,8 @@ object Form3: TdxForm
     Height = 396
     Top = 308
     Width = 1148
-    ActivePage = dxTabSheet8
-    TabIndex = 8
+    ActivePage = dxTabSheet9
+    TabIndex = 0
     TabOrder = 4
     object dxTabSheet9: TdxTabSheet
       Caption = 'Информация о партии'
@@ -1732,13 +1732,14 @@ object Form3: TdxForm
         TabOrder = 1
         Id = 165
         FieldName = 'LOG'
-        FieldSize = 400
+        FieldSize = 0
         Required = False
         SourceTId = 0
         SourceFId = 0
         Delimiter = ', '
-        Expression = '// [Группа показателя3] [Дата отбора] [Клиент] [Место отправления] [Место получения] [Образцы отобрал] [Образцы принял] [Отправитель] [Позиций] [Получатель] [Регион отправления] [Регион получения] [Страна отправления] [Страна получения]'#13#10'iif (NEWREC=1,cstr(DATE)+''_''+cstr(TIME)+'' - ''+USER+'' зарегистрировал заявку ''+[Шифр_заявки],'#13#10'block('#13#10'setvar(''OLD_LOG'',OLDVALUE(''LOG'')),'#13#10'cstr(DATE)+''_''+cstr(TIME)+'' - ''+USER+'' изменил заявку ''+[Шифр_заявки]+ '' / '' + getvar(''OLD_LOG'')'#13#10')'#13#10')'
+        Expression = '// [№][Номер][Группа показателя3] [Дата отбора] [Клиент] [Место отправления] [Место получения] [Образцы отобрал] [Образцы принял] [Отправитель] [Позиций] [Получатель] [Регион отправления] [Регион получения] [Страна отправления] [Страна получения]'#13#10'iif (NEWREC=1,cstr(DATE)+''_''+cstr(TIME)+'' - ''+USER+'' зарегистрировал заявку ''+[Шифр_заявки],'#13#10'block('#13#10'setvar(''OLD_LOG'',OLDVALUE(''LOG'')),'#13#10'cstr(DATE)+''_''+cstr(TIME)+'' - ''+USER+'' изменил заявку ''+[Шифр_заявки]+ '' / '' + getvar(''OLD_LOG'')'#13#10')'#13#10')'
         Editable = False
+        DefaultValue = ''''''
         UpdateTree = False
       end
       object dxCheckBox1: TdxCheckBox
@@ -1914,7 +1915,7 @@ object Form3: TdxForm
         ParentColor = False
       end
       object dxCalcEdit8: TdxCalcEdit
-        Left = 1092
+        Left = 1096
         Height = 28
         Top = 332
         Width = 48

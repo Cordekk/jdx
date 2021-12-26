@@ -2,7 +2,7 @@ object Form121: TdxForm
   Left = 10
   Height = 711
   Top = 10
-  Width = 1011
+  Width = 1010
   Id = 121
   PId = 0
   FormCaption = 'Документооборот'
@@ -21,12 +21,12 @@ object Form121: TdxForm
   Tree = Tree.Owner
   Index = 8
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' | ROLE = ''Администратор''" grid="cmp;ve_prop|dxButton7;Видимость|dxTabSheet3;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''''" grid="cmp;ve_prop|dxButton6;Доступность" stateevents="0" /><action type="9" id="8E1C0618-DC18-4F21-A621-456E55767869" bn="dxButton2" /><action type="9" id="59E17B88-182D-458B-86EA-ED9BD6C2CB27" src_qry="Дерево_документов" fields="f;var|Уровень1;level1|Уровень2;level2" levels="2" dest_qry="Документооборот1" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' | ROLE = ''Администратор''" grid="cmp;ve_prop|dxButton7;Видимость|dxTabSheet3;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''''" grid="cmp;ve_prop|dxButton6;Доступность" stateevents="0" /><action type="9" id="8E1C0618-DC18-4F21-A621-456E55767869" bn="dxButton2" /><action type="9" id="59E17B88-182D-458B-86EA-ED9BD6C2CB27" src_qry="Дерево_документов" fields="f;var|Уровень1;level1" levels="1" dest_qry="Документооборот1" /></actions>'
   object dxPageControl2: TdxPageControl
     Left = 4
     Height = 696
     Top = 4
-    Width = 1001
+    Width = 1000
     ActivePage = dxTabSheet4
     Anchors = [akTop, akLeft, akRight, akBottom]
     TabIndex = 0
@@ -61,7 +61,7 @@ object Form121: TdxForm
         Left = 8
         Height = 622
         Top = 48
-        Width = 985
+        Width = 984
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
@@ -404,10 +404,10 @@ object Form121: TdxForm
         ActionOnClick = '<actions><action type="7" expression="Setfield(''Вид документа'',GET(''Документооборот1'', ''Вид документа1''))"/></actions>'
       end
       object dxQueryGrid1: TdxQueryGrid
-        Left = 196
+        Left = 240
         Height = 582
         Top = 92
-        Width = 802
+        Width = 757
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
@@ -471,10 +471,10 @@ object Form121: TdxForm
         DefaultValue = '0'
       end
       object dxQueryGrid9: TdxQueryGrid
-        Left = -5
+        Left = -9
         Height = 582
         Top = 85
-        Width = 202
+        Width = 246
         Anchors = [akTop, akLeft, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
