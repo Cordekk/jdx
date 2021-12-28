@@ -400,7 +400,7 @@ begin
               Wr.OpenRecord(0);
               Wr.Append;
               Wr['Анализная карта'] := Self.Recid;
-              Wr['Результат'] := Rt.Recid;
+             // Wr['Результат'] := Rt.Recid;  // не прописывать результат
               Wr['Шаблон АК'] := Self['Шаблон']; // для проверки на уникальность
               Wr['Шаблон ХИ'] := ShWr['ИД']; // для проверки на уникальность
               if  Wr['Уникальность']=1  then   // проверкa на уникальность!!!
@@ -645,6 +645,6 @@ begin
     dxQueryGrid12.OnAfterScroll:=@ResultAfterScroll; // заполнение результата
 	  dxButton23.OnClick := @ResultAfterScroll;    	// отмена сохранения результата
 	  dxButton22.OnClick := @SaveResult;  // сохранение результата
-	  dxButton24.OnClick := @SaveNewResult;  // создание нового результата
+	  //  dxButton24.OnClick := @SaveNewResult;  // создание нового результата   надо удалить за недабностью
 end;
 

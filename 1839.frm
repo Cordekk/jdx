@@ -162,9 +162,9 @@ object Form231: TdxForm
     Height = 718
     Top = 108
     Width = 1084
-    ActivePage = dxTabSheet4
+    ActivePage = dxTabSheet1
     Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 5
+    TabIndex = 1
     TabOrder = 5
     object dxTabSheet5: TdxTabSheet
       Caption = 'Фитосанитария'
@@ -407,9 +407,9 @@ object Form231: TdxForm
     object dxTabSheet1: TdxTabSheet
       Caption = 'Назначить исследования'
       object dxLabel8: TdxLabel
-        Left = 656
+        Left = 652
         Height = 16
-        Top = 318
+        Top = 290
         Width = 190
         Anchors = [akTop, akRight]
         Caption = 'Исследования назначенные'
@@ -707,7 +707,7 @@ object Form231: TdxForm
       object dxCalcEdit1: TdxCalcEdit
         Left = 864
         Height = 24
-        Top = 316
+        Top = 284
         Width = 100
         Anchors = [akTop, akRight]
         CharCase = ecNormal
@@ -766,7 +766,7 @@ object Form231: TdxForm
       object dxQueryGrid11: TdxQueryGrid
         Left = 755
         Height = 58
-        Top = 596
+        Top = 608
         Width = 288
         Anchors = [akRight, akBottom]
         AutoAdvance = aaNone
@@ -845,8 +845,8 @@ object Form231: TdxForm
       end
       object dxGrid2: TdxGrid
         Left = 4
-        Height = 323
-        Top = 288
+        Height = 307
+        Top = 304
         Width = 1068
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoAdvance = aaNone
@@ -863,7 +863,7 @@ object Form231: TdxForm
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
-        ShowButtons = False
+        ShowButtons = True
         VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnDuplicate, gbnShopping, gbnMoveUp, gbnMoveDown]
         VisibleCaptions = []
         FlatButtons = True
@@ -889,7 +889,7 @@ object Form231: TdxForm
     object dxTabSheet3: TdxTabSheet
       Caption = 'Ход работы'
       object dxCheckBox9: TdxCheckBox
-        Left = 866
+        Left = 870
         Height = 23
         Top = 623
         Width = 194
@@ -1555,9 +1555,9 @@ object Form231: TdxForm
       object dxLabel53: TdxLabel
         Left = 832
         Height = 32
-        Top = 360
-        Width = 95
-        Caption = 'X - Значение '#13#10'с прибора'
+        Top = 352
+        Width = 92
+        Caption = 'Значение '#13#10'с прибора X='
         ParentColor = False
       end
       object dxLabel54: TdxLabel
@@ -1569,9 +1569,9 @@ object Form231: TdxForm
         ParentColor = False
       end
       object dxButton25: TdxButton
-        Left = 980
+        Left = 968
         Height = 30
-        Top = 389
+        Top = 449
         Width = 100
         Anchors = [akRight, akBottom]
         Caption = 'Пересчитать'
@@ -1583,7 +1583,7 @@ object Form231: TdxForm
       Caption = 'Результаты'
       object dxQueryGrid12: TdxQueryGrid
         Left = 2
-        Height = 516
+        Height = 512
         Top = 22
         Width = 596
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -1884,7 +1884,7 @@ object Form231: TdxForm
       object dxLabel46: TdxLabel
         Left = 620
         Height = 16
-        Top = 272
+        Top = 276
         Width = 99
         Anchors = [akTop, akRight]
         Caption = 'Вид организма'
@@ -2097,7 +2097,7 @@ object Form231: TdxForm
         DefaultValue = '0'
       end
       object dxLabel50: TdxLabel
-        Left = 720
+        Left = 620
         Height = 16
         Top = 416
         Width = 82
@@ -2107,9 +2107,9 @@ object Form231: TdxForm
       end
       object dxQueryGrid13: TdxQueryGrid
         Left = 4
-        Height = 93
+        Height = 141
         Top = 537
-        Width = 592
+        Width = 600
         Anchors = [akLeft, akRight, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
@@ -2141,9 +2141,9 @@ object Form231: TdxForm
         ManualRefresh = False
       end
       object dxButton24: TdxButton
-        Left = 616
+        Left = 848
         Height = 30
-        Top = 608
+        Top = 648
         Width = 208
         Anchors = [akTop, akRight]
         Caption = 'Добавить новый результат'
@@ -2167,9 +2167,9 @@ object Form231: TdxForm
         DefaultValue = '0'
       end
       object dxLabel55: TdxLabel
-        Left = 680
+        Left = 620
         Height = 16
-        Top = 480
+        Top = 488
         Width = 68
         Anchors = [akTop, akRight]
         Caption = 'Результат'
@@ -2196,7 +2196,7 @@ object Form231: TdxForm
       object dxButton26: TdxButton
         Left = 616
         Height = 30
-        Top = 648
+        Top = 616
         Width = 212
         Anchors = [akTop, akRight]
         Caption = 'Заполнить все результаты'

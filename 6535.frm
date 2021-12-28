@@ -172,6 +172,7 @@ object Form6535: TdxForm
     Id = 131002
     FieldName = 'Количество исследований'
     Precission = 0
+    Expression = 'DBCOUNT(''Результат испытаний'', ''[!Анализная карта]=[!ИД] & [!Исследование|Методика из ОА]=[Показатель исследования]'')'
     Required = False
     DefaultValue = '0'
     Editable = False
@@ -240,7 +241,7 @@ object Form6535: TdxForm
     FieldName = 'Ед. изм.'
     FieldSize = 50
     Required = False
-    Expression = '[Наименование материала|Номенклатура|Ед.изм2|Сокр]'
+    Expression = '[Наименование материала|Ед.изм2|Сокр]'
     Editable = False
   end
   object dxLookupComboBox3: TdxLookupComboBox

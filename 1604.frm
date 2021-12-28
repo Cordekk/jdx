@@ -1,8 +1,8 @@
 object Form1604: TdxForm
   Left = 10
-  Height = 718
+  Height = 899
   Top = 10
-  Width = 603
+  Width = 669
   Id = 1604
   PId = 0
   FormCaption = 'Ход испытаний'
@@ -510,7 +510,7 @@ object Form1604: TdxForm
   object dxLabel16: TdxLabel
     Left = 16
     Height = 16
-    Top = 596
+    Top = 776
     Width = 40
     Caption = 'Логер'
     ParentColor = False
@@ -518,13 +518,13 @@ object Form1604: TdxForm
   object dxMemo2: TdxMemo
     Left = 16
     Height = 80
-    Top = 620
+    Top = 812
     Width = 272
     ScrollBars = ssBoth
     TabOrder = 18
     Id = 26113
     FieldName = 'Логер'
-    FieldSize = 300
+    FieldSize = 0
     Required = False
     SourceTId = 0
     SourceFId = 0
@@ -670,7 +670,7 @@ object Form1604: TdxForm
   object dxLookupComboBox9: TdxLookupComboBox
     Left = 400
     Height = 24
-    Top = 644
+    Top = 836
     Width = 196
     CharCase = ecNormal
     MaxLength = 0
@@ -684,6 +684,7 @@ object Form1604: TdxForm
     DestTable = 0
     PromptFillTable = False
     ClearTableBeforeFill = False
+    Expression = '[Анализная карта|Шаблон]'
     Editable = False
     ListFields = <>
     DropDownCount = 8
@@ -695,7 +696,7 @@ object Form1604: TdxForm
   object dxLabel19: TdxLabel
     Left = 316
     Height = 16
-    Top = 644
+    Top = 836
     Width = 75
     Caption = 'Шаблон АК'
     ParentColor = False
@@ -703,7 +704,7 @@ object Form1604: TdxForm
   object dxEdit3: TdxEdit
     Left = 400
     Height = 24
-    Top = 676
+    Top = 868
     Width = 192
     CharCase = ecNormal
     MaxLength = 0
@@ -717,7 +718,7 @@ object Form1604: TdxForm
   object dxLabel20: TdxLabel
     Left = 316
     Height = 16
-    Top = 676
+    Top = 868
     Width = 76
     Caption = 'Шаблон ХИ'
     ParentColor = False
@@ -725,7 +726,7 @@ object Form1604: TdxForm
   object dxCalcEdit4: TdxCalcEdit
     Left = 428
     Height = 24
-    Top = 612
+    Top = 804
     Width = 160
     CharCase = ecNormal
     MaxLength = 0
@@ -739,7 +740,7 @@ object Form1604: TdxForm
     Id = 131069
     FieldName = 'Уникальность'
     Precission = 0
-    Expression = '// [Шаблон ХИ] [Шаблон АК] [Результат][Анализная карта]'#13#10'DBUNIQUE(''Анализная карта;Результат;Шаблон АК;Шаблон ХИ'')'
+    Expression = '// [Шаблон ХИ] [Шаблон АК] [Анализная карта]'#13#10'DBUNIQUE(''Анализная карта;Шаблон АК;Шаблон ХИ'')'
     Required = False
     DefaultValue = '0'
     Editable = False
@@ -750,7 +751,7 @@ object Form1604: TdxForm
   object dxLabel21: TdxLabel
     Left = 320
     Height = 16
-    Top = 616
+    Top = 808
     Width = 94
     Caption = 'Уникальность'
     ParentColor = False
@@ -786,6 +787,193 @@ object Form1604: TdxForm
     Width = 95
     Caption = 'X - Значение '#13#10'с прибора'
     ParentColor = False
+  end
+  object dxLabel23: TdxLabel
+    Left = 20
+    Height = 16
+    Top = 592
+    Width = 68
+    Caption = 'Результат'
+    ParentColor = False
+  end
+  object dxEdit4: TdxEdit
+    Left = 20
+    Height = 24
+    Top = 612
+    Width = 636
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 29
+    Id = 262415
+    FieldName = 'Результат_текст'
+    FieldSize = 400
+    Required = False
+    Editable = False
+  end
+  object dxLabel24: TdxLabel
+    Left = 20
+    Height = 16
+    Top = 616
+    Width = 99
+    Caption = 'Вид организма'
+    ParentColor = False
+  end
+  object dxCheckBox7: TdxCheckBox
+    Left = 136
+    Height = 23
+    Top = 584
+    Width = 142
+    Caption = 'Положительный'
+    TabOrder = 30
+    ValueChecked = '1'
+    ValueUnchecked = '0'
+    Id = 262416
+    FieldName = 'Положительный'
+    CheckedText = 'Положительный'
+    UnCheckedText = 'Отрицательный'
+    Expression = 'IIF([Вид организма|Положительный]=1 & [Не обнаружено]=0, 1, 0)'
+    Editable = True
+    DefaultValue = '0'
+  end
+  object dxLookupComboBox10: TdxLookupComboBox
+    Left = 20
+    Height = 24
+    Top = 640
+    Width = 296
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 31
+    Id = 262417
+    FieldName = 'Вид организма'
+    SourceTId = 110
+    SourceFId = 131042
+    Required = False
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Editable = False
+    ListFields = <>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = False
+    UpdateTree = False
+  end
+  object dxObjectField3: TdxObjectField
+    Left = 356
+    Height = 24
+    Top = 640
+    Width = 304
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 32
+    Id = 262418
+    FieldName = 'Наименование 2'
+    ObjId = 262417
+    FieldId = 1862
+  end
+  object dxComboBox1: TdxComboBox
+    Left = 20
+    Height = 24
+    Top = 672
+    Width = 300
+    AutoComplete = True
+    AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+    ItemHeight = 16
+    Items.Strings = (
+      'Имаго'
+      'Личинка'
+      'Яйца'
+      'Циста'
+      'Семена'
+      'Части растения'
+      'Растение с корнем'
+      'Спорангий'
+      'Споры'
+      'Антитела'
+      'ДНК'
+      'РНК'
+    )
+    MaxLength = 0
+    TabOrder = 33
+    Id = 262419
+    FieldName = 'Форма'
+    SourceTId = 0
+    SourceFId = 0
+    FieldSize = 50
+    Required = False
+    Editable = False
+  end
+  object dxObjectField4: TdxObjectField
+    Left = 356
+    Height = 24
+    Top = 668
+    Width = 304
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 34
+    Id = 262420
+    FieldName = 'Карантин'
+    ObjId = 262417
+    FieldId = 1863
+  end
+  object dxCheckBox8: TdxCheckBox
+    Left = 24
+    Height = 23
+    Top = 708
+    Width = 250
+    Caption = 'Соответствует (не обнаружено)'
+    TabOrder = 35
+    ValueChecked = '1'
+    ValueUnchecked = '0'
+    Id = 262421
+    FieldName = 'Не обнаружено'
+    CheckedText = 'Да'
+    UnCheckedText = 'Нет'
+    Editable = False
+    DefaultValue = '0'
+  end
+  object dxLabel25: TdxLabel
+    Left = 352
+    Height = 16
+    Top = 716
+    Width = 82
+    Caption = 'Примечание'
+    ParentColor = False
+  end
+  object dxMemo3: TdxMemo
+    Left = 168
+    Height = 44
+    Top = 740
+    Width = 500
+    ScrollBars = ssBoth
+    TabOrder = 36
+    Id = 262422
+    FieldName = 'Примечание'
+    FieldSize = 0
+    Required = False
+    SourceTId = 0
+    SourceFId = 0
+    Delimiter = ', '
+    Editable = False
+    UpdateTree = False
+  end
+  object dxCheckBox9: TdxCheckBox
+    Left = 292
+    Height = 23
+    Top = 584
+    Width = 90
+    Caption = 'Отменено'
+    TabOrder = 37
+    ValueChecked = '1'
+    ValueUnchecked = '0'
+    Id = 262423
+    FieldName = 'Отменен'
+    CheckedText = 'Да'
+    UnCheckedText = 'Нет'
+    Editable = False
+    DefaultValue = '0'
   end
   object Grid: TdxGrid
     Left = 0
@@ -974,6 +1162,63 @@ object Form1604: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f131106'
+      end    
+      item
+        Tag = 262415
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262415'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262416
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262416'
+      end    
+      item
+        Tag = 262417
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262417l'
+      end    
+      item
+        Tag = 262418
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262418'
+      end    
+      item
+        Tag = 262419
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262419'
+      end    
+      item
+        Tag = 262420
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262420'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262421
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262421'
+      end    
+      item
+        Tag = 262422
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262422'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262423
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262423'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

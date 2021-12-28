@@ -27,9 +27,9 @@ object Form121: TdxForm
     Height = 696
     Top = 4
     Width = 1000
-    ActivePage = dxTabSheet4
+    ActivePage = dxTabSheet3
     Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 0
+    TabIndex = 5
     TabOrder = 0
     object dxTabSheet4: TdxTabSheet
       Caption = 'Задачи мне'
@@ -552,6 +552,14 @@ object Form121: TdxForm
         Caption = 'Монитор пользователей'
         TabOrder = 2
         ActionOnClick = '<actions><action type="6" /></actions>'
+      end
+      object dxButton9: TdxButton
+        Left = 568
+        Height = 30
+        Top = 500
+        Width = 416
+        Caption = 'скопировать РЕЗУЛЬТАТЫ ИСПЫТАНИЙ В ХОД ИСПЫТАНИЙ'
+        TabOrder = 3
       end
     end
     object dxTabSheet1: TdxTabSheet

@@ -404,9 +404,9 @@ object Form26: TdxForm
     Height = 304
     Top = 438
     Width = 825
-    ActivePage = dxTabSheet3
+    ActivePage = dxTabSheet4
     Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 0
+    TabIndex = 3
     TabOrder = 13
     object dxTabSheet3: TdxTabSheet
       Caption = 'Результаты'
@@ -910,6 +910,77 @@ object Form26: TdxForm
         FieldName = 'Госзадание'
         ObjId = 4563
         FieldId = 8527
+      end
+    end
+    object dxTabSheet4: TdxTabSheet
+      Caption = '.'
+      object dxQueryGrid3: TdxQueryGrid
+        Left = 284
+        Height = 236
+        Top = 31
+        Width = 501
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 0
+        SelectedColor = clHighlight
+        GridLineStyle = psSolid
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = False
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -17
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 2928
+        ManualRefresh = False
+      end
+      object dxLookupComboBox15: TdxLookupComboBox
+        Left = 12
+        Height = 28
+        Top = 40
+        Width = 172
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 1
+        Id = 262424
+        FieldName = 'Анализная карта'
+        SourceTId = 1839
+        SourceFId = 28728
+        Required = False
+        SourceTable = 0
+        DestTable = 0
+        PromptFillTable = False
+        ClearTableBeforeFill = False
+        Editable = False
+        ListFields = <>
+        DropDownCount = 8
+        ListWidthExtra = 0
+        HideList = False
+        HideButton = False
+        UpdateTree = False
+      end
+      object dxLabel27: TdxLabel
+        Left = 12
+        Height = 20
+        Top = 12
+        Width = 149
+        Caption = 'Анализная карта'
+        ParentColor = False
       end
     end
   end
@@ -1470,6 +1541,12 @@ object Form26: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f131063'
+      end    
+      item
+        Tag = 262424
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262424l'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

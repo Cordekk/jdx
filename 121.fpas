@@ -26,58 +26,52 @@ end;
 
 
 
-// procedure CopyTable (Sender: TObject);
-//var
-//  Log1, Fields1, Log, Fields: TdxForm;
-//
-  //n: Integer;
-//begin
-//  Log1 := TdxForm.Create('Log1');
-//  Log := TdxForm.Create('Log');
-//  Log.Open;
-//  Log.Edit;
-//  Log1.Open;
-//  Log1.MoveFirst;
-//  Log1.Edit;
-//  Fields1:= Log1.Forms['Fields1'];
-//  Fields:= Log.Forms['Fields'];
-  //n  := 0;
-//  while Log1.EOF = False do  //  Log1.EOF = False      n<10
-//  begin
-   //n :=n+1;
-   //Log1.MoveFirst;
-//   Log.Append;
-//   Log['Номер записи'] := Log1['Номер записи'];
-//   Log['Дата'] := Log1['Дата'];
-//   Log['Наименование события'] := Log1['Наименование события'];
-//   Log['Время начала редактирования'] := Log1['Время начала редактирования'];
-//   Log['Время сохранения записи'] := Log1['Время сохранения записи'];
-//   Log['Пользователь'] := Log1['Пользователь'];
-//   Log['Форма'] := Log1['Форма'];
-//   Log['Тип формы'] := Log1['Тип формы'];
-//   Log['ИД'] := Log1['ИД'];
-//   Fields1.MoveFirst;
-//      while Fields1.EOF = False do  //  Log1.EOF = False
-//      begin
-//      Fields.Append;
-//      Fields['Имя поля'] := Fields1['Имя поля'];
-//      Fields['Значение до'] := Fields1['Значение до'];
-//      Fields['Значение после'] := Fields1['Значение после'];
-//      Fields.Post;
-//      Fields1.MoveNext;
-//      end;
-//   Log.Post;
-   //Log.Close;
-//   Log1.MoveNext;
-//  end;
-    //Очищаем формы;
-//  Log.free;
-//  Log1.free;
-//end;
+procedure CopyTable (Sender: TObject);
+// копируем результаты испытаний в ход испытаний для того чтобы убрать лишнюю форму (результат испытаний)
+var
+  HOD, RESULTI: TdxForm;
+  n: Integer;
+begin
+
+  HOD := TdxForm.Create('Ход испытаний');
+  RESULTI := TdxForm.Create('Результат испытаний');
+  HOD.Open;
+  HOD.Edit;
+  RESULTI.Open;
+  RESULTI.MoveFirst;
+  RESULTI.Edit;
+  n  := 0;
+  while RESULTI.EOF = False do  //
+  begin
+   n :=n+1;
+   RESULTI.MoveFirst;
+   HOD.Append;
+   HOD['Анализная карта'] := RESULTI['Анализная карта'];
+   HOD['Исследование'] := RESULTI['Исследование'];
+   HOD['Значение'] := RESULTI['Значение'];
+   HOD['Ед.изм'] := RESULTI['Ед.изм'];
+   HOD['Результат_текст'] := RESULTI['Результат_текст'];
+   HOD['Неопределенность'] := RESULTI['Неопределенность'];
+   HOD['Положительный'] := RESULTI['Положительный'];
+   HOD['Вид организма'] := RESULTI['Вид организма'];
+   HOD['Примечание'] := RESULTI['Примечание'];
+   HOD['Форма'] := RESULTI['Форма'];
+   HOD['Не обнаружено'] := RESULTI['Не обнаружено'];
+   HOD['Отменен'] := RESULTI['Отменен'];
+   HOD['Основной результат'] := 1;
+   HOD['Шаблон ХИ'] := RESULTI['ИД'];
+   IF  HOD['Уникальность']=1 THEN HOD.Post;
+   HOD.Close;
+   // RESULT.Delete   //    удалить запись!
+   RESULTI.MoveNext;
+  end;
+    // Очищаем формы;
+  RESULTI.free;
+  HOD.free;
+end;
 
 
 procedure Form_Create;
 begin
   dxButton2.OnClick := @Click; // копирование шаблонов  по кнопке
- // Self.EditWindow.OnShow := @Click;  // копирование шаблонов автоматически при открывании базы
   end;

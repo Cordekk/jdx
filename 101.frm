@@ -1,6 +1,6 @@
 object Form101: TdxForm
   Left = 10
-  Height = 544
+  Height = 557
   Top = 10
   Width = 682
   Id = 101
@@ -561,7 +561,7 @@ object Form101: TdxForm
     MaxLength = 0
     TabOrder = 21
     Id = 131121
-    FieldName = 'Текст131121'
+    FieldName = 'Результат_текст'
     FieldSize = 400
     Required = False
     Editable = False
