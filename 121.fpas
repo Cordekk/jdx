@@ -74,4 +74,5 @@ end;
 procedure Form_Create;
 begin
   dxButton2.OnClick := @Click; // копирование шаблонов  по кнопке
+  // dxButton9.OnClick   := @CopyTable // копирование из результатов в ход работы
   end;
