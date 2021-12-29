@@ -545,17 +545,17 @@ if Self.State in [dsInsert,dsEdit] then
 	Self['Среднее значение']:=dxQueryGrid12['Значение'];
 	Self['Ед.изм2']:=dxQueryGrid12['Ед.изм2'];
 	Self['Неопределенность2']:=dxQueryGrid12['Неопределенность2'];
-	Self['Повторяемость']:=dxQueryGrid12['Повторяемость'];
-	Self['Предел повторяемости']:=dxQueryGrid12['Предел повторяемости'];
+	// Self['Повторяемость']:=dxQueryGrid12['Повторяемость'];
+	// Self['Предел повторяемости']:=dxQueryGrid12['Предел повторяемости'];
 	Self['Оперативный контроль']:=dxQueryGrid12['Оперативный контроль'];
 	Self['Положительный']:=dxQueryGrid12['Положительный'];
-	Self['Вид организма']:=dxQueryGrid12['Вид организма2'];
-	Self['Форма']:=dxQueryGrid12['Форма'];
-	Self['Не обнаружено']:=dxQueryGrid12['Не обнаружено'];
-	Self['Отменен']:=dxQueryGrid12['Отменен'];
-	Self['Мин.предел']:=dxQueryGrid12['Мин.предел'];
-	Self['Макс.предел']:=dxQueryGrid12['Макс.предел'];
-	Self['Примечание']:=dxQueryGrid12['Примечание'];
+	// Self['Вид организма']:=dxQueryGrid12['Вид организма2'];
+	// Self['Форма']:=dxQueryGrid12['Форма'];
+  //Self['Не обнаружено']:=dxQueryGrid12['Не обнаружено'];
+	// Self['Отменен']:=dxQueryGrid12['Отменен'];
+//	Self['Мин.предел']:=dxQueryGrid12['Мин.предел'];
+//	Self['Макс.предел']:=dxQueryGrid12['Макс.предел'];
+	// Self['Примечание']:=dxQueryGrid12['Примечание'];
 	Self['Редактирование']:=dxQueryGrid12['Редактирование'];
       end;
   end;
@@ -642,9 +642,9 @@ begin
     dxButton16.OnClick := @SaveWorkAndGoOver;  //  Сохранение записи хода испытания и переход к другому образцу
 	  dxButton14.OnClick :=@WorkAfterScroll; // Отмена записи хода испытания и обновление
 	  dxButton19.OnClick := @SaveWorkTesting; //  Завершение проверки оборудования (запись хода испытания и обновление хода испытаний)
-    dxQueryGrid12.OnAfterScroll:=@ResultAfterScroll; // заполнение результата
-	  dxButton23.OnClick := @ResultAfterScroll;    	// отмена сохранения результата
-	  dxButton22.OnClick := @SaveResult;  // сохранение результата
+    // dxQueryGrid12.OnAfterScroll:=@ResultAfterScroll; // заполнение результата
+	 //  dxButton23.OnClick := @ResultAfterScroll;    	// отмена сохранения результата
+	  // dxButton22.OnClick := @SaveResult;  // сохранение результата
 	  //  dxButton24.OnClick := @SaveNewResult;  // создание нового результата   надо удалить за недабностью
 end;
 

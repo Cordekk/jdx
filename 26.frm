@@ -28,7 +28,7 @@ object Form26: TdxForm
   Tree = Tree.Owner
   Index = 15
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="F5587D26-710A-4F6E-AF8B-ACAF9034982F" allfields="0" logfields="Field" users="User" /><action type="9" id="0D75186F-C6BB-4B69-BCF9-092FD2C316A3" fields="field|Значение|Положительное|Ед.изм|Погрешность|Постинфекционное|Нет вакциональных антител" queries="query" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''Администратор'' |  ROLE = ''''" grid="cmp;ve_prop|dxDateEdit1;Редактирование|dxLookupComboBox10;Редактирование|dxEdit3;Редактирование|dxLookupComboBox5;Редактирование|dxLookupComboBox8;Редактирование|dxCalcEdit3;Редактирование|dxLookupComboBox13;Редактирование|dxCalcEdit1;Редактирование|dxLookupComboBox1;Редактирование|dxLookupComboBox12;Редактирование" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''Администратор'' |  ROLE = '''' | ROLE = ''Приемка''" grid="cmp;ve_prop|dxCheckBox1;Редактирование|dxCheckBox3;Редактирование|dxCheckBox2;Редактирование|dxCheckBox7;Редактирование|dxLookupComboBox9;Редактирование|dxEdit5;Редактирование" stateevents="0" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="F5587D26-710A-4F6E-AF8B-ACAF9034982F" allfields="0" logfields="Field" users="User" /><action type="9" id="0D75186F-C6BB-4B69-BCF9-092FD2C316A3" fields="field|Значение|Положительное|Ед.изм|Неопределенность|Постинфекционное|Нет вакциональных антител" queries="query" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''Администратор'' |  ROLE = ''''" grid="cmp;ve_prop|dxDateEdit1;Редактирование|dxLookupComboBox10;Редактирование|dxEdit3;Редактирование|dxLookupComboBox5;Редактирование|dxLookupComboBox8;Редактирование|dxCalcEdit3;Редактирование|dxLookupComboBox13;Редактирование|dxCalcEdit1;Редактирование|dxLookupComboBox1;Редактирование|dxLookupComboBox12;Редактирование" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''Администратор'' |  ROLE = '''' | ROLE = ''Приемка''" grid="cmp;ve_prop|dxCheckBox1;Редактирование|dxCheckBox3;Редактирование|dxCheckBox2;Редактирование|dxCheckBox7;Редактирование|dxLookupComboBox9;Редактирование|dxEdit5;Редактирование" stateevents="0" /></actions>'
   object dxLabel1: TdxLabel
     Left = 16
     Height = 20
@@ -404,9 +404,9 @@ object Form26: TdxForm
     Height = 304
     Top = 438
     Width = 825
-    ActivePage = dxTabSheet4
+    ActivePage = dxTabSheet3
     Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 3
+    TabIndex = 0
     TabOrder = 13
     object dxTabSheet3: TdxTabSheet
       Caption = 'Результаты'
@@ -490,20 +490,20 @@ object Form26: TdxForm
         Left = 4
         Height = 20
         Top = 107
-        Width = 115
-        Caption = 'Погрешность'
+        Width = 166
+        Caption = 'Неопределенность'
         ParentColor = False
       end
       object dxEdit4: TdxEdit
-        Left = 124
+        Left = 4
         Height = 28
-        Top = 103
-        Width = 208
+        Top = 127
+        Width = 160
         CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
         Id = 1847
-        FieldName = 'Погрешность'
+        FieldName = 'Неопределенность'
         FieldSize = 50
         Required = False
         Editable = False
@@ -526,10 +526,10 @@ object Form26: TdxForm
         DefaultValue = '0'
       end
       object dxEdit3: TdxMemo
-        Left = 96
+        Left = 100
         Height = 52
-        Top = 11
-        Width = 660
+        Top = 7
+        Width = 680
         ScrollBars = ssBoth
         TabOrder = 1
         Id = 1846
@@ -574,6 +574,38 @@ object Form26: TdxForm
         Expression = '//IIF([Доработка]=1, 0, 1)'
         Editable = False
         DefaultValue = '0'
+      end
+      object dxLabel28: TdxLabel
+        Left = 200
+        Height = 20
+        Top = 104
+        Width = 68
+        Caption = 'Ср.знач'
+        ParentColor = False
+      end
+      object dxCalcEdit5: TdxCalcEdit
+        Left = 196
+        Height = 28
+        Top = 124
+        Width = 100
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 7
+        HideButton = False
+        CalculatorLayout = clNormal
+        AsInteger = 0
+        ButtonWidth = 28
+        NumGlyphs = 1
+        Flat = True
+        Id = 262425
+        FieldName = 'Среднее значение'
+        Precission = 0
+        Required = False
+        DefaultValue = '0'
+        Editable = False
+        NullToZero = True
+        GroupDigits = True
+        PadZeros = True
       end
     end
     object dxTabSheet2: TdxTabSheet
@@ -966,6 +998,7 @@ object Form26: TdxForm
         DestTable = 0
         PromptFillTable = False
         ClearTableBeforeFill = False
+        Expression = 'GET(''Результаты испытаний'', ''Анализная карта'')'
         Editable = False
         ListFields = <>
         DropDownCount = 8
@@ -1547,6 +1580,12 @@ object Form26: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262424l'
+      end    
+      item
+        Tag = 262425
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262425'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

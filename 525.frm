@@ -101,7 +101,7 @@ object Form525: TdxForm
     Width = 176
     Caption = 'Импорт Исследований'
     TabOrder = 3
-    ActionOnClick = '<actions><action type="9" id="DAB4A991-055D-466F-A13B-A462C2BE964E" initfolder="" filename="" charset="UTF-8" skipfirstrow="1" form="Исследование" fields="formfield;update|№пп;0|Проба;1|Номер_образца;1|Показатель;1|Лаборатория;0|Исполнитель;0|Значение;0|Норматив;0|Погрешность;0|Методы испытаний;0|Дата изменения;0|Положительное;0|Постинфекционное;0|Нет вакциональных антител;0|Дата поступления;0" values="field;expr|Archiv;0" /></actions>'
+    ActionOnClick = '<actions><action type="9" id="DAB4A991-055D-466F-A13B-A462C2BE964E" initfolder="" filename="" charset="UTF-8" skipfirstrow="1" form="Исследование" fields="formfield;update|№пп;0|Проба;1|Номер_образца;1|Показатель;1|Лаборатория;0|Исполнитель;0|Значение;0|Норматив;0|Неопределенность;0|Методы испытаний;0|Дата изменения;0|Положительное;0|Постинфекционное;0|Нет вакциональных антител;0|Дата поступления;0" values="field;expr|Archiv;0" /></actions>'
   end
   object dxButton5: TdxButton
     Left = 12
@@ -204,7 +204,7 @@ object Form525: TdxForm
     Width = 176
     Caption = 'Импорт Незавершенных'
     TabOrder = 10
-    ActionOnClick = '<actions><action type="9" id="DAB4A991-055D-466F-A13B-A462C2BE964E" initfolder="" filename="" charset="UTF-8" skipfirstrow="1" form="Исследование" fields="formfield;update|№пп;0|Проба;1|Номер_образца;1|Показатель;1|Лаборатория;0|Исполнитель;0|Значение;0|Норматив;0|Погрешность;0|Методы испытаний;0|Положительное;0|Постинфекционное;0|Нет вакциональных антител;0|Дата поступления;0" values="field;expr|Archiv;0" /></actions>'
+    ActionOnClick = '<actions><action type="9" id="DAB4A991-055D-466F-A13B-A462C2BE964E" initfolder="" filename="" charset="UTF-8" skipfirstrow="1" form="Исследование" fields="formfield;update|№пп;0|Проба;1|Номер_образца;1|Показатель;1|Лаборатория;0|Исполнитель;0|Значение;0|Норматив;0|Неопределенность;0|Методы испытаний;0|Положительное;0|Постинфекционное;0|Нет вакциональных антител;0|Дата поступления;0" values="field;expr|Archiv;0" /></actions>'
   end
   object dxQueryGrid4: TdxQueryGrid
     Left = 620

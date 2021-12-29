@@ -27,9 +27,9 @@ object Form121: TdxForm
     Height = 696
     Top = 4
     Width = 1000
-    ActivePage = dxTabSheet3
+    ActivePage = dxTabSheet4
     Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 5
+    TabIndex = 0
     TabOrder = 0
     object dxTabSheet4: TdxTabSheet
       Caption = 'Задачи мне'
