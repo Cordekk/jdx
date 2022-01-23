@@ -1,7 +1,7 @@
 object Form103: TdxForm
-  Left = 10
+  Left = 7
   Height = 602
-  Top = 10
+  Top = 7
   Width = 498
   Id = 103
   PId = 0
@@ -23,7 +23,7 @@ object Form103: TdxForm
   SoftCheck = False
   object dxCounter1: TdxCounter
     Left = 36
-    Height = 24
+    Height = 22
     Top = 8
     Width = 80
     ReadOnly = True
@@ -36,7 +36,7 @@ object Form103: TdxForm
   end
   object dxDateEdit1: TdxDateEdit
     Left = 32
-    Height = 24
+    Height = 22
     Top = 256
     Width = 100
     CharCase = ecNormal
@@ -47,7 +47,7 @@ object Form103: TdxForm
     OKCaption = 'OK'
     CancelCaption = 'Cancel'
     DateOrder = doNone
-    ButtonWidth = 24
+    ButtonWidth = 22
     Flat = True
     NumGlyphs = 1
     Id = 2513
@@ -58,7 +58,7 @@ object Form103: TdxForm
   end
   object dxDateEdit2: TdxDateEdit
     Left = 32
-    Height = 24
+    Height = 22
     Top = 376
     Width = 100
     CharCase = ecNormal
@@ -69,7 +69,7 @@ object Form103: TdxForm
     OKCaption = 'OK'
     CancelCaption = 'Cancel'
     DateOrder = doNone
-    ButtonWidth = 24
+    ButtonWidth = 22
     Flat = True
     NumGlyphs = 1
     Id = 2514
@@ -81,7 +81,7 @@ object Form103: TdxForm
   end
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 32
-    Height = 24
+    Height = 22
     Top = 188
     Width = 412
     CharCase = ecNormal
@@ -106,7 +106,7 @@ object Form103: TdxForm
   end
   object dxComboBox1: TdxComboBox
     Left = 36
-    Height = 24
+    Height = 22
     Top = 124
     Width = 228
     AutoComplete = True
@@ -130,31 +130,31 @@ object Form103: TdxForm
   end
   object dxLabel1: TdxLabel
     Left = 32
-    Height = 16
+    Height = 17
     Top = 160
-    Width = 173
+    Width = 175
     Caption = 'Организация-поверитель'
     ParentColor = False
   end
   object dxLabel2: TdxLabel
     Left = 32
-    Height = 16
+    Height = 17
     Top = 228
-    Width = 282
+    Width = 285
     Caption = 'Дата поверки, калибровки или проверки'
     ParentColor = False
   end
   object dxLabel3: TdxLabel
     Left = 32
-    Height = 16
+    Height = 17
     Top = 352
-    Width = 350
+    Width = 354
     Caption = 'Срок действия поверки, калибровки или проверки'
     ParentColor = False
   end
   object dxEdit1: TdxEdit
     Left = 36
-    Height = 24
+    Height = 22
     Top = 316
     Width = 432
     CharCase = ecNormal
@@ -168,23 +168,23 @@ object Form103: TdxForm
   end
   object dxLabel4: TdxLabel
     Left = 36
-    Height = 16
+    Height = 17
     Top = 292
-    Width = 98
+    Width = 99
     Caption = 'Документ (№)'
     ParentColor = False
   end
   object dxLabel5: TdxLabel
     Left = 48
-    Height = 16
+    Height = 17
     Top = 100
-    Width = 93
+    Width = 96
     Caption = 'Вид проверки'
     ParentColor = False
   end
   object dxLookupComboBox2: TdxLookupComboBox
     Left = 204
-    Height = 24
+    Height = 22
     Top = 12
     Width = 284
     CharCase = ecNormal
@@ -211,17 +211,17 @@ object Form103: TdxForm
   end
   object dxLabel6: TdxLabel
     Left = 56
-    Height = 16
+    Height = 17
     Top = 412
-    Width = 206
+    Width = 210
     Caption = 'Примечание (перечень работ)'
     ParentColor = False
   end
   object dxLabel7: TdxLabel
     Left = 124
-    Height = 16
+    Height = 17
     Top = 12
-    Width = 72
+    Width = 73
     Caption = 'Сотрудник'
     ParentColor = False
   end
@@ -244,7 +244,7 @@ object Form103: TdxForm
   end
   object dxLabel8: TdxLabel
     Left = 16
-    Height = 16
+    Height = 17
     Top = 16
     Width = 15
     Caption = '№'
@@ -252,7 +252,7 @@ object Form103: TdxForm
   end
   object dxLookupComboBox3: TdxLookupComboBox
     Left = 48
-    Height = 24
+    Height = 22
     Top = 56
     Width = 420
     CharCase = ecNormal
@@ -361,7 +361,7 @@ object Form103: TdxForm
     FlatButtons = True
     ButtonsColor = clBtnFace
     ButtonSize = 25
-    ButtonFont.Height = -13
+    ButtonFont.Height = -9
     ButtonFont.Name = 'Verdana'
     AlignmentButtons = taLeftJustify
     HideButtonsWhenLostFocus = False

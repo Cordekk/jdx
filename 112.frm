@@ -192,7 +192,7 @@ object Form112: TdxForm
         Left = 8
         Height = 202
         Top = 184
-        Width = 300
+        Width = 408
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -286,10 +286,10 @@ object Form112: TdxForm
         Editable = True
       end
       object dxMemo1: TdxMemo
-        Left = 340
+        Left = 440
         Height = 180
         Top = 84
-        Width = 540
+        Width = 440
         ScrollBars = ssBoth
         TabOrder = 3
         Id = 7323
@@ -304,15 +304,15 @@ object Form112: TdxForm
         UpdateTree = False
       end
       object dxLabel19: TdxLabel
-        Left = 340
+        Left = 444
         Height = 16
-        Top = 64
+        Top = 68
         Width = 66
         Caption = 'Описание'
         ParentColor = False
       end
       object dxButton9: TdxButton
-        Left = 348
+        Left = 444
         Height = 30
         Top = 272
         Width = 140
@@ -365,7 +365,7 @@ object Form112: TdxForm
         Left = 12
         Height = 24
         Top = 152
-        Width = 280
+        Width = 396
         CharCase = ecNormal
         MaxLength = 0
         TabOrder = 6
@@ -395,9 +395,9 @@ object Form112: TdxForm
         UpdateTree = False
       end
       object dxButton11: TdxButton
-        Left = 316
+        Left = 448
         Height = 30
-        Top = 336
+        Top = 332
         Width = 136
         Caption = 'Назначить всем'
         TabOrder = 7
@@ -1886,7 +1886,7 @@ object Form112: TdxForm
     FlatButtons = True
     ButtonsColor = clBtnFace
     ButtonSize = 25
-    ButtonFont.Height = -13
+    ButtonFont.Height = -9
     ButtonFont.Name = 'Verdana'
     AlignmentButtons = taLeftJustify
     HideButtonsWhenLostFocus = False

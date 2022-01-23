@@ -49,7 +49,7 @@ object Form295: TdxForm
     FlatButtons = True
     ButtonsColor = clBtnFace
     ButtonSize = 25
-    ButtonFont.Height = -13
+    ButtonFont.Height = -9
     ButtonFont.Name = 'Verdana'
     AlignmentButtons = taLeftJustify
     HideButtonsWhenLostFocus = False
@@ -199,7 +199,7 @@ object Form295: TdxForm
     FlatButtons = True
     ButtonsColor = clBtnFace
     ButtonSize = 25
-    ButtonFont.Height = -13
+    ButtonFont.Height = -9
     ButtonFont.Name = 'Verdana'
     AlignmentButtons = taLeftJustify
     HideButtonsWhenLostFocus = False
@@ -233,7 +233,7 @@ object Form295: TdxForm
     FlatButtons = True
     ButtonsColor = clBtnFace
     ButtonSize = 25
-    ButtonFont.Height = -13
+    ButtonFont.Height = -9
     ButtonFont.Name = 'Verdana'
     AlignmentButtons = taLeftJustify
     HideButtonsWhenLostFocus = False
@@ -283,7 +283,7 @@ object Form295: TdxForm
     FlatButtons = True
     ButtonsColor = clBtnFace
     ButtonSize = 25
-    ButtonFont.Height = -13
+    ButtonFont.Height = -9
     ButtonFont.Name = 'Verdana'
     AlignmentButtons = taLeftJustify
     HideButtonsWhenLostFocus = False
@@ -325,7 +325,7 @@ object Form295: TdxForm
     FlatButtons = True
     ButtonsColor = clBtnFace
     ButtonSize = 25
-    ButtonFont.Height = -13
+    ButtonFont.Height = -9
     ButtonFont.Name = 'Verdana'
     AlignmentButtons = taLeftJustify
     HideButtonsWhenLostFocus = False
@@ -413,7 +413,7 @@ object Form295: TdxForm
     FlatButtons = True
     ButtonsColor = clBtnFace
     ButtonSize = 25
-    ButtonFont.Height = -13
+    ButtonFont.Height = -9
     ButtonFont.Name = 'Verdana'
     AlignmentButtons = taLeftJustify
     HideButtonsWhenLostFocus = False

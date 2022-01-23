@@ -2,7 +2,7 @@ object Form302: TdxForm
   Left = 10
   Height = 300
   Top = 10
-  Width = 337
+  Width = 470
   Id = 302
   PId = 112
   FormCaption = 'Исполнители'
@@ -32,7 +32,7 @@ object Form302: TdxForm
     Left = 8
     Height = 24
     Top = 60
-    Width = 300
+    Width = 416
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
@@ -64,14 +64,14 @@ object Form302: TdxForm
       item
         Tag = 7324
         Title.Caption = ' '
-        Width = 100
+        Width = 375
         FieldName = 'f7324l'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
     Font.Height = -13
     Font.Name = 'Verdana'
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
     ParentDoubleBuffered = False
     ReadOnly = True
     ShowHint = True
@@ -86,7 +86,7 @@ object Form302: TdxForm
     FlatButtons = True
     ButtonsColor = clBtnFace
     ButtonSize = 25
-    ButtonFont.Height = -13
+    ButtonFont.Height = -9
     ButtonFont.Name = 'Verdana'
     AlignmentButtons = taLeftJustify
     HideButtonsWhenLostFocus = False

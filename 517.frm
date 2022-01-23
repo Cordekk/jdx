@@ -96,7 +96,7 @@ object Form517: TdxForm
     Left = 16
     Height = 202
     Top = 88
-    Width = 416
+    Width = 556
     AutoAdvance = aaNone
     Color = clWindow
     Columns = <>
@@ -117,7 +117,7 @@ object Form517: TdxForm
     FlatButtons = True
     ButtonsColor = clBtnFace
     ButtonSize = 25
-    ButtonFont.Height = -13
+    ButtonFont.Height = -9
     ButtonFont.Name = 'Verdana'
     AlignmentButtons = taLeftJustify
     HideButtonsWhenLostFocus = False
@@ -170,7 +170,7 @@ object Form517: TdxForm
     FlatButtons = True
     ButtonsColor = clBtnFace
     ButtonSize = 25
-    ButtonFont.Height = -13
+    ButtonFont.Height = -9
     ButtonFont.Name = 'Verdana'
     AlignmentButtons = taLeftJustify
     HideButtonsWhenLostFocus = False

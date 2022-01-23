@@ -5,11 +5,11 @@ object Form222: TdxForm
   Width = 1040
   Id = 222
   PId = 0
-  FormCaption = 'Отчеты КПД'
+  FormCaption = 'Отчеты КПД и рисков'
   FormGroup = 'Общие'
   Templates.Strings = (
-    'Отчет КПД.doc'
     'Отчет КПД.odt'
+    'Реестр рисков.odt'
   )
   Font.Height = -13
   Font.Name = 'Verdana'
@@ -32,7 +32,7 @@ object Form222: TdxForm
     Left = 24
     Height = 188
     Top = 96
-    Width = 1016
+    Width = 748
     AutoAdvance = aaNone
     Color = clWindow
     Columns = <>
@@ -53,7 +53,7 @@ object Form222: TdxForm
     FlatButtons = True
     ButtonsColor = clBtnFace
     ButtonSize = 25
-    ButtonFont.Height = -13
+    ButtonFont.Height = -9
     ButtonFont.Name = 'Verdana'
     AlignmentButtons = taLeftJustify
     HideButtonsWhenLostFocus = False
@@ -112,8 +112,8 @@ object Form222: TdxForm
     Left = 36
     Height = 16
     Top = 68
-    Width = 260
-    Caption = 'Несоответствия и риски лаборатории'
+    Width = 290
+    Caption = 'Несоответствия и/или риски лаборатории'
     ParentColor = False
   end
   object dxLookupComboBox1: TdxLookupComboBox
@@ -143,9 +143,9 @@ object Form222: TdxForm
     UpdateTree = False
   end
   object dxLabel1: TdxLabel
-    Left = 460
+    Left = 464
     Height = 16
-    Top = 12
+    Top = 16
     Width = 161
     Caption = 'Выбрать вид документа'
     ParentColor = False
@@ -337,10 +337,122 @@ object Form222: TdxForm
     Left = 588
     Height = 30
     Top = 696
-    Width = 100
-    Caption = 'Печать'
+    Width = 116
+    Caption = 'Печать отчет'
     TabOrder = 11
     ActionOnClick = '<actions><action type="2" template="Отчет КПД.odt" expression="" outfile="" fileaction="1" saverecord="0"/></actions>'
+  end
+  object dxQueryGrid3: TdxQueryGrid
+    Left = 776
+    Height = 138
+    Top = 96
+    Width = 260
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    AutoAdvance = aaNone
+    Color = clWindow
+    Columns = <>
+    DefaultRowHeight = 20
+    DoubleBuffered = True
+    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+    ParentDoubleBuffered = False
+    ShowHint = True
+    TabOrder = 12
+    SelectedColor = clHighlight
+    GridLineStyle = psSolid
+    SelectedTextColor = clHighlightText
+    InactiveSelectedColor = clSilver
+    InactiveSelectedTextColor = clBlack
+    ShowButtons = False
+    VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
+    VisibleCaptions = []
+    FlatButtons = True
+    ButtonsColor = clBtnFace
+    ButtonSize = 25
+    ButtonFont.Height = -13
+    ButtonFont.Name = 'Verdana'
+    AlignmentButtons = taLeftJustify
+    HideButtonsWhenLostFocus = False
+    WordWrap = False
+    AllowChangeSort = False
+    Id = 2929
+    ManualRefresh = False
+  end
+  object dxDateEdit3: TdxDateEdit
+    Left = 776
+    Height = 24
+    Top = 244
+    Width = 100
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 13
+    HideButton = False
+    CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+    OKCaption = 'OK'
+    CancelCaption = 'Cancel'
+    DateOrder = doNone
+    ButtonWidth = 24
+    Flat = True
+    NumGlyphs = 1
+    Id = 262429
+    FieldName = 'Дата оценки'
+    DateNow = False
+    Expression = 'MAX(''Оценка рисков'', ''Дата'')'
+    Required = False
+    Editable = False
+  end
+  object dxEdit1: TdxEdit
+    Left = 904
+    Height = 24
+    Top = 244
+    Width = 104
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 14
+    Id = 262430
+    FieldName = 'Оценка риска'
+    FieldSize = 50
+    Required = False
+    Expression = 'TAKE(''Оценка рисков'', ''Оценка риска'', ''[Дата]=[:Дата оценки]'')'
+    Editable = False
+  end
+  object dxEdit2: TdxEdit
+    Left = 776
+    Height = 24
+    Top = 272
+    Width = 100
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 15
+    Id = 262433
+    FieldName = 'Вероятность'
+    FieldSize = 50
+    Required = False
+    Expression = 'TAKE(''Оценка рисков'', ''Вероятность'', '''')'
+    Editable = False
+  end
+  object dxEdit3: TdxEdit
+    Left = 904
+    Height = 24
+    Top = 268
+    Width = 100
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 16
+    Id = 262434
+    FieldName = 'Последствия'
+    FieldSize = 50
+    Required = False
+    Expression = 'MERGE(''Оценка рисков'', ''Последствия'', ''; '')'
+    Editable = False
+  end
+  object dxButton3: TdxButton
+    Left = 596
+    Height = 30
+    Top = 740
+    Width = 172
+    Caption = 'Печать реестр рисков'
+    TabOrder = 17
+    ActionOnClick = '<actions><action type="2" template="Реестр рисков.odt" expression="" outfile="" fileaction="1" saverecord="1"/></actions>'
   end
   object Grid: TdxGrid
     Left = 0
@@ -386,6 +498,30 @@ object Form222: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f8521'
+      end    
+      item
+        Tag = 262429
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262429'
+      end    
+      item
+        Tag = 262430
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262430'
+      end    
+      item
+        Tag = 262433
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262433'
+      end    
+      item
+        Tag = 262434
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262434'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
@@ -406,7 +542,7 @@ object Form222: TdxForm
     FlatButtons = True
     ButtonsColor = clBtnFace
     ButtonSize = 25
-    ButtonFont.Height = -13
+    ButtonFont.Height = -9
     ButtonFont.Name = 'Verdana'
     AlignmentButtons = taLeftJustify
     HideButtonsWhenLostFocus = False

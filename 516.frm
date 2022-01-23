@@ -20,31 +20,6 @@ object Form516: TdxForm
   Tree = Tree.Owner
   Index = 0
   SoftCheck = False
-  object dxLookupComboBox1: TdxLookupComboBox
-    Left = 104
-    Height = 24
-    Top = 8
-    Width = 220
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 0
-    Id = 8398
-    FieldName = 'Риск'
-    SourceTId = 513
-    SourceFId = 8383
-    Required = False
-    SourceTable = 0
-    DestTable = 0
-    PromptFillTable = False
-    ClearTableBeforeFill = False
-    Editable = False
-    ListFields = <>
-    DropDownCount = 8
-    ListWidthExtra = 0
-    HideList = False
-    HideButton = False
-    UpdateTree = False
-  end
   object dxLabel1: TdxLabel
     Left = 8
     Height = 16
@@ -53,31 +28,6 @@ object Form516: TdxForm
     Caption = 'Риск'
     ParentColor = False
   end
-  object dxCalcEdit1: TdxCalcEdit
-    Left = 408
-    Height = 24
-    Top = 36
-    Width = 100
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 1
-    HideButton = False
-    CalculatorLayout = clNormal
-    AsInteger = 0
-    ButtonWidth = 24
-    NumGlyphs = 1
-    Flat = True
-    Id = 8399
-    FieldName = 'Вероятность'
-    Precission = 0
-    Expression = '[Вероятность текущая] -[Риск|Вероятность]'
-    Required = False
-    DefaultValue = '0'
-    Editable = False
-    NullToZero = True
-    GroupDigits = True
-    PadZeros = True
-  end
   object dxLabel2: TdxLabel
     Left = 8
     Height = 16
@@ -85,31 +35,6 @@ object Form516: TdxForm
     Width = 149
     Caption = 'Вероятность текущая'
     ParentColor = False
-  end
-  object dxCalcEdit2: TdxCalcEdit
-    Left = 408
-    Height = 24
-    Top = 68
-    Width = 100
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 2
-    HideButton = False
-    CalculatorLayout = clNormal
-    AsInteger = 0
-    ButtonWidth = 24
-    NumGlyphs = 1
-    Flat = True
-    Id = 8400
-    FieldName = 'Последствия'
-    Precission = 0
-    Expression = '[Последствия текущие]-[Риск|Последствия]'
-    Required = False
-    DefaultValue = '0'
-    Editable = False
-    NullToZero = True
-    GroupDigits = True
-    PadZeros = True
   end
   object dxLabel3: TdxLabel
     Left = 8
@@ -126,7 +51,7 @@ object Form516: TdxForm
     Width = 316
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 3
+    TabOrder = 0
     Id = 8510
     FieldName = 'Вероятность риска'
     SourceTId = 514
@@ -152,7 +77,7 @@ object Form516: TdxForm
     Width = 312
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 4
+    TabOrder = 1
     Id = 8511
     FieldName = 'Последствия риска'
     SourceTId = 514
@@ -178,7 +103,7 @@ object Form516: TdxForm
     Width = 312
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 5
+    TabOrder = 2
     Id = 8512
     FieldName = 'Оценка'
     SourceTId = 514
@@ -228,7 +153,7 @@ object Form516: TdxForm
     Width = 100
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 6
+    TabOrder = 3
     HideButton = False
     CalculatorLayout = clNormal
     AsInteger = 0
@@ -238,7 +163,6 @@ object Form516: TdxForm
     Id = 131112
     FieldName = 'Вероятность текущая'
     Precission = 0
-    Expression = '[Риск|Вероятность]'
     Required = False
     DefaultValue = '0'
     Editable = True
@@ -253,7 +177,7 @@ object Form516: TdxForm
     Width = 100
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 7
+    TabOrder = 4
     HideButton = False
     CalculatorLayout = clNormal
     AsInteger = 0
@@ -263,7 +187,6 @@ object Form516: TdxForm
     Id = 131113
     FieldName = 'Последствия текущие'
     Precission = 0
-    Expression = '[Риск|Последствия]'
     Required = False
     DefaultValue = '0'
     Editable = True
@@ -271,13 +194,30 @@ object Form516: TdxForm
     GroupDigits = True
     PadZeros = True
   end
-  object dxLabel7: TdxLabel
-    Left = 408
-    Height = 16
-    Top = 16
-    Width = 127
-    Caption = 'Переоценка риска'
-    ParentColor = False
+  object dxLookupComboBox5: TdxLookupComboBox
+    Left = 52
+    Height = 24
+    Top = 4
+    Width = 328
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 5
+    Id = 262427
+    FieldName = 'Документ'
+    SourceTId = 112
+    SourceFId = 1894
+    Required = False
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Editable = True
+    ListFields = <>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = False
+    UpdateTree = False
   end
   object Grid: TdxGrid
     Left = 0
@@ -287,12 +227,6 @@ object Form516: TdxForm
     AutoAdvance = aaNone
     Color = clWindow
     Columns = <    
-      item
-        Tag = 8398
-        Title.Caption = ' '
-        Width = 313
-        FieldName = 'f8398l'
-      end    
       item
         Tag = 8510
         Title.Caption = ' '
@@ -312,18 +246,6 @@ object Form516: TdxForm
         FieldName = 'f8512l'
       end    
       item
-        Tag = 8399
-        Title.Caption = ' '
-        Width = 112
-        FieldName = 'f8399'
-      end    
-      item
-        Tag = 8400
-        Title.Caption = ' '
-        Width = 107
-        FieldName = 'f8400'
-      end    
-      item
         Tag = 131112
         Title.Caption = ' '
         Width = 100
@@ -334,6 +256,12 @@ object Form516: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f131113'
+      end    
+      item
+        Tag = 262427
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262427l'
       end>
     DefaultRowHeight = 40
     DoubleBuffered = True
@@ -354,7 +282,7 @@ object Form516: TdxForm
     FlatButtons = True
     ButtonsColor = clBtnFace
     ButtonSize = 25
-    ButtonFont.Height = -13
+    ButtonFont.Height = -9
     ButtonFont.Name = 'Verdana'
     AlignmentButtons = taLeftJustify
     HideButtonsWhenLostFocus = False

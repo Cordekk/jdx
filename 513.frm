@@ -5,7 +5,7 @@ object Form513: TdxForm
   Width = 676
   Id = 513
   PId = 0
-  FormCaption = 'Реестр рисков'
+  FormCaption = 'Реестр рисков1'
   FormGroup = 'Общие'
   Font.Height = -13
   Font.Name = 'Verdana'
@@ -211,46 +211,45 @@ object Form513: TdxForm
     Caption = 'Оценка'
     ParentColor = False
   end
-  object dxQueryGrid1: TdxQueryGrid
-    Left = 16
-    Height = 178
-    Top = 232
-    Width = 652
-    AutoAdvance = aaNone
-    Color = clWindow
-    Columns = <>
-    DefaultRowHeight = 20
-    DoubleBuffered = True
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
-    ParentDoubleBuffered = False
-    ShowHint = True
-    TabOrder = 6
-    SelectedColor = clHighlight
-    GridLineStyle = psSolid
-    SelectedTextColor = clHighlightText
-    InactiveSelectedColor = clSilver
-    InactiveSelectedTextColor = clBlack
-    ShowButtons = False
-    VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
-    VisibleCaptions = []
-    FlatButtons = True
-    ButtonsColor = clBtnFace
-    ButtonSize = 25
-    ButtonFont.Height = -13
-    ButtonFont.Name = 'Verdana'
-    AlignmentButtons = taLeftJustify
-    HideButtonsWhenLostFocus = False
-    WordWrap = False
-    AllowChangeSort = False
-    Id = 384
-    ManualRefresh = False
-  end
   object dxLabel7: TdxLabel
     Left = 32
     Height = 16
     Top = 208
     Width = 155
     Caption = 'Подсчет оценки риска'
+    ParentColor = False
+  end
+  object dxLookupComboBox4: TdxLookupComboBox
+    Left = 432
+    Height = 24
+    Top = 48
+    Width = 216
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 6
+    Id = 262426
+    FieldName = 'Документ'
+    SourceTId = 112
+    SourceFId = 1894
+    Required = False
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Editable = False
+    ListFields = <>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = False
+    UpdateTree = False
+  end
+  object dxLabel8: TdxLabel
+    Left = 360
+    Height = 16
+    Top = 44
+    Width = 66
+    Caption = 'Документ'
     ParentColor = False
   end
   object Grid: TdxGrid
@@ -296,6 +295,12 @@ object Form513: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f8388l'
+      end    
+      item
+        Tag = 262426
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262426l'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
@@ -316,7 +321,7 @@ object Form513: TdxForm
     FlatButtons = True
     ButtonsColor = clBtnFace
     ButtonSize = 25
-    ButtonFont.Height = -13
+    ButtonFont.Height = -9
     ButtonFont.Name = 'Verdana'
     AlignmentButtons = taLeftJustify
     HideButtonsWhenLostFocus = False

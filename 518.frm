@@ -2,7 +2,7 @@ object Form518: TdxForm
   Left = 10
   Height = 300
   Top = 10
-  Width = 350
+  Width = 534
   Id = 518
   PId = 517
   FormCaption = 'Состав комиссии'
@@ -29,10 +29,10 @@ object Form518: TdxForm
     ParentColor = False
   end
   object dxLookupComboBox1: TdxLookupComboBox
-    Left = 8
+    Left = 12
     Height = 24
-    Top = 60
-    Width = 300
+    Top = 52
+    Width = 404
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
@@ -85,7 +85,7 @@ object Form518: TdxForm
     FlatButtons = True
     ButtonsColor = clBtnFace
     ButtonSize = 25
-    ButtonFont.Height = -13
+    ButtonFont.Height = -9
     ButtonFont.Name = 'Verdana'
     AlignmentButtons = taLeftJustify
     HideButtonsWhenLostFocus = False
