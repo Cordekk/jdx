@@ -43,21 +43,6 @@ object Form4491: TdxForm
     Caption = 'Имя поля'
     ParentColor = False
   end
-  object dxEdit2: TdxEdit
-    Left = 175
-    Height = 24
-    Top = 40
-    Width = 252
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 1
-    Id = 8188
-    FieldName = 'Значение до'
-    FieldSize = 100
-    Required = False
-    Expression = '//'
-    Editable = False
-  end
   object dxLabel2: TdxLabel
     Left = 8
     Height = 16
@@ -66,21 +51,6 @@ object Form4491: TdxForm
     Caption = 'Значение до измнения'
     ParentColor = False
   end
-  object dxEdit3: TdxEdit
-    Left = 175
-    Height = 24
-    Top = 72
-    Width = 252
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 2
-    Id = 8189
-    FieldName = 'Значение после'
-    FieldSize = 100
-    Required = False
-    Expression = '//'
-    Editable = False
-  end
   object dxLabel3: TdxLabel
     Left = 8
     Height = 16
@@ -88,6 +58,42 @@ object Form4491: TdxForm
     Width = 143
     Caption = 'Значение после изм.'
     ParentColor = False
+  end
+  object dxEdit2: TdxMemo
+    Left = 175
+    Height = 24
+    Top = 40
+    Width = 252
+    ScrollBars = ssBoth
+    TabOrder = 1
+    Id = 8188
+    FieldName = 'Значение до'
+    FieldSize = 0
+    Required = False
+    SourceTId = 0
+    SourceFId = 0
+    Delimiter = ', '
+    Expression = '//'
+    Editable = False
+    UpdateTree = False
+  end
+  object dxEdit3: TdxMemo
+    Left = 175
+    Height = 24
+    Top = 72
+    Width = 252
+    ScrollBars = ssBoth
+    TabOrder = 2
+    Id = 8189
+    FieldName = 'Значение после'
+    FieldSize = 0
+    Required = False
+    SourceTId = 0
+    SourceFId = 0
+    Delimiter = ', '
+    Expression = '//'
+    Editable = False
+    UpdateTree = False
   end
   object Grid: TdxGrid
     Left = 0

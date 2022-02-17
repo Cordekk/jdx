@@ -1,8 +1,8 @@
 object Form119: TdxForm
   Left = 10
-  Height = 443
+  Height = 653
   Top = 10
-  Width = 686
+  Width = 678
   Id = 119
   PId = 0
   FormCaption = 'Виды документов'
@@ -36,9 +36,9 @@ object Form119: TdxForm
     Editable = False
   end
   object dxEdit2: TdxEdit
-    Left = 432
+    Left = 420
     Height = 24
-    Top = 148
+    Top = 160
     Width = 144
     CharCase = ecNormal
     MaxLength = 0
@@ -50,9 +50,9 @@ object Form119: TdxForm
     Editable = False
   end
   object dxLabel1: TdxLabel
-    Left = 432
+    Left = 420
     Height = 16
-    Top = 128
+    Top = 140
     Width = 166
     Caption = 'Уровень документа СМК'
     ParentColor = False
@@ -66,9 +66,9 @@ object Form119: TdxForm
     ParentColor = False
   end
   object dxLookupComboBox1: TdxLookupComboBox
-    Left = 28
+    Left = 24
     Height = 24
-    Top = 48
+    Top = 36
     Width = 596
     CharCase = ecNormal
     MaxLength = 0
@@ -92,9 +92,9 @@ object Form119: TdxForm
   end
   object dxMemo1: TdxMemo
     Left = 24
-    Height = 102
+    Height = 130
     Top = 148
-    Width = 398
+    Width = 386
     ScrollBars = ssBoth
     TabOrder = 3
     Id = 2443
@@ -108,17 +108,17 @@ object Form119: TdxForm
     UpdateTree = False
   end
   object dxLabel3: TdxLabel
-    Left = 416
+    Left = 356
     Height = 16
-    Top = 20
+    Top = 76
     Width = 92
     Caption = 'Кодификация'
     ParentColor = False
   end
   object dxEdit3: TdxEdit
-    Left = 528
+    Left = 464
     Height = 24
-    Top = 16
+    Top = 68
     Width = 100
     CharCase = ecNormal
     MaxLength = 0
@@ -130,17 +130,17 @@ object Form119: TdxForm
     Editable = False
   end
   object dxLabel4: TdxLabel
-    Left = 432
+    Left = 420
     Height = 16
-    Top = 176
+    Top = 188
     Width = 97
     Caption = 'Номенклатура'
     ParentColor = False
   end
   object dxEdit4: TdxEdit
-    Left = 432
+    Left = 420
     Height = 24
-    Top = 196
+    Top = 208
     Width = 100
     CharCase = ecNormal
     MaxLength = 0
@@ -154,7 +154,7 @@ object Form119: TdxForm
   object dxEdit5: TdxEdit
     Left = 168
     Height = 24
-    Top = 284
+    Top = 288
     Width = 392
     CharCase = ecNormal
     MaxLength = 0
@@ -168,7 +168,7 @@ object Form119: TdxForm
   object dxLabel5: TdxLabel
     Left = 24
     Height = 16
-    Top = 288
+    Top = 296
     Width = 134
     Caption = 'Шаблон для печати'
     ParentColor = False
@@ -176,7 +176,7 @@ object Form119: TdxForm
   object dxCalcEdit1: TdxCalcEdit
     Left = 580
     Height = 24
-    Top = 416
+    Top = 620
     Width = 100
     CharCase = ecNormal
     MaxLength = 0
@@ -207,10 +207,10 @@ object Form119: TdxForm
     ParentColor = False
   end
   object dxEdit6: TdxEdit
-    Left = 168
+    Left = 28
     Height = 24
     Top = 324
-    Width = 388
+    Width = 300
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
@@ -219,27 +219,28 @@ object Form119: TdxForm
     FieldSize = 50
     Required = False
     Editable = False
+    DefaultValue = '''URD-KOD-№-YYYY'''
   end
   object dxLabel7: TdxLabel
-    Left = 24
-    Height = 112
-    Top = 328
+    Left = 28
+    Height = 160
+    Top = 352
     Width = 293
-    Caption = 'Шаблон нумератора'#13#10'№ - номер документа по порядку'#13#10'NN - номенклатурный номер'#13#10'KOD - кодификация документа'#13#10'URD - уровень документа СМК'#13#10'MM - месяц,    YYYY - год, DD - день'#13#10'И любые знаки и любой текст между ними'
+    Caption = 'Шаблон нумератора'#13#10'№ - номер документа по порядку'#13#10'NN - номенклатурный номер'#13#10'KOD - кодификация документа'#13#10'URD - уровень документа СМК'#13#10'YYYY - год, 4 цифры'#13#10'YY - год, 2 последние цифры'#13#10'MM - месяц,    '#13#10'DD - день'#13#10'И любые знаки и любой текст между ними'
     ParentColor = False
   end
   object dxLabel8: TdxLabel
-    Left = 432
+    Left = 420
     Height = 16
-    Top = 224
+    Top = 236
     Width = 134
     Caption = 'Срок хранения, лет'
     ParentColor = False
   end
   object dxEdit7: TdxEdit
-    Left = 432
+    Left = 420
     Height = 24
-    Top = 240
+    Top = 252
     Width = 100
     CharCase = ecNormal
     MaxLength = 0
@@ -253,10 +254,146 @@ object Form119: TdxForm
   object dxLabel9: TdxLabel
     Left = 24
     Height = 16
-    Top = 80
+    Top = 72
     Width = 101
     Caption = 'Вид документа'
     ParentColor = False
+  end
+  object dxCheckBox1: TdxCheckBox
+    Left = 339
+    Height = 23
+    Top = 360
+    Width = 214
+    Caption = 'NN- внутри новенклатуры'
+    TabOrder = 10
+    ValueChecked = '1'
+    ValueUnchecked = '0'
+    Id = 262436
+    FieldName = 'NN'
+    CheckedText = 'Да'
+    UnCheckedText = 'Нет'
+    Editable = False
+    DefaultValue = '0'
+  end
+  object dxCheckBox2: TdxCheckBox
+    Left = 339
+    Height = 23
+    Top = 387
+    Width = 242
+    Caption = 'KOD - внутри вида документа'
+    TabOrder = 11
+    ValueChecked = '1'
+    ValueUnchecked = '0'
+    Id = 262437
+    FieldName = 'KOD'
+    CheckedText = 'Да'
+    UnCheckedText = 'Нет'
+    Editable = False
+    DefaultValue = '0'
+  end
+  object dxCheckBox3: TdxCheckBox
+    Left = 339
+    Height = 23
+    Top = 418
+    Width = 210
+    Caption = 'URD - внутриуровневая'
+    TabOrder = 12
+    ValueChecked = '1'
+    ValueUnchecked = '0'
+    Id = 262438
+    FieldName = 'URD'
+    CheckedText = 'Да'
+    UnCheckedText = 'Нет'
+    Editable = False
+    DefaultValue = '0'
+  end
+  object dxCheckBox4: TdxCheckBox
+    Left = 339
+    Height = 23
+    Top = 473
+    Width = 210
+    Caption = 'MM - внутри месяца'
+    TabOrder = 13
+    ValueChecked = '1'
+    ValueUnchecked = '0'
+    Id = 262440
+    FieldName = 'MM'
+    CheckedText = 'Да'
+    UnCheckedText = 'Нет'
+    Editable = False
+    DefaultValue = '0'
+  end
+  object dxCheckBox5: TdxCheckBox
+    Left = 339
+    Height = 23
+    Top = 500
+    Width = 206
+    Caption = 'DD - внутри дня'
+    TabOrder = 14
+    ValueChecked = '1'
+    ValueUnchecked = '0'
+    Id = 262441
+    FieldName = 'DD'
+    CheckedText = 'Да'
+    UnCheckedText = 'Нет'
+    Editable = False
+    DefaultValue = '0'
+  end
+  object dxCheckBox6: TdxCheckBox
+    Left = 339
+    Height = 23
+    Top = 448
+    Width = 162
+    Caption = 'YYYY - внутри года'
+    TabOrder = 15
+    ValueChecked = '1'
+    ValueUnchecked = '0'
+    Id = 262442
+    FieldName = 'YYYY'
+    CheckedText = 'Да'
+    UnCheckedText = 'Нет'
+    Editable = False
+    DefaultValue = '0'
+  end
+  object dxLabel10: TdxLabel
+    Left = 344
+    Height = 16
+    Top = 336
+    Width = 235
+    Caption = 'Нумерация идет с начала внутри:'
+    ParentColor = False
+  end
+  object dxLabel11: TdxLabel
+    Left = 28
+    Height = 16
+    Top = 544
+    Width = 270
+    Caption = 'Минимальное количество цифр номера'
+    ParentColor = False
+  end
+  object dxCalcEdit2: TdxCalcEdit
+    Left = 340
+    Height = 24
+    Top = 540
+    Width = 80
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 16
+    HideButton = False
+    CalculatorLayout = clNormal
+    AsInteger = 0
+    ButtonWidth = 24
+    NumGlyphs = 1
+    Flat = True
+    Id = 262451
+    FieldName = 'Число'
+    Precission = 0
+    Required = False
+    DefaultValue = '1'
+    Editable = False
+    NullToZero = True
+    GroupDigits = True
+    PadZeros = True
   end
   object Grid: TdxGrid
     Left = 0
@@ -303,34 +440,91 @@ object Form119: TdxForm
         FieldName = 'f8412'
       end    
       item
+        Tag = 262414
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262414'
+      end    
+      item
         Tag = 8513
         Title.Caption = ' '
         Width = 100
         FieldName = 'f8513'
       end    
       item
-        Tag = 262316
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f262316'
-      end    
-      item
         Tag = 262412
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262412'
       end    
       item
-        Tag = 262414
+        Tag = 262316
         Title.Caption = ' '
-        Width = 100
-        FieldName = 'f262414'
+        Width = 0
+        Visible = False
+        FieldName = 'f262316'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262436
+        Title.Caption = ' '
+        Width = 0
+        Visible = False
+        FieldName = 'f262436'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262437
+        Title.Caption = ' '
+        Width = 0
+        Visible = False
+        FieldName = 'f262437'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262438
+        Title.Caption = ' '
+        Width = 0
+        Visible = False
+        FieldName = 'f262438'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262440
+        Title.Caption = ' '
+        Width = 0
+        Visible = False
+        FieldName = 'f262440'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262441
+        Title.Caption = ' '
+        Width = 0
+        Visible = False
+        FieldName = 'f262441'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262442
+        Title.Caption = ' '
+        Width = 0
+        Visible = False
+        FieldName = 'f262442'
+      end    
+      item
+        Tag = 262451
+        Title.Caption = ' '
+        Width = 0
+        Visible = False
+        FieldName = 'f262451'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
     Font.Height = -13
     Font.Name = 'Verdana'
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgDisplayMemoText]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgDisplayMemoText]
     ParentDoubleBuffered = False
     ReadOnly = True
     ShowHint = True

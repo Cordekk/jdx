@@ -27,7 +27,7 @@ object Form112: TdxForm
   Tree = Tree.Owner
   Index = 9
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Сотрудник|user] = USER" grid="cmp;ve_prop|dxLookupComboBox4;Редактирование|dxLookupComboBox2;Редактирование|dxLookupComboBox3;Редактирование|dxEdit1;Редактирование|dxMemo3;Редактирование|dxMemo5;Редактирование|dxLookupComboBox1;Редактирование" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Утверждающий|user]= user & [Согласовано] = 1" grid="cmp;ve_prop|dxButton10;Доступность|dxMemo4;Доступность|dxCheckBox2;Доступность" stateevents="0" /><action type="9" id="86F3AAEF-2807-46C4-8344-8E2521947747" allfields="1" logfields="Field" users="User" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Сотрудник|user] = USER" grid="cmp;ve_prop|dxLookupComboBox4;Редактирование|dxLookupComboBox2;Редактирование|dxLookupComboBox3;Редактирование|dxEdit1;Редактирование|dxMemo3;Редактирование|dxMemo5;Редактирование|dxLookupComboBox1;Редактирование" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Утверждающий|user]= user & [Согласовано] = 1" grid="cmp;ve_prop|dxButton10;Доступность|dxMemo4;Доступность|dxCheckBox2;Доступность" stateevents="0" /><action type="9" id="86F3AAEF-2807-46C4-8344-8E2521947747" allfields="1" logfields="Field" users="User" /><action disabled="1" type="9" id="65D407B7-2CFE-4F4D-9BE4-800461F09FE4" numerator="Номер" allow_edit_number="1" dependfields="DependField|Нумератор" /></actions>'
   object dxButton13: TdxButton
     Left = 788
     Height = 30
@@ -162,9 +162,9 @@ object Form112: TdxForm
     Height = 424
     Top = 398
     Width = 912
-    ActivePage = dxTabSheet3
+    ActivePage = dxTabSheet9
     Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 5
     object dxTabSheet9: TdxTabSheet
       Caption = 'Описание'
@@ -1192,7 +1192,7 @@ object Form112: TdxForm
         Left = 8
         Height = 380
         Top = 8
-        Width = 804
+        Width = 748
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
@@ -1231,6 +1231,21 @@ object Form112: TdxForm
         Caption = 'dxLabel10'
         ParentColor = False
         Expression = '// LOGER(''Номер;Заголовок;Описание;Дата;"Вид документа1|Вид документа";"Адресат|ФамилияИО";"Подразделение_адресат|Название_подразделения"'', ''Дата проверки'', ''Дата изменения'')'
+      end
+      object dxEdit4: TdxEdit
+        Left = 776
+        Height = 24
+        Top = 312
+        Width = 100
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 1
+        Id = 262452
+        FieldName = 'Нумератор'
+        FieldSize = 50
+        Required = False
+        Expression = 'IIF( [Вид документа|NN]=1,[Вид документа|Номенклатура],'''')+'#13#10'IIF( [Вид документа|URD]=1,[Вид документа|Уровень документа СМК],'''')+'#13#10'IIF( [Вид документа|KOD]=1, [Вид документа|КОД],'''')+'#13#10'IIF( [Вид документа|YYYY]=1|[Вид документа|MM]=1|[Вид документа|DD]=1,CSTR(YEAROF([Дата])),'''')+'#13#10'IIF( [Вид документа|MM]=1|[Вид документа|DD]=1,CSTR(MONTHOF([Дата])),'''')+'#13#10'IIF( [Вид документа|DD]=1,CSTR(DAYOF([Дата])),'''')'
+        Editable = False
       end
     end
   end
@@ -1589,10 +1604,10 @@ object Form112: TdxForm
     Id = 8409
     FieldName = 'Номер'
     Precission = 0
-    Expression = '// [Счетчик]'#13#10'NZ(DBMAX(''Документы'', ''Номер'', ''[!Вид документа]=[Вид документа]&[!Дата]>= BEGINYEAR(NZ([Дата],SRV_DATE))''),0)+1'
+    Expression = '// [Счетчик]'#13#10'// старый нумератор через DBMAX'#13#10'NZ(DBMAX(''Документы'', ''Номер'', ''[!Нумератор]=[Нумератор]''),0)+1'
     Required = False
     DefaultValue = '0'
-    Editable = False
+    Editable = True
     NullToZero = True
     GroupDigits = True
     PadZeros = True
@@ -1617,7 +1632,7 @@ object Form112: TdxForm
     FieldName = 'КОД'
     FieldSize = 20
     Required = False
-    Expression = 'NZ([Вид документа|КОД],'''')+'' ''+NZ([Вид документа|Уровень документа СМК],'''')+''-''+CSTR([Номер])+''-''+CSTR(YEAROF([Дата]))'
+    Expression = '/*NZ([Вид документа|КОД],'''')+'' ''+NZ([Вид документа|Уровень документа СМК],'''')+''-''+CSTR([Номер])+''-''+CSTR(YEAROF([Дата]))'#13#10'*/'#13#10'Block('#13#10'setvar(''ND'',[Вид документа|Шаблон_номера]),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''№'',ZEROS([Номер],[Вид документа|Число]))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''NN'',NZ([Вид документа|Номенклатура],''''))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''KOD'',NZ([Вид документа|КОД],''''))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''URD'',NZ([Вид документа|Уровень документа СМК],''''))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''YYYY'',CSTR(YEAROF([Дата])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''MM'',CSTR(MONTHOF([Дата])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''DD'',CSTR(DAYOF([Дата])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''YY'',CUT(CSTR(YEAROF([Дата])),3,2))),'#13#10'getvar(''ND'')'#13#10')'
     Editable = True
   end
   object Grid: TdxGrid
@@ -1866,6 +1881,12 @@ object Form112: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f131081'
+      end    
+      item
+        Tag = 262452
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262452'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

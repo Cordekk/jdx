@@ -290,7 +290,7 @@ object Form3490: TdxForm
     Left = 192
     Height = 16
     Top = 14
-    Width = 140
+    Width = 139
     Caption = 'v. 3.1  (04.04.2018) '
     ParentColor = False
   end
