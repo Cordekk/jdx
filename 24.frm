@@ -180,7 +180,7 @@ object Form24: TdxForm
   object dxLabel6: TdxLabel
     Left = 12
     Height = 20
-    Top = 264
+    Top = 260
     Width = 96
     Caption = 'Должность'
     ParentColor = False
@@ -1001,6 +1001,40 @@ object Form24: TdxForm
     Editable = False
     DefaultValue = '0'
   end
+  object dxLabel20: TdxLabel
+    Left = 312
+    Height = 20
+    Top = 200
+    Width = 53
+    Caption = 'Адрес'
+    ParentColor = False
+  end
+  object dxLookupComboBox3: TdxLookupComboBox
+    Left = 388
+    Height = 28
+    Top = 196
+    Width = 592
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 19
+    Id = 262463
+    FieldName = 'Адрес'
+    SourceTId = 294
+    SourceFId = 7276
+    Required = False
+    DefaultValue = '1'
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Editable = False
+    ListFields = <>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = False
+    UpdateTree = False
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 100
@@ -1202,6 +1236,12 @@ object Form24: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262409'
+      end    
+      item
+        Tag = 262463
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262463l'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
