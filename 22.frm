@@ -26,7 +26,7 @@ object Form22: TdxForm
   Tree = Tree.Owner
   Index = 40
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Контроль]=null" grid="cmp;ve_prop|dxLabel2;Видимость|dxLookupComboBox2;Видимость|dxLabel6;Видимость|dxObjectField2;Видимость|dxEdit6;Видимость|dxLabel22;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="'#13#10'[Заявка клиента2] = null" grid="cmp;ve_prop|dxLabel16;Видимость|dxLookupComboBox7;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="NEWREC=0" grid="cmp;ve_prop|dxButton1;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Заявка клиента2] = GetVar(''g'') | GetVar(''g'') = Null" grid="cmp;ve_prop|dxLookupComboBox1;Доступность|dxMemo1;Редактирование|dxEdit6;Редактирование|dxCalcEdit6;Доступность|dxEdit2;Редактирование|dxLookupComboBox5;Доступность|dxEdit3;Редактирование|dxEdit5;Редактирование" stateevents="0" /><action type="9" id="D310819C-2BA6-4F44-88C5-C13057BEA0FD" allfields="1" logfields="Field" users="User" /><action type="9" id="0D75186F-C6BB-4B69-BCF9-092FD2C316A3" fields="field|Продукция|Примечание|Объем партии1|Место происхождения|Шифр_Аргус_Меркурий|Срок годности" queries="query" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="D310819C-2BA6-4F44-88C5-C13057BEA0FD" allfields="1" logfields="Field" users="User" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="role = '''' | role = ''Администратор''" grid="cmp;ve_prop|dxCalcEdit1;Доступность" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Контроль]=null" grid="cmp;ve_prop|dxLabel2;Видимость|dxLookupComboBox2;Видимость|dxLabel6;Видимость|dxObjectField2;Видимость|dxEdit6;Видимость|dxLabel22;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="'#13#10'[Заявка клиента2] = null" grid="cmp;ve_prop|dxLabel16;Видимость|dxLookupComboBox7;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="NEWREC=0" grid="cmp;ve_prop|dxButton1;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Заявка клиента2] = GetVar(''g'') | GetVar(''g'') = Null" grid="cmp;ve_prop|dxLookupComboBox1;Доступность|dxMemo1;Редактирование|dxEdit6;Редактирование|dxCalcEdit6;Доступность|dxEdit2;Редактирование|dxLookupComboBox5;Доступность|dxEdit3;Редактирование|dxEdit5;Редактирование|dxLookupComboBox2;Редактирование" stateevents="0" /><action type="9" id="0D75186F-C6BB-4B69-BCF9-092FD2C316A3" fields="field|Продукция|Примечание|Объем партии1|Место происхождения|Шифр_Аргус_Меркурий|Срок годности" queries="query" /></actions>'
   object dxLookupComboBox7: TdxLookupComboBox
     Left = 92
     Height = 28
@@ -207,7 +207,7 @@ object Form22: TdxForm
     Required = True
     DefaultValue = '1'
     CheckExpression = 'IIF(DBUNIQUE(''Номер_пробы;Нумератор'')=0,'#13#10'setfield(''Номер_пробы'',  nz(DBMAX(''Пробы'', ''Номер_пробы'', ''[!Нумератор]=[Нумератор]''), 0) + 1),'#13#10''''')'
-    Editable = False
+    Editable = True
     NullToZero = True
     GroupDigits = True
     PadZeros = True
@@ -385,7 +385,7 @@ object Form22: TdxForm
     FieldName = 'Шифр_пробы'
     FieldSize = 150
     Required = False
-    Expression = '//NZ([Заявка клиента2|Шифр_заявки],'''')+NZ([Контроль|Шифр_контроль],'''')+ "-" + CSTR(ZEROS([Номер_пробы],2))'#13#10'Block('#13#10'setvar(''ND'',[Заявка клиента2|Направление2|Шаблон_номера_пробы]),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''ZZZZ'',[Заявка клиента2|Шифр_заявки])),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''№'',ZEROS([Номер_пробы],[Заявка клиента2|Направление2|Число1]))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''KOD'',[Заявка клиента2|Подразделение1|КОД])),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''URD'',[Заявка клиента2|Направление2|Префикс_направление])),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''YYYY'',CSTR(YEAROF([Дата_добавления])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''MM'',CSTR(MONTHOF([Дата_добавления])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''DD'',CSTR(DAYOF([Дата_добавления])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''YY'',CUT(CSTR(YEAROF([Дата_добавления])),3,2))),'#13#10'NZ(getvar(''ND''), NZ([Контроль|Шифр_контроль],'''')+ "-" + CSTR(ZEROS([Номер_пробы],2)))'#13#10')'
+    Expression = '//NZ([Заявка клиента2|Шифр_заявки],'''')+NZ([Контроль|Шифр_контроль],'''')+ "-" + CSTR(ZEROS([Номер_пробы],2))'#13#10'Block('#13#10'setvar(''ND'',[Заявка клиента2|Направление2|Шаблон_номера_пробы]),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''ZZZZ'',[Заявка клиента2|Шифр_заявки])),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''№'',ZEROS([Номер_пробы],[Заявка клиента2|Направление2|Число1]))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''KOD'',[Заявка клиента2|Подразделение1|КОД])),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''URD'',[Заявка клиента2|Направление2|Префикс_направление])),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''YYYY'',CSTR(YEAROF([Дата_добавления])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''MM'',CSTR(MONTHOF([Дата_добавления])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''DD'',CSTR(DAYOF([Дата_добавления])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''YY'',CUT(CSTR(YEAROF([Дата_добавления])),3,2))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''VPr1'',CUT([Вид пробы],1,1))), //VPr1 - учитывать Вид пробы (1 буква)'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''VPr1'',CUT([Вид пробы],1,2))),//VPr2 - учитывать Вид пробы (2 буквы)'#13#10'NZ(getvar(''ND''), NZ([Контроль|Шифр_контроль],'''')+ "-" + CSTR(ZEROS([Номер_пробы],2)))'#13#10')'
     CheckExpression = 'IIF(NZ([Заявка клиента2],0)+NZ([Контроль],0) = 0, ''Заявка не сохранена!'', '''')'
     Editable = False
   end
@@ -1151,9 +1151,9 @@ object Form22: TdxForm
         AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
         ItemHeight = 20
         Items.Strings = (
-          'Импортная продукция'
-          'Отечественная продукция'
-          'Подкарантинные объекты'
+          'импортная продукция'
+          'отечественная продукция'
+          'подкарантинные объекты'
         )
         MaxLength = 0
         TabOrder = 10
@@ -1163,7 +1163,7 @@ object Form22: TdxForm
         SourceFId = 0
         FieldSize = 50
         Required = False
-        Expression = 'IIF([Продукция|Группа продукции2|Родитель_корень|Объект]=1, ''Подкарантинные объекты'', IIF([Страна происхождения|Заграница]=1, ''Импортная продукция'', ''Отечественная продукция''))'
+        Expression = 'IIF([Продукция|Группа продукции2|Родитель_корень|Объект]=1, ''подкарантинные объекты'', IIF([Страна происхождения|Заграница]=1, ''импортная продукция'', ''отечественная продукция''))'
         Editable = False
       end
       object dxLabel29: TdxLabel
@@ -1833,10 +1833,11 @@ object Form22: TdxForm
       item
         Tag = 262462
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262462'
       end>
-    DefaultRowHeight = 20
+    DefaultRowHeight = 24
     DoubleBuffered = True
     Font.Height = -17
     Font.Name = 'Verdana'

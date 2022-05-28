@@ -2,7 +2,7 @@ object Form119: TdxForm
   Left = 10
   Height = 653
   Top = 10
-  Width = 678
+  Width = 665
   Id = 119
   PId = 0
   FormCaption = 'Виды документов'
@@ -141,7 +141,7 @@ object Form119: TdxForm
     Left = 420
     Height = 24
     Top = 208
-    Width = 100
+    Width = 144
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
@@ -168,7 +168,7 @@ object Form119: TdxForm
   object dxLabel5: TdxLabel
     Left = 24
     Height = 16
-    Top = 296
+    Top = 292
     Width = 134
     Caption = 'Шаблон для печати'
     ParentColor = False
@@ -223,10 +223,10 @@ object Form119: TdxForm
   end
   object dxLabel7: TdxLabel
     Left = 28
-    Height = 160
+    Height = 192
     Top = 352
-    Width = 293
-    Caption = 'Шаблон нумератора'#13#10'№ - номер документа по порядку'#13#10'NN - номенклатурный номер'#13#10'KOD - кодификация документа'#13#10'URD - уровень документа СМК'#13#10'YYYY - год, 4 цифры'#13#10'YY - год, 2 последние цифры'#13#10'MM - месяц,    '#13#10'DD - день'#13#10'И любые знаки и любой текст между ними'
+    Width = 352
+    Caption = 'Шаблон нумератора'#13#10'№ - номер документа по порядку'#13#10'NN - номенклатурный номер'#13#10'KOD - кодификация документа'#13#10'URD - уровень документа СМК'#13#10'YYYY - год, 4 цифры'#13#10'YY - год, 2 последние цифры'#13#10'MM - месяц,    '#13#10'DD - день'#13#10'PRKD - код подразделения'#13#10'PRSK - сокращенное наименование подразделения'#13#10'И любые знаки и любой текст между ними'
     ParentColor = False
   end
   object dxLabel8: TdxLabel
@@ -241,7 +241,7 @@ object Form119: TdxForm
     Left = 420
     Height = 24
     Top = 252
-    Width = 100
+    Width = 140
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
@@ -260,9 +260,9 @@ object Form119: TdxForm
     ParentColor = False
   end
   object dxCheckBox1: TdxCheckBox
-    Left = 339
+    Left = 401
     Height = 23
-    Top = 360
+    Top = 356
     Width = 214
     Caption = 'NN- внутри новенклатуры'
     TabOrder = 10
@@ -276,9 +276,9 @@ object Form119: TdxForm
     DefaultValue = '0'
   end
   object dxCheckBox2: TdxCheckBox
-    Left = 339
+    Left = 401
     Height = 23
-    Top = 387
+    Top = 383
     Width = 242
     Caption = 'KOD - внутри вида документа'
     TabOrder = 11
@@ -292,9 +292,9 @@ object Form119: TdxForm
     DefaultValue = '0'
   end
   object dxCheckBox3: TdxCheckBox
-    Left = 339
+    Left = 401
     Height = 23
-    Top = 418
+    Top = 414
     Width = 210
     Caption = 'URD - внутриуровневая'
     TabOrder = 12
@@ -308,9 +308,9 @@ object Form119: TdxForm
     DefaultValue = '0'
   end
   object dxCheckBox4: TdxCheckBox
-    Left = 339
+    Left = 401
     Height = 23
-    Top = 473
+    Top = 469
     Width = 210
     Caption = 'MM - внутри месяца'
     TabOrder = 13
@@ -324,9 +324,9 @@ object Form119: TdxForm
     DefaultValue = '0'
   end
   object dxCheckBox5: TdxCheckBox
-    Left = 339
+    Left = 401
     Height = 23
-    Top = 500
+    Top = 496
     Width = 206
     Caption = 'DD - внутри дня'
     TabOrder = 14
@@ -340,9 +340,9 @@ object Form119: TdxForm
     DefaultValue = '0'
   end
   object dxCheckBox6: TdxCheckBox
-    Left = 339
+    Left = 401
     Height = 23
-    Top = 448
+    Top = 444
     Width = 162
     Caption = 'YYYY - внутри года'
     TabOrder = 15
@@ -356,25 +356,25 @@ object Form119: TdxForm
     DefaultValue = '0'
   end
   object dxLabel10: TdxLabel
-    Left = 344
+    Left = 401
     Height = 16
-    Top = 336
+    Top = 332
     Width = 235
     Caption = 'Нумерация идет с начала внутри:'
     ParentColor = False
   end
   object dxLabel11: TdxLabel
-    Left = 28
+    Left = 24
     Height = 16
-    Top = 544
+    Top = 608
     Width = 270
     Caption = 'Минимальное количество цифр номера'
     ParentColor = False
   end
   object dxCalcEdit2: TdxCalcEdit
-    Left = 340
+    Left = 336
     Height = 24
-    Top = 540
+    Top = 604
     Width = 80
     CharCase = ecNormal
     MaxLength = 0
@@ -394,6 +394,38 @@ object Form119: TdxForm
     NullToZero = True
     GroupDigits = True
     PadZeros = True
+  end
+  object dxCheckBox7: TdxCheckBox
+    Left = 401
+    Height = 23
+    Top = 520
+    Width = 190
+    Caption = 'Внутри подразделения'
+    TabOrder = 17
+    ValueChecked = '1'
+    ValueUnchecked = '0'
+    Id = 262484
+    FieldName = 'PRKD'
+    CheckedText = 'Да'
+    UnCheckedText = 'Нет'
+    Editable = False
+    DefaultValue = '0'
+  end
+  object dxCheckBox8: TdxCheckBox
+    Left = 28
+    Height = 23
+    Top = 560
+    Width = 238
+    Caption = 'Номер из Аргуса (внешний)'
+    TabOrder = 18
+    ValueChecked = '1'
+    ValueUnchecked = '0'
+    Id = 262486
+    FieldName = 'Внешний номер'
+    CheckedText = 'Да'
+    UnCheckedText = 'Нет'
+    Editable = False
+    DefaultValue = '0'
   end
   object Grid: TdxGrid
     Left = 0
@@ -519,6 +551,20 @@ object Form119: TdxForm
         Width = 0
         Visible = False
         FieldName = 'f262451'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262484
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262484'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262486
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262486'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

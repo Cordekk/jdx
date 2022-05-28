@@ -217,10 +217,73 @@ begin
     MsgBox('JDX', IntToStr(I) + ' исследований назначено');
     end;
 
-procedure Form_Create;
+
+   //скрипт для редактирования полей связанных форм.
+procedure Argus_SetFieldValueSQL(Sender: TObject);    // прописать шифр заявки и образца из аргуса сначала в пробы, затем в образцы через SQL
+var
+   n, p, o: Integer;
+  Shifr, SQLst: string;
+  SQL: TdxSQLQuery;
+begin
+  SQLst :='select  id,  [Шифр_Аргус_Меркурий] as sh from [Пробы] where [Заявка клиента2]='+inttostr(Self.recid); // создаем SQL запрос который отберет нам все пробы из заявки, строка формируется.
+  Sql := SQLSelect(SQLst);
+  p:=0;
+  o:=0;
+	if Sql.RecordCount > 0 then    // если записи есть то начинаем их менять в цикле
+	   begin
+		Sql.MoveFirst; // встанем на первую отобранную запись
+		try
+			while not Sql.Eof do
+			begin
+			 p:=p+1;  // записываем счетчик измененных проб
+			 Sql.Edit; // открываем на редактирование
+			 Sql.Field[1].AsString := Self['Аргус №'];    // в цикле присваиваем нужно значение полю запроса, потом его сохраним
+			 Sql.Post;         // сохраняем измененные значения
+			 Sql.MoveNext;  // двигаемся дальше по запросу
+			end;
+			finally
+			Sql.ApplyUpdates; //применяем изменения, после чего освободим запрос
+			Sql.Free;
+			end;
+		end;
+    Shifr:= Self['Аргус №1']; // прочитать поле с шифром
+		try
+		n:=StrToInt(copy(Shifr,1,POS('-',Shifr)-1)); // извлечь номер (первые цифры)
+		except n:=0;
+		finally
+		end
+    delete(Shifr,1,POS('-',Shifr)-1); // убрать из шифра первые цифры
+    SQLst :='select id, [Шифр_Аргус] as sh from [Образцы] where [Заявка клиента]='+inttostr(Self.recid);  // создаем SQL запрос который отберет нам все образцы из заявки
+    Sql := SQLSelect(SQLst);
+		if Sql.RecordCount > 0 then    // если записи есть то начинаем их менять в цикле
+	   begin
+		Sql.MoveFirst;
+		try
+		while not Sql.Eof do
+			 begin
+			  Sql.Edit; // открываем для редактирования
+			  Sql.Field[1].AsString := inttostr(n)+Shifr; // в цикле присваиваем нужно значение полю запроса, потом его сохраним
+			  Sql.Post;  // сохраняем измененные хначения
+			  Sql.MoveNext;   // двигаемся дальше по запросу
+			  n:= n+1; // меняем номер на следующий (больший на единицу)
+			  o:=o+1; // записываем счетчик измененных образцов
+			 end;
+		 finally
+			Sql.ApplyUpdates; // применяем изменения, после чего освободим запрос
+			Sql.Free; // освободим запрос
+			MsgBox('JDX', IntToStr(p) + ' проб заполнено, '+IntToStr(o)+ ' образцов заполнено'); // проверка
+		// TCONTROL(Self.findcomponent('dxLabel45')).Caption:=IntToStr(p) + ' проб заполнено, '+IntToStr(o)+ ' образцов заполнено';
+			dxQueryGrid1.refresh;
+			end;
+
+	end;
+end;
+
+  procedure Form_Create;
 begin
   dxButton3.OnClick := @CreateSamples; // получение образцов
   DuplicateBn.OnClick := @DuplicateBnClick; // внесение пробы (и дублирование)
   dxQueryGrid7.OnAfterScroll:=@dxQueryGrid1OnAfterScroll; // открытие приложенных файлов
   dxButton14.OnClick := @CreateReseach; // назначение исследований по упрощенной схеме
+  dxButton5.OnClick := @Argus_SetFieldValueSQL; // прописать шифр заявки и образца из аргус лаборатории
   end;

@@ -31,7 +31,7 @@ object Form247: TdxForm
     MaxLength = 0
     TabOrder = 0
     Id = 2690
-    FieldName = 'Номер проверки'
+    FieldName = 'Номер'
     Required = False
   end
   object dxDateEdit1: TdxDateEdit
@@ -189,10 +189,10 @@ object Form247: TdxForm
     ParentColor = False
   end
   object dxLookupComboBox2: TdxLookupComboBox
-    Left = 348
+    Left = 344
     Height = 24
-    Top = 76
-    Width = 284
+    Top = 80
+    Width = 408
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
@@ -239,9 +239,9 @@ object Form247: TdxForm
     UpdateTree = False
   end
   object dxLabel7: TdxLabel
-    Left = 360
+    Left = 292
     Height = 16
-    Top = 24
+    Top = 16
     Width = 72
     Caption = 'Сотрудник'
     ParentColor = False
@@ -301,6 +301,88 @@ object Form247: TdxForm
     Top = 572
     Width = 83
     Caption = 'Заключение'
+    ParentColor = False
+  end
+  object dxEdit4: TdxEdit
+    Left = 728
+    Height = 24
+    Top = 0
+    Width = 80
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 10
+    Id = 262464
+    FieldName = 'Идентификатор'
+    FieldSize = 20
+    Required = False
+    Expression = '// [Номер]'#13#10'RECID(''ТехОбслуживание ТМЦ'')'
+    Editable = False
+    DefaultValue = 'RECID(''Документы'')'
+  end
+  object dxLookupComboBox3: TdxLookupComboBox
+    Left = 385
+    Height = 24
+    Top = 8
+    Width = 304
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 11
+    Id = 262465
+    FieldName = 'Сотрудник'
+    SourceTId = 24
+    SourceFId = 87
+    Required = True
+    DefaultValue = 'OBJID("Сотрудники", "user", USER)'
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Expression = '// [Номер]'#13#10'OBJID("Сотрудники", "user", USER)'
+    Editable = False
+    ListFields = <>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = True
+    UpdateTree = False
+  end
+  object dxLookupComboBox5: TdxLookupComboBox
+    Left = 384
+    Height = 24
+    Top = 40
+    Width = 304
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 12
+    Id = 262466
+    FieldName = 'Подразделение'
+    SourceTId = 25
+    SourceFId = 77
+    Required = False
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Expression = '[Сотрудник|Подразделение]'
+    Editable = False
+    ListFields = <    
+      item
+        FieldId = 78
+        Width = 500
+        Searchable = True
+      end>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = True
+    UpdateTree = False
+  end
+  object dxLabel10: TdxLabel
+    Left = 308
+    Height = 16
+    Top = 84
+    Width = 30
+    Caption = 'ТМЦ'
     ParentColor = False
   end
   object Grid: TdxGrid
@@ -370,6 +452,24 @@ object Form247: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262361'
+      end    
+      item
+        Tag = 262464
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262464'
+      end    
+      item
+        Tag = 262465
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262465l'
+      end    
+      item
+        Tag = 262466
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262466l'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

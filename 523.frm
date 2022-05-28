@@ -986,6 +986,15 @@ object Form523: TdxForm
         Id = 2917
         ManualRefresh = False
       end
+      object dxButton5: TdxButton
+        Left = 932
+        Height = 30
+        Top = 12
+        Width = 160
+        Caption = 'пересчитать ГЗ'
+        TabOrder = 21
+        ActionOnClick = '<actions><action type="3" form="Заявка клиента" filter="[Дата]&gt;=[Дата_начала] &  [Дата]&lt;=[Дата_конца]" table="" field="Госзадание" expression=""/></actions>'
+      end
     end
     object dxTabSheet5: TdxTabSheet
       Caption = 'По сотрудникам'

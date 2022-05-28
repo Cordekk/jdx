@@ -1,8 +1,8 @@
 object Form28: TdxForm
   Left = 10
-  Height = 904
+  Height = 647
   Top = 10
-  Width = 658
+  Width = 794
   Id = 28
   PId = 0
   FormCaption = 'Направление деятельности'
@@ -39,7 +39,7 @@ object Form28: TdxForm
     Left = 100
     Height = 28
     Top = 88
-    Width = 80
+    Width = 104
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
@@ -70,7 +70,7 @@ object Form28: TdxForm
     Left = 456
     Height = 28
     Top = 84
-    Width = 100
+    Width = 140
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
@@ -98,341 +98,362 @@ object Form28: TdxForm
     Caption = 'Срок исполнения заявок'
     ParentColor = False
   end
-  object dxEdit6: TdxEdit
-    Left = 20
-    Height = 28
-    Top = 168
-    Width = 300
-    CharCase = ecNormal
-    MaxLength = 0
+  object dxPageControl1: TdxPageControl
+    Left = 12
+    Height = 506
+    Top = 124
+    Width = 748
+    ActivePage = dxTabSheet2
+    TabIndex = 1
     TabOrder = 3
-    Id = 262443
-    FieldName = 'Шаблон_номера_заявки'
-    FieldSize = 50
-    Required = False
-    CheckExpression = 'IIF([Шаблон_номера_заявки]=null,''Не должно быть пустым'' ,'''' )'
-    Editable = False
-    DefaultValue = '''YY-№'''
-  end
-  object dxLabel7: TdxLabel
-    Left = 20
-    Height = 200
-    Top = 196
-    Width = 298
-    Caption = 'Шаблон нумератора'#13#10'№ - номер документа по порядку'#13#10'URD - направление деятельности'#13#10'KOD - код подразделения'#13#10'YYYY - год - 4 цифры'#13#10'YY - год, 2 последние цифры'#13#10'MM - месяц,    '#13#10'DD - день'#13#10'И любые знаки и любой текст '#13#10'между ними'
-    ParentColor = False
-  end
-  object dxLabel10: TdxLabel
-    Left = 332
-    Height = 40
-    Top = 164
-    Width = 216
-    Caption = 'Нумерация заявки идет '#13#10'с начала внутри:'
-    ParentColor = False
-  end
-  object dxCheckBox2: TdxCheckBox
-    Left = 335
-    Height = 23
-    Top = 267
-    Width = 302
-    Caption = 'KOD - внутри подразделения'
-    TabOrder = 4
-    ValueChecked = '1'
-    ValueUnchecked = '0'
-    Id = 262445
-    FieldName = 'KOD'
-    CheckedText = 'Да'
-    UnCheckedText = 'Нет'
-    Editable = False
-    DefaultValue = '0'
-  end
-  object dxCheckBox3: TdxCheckBox
-    Left = 335
-    Height = 23
-    Top = 238
-    Width = 278
-    Caption = 'URD - внутри направления'
-    TabOrder = 5
-    ValueChecked = '1'
-    ValueUnchecked = '0'
-    Id = 262446
-    FieldName = 'URD'
-    CheckedText = 'Да'
-    UnCheckedText = 'Нет'
-    Editable = False
-    DefaultValue = '0'
-  end
-  object dxCheckBox6: TdxCheckBox
-    Left = 335
-    Height = 23
-    Top = 292
-    Width = 246
-    Caption = 'YYYY - внутри года'
-    TabOrder = 6
-    ValueChecked = '1'
-    ValueUnchecked = '0'
-    Id = 262447
-    FieldName = 'YYYY'
-    CheckedText = 'Да'
-    UnCheckedText = 'Нет'
-    Editable = False
-    DefaultValue = '1'
-  end
-  object dxCheckBox4: TdxCheckBox
-    Left = 335
-    Height = 23
-    Top = 317
-    Width = 210
-    Caption = 'MM - внутри месяца'
-    TabOrder = 7
-    ValueChecked = '1'
-    ValueUnchecked = '0'
-    Id = 262448
-    FieldName = 'MM'
-    CheckedText = 'Да'
-    UnCheckedText = 'Нет'
-    Editable = False
-    DefaultValue = '0'
-  end
-  object dxCheckBox5: TdxCheckBox
-    Left = 335
-    Height = 23
-    Top = 340
-    Width = 206
-    Caption = 'DD - внутри дня'
-    TabOrder = 8
-    ValueChecked = '1'
-    ValueUnchecked = '0'
-    Id = 262449
-    FieldName = 'DD'
-    CheckedText = 'Да'
-    UnCheckedText = 'Нет'
-    Editable = False
-    DefaultValue = '0'
-  end
-  object dxLabel4: TdxLabel
-    Left = 20
-    Height = 20
-    Top = 404
-    Width = 349
-    Caption = 'Минимальное количество цифр номера'
-    ParentColor = False
-  end
-  object dxCalcEdit2: TdxCalcEdit
-    Left = 380
-    Height = 28
-    Top = 404
-    Width = 80
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 9
-    HideButton = False
-    CalculatorLayout = clNormal
-    AsInteger = 0
-    ButtonWidth = 28
-    NumGlyphs = 1
-    Flat = True
-    Id = 262450
-    FieldName = 'Число'
-    Precission = 0
-    Required = False
-    DefaultValue = '4'
-    Editable = False
-    NullToZero = True
-    GroupDigits = True
-    PadZeros = True
-  end
-  object dxLabel5: TdxLabel
-    Left = 20
-    Height = 20
-    Top = 140
-    Width = 265
-    Caption = 'Настройка нумератора заявок'
-    ParentColor = False
-  end
-  object dxLabel6: TdxLabel
-    Left = 16
-    Height = 40
-    Top = 440
-    Width = 388
-    Caption = 'Начальный номер необходимо установить'#13#10' в последней заявке по этому направлению'
-    ParentColor = False
-  end
-  object dxEdit7: TdxEdit
-    Left = 24
-    Height = 28
-    Top = 544
-    Width = 300
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 10
-    Id = 262454
-    FieldName = 'Шаблон_номера_пробы'
-    FieldSize = 50
-    Required = False
-    CheckExpression = 'IIF([Шаблон_номера_пробы]=null,''Не должно быть пустым'' ,'''' )'
-    Editable = False
-    DefaultValue = '''ZZZZ-№'''
-  end
-  object dxLabel8: TdxLabel
-    Left = 24
-    Height = 220
-    Top = 572
-    Width = 298
-    Caption = 'Шаблон нумератора'#13#10'№ - номер документа по порядку'#13#10'ZZZZ - внутри заявки'#13#10'URD - направление деятельности'#13#10'KOD - код подразделения'#13#10'YYYY - год - 4 цифры'#13#10'YY - год, 2 последние цифры'#13#10'MM - месяц,    '#13#10'DD - день'#13#10'И любые знаки и любой текст '#13#10'между ними'
-    ParentColor = False
-  end
-  object dxLabel11: TdxLabel
-    Left = 336
-    Height = 40
-    Top = 540
-    Width = 213
-    Caption = 'Нумерация пробы идет '#13#10'с начала внутри:'
-    ParentColor = False
-  end
-  object dxCheckBox7: TdxCheckBox
-    Left = 339
-    Height = 23
-    Top = 643
-    Width = 302
-    Caption = 'KOD - внутри подразделения'
-    TabOrder = 11
-    ValueChecked = '1'
-    ValueUnchecked = '0'
-    Id = 262455
-    FieldName = 'KOD1'
-    CheckedText = 'Да'
-    UnCheckedText = 'Нет'
-    Editable = False
-    DefaultValue = '0'
-  end
-  object dxCheckBox8: TdxCheckBox
-    Left = 339
-    Height = 23
-    Top = 614
-    Width = 278
-    Caption = 'URD - внутри направления'
-    TabOrder = 12
-    ValueChecked = '1'
-    ValueUnchecked = '0'
-    Id = 262456
-    FieldName = 'URD1'
-    CheckedText = 'Да'
-    UnCheckedText = 'Нет'
-    Editable = False
-    DefaultValue = '0'
-  end
-  object dxCheckBox9: TdxCheckBox
-    Left = 339
-    Height = 23
-    Top = 668
-    Width = 246
-    Caption = 'YYYY - внутри года'
-    TabOrder = 13
-    ValueChecked = '1'
-    ValueUnchecked = '0'
-    Id = 262457
-    FieldName = 'YYYY1'
-    CheckedText = 'Да'
-    UnCheckedText = 'Нет'
-    Editable = False
-    DefaultValue = '0'
-  end
-  object dxCheckBox10: TdxCheckBox
-    Left = 339
-    Height = 23
-    Top = 693
-    Width = 210
-    Caption = 'MM - внутри месяца'
-    TabOrder = 14
-    ValueChecked = '1'
-    ValueUnchecked = '0'
-    Id = 262458
-    FieldName = 'MM1'
-    CheckedText = 'Да'
-    UnCheckedText = 'Нет'
-    Editable = False
-    DefaultValue = '0'
-  end
-  object dxCheckBox11: TdxCheckBox
-    Left = 339
-    Height = 23
-    Top = 716
-    Width = 206
-    Caption = 'DD - внутри дня'
-    TabOrder = 15
-    ValueChecked = '1'
-    ValueUnchecked = '0'
-    Id = 262459
-    FieldName = 'DD1'
-    CheckedText = 'Да'
-    UnCheckedText = 'Нет'
-    Editable = False
-    DefaultValue = '0'
-  end
-  object dxLabel9: TdxLabel
-    Left = 24
-    Height = 20
-    Top = 804
-    Width = 349
-    Caption = 'Минимальное количество цифр номера'
-    ParentColor = False
-  end
-  object dxCalcEdit3: TdxCalcEdit
-    Left = 392
-    Height = 28
-    Top = 796
-    Width = 80
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 16
-    HideButton = False
-    CalculatorLayout = clNormal
-    AsInteger = 0
-    ButtonWidth = 28
-    NumGlyphs = 1
-    Flat = True
-    Id = 262460
-    FieldName = 'Число1'
-    Precission = 0
-    Required = False
-    DefaultValue = '2'
-    Editable = False
-    NullToZero = True
-    GroupDigits = True
-    PadZeros = True
-  end
-  object dxCheckBox12: TdxCheckBox
-    Left = 340
-    Height = 23
-    Top = 588
-    Width = 266
-    Caption = 'ZZZZ - внутри заявки'
-    TabOrder = 17
-    ValueChecked = '1'
-    ValueUnchecked = '0'
-    Id = 262461
-    FieldName = 'ZZZZ1'
-    CheckedText = 'Да'
-    UnCheckedText = 'Нет'
-    Editable = False
-    DefaultValue = '1'
-  end
-  object dxLabel12: TdxLabel
-    Left = 24
-    Height = 20
-    Top = 520
-    Width = 249
-    Caption = 'Настройка нумератора проб'
-    ParentColor = False
-  end
-  object dxLabel13: TdxLabel
-    Left = 28
-    Height = 40
-    Top = 836
-    Width = 382
-    Caption = 'Начальный номер необходимо установить'#13#10' в последней пробе по этому направлению'
-    ParentColor = False
+    object dxTabSheet1: TdxTabSheet
+      Caption = 'Нумератор заявок'
+      object dxEdit6: TdxEdit
+        Left = 4
+        Height = 28
+        Top = 101
+        Width = 300
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 0
+        Id = 262443
+        FieldName = 'Шаблон_номера_заявки'
+        FieldSize = 50
+        Required = False
+        CheckExpression = 'IIF([Шаблон_номера_заявки]=null,''Не должно быть пустым'' ,'''' )'
+        Editable = False
+        DefaultValue = '''YY-№'''
+      end
+      object dxLabel7: TdxLabel
+        Left = 4
+        Height = 200
+        Top = 129
+        Width = 298
+        Caption = 'Шаблон нумератора'#13#10'№ - номер документа по порядку'#13#10'URD - направление деятельности'#13#10'KOD - код подразделения'#13#10'YYYY - год - 4 цифры'#13#10'YY - год, 2 последние цифры'#13#10'MM - месяц,    '#13#10'DD - день'#13#10'И любые знаки и любой текст '#13#10'между ними'
+        ParentColor = False
+      end
+      object dxLabel10: TdxLabel
+        Left = 316
+        Height = 40
+        Top = 97
+        Width = 216
+        Caption = 'Нумерация заявки идет '#13#10'с начала внутри:'
+        ParentColor = False
+      end
+      object dxCheckBox2: TdxCheckBox
+        Left = 319
+        Height = 23
+        Top = 200
+        Width = 302
+        Caption = 'KOD - внутри подразделения'
+        TabOrder = 1
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262445
+        FieldName = 'KOD'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox3: TdxCheckBox
+        Left = 319
+        Height = 23
+        Top = 171
+        Width = 278
+        Caption = 'URD - внутри направления'
+        TabOrder = 2
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262446
+        FieldName = 'URD'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox6: TdxCheckBox
+        Left = 319
+        Height = 23
+        Top = 225
+        Width = 246
+        Caption = 'YYYY - внутри года'
+        TabOrder = 3
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262447
+        FieldName = 'YYYY'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '1'
+      end
+      object dxCheckBox4: TdxCheckBox
+        Left = 319
+        Height = 23
+        Top = 250
+        Width = 210
+        Caption = 'MM - внутри месяца'
+        TabOrder = 4
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262448
+        FieldName = 'MM'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox5: TdxCheckBox
+        Left = 319
+        Height = 23
+        Top = 273
+        Width = 206
+        Caption = 'DD - внутри дня'
+        TabOrder = 5
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262449
+        FieldName = 'DD'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxLabel4: TdxLabel
+        Left = 4
+        Height = 20
+        Top = 337
+        Width = 349
+        Caption = 'Минимальное количество цифр номера'
+        ParentColor = False
+      end
+      object dxCalcEdit2: TdxCalcEdit
+        Left = 364
+        Height = 28
+        Top = 337
+        Width = 80
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 6
+        HideButton = False
+        CalculatorLayout = clNormal
+        AsInteger = 0
+        ButtonWidth = 28
+        NumGlyphs = 1
+        Flat = True
+        Id = 262450
+        FieldName = 'Число'
+        Precission = 0
+        Required = False
+        DefaultValue = '4'
+        Editable = False
+        NullToZero = True
+        GroupDigits = True
+        PadZeros = True
+      end
+      object dxLabel5: TdxLabel
+        Left = 4
+        Height = 20
+        Top = 73
+        Width = 265
+        Caption = 'Настройка нумератора заявок'
+        ParentColor = False
+      end
+      object dxLabel6: TdxLabel
+        Left = 0
+        Height = 40
+        Top = 373
+        Width = 388
+        Caption = 'Начальный номер необходимо установить'#13#10' в последней заявке по этому направлению'
+        ParentColor = False
+      end
+    end
+    object dxTabSheet2: TdxTabSheet
+      Caption = 'Нумератор проб'
+      object dxEdit7: TdxEdit
+        Left = 24
+        Height = 28
+        Top = 81
+        Width = 300
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 0
+        Id = 262454
+        FieldName = 'Шаблон_номера_пробы'
+        FieldSize = 50
+        Required = False
+        CheckExpression = 'IIF([Шаблон_номера_пробы]=null,''Не должно быть пустым'' ,'''' )'
+        Editable = False
+        DefaultValue = '''ZZZZ-№'''
+      end
+      object dxLabel8: TdxLabel
+        Left = 24
+        Height = 260
+        Top = 109
+        Width = 346
+        Caption = 'Шаблон нумератора'#13#10'№ - номер документа по порядку'#13#10'ZZZZ - внутри заявки'#13#10'URD - направление деятельности'#13#10'KOD - код подразделения'#13#10'YYYY - год - 4 цифры'#13#10'YY - год, 2 последние цифры'#13#10'MM - месяц,    '#13#10'DD - день'#13#10'VPr1 - учитывать Вид пробы (1 буква)'#13#10'VPr2 - учитывать Вид пробы (2 буквы)'#13#10'И любые знаки и любой текст '#13#10'между ними'
+        ParentColor = False
+      end
+      object dxLabel11: TdxLabel
+        Left = 336
+        Height = 40
+        Top = 77
+        Width = 213
+        Caption = 'Нумерация пробы идет '#13#10'с начала внутри:'
+        ParentColor = False
+      end
+      object dxCheckBox7: TdxCheckBox
+        Left = 339
+        Height = 23
+        Top = 180
+        Width = 302
+        Caption = 'KOD - внутри подразделения'
+        TabOrder = 1
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262455
+        FieldName = 'KOD1'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox8: TdxCheckBox
+        Left = 339
+        Height = 23
+        Top = 151
+        Width = 278
+        Caption = 'URD - внутри направления'
+        TabOrder = 2
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262456
+        FieldName = 'URD1'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox9: TdxCheckBox
+        Left = 339
+        Height = 23
+        Top = 205
+        Width = 246
+        Caption = 'YYYY - внутри года'
+        TabOrder = 3
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262457
+        FieldName = 'YYYY1'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox10: TdxCheckBox
+        Left = 339
+        Height = 23
+        Top = 230
+        Width = 210
+        Caption = 'MM - внутри месяца'
+        TabOrder = 4
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262458
+        FieldName = 'MM1'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox11: TdxCheckBox
+        Left = 339
+        Height = 23
+        Top = 253
+        Width = 206
+        Caption = 'DD - внутри дня'
+        TabOrder = 5
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262459
+        FieldName = 'DD1'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxLabel9: TdxLabel
+        Left = 20
+        Height = 20
+        Top = 377
+        Width = 349
+        Caption = 'Минимальное количество цифр номера'
+        ParentColor = False
+      end
+      object dxCalcEdit3: TdxCalcEdit
+        Left = 388
+        Height = 28
+        Top = 369
+        Width = 80
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 6
+        HideButton = False
+        CalculatorLayout = clNormal
+        AsInteger = 0
+        ButtonWidth = 28
+        NumGlyphs = 1
+        Flat = True
+        Id = 262460
+        FieldName = 'Число1'
+        Precission = 0
+        Required = False
+        DefaultValue = '2'
+        Editable = False
+        NullToZero = True
+        GroupDigits = True
+        PadZeros = True
+      end
+      object dxCheckBox12: TdxCheckBox
+        Left = 340
+        Height = 23
+        Top = 125
+        Width = 266
+        Caption = 'ZZZZ - внутри заявки'
+        TabOrder = 7
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262461
+        FieldName = 'ZZZZ1'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '1'
+      end
+      object dxLabel12: TdxLabel
+        Left = 24
+        Height = 20
+        Top = 57
+        Width = 249
+        Caption = 'Настройка нумератора проб'
+        ParentColor = False
+      end
+      object dxLabel13: TdxLabel
+        Left = 24
+        Height = 40
+        Top = 409
+        Width = 382
+        Caption = 'Начальный номер необходимо установить'#13#10' в последней пробе по этому направлению'
+        ParentColor = False
+      end
+    end
+    object dxTabSheet3: TdxTabSheet
+      Caption = 'Свойства полей'
+    end
+    object dxTabSheet4: TdxTabSheet
+      Caption = 'Видимость полей'
+    end
   end
   object Grid: TdxGrid
     Left = 0

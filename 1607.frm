@@ -153,26 +153,26 @@ object Form1607: TdxForm
       item
         Tag = 26158
         Title.Caption = ' '
-        Width = 174
+        Width = 333
         FieldName = 'f26158l'
-      end    
-      item
-        Tag = 26159
-        Title.Caption = ' '
-        Width = 311
-        FieldName = 'f26159'
-      end    
-      item
-        Tag = 26160
-        Title.Caption = ' '
-        Width = 112
-        FieldName = 'f26160l'
       end    
       item
         Tag = 131009
         Title.Caption = ' '
-        Width = 165
+        Width = 163
         FieldName = 'f131009'
+      end    
+      item
+        Tag = 26160
+        Title.Caption = ' '
+        Width = 278
+        FieldName = 'f26160l'
+      end    
+      item
+        Tag = 26159
+        Title.Caption = ' '
+        Width = 330
+        FieldName = 'f26159'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

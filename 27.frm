@@ -1,8 +1,8 @@
 object Form27: TdxForm
   Left = 10
-  Height = 146
+  Height = 273
   Top = 10
-  Width = 602
+  Width = 600
   Id = 27
   PId = 0
   FormCaption = 'Показатели'
@@ -81,6 +81,28 @@ object Form27: TdxForm
     Caption = 'Группа показателя'
     ParentColor = False
   end
+  object dxLabel3: TdxLabel
+    Left = 16
+    Height = 20
+    Top = 136
+    Width = 230
+    Caption = 'Альтернативное название'
+    ParentColor = False
+  end
+  object dxEdit3: TdxEdit
+    Left = 12
+    Height = 28
+    Top = 168
+    Width = 576
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 2
+    Id = 262476
+    FieldName = 'Альтернативное название1'
+    FieldSize = 300
+    Required = False
+    Editable = False
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 100
@@ -100,6 +122,12 @@ object Form27: TdxForm
         Title.Caption = ' '
         Width = 430
         FieldName = 'f105l'
+      end    
+      item
+        Tag = 262476
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262476'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
