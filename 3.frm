@@ -1840,9 +1840,9 @@ object Form3: TdxForm
       Caption = 'Результаты'
       object dxQueryGrid9: TdxQueryGrid
         Left = -4
-        Height = 412
+        Height = 348
         Top = 44
-        Width = 812
+        Width = 760
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
@@ -1904,7 +1904,7 @@ object Form3: TdxForm
         Width = 232
         Caption = '+ протокол по карантину'
         TabOrder = 3
-        ActionOnClick = '<actions><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Результат" values="field;expr|Вид документа;DBGETID(''Виды документов'', ''[!Вид документа]=&quot;Протокол испытаний карантинной экспертизы&quot;'')|Сотрудник3;DBGETID(''Сотрудники'', ''[!Подпись протокола]=1'')|Заявка клиента;RECID(''Заявка клиента'')" ignoreaccess="0" obj="" qry="Результаты к заявке" /><action type="5" /></actions>'
+        ActionOnClick = '<actions><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Результат" values="field;expr|Вид документа;47|Сотрудник3;43|Заявка клиента;getvar(''g'')" ignoreaccess="0" obj="" qry="Результаты к заявке" /><action type="5" /></actions>'
       end
       object dxButton24: TdxButton
         Left = 404

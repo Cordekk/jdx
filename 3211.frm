@@ -26,6 +26,7 @@ object Form1603: TdxForm
   Tree = Tree.Owner
   Index = 88
   SoftCheck = False
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="role=''''" grid="cmp;ve_prop|dxLookupComboBox2;Редактирование" stateevents="0" /></actions>'
   object dxPageControl1: TdxPageControl
     Left = 4
     Height = 814
@@ -291,7 +292,7 @@ object Form1603: TdxForm
         PromptFillTable = False
         ClearTableBeforeFill = False
         Expression = '//'
-        Editable = False
+        Editable = True
         ListFields = <>
         DropDownCount = 8
         ListWidthExtra = 0
