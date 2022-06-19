@@ -47,7 +47,7 @@ object Form28: TdxForm
     FieldName = 'Префикс_направление'
     FieldSize = 50
     Required = False
-    Expression = 'IIF([Префикс_направление]=null,''Не должно быть пустым'' ,'''' )'
+    CheckExpression = 'IIF([Префикс_направление]=null,''Не должно быть пустым'' ,'''' )'
     Editable = False
   end
   object dxLabel1: TdxLabel
@@ -103,8 +103,8 @@ object Form28: TdxForm
     Height = 506
     Top = 124
     Width = 748
-    ActivePage = dxTabSheet2
-    TabIndex = 1
+    ActivePage = dxTabSheet1
+    TabIndex = 0
     TabOrder = 3
     object dxTabSheet1: TdxTabSheet
       Caption = 'Нумератор заявок'

@@ -22,9 +22,9 @@ object Form25: TdxForm
   Index = 33
   SoftCheck = False
   object dxEdit1: TdxEdit
-    Left = 24
+    Left = 28
     Height = 28
-    Top = 24
+    Top = 36
     Width = 568
     CharCase = ecNormal
     MaxLength = 0
@@ -36,9 +36,9 @@ object Form25: TdxForm
     Editable = False
   end
   object DxEdit2: TdxEdit
-    Left = 24
+    Left = 228
     Height = 28
-    Top = 96
+    Top = 68
     Width = 204
     CharCase = ecNormal
     MaxLength = 0
@@ -91,9 +91,9 @@ object Form25: TdxForm
     UpdateTree = False
   end
   object dxEdit3: TdxEdit
-    Left = 444
+    Left = 228
     Height = 28
-    Top = 88
+    Top = 104
     Width = 80
     CharCase = ecNormal
     MaxLength = 0
@@ -105,9 +105,9 @@ object Form25: TdxForm
     Editable = False
   end
   object dxLabel3: TdxLabel
-    Left = 392
+    Left = 176
     Height = 20
-    Top = 92
+    Top = 108
     Width = 38
     Caption = 'КОД'
     ParentColor = False
@@ -146,9 +146,9 @@ object Form25: TdxForm
     ParentColor = False
   end
   object dxCalcEdit1: TdxCalcEdit
-    Left = 252
+    Left = 508
     Height = 28
-    Top = 92
+    Top = 0
     Width = 100
     CharCase = ecNormal
     MaxLength = 0

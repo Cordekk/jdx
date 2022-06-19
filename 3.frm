@@ -70,7 +70,7 @@ object Form3: TdxForm
   Tree = Tree.Owner
   Index = 14
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="9A42E20C-39FB-403A-B04A-CA5904B07376" allfields="1" logfields="Field" users="User" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Номер]&lt;&gt;null" grid="cmp;ve_prop|dxButton4;Видимость|dxButton11;Видимость|dxButton12;Видимость|dxButton9;Видимость|dxButton8;Видимость|DuplicateBn;Видимость|dxLookupComboBox14;Доступность" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''''  | ROLE = ''Администратор''" grid="cmp;ve_prop|dxLookupComboBox21;Редактирование|dxCheckBox4;Редактирование|dxCheckBox5;Редактирование|dxCheckBox6;Редактирование|dxCalcEdit7;Редактирование|dxCheckBox14;Редактирование" stateevents="0" /><action type="9" id="244F02CB-C541-4A44-B997-57368822EF37" g="c;t;e|dxButton19;Создать новый счет для этого клиента;|dxButton7;Записать Нормативный документ в задание;|dxLookupComboBox14;выберите заявку из которой хотите копировать пробу;" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Аргус-лаборатория]=1" grid="cmp;ve_prop|dxEdit7;Видимость|dxEdit10;Видимость|dxLabel42;Видимость|dxLabel43;Видимость|dxButton5;Видимость|dxLabel44;Видимость|dxEdit11;Видимость" stateevents="1" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="9A42E20C-39FB-403A-B04A-CA5904B07376" allfields="1" logfields="Field" users="User" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Номер]&lt;&gt;null" grid="cmp;ve_prop|dxButton4;Видимость|dxButton11;Видимость|dxButton12;Видимость|dxButton9;Видимость|dxButton8;Видимость|DuplicateBn;Видимость|dxLookupComboBox14;Доступность" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''''  | ROLE = ''Администратор''" grid="cmp;ve_prop|dxLookupComboBox21;Редактирование|dxCheckBox4;Редактирование|dxCheckBox5;Редактирование|dxCheckBox6;Редактирование|dxCalcEdit7;Редактирование|dxCheckBox14;Редактирование" stateevents="0" /><action type="9" id="244F02CB-C541-4A44-B997-57368822EF37" g="c;t;e|dxButton19;Создать новый счет для этого клиента;|dxButton7;Записать Нормативный документ в задание;|dxLookupComboBox14;выберите заявку из которой хотите копировать пробу;" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Аргус-лаборатория]=1" grid="cmp;ve_prop|dxEdit7;Видимость|dxEdit10;Видимость|dxLabel42;Видимость|dxLabel43;Видимость|dxButton5;Видимость|dxLabel44;Видимость|dxEdit11;Видимость" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' //  | ROLE = ''Администратор''" grid="cmp;ve_prop|dxLookupComboBox3;Доступность|dxLookupComboBox13;Доступность" stateevents="0" /></actions>'
   object dxCalcEdit5: TdxCalcEdit
     Left = 224
     Height = 28
@@ -589,7 +589,7 @@ object Form3: TdxForm
         FieldName = 'Дубль'
         SourceTId = 3
         SourceFId = 84
-        Filter = '[Клиент]=[Клиент]'
+        Filter = '[Клиент]=[Клиент] & [Дата] >=ADDMONTH([Дата],-6)'
         Required = False
         SourceTable = 0
         DestTable = 0
@@ -2128,7 +2128,7 @@ object Form3: TdxForm
         Id = 131114
         FieldName = '№'
         Precission = 0
-        Expression = '// [Номер] [Нумератор]'#13#10'NZ(DBMAX(''Заявка Клиента'', ''№'', ''[!Нумератор]=[Нумератор]''),0)+1'
+        Expression = '// [Номер] [Нумератор]'#13#10'IIF(NEWREC=1,NZ(DBMAX(''Заявка Клиента'', ''№'', ''[!Нумератор]=[Нумератор]''),0)+1,'#13#10'IIF(OLDVALUE(''Нумератор'')=[Нумератор],OLDVALUE(''№''),NZ(DBMAX(''Заявка Клиента'', ''№'', ''[!Нумератор]=[Нумератор]''),0)+1)) // проверка, что при изменении направления не изменился нумератор'
         Required = True
         DefaultValue = '0'
         CheckExpression = 'iif(DBUNIQUE(''№;Нумератор'')=0,'#13#10'Setfield(''№'', NZ(DBMAX(''Заявка Клиента'', ''№'', ''[!Нумератор]=[Нумератор]''),0)+1), '''')'
@@ -2157,7 +2157,7 @@ object Form3: TdxForm
         FieldName = 'Нумератор'
         FieldSize = 50
         Required = False
-        Expression = 'IIF( [Направление2|URD]=1,[Направление2|Префикс_направление],'''')+'#13#10'IIF( [Направление2|KOD]=1, [Подразделение1|КОД],'''')+'#13#10'IIF( [Направление2|YYYY]=1|[Направление2|MM]=1|[Направление2|DD]=1,CSTR(YEAROF([Дата])),'''')+'#13#10'IIF( [Направление2|MM]=1|[Направление2|DD]=1,CSTR(MONTHOF([Дата])),'''')+'#13#10'IIF( [Направление2|DD]=1,CSTR(DAYOF([Дата])),'''')'
+        Expression = 'IIF( [Направление2|URD]=1,[Направление2|Префикс_направление],'''')+'#13#10'IIF( [Направление2|KOD]=1, [Подразделение1|КОД],'''')+'#13#10'IIF( [Направление2|YYYY]=1|[Направление2|MM]=1|[Направление2|DD]=1,CSTR(YEAROF([Дата])),'''')+'#13#10'IIF( [Направление2|MM]=1|[Направление2|DD]=1,CSTR(MONTHOF([Дата])),'''')+'#13#10'IIF( [Направление2|DD]=1,CSTR(DAYOF([Дата])),'''')+'#13#10'IIF( [Направление2]=null,CSTR(YEAROF([Дата])),'''')'
         Editable = False
       end
     end
@@ -2323,7 +2323,7 @@ object Form3: TdxForm
     FieldName = 'Шифр_заявки'
     FieldSize = 150
     Required = False
-    Expression = 'Block('#13#10'setvar(''ND'',[Направление2|Шаблон_номера_заявки]),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''№'',ZEROS([№],[Направление2|Число]))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''KOD'',[Подразделение1|КОД])),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''URD'',[Направление2|Префикс_направление])),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''YYYY'',CSTR(YEAROF([Дата])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''MM'',CSTR(MONTHOF([Дата])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''DD'',CSTR(DAYOF([Дата])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''YY'',CUT(CSTR(YEAROF([Дата])),3,2))),'#13#10'getvar(''ND'')'#13#10')'
+    Expression = 'Block('#13#10'setvar(''ND'',NZ([Направление2|Шаблон_номера_заявки],''YY-№'')),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''№'',ZEROS([№],NZ([Направление2|Число],4)))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''KOD'',NZ([Подразделение1|КОД],''''))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''URD'',NZ([Направление2|Префикс_направление],''''))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''YYYY'',CSTR(YEAROF([Дата])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''MM'',CSTR(MONTHOF([Дата])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''DD'',CSTR(DAYOF([Дата])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''YY'',CUT(CSTR(YEAROF([Дата])),3,2))),'#13#10'getvar(''ND'')'#13#10')'
     Editable = False
   end
   object dxLabel11: TdxLabel
@@ -2506,7 +2506,6 @@ object Form3: TdxForm
     FieldName = 'Сотрудник1'
     SourceTId = 24
     SourceFId = 87
-    Filter = '[user] = user'
     Required = True
     DefaultValue = 'OBJID("Сотрудники", "user", USER)'
     SourceTable = 0
@@ -2514,7 +2513,7 @@ object Form3: TdxForm
     PromptFillTable = False
     ClearTableBeforeFill = False
     Expression = '// [Номер]'#13#10'OBJID("Сотрудники", "user", USER)'
-    Editable = False
+    Editable = True
     ListFields = <>
     DropDownCount = 8
     ListWidthExtra = 0
@@ -2580,7 +2579,7 @@ object Form3: TdxForm
     Width = 307
     Caption = 'Номер заявки (сопроводительной)'
     ParentColor = False
-    Expression = 'Block('#13#10'IIF(EDITREC=1 | NEWREC = 1,'#13#10'Setvar(''g'', RECID(''Заявка клиента'')), '''')'#13#10', ''Номер заявки (сопроводительной'')'
+    Expression = '// [Номер]'#13#10'Block('#13#10'IIF(EDITREC=1 | NEWREC = 1,'#13#10'Setvar(''g'', RECID(''Заявка клиента'')), '''')'#13#10', ''Номер заявки (сопроводительной'')'
   end
   object dxLabel26: TdxLabel
     Left = 4
@@ -2705,7 +2704,7 @@ object Form3: TdxForm
     PromptFillTable = False
     ClearTableBeforeFill = False
     Expression = '[Сотрудник1|Подразделение]'
-    Editable = False
+    Editable = True
     ListFields = <>
     DropDownCount = 8
     ListWidthExtra = 0
