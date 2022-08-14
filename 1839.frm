@@ -162,9 +162,9 @@ object Form231: TdxForm
     Height = 718
     Top = 108
     Width = 1084
-    ActivePage = dxTabSheet1
+    ActivePage = dxTabSheet3
     Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 1
+    TabIndex = 3
     TabOrder = 5
     object dxTabSheet5: TdxTabSheet
       Caption = 'Фитосанитария'
@@ -1183,7 +1183,7 @@ object Form231: TdxForm
         Id = 131017
         FieldName = 'Значение1'
         Precission = 6
-        Expression = '/* IIF([Постоянная1]=0,'#13#10'JS_EVAL('#13#10'Merge(''Ход испытаний2'', ''Строка кода'', newline)'#13#10'+ text(''var b = [B];'') + newline'#13#10'+ text(''var a = [A];'') + newline'#13#10'+ text(''var X = [X];'') + newline'#13#10'+cstr([Формула1]))'#13#10', 0)  */'
+        Expression = 'IIF([Постоянная1]=0,'#13#10'SetField( ''Значение1'','#13#10'JS_EVAL('#13#10'REPLACEALL(Merge(''Ход испытаний2'', ''Строка кода'', newline)+ newline'#13#10'+ text(''var b = [B];'') + newline'#13#10'+ text(''var a = [A];'') + newline'#13#10'+ text(''var X = [X];'') + newline'#13#10'+cstr([Формула1])+'';'','','',''.''))'#13#10')'#13#10', [Значение1])'
         Required = False
         Editable = True
         NullToZero = False
@@ -1576,7 +1576,7 @@ object Form231: TdxForm
         Anchors = [akRight, akBottom]
         Caption = 'Пересчитать'
         TabOrder = 28
-        ActionOnClick = '<actions><action type="7" expression="IIF([Постоянная1]=0,'#13#10'SetField( ''Значение1'','#13#10'JS_EVAL('#13#10'Merge(''Ход испытаний2'', ''Строка кода'', newline)'#13#10'+ text(''var b = [B];'') + newline'#13#10'+ text(''var a = [A];'') + newline'#13#10'+ text(''var X = [X];'') + newline'#13#10'+cstr([Формула1]))'#13#10')'#13#10', '''')"/></actions>'
+        ActionOnClick = '<actions><action type="7" expression="IIF([Постоянная1]=0,'#13#10'SetField( ''Значение1'','#13#10'JS_EVAL('#13#10'REPLACEALL(Merge(''Ход испытаний2'', ''Строка кода'', newline)+ newline'#13#10'+ text(''var b = [B];'') + newline'#13#10'+ text(''var a = [A];'') + newline'#13#10'+ text(''var X = [X];'') + newline'#13#10'+cstr([Формула1])+'';'','','',''.''))'#13#10')'#13#10', [Значение1])"/></actions>'
       end
     end
     object dxTabSheet7: TdxTabSheet

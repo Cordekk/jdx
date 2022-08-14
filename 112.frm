@@ -27,7 +27,7 @@ object Form112: TdxForm
   Tree = Tree.Owner
   Index = 9
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Сотрудник|user] = USER" grid="cmp;ve_prop|dxLookupComboBox4;Редактирование|dxLookupComboBox2;Редактирование|dxLookupComboBox3;Редактирование|dxEdit1;Редактирование|dxMemo3;Редактирование|dxMemo5;Редактирование|dxLookupComboBox1;Редактирование" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Утверждающий|user]= user & [Согласовано] = 1" grid="cmp;ve_prop|dxButton10;Доступность|dxMemo4;Доступность|dxCheckBox2;Доступность" stateevents="0" /><action type="9" id="86F3AAEF-2807-46C4-8344-8E2521947747" allfields="1" logfields="Field" users="User" /><action disabled="1" type="9" id="65D407B7-2CFE-4F4D-9BE4-800461F09FE4" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" numerator="Номер" allow_edit_number="1" dependfields="DependField|Нумератор" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Сотрудник|user] = USER" grid="cmp;ve_prop|dxLookupComboBox4;Редактирование|dxLookupComboBox2;Редактирование|dxLookupComboBox3;Редактирование|dxEdit1;Редактирование|dxMemo3;Редактирование|dxMemo5;Редактирование|dxLookupComboBox1;Редактирование" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Утверждающий|user]= user & [Согласовано] = 1" grid="cmp;ve_prop|dxButton10;Доступность|dxMemo4;Доступность|dxCheckBox2;Доступность" stateevents="0" /><action type="9" id="86F3AAEF-2807-46C4-8344-8E2521947747" allfields="1" logfields="Field" users="User" /><action disabled="1" type="9" id="65D407B7-2CFE-4F4D-9BE4-800461F09FE4" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" numerator="Номер" allow_edit_number="1" dependfields="DependField|Нумератор" /></actions>'
   object dxButton13: TdxButton
     Left = 788
     Height = 30
@@ -65,7 +65,7 @@ object Form112: TdxForm
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
-    HideButton = False
+    HideButton = True
     CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
     OKCaption = 'OK'
     CancelCaption = 'Cancel'
@@ -90,14 +90,14 @@ object Form112: TdxForm
     ParentColor = False
   end
   object dxTimeEdit1: TdxTimeEdit
-    Left = 272
+    Left = 248
     Height = 24
     Top = 40
     Width = 80
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
-    HideButton = False
+    HideButton = True
     Id = 1886
     FieldName = 'Время'
     CurTime = True
@@ -162,9 +162,9 @@ object Form112: TdxForm
     Height = 424
     Top = 398
     Width = 912
-    ActivePage = dxTabSheet7
+    ActivePage = dxTabSheet8
     Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 8
+    TabIndex = 6
     TabOrder = 5
     object dxTabSheet9: TdxTabSheet
       Caption = 'Описание'

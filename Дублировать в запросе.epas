@@ -1,5 +1,6 @@
 {@action
 ID=62900B52-9BF5-4E72-833F-9B47AB4F4399
+target=button
 OrigName=QG_DUPLICATE
 Name="Дублировать" в запросе
 Group=Расширение возможностей компонентов

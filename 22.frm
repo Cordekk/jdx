@@ -653,9 +653,9 @@ object Form22: TdxForm
     Height = 213
     Top = 564
     Width = 870
-    ActivePage = dxTabSheet1
+    ActivePage = dxTabSheet3
     Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 0
+    TabIndex = 2
     TabOrder = 22
     object dxTabSheet1: TdxTabSheet
       Caption = 'Образцы и исследования'
