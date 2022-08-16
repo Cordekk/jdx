@@ -21,7 +21,7 @@ object Form14: TdxForm
   Tree = Tree.Owner
   Index = 100
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Тип неопределенности]=''Тип А''" grid="cmp;ve_prop|dxQueryGrid1;Доступность|dxButton2;Доступность" stateevents="0" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Тип неопределенности]=''Тип А''" grid="cmp;ve_prop|dxQueryGrid1;Доступность|dxButton2;Доступность|dxLabel15;Доступность|dxButton4;Видимость" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Сотрудник|user]=USER" grid="cmp;ve_prop|dxLookupComboBox2;Редактирование" stateevents="0" /></actions>'
   object dxCalcEdit5: TdxCalcEdit
     Left = 788
     Height = 24
@@ -288,21 +288,26 @@ object Form14: TdxForm
     Left = 195
     Height = 24
     Top = 80
-    Width = 100
+    Width = 132
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     Id = 262511
     FieldName = 'Расчет неопределенности'
     SourceTId = 6845
-    SourceFId = 262498
+    SourceFId = 262497
     Required = False
     SourceTable = 0
     DestTable = 0
     PromptFillTable = False
     ClearTableBeforeFill = False
     Editable = False
-    ListFields = <>
+    ListFields = <    
+      item
+        FieldId = 262516
+        Width = 100
+        Searchable = False
+      end>
     DropDownCount = 8
     ListWidthExtra = 0
     HideList = False
@@ -539,7 +544,7 @@ object Form14: TdxForm
     Id = 262527
     FieldName = 'Стандартная неопределенность'
     Precission = 6
-    Expression = '[Показатель точности]/(iif([Тип распределения]=''Нормальное'',2,'#13#10'iif([Тип распределения]=''Равномерное'',power(3,0.5),power(6,0.5))))'
+    Expression = '[Показатель точности]/(iif([Тип распределения]=''Нормальное'',1.96,'#13#10'iif([Тип распределения]=''Равномерное'',power(3,0.5),power(6,0.5))))'
     Required = False
     DefaultValue = '0'
     Editable = False
@@ -623,13 +628,13 @@ object Form14: TdxForm
     ManualRefresh = False
   end
   object dxButton2: TdxButton
-    Left = 672
+    Left = 684
     Height = 30
-    Top = 512
+    Top = 504
     Width = 228
     Caption = 'Вычислить значения по типу А'
     TabOrder = 18
-    ActionOnClick = '<actions><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|среднее;AVG(''Запрос6'', ''Значение'')" ignoreaccess="0" saverec="0" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Запрос6" keeppos="0" /><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Показатель точности;POWER(SUM(''Запрос6'', ''кв.отклон'')/(COUNT(''Запрос6'')*(COUNT(''Запрос6'')-1)),0.5)|Значение;AVG(''Запрос6'', ''Значение'')|Число степеней свободы;COUNT(''Запрос6'')-1|Тип неопределенности;''Тип А''|Тип распределения;''Нормальное''" ignoreaccess="0" saverec="0" /><action type="5" /></actions>'
+    ActionOnClick = '<actions><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|среднее;AVG(''Запрос6'', ''Значение'')" ignoreaccess="0" saverec="0" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Запрос6" keeppos="0" /><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Показатель точности;1.96*POWER(SUM(''Запрос6'', ''кв.отклон'')/(COUNT(''Запрос6'')*(COUNT(''Запрос6'')-1)),0.5)|Значение;AVG(''Запрос6'', ''Значение'')|Число степеней свободы;COUNT(''Запрос6'')-1|Тип неопределенности;''Тип А''|Тип распределения;''Нормальное''" ignoreaccess="0" saverec="0" /><action type="5" /></actions>'
   end
   object dxLabel14: TdxLabel
     Left = 28
@@ -677,7 +682,7 @@ object Form14: TdxForm
   object dxLookupComboBox6: TdxLookupComboBox
     Left = 272
     Height = 24
-    Top = 508
+    Top = 484
     Width = 356
     CharCase = ecNormal
     MaxLength = 0
@@ -691,6 +696,7 @@ object Form14: TdxForm
     DestTable = 0
     PromptFillTable = False
     ClearTableBeforeFill = False
+    Expression = 'IIF([Тип неопределенности]=''Тип В'',null,OLDVALUE(''Анализная карта''))'
     Editable = False
     ListFields = <    
       item
@@ -717,7 +723,7 @@ object Form14: TdxForm
   object dxLabel15: TdxLabel
     Left = 104
     Height = 16
-    Top = 516
+    Top = 492
     Width = 116
     Caption = 'Анализная карта'
     ParentColor = False
@@ -725,10 +731,23 @@ object Form14: TdxForm
   object dxLabel16: TdxLabel
     Left = 32
     Height = 16
-    Top = 484
+    Top = 460
     Width = 681
     Caption = 'Для добавления измеренных значений по типу А, выберите анализную карту, или создайте новую'
     ParentColor = False
+  end
+  object dxButton4: TdxButton
+    Left = 198
+    Height = 22
+    Top = 520
+    Width = 100
+    Caption = 'Дублировать'
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = [fsItalic]
+    ParentFont = False
+    TabOrder = 22
+    ActionOnClick = '<actions><action type="9" id="62900B52-9BF5-4E72-833F-9B47AB4F4399" _qg="Запрос6" _fm="Ход испытаний" _ls="Только форма" /></actions>'
   end
   object Grid: TdxGrid
     Left = 0

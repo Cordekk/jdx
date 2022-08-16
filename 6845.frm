@@ -21,6 +21,7 @@ object Form13: TdxForm
   Tree = Tree.Owner
   Index = 99
   SoftCheck = False
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="1=0" grid="cmp;ve_prop|dxQueryGrid2;Доступность" stateevents="0" /></actions>'
   object dxCounter1: TdxCounter
     Left = 70
     Height = 24
@@ -343,7 +344,8 @@ object Form13: TdxForm
         DestTable = 0
         PromptFillTable = False
         ClearTableBeforeFill = False
-        Editable = False
+        Expression = '[Методика в ОА|Методика]'
+        Editable = True
         ListFields = <>
         DropDownCount = 8
         ListWidthExtra = 0
@@ -368,7 +370,8 @@ object Form13: TdxForm
         DestTable = 0
         PromptFillTable = False
         ClearTableBeforeFill = False
-        Editable = False
+        Expression = '[Методика в ОА|Показатель]'
+        Editable = True
         ListFields = <>
         DropDownCount = 8
         ListWidthExtra = 0
@@ -388,13 +391,19 @@ object Form13: TdxForm
         FieldName = 'Методика в ОА'
         SourceTId = 519
         SourceFId = 8523
+        Filter = '[?Методика]=[Методика] & [?Показатель]=[Показатель]'
         Required = False
         SourceTable = 0
         DestTable = 0
         PromptFillTable = False
         ClearTableBeforeFill = False
         Editable = False
-        ListFields = <>
+        ListFields = <        
+          item
+            FieldId = 8489
+            Width = 100
+            Searchable = True
+          end>
         DropDownCount = 8
         ListWidthExtra = 0
         HideList = False
@@ -544,7 +553,7 @@ object Form13: TdxForm
         WordWrap = False
         AllowChangeSort = False
         Id = 2940
-        ManualRefresh = False
+        ManualRefresh = True
       end
       object dxButton3: TdxButton
         Left = 748
@@ -553,7 +562,7 @@ object Form13: TdxForm
         Width = 120
         Caption = 'Пересчитать'
         TabOrder = 1
-        ActionOnClick = '<actions><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Бюджет неопределенности1" keeppos="0" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Расчет коэффициентов" keeppos="0" /></actions>'
+        ActionOnClick = '<actions><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Бюджет неопределенности1" keeppos="0" /><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Результат по методике;IIF(COUNT(''Бюджет неопределенности1'')&gt;0,JS_EVAL('#13#10'MERGE(''Бюджет неопределенности1'', ''Текст_для_формулы'', newline)'#13#10'+cstr([Итоговая формула]) + ''&003B''),0)" ignoreaccess="0" saverec="0" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Расчет коэффициентов" keeppos="0" /><action type="5" /></actions>'
       end
     end
     object dxTabSheet4: TdxTabSheet
@@ -582,14 +591,14 @@ object Form13: TdxForm
         Flat = True
         Id = 262536
         FieldName = 'Результат по методике'
-        Precission = 0
-        Expression = 'JS_EVAL('#13#10'MERGE(''Бюджет неопределенности1'', ''Текст_для_формулы'', newline)'#13#10'+cstr([Итоговая формула]) + '';'')'
+        Precission = 6
+        Expression = '//'
         Required = False
         DefaultValue = '0'
         Editable = False
         NullToZero = True
         GroupDigits = True
-        PadZeros = True
+        PadZeros = False
       end
       object dxCalcEdit2: TdxCalcEdit
         Left = 336
@@ -614,7 +623,7 @@ object Form13: TdxForm
         Editable = False
         NullToZero = True
         GroupDigits = True
-        PadZeros = True
+        PadZeros = False
       end
       object dxLabel11: TdxLabel
         Left = 16
@@ -641,13 +650,13 @@ object Form13: TdxForm
         Id = 262540
         FieldName = 'Эфф.число_ст.свободы'
         Precission = 6
-        Expression = 'TRUNC(POWER([Сумм.станд.неоп],4)/SUM(''Расчет коэффициентов'', ''Вклад степени свободы''))'
+        Expression = 'IIF(SUM(''Расчет коэффициентов'', ''Вклад степени свободы'')<>0,'#13#10'TRUNC(POWER([Сумм.станд.неоп],4)/SUM(''Расчет коэффициентов'', ''Вклад степени свободы'')),'#13#10'null)'
         Required = False
         DefaultValue = '0'
         Editable = False
-        NullToZero = True
+        NullToZero = False
         GroupDigits = True
-        PadZeros = True
+        PadZeros = False
       end
       object dxLabel12: TdxLabel
         Left = 16
@@ -680,7 +689,7 @@ object Form13: TdxForm
         Editable = False
         NullToZero = True
         GroupDigits = True
-        PadZeros = True
+        PadZeros = False
       end
       object dxLabel13: TdxLabel
         Left = 16
@@ -707,13 +716,13 @@ object Form13: TdxForm
         Id = 262542
         FieldName = 'Расш.неоп'
         Precission = 6
-        Expression = '[Сумм.станд.неоп]*[Коэффициент охвата]'
+        Expression = 'IIF([Норм.расп]=1,[Сумм.станд.неоп]*1.96,[Сумм.станд.неоп]*[Коэффициент охвата])'
         Required = False
         DefaultValue = '0'
         Editable = False
         NullToZero = True
         GroupDigits = True
-        PadZeros = True
+        PadZeros = False
       end
       object dxLabel14: TdxLabel
         Left = 16
@@ -740,13 +749,13 @@ object Form13: TdxForm
         Id = 262543
         FieldName = 'Отн.неопр'
         Precission = 6
-        Expression = 'ABC([Расш.неоп]/[Результат по методике])'
+        Expression = 'iif([Результат по методике]<>0,'#13#10'ABC([Расш.неоп]/[Результат по методике]), null)'
         Required = False
         DefaultValue = '0'
         Editable = False
-        NullToZero = True
+        NullToZero = False
         GroupDigits = True
-        PadZeros = True
+        PadZeros = False
       end
       object dxLabel15: TdxLabel
         Left = 16
@@ -788,6 +797,31 @@ object Form13: TdxForm
         Caption = 'Доверительная вероятность (1-P=a)'
         ParentColor = False
       end
+      object dxCheckBox1: TdxCheckBox
+        Left = 480
+        Height = 23
+        Top = 128
+        Width = 342
+        Caption = 'Выбрать 1,96  (нормальное распределение!)'
+        TabOrder = 7
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262549
+        FieldName = 'Норм.расп'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxButton5: TdxButton
+        Left = 636
+        Height = 30
+        Top = 12
+        Width = 120
+        Caption = 'Пересчитать'
+        TabOrder = 8
+        ActionOnClick = '<actions><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Бюджет неопределенности1" keeppos="0" /><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Результат по методике;IIF(COUNT(''Бюджет неопределенности1'')&gt;0,JS_EVAL('#13#10'MERGE(''Бюджет неопределенности1'', ''Текст_для_формулы'', newline)'#13#10'+cstr([Итоговая формула]) + ''&003B''),0)" ignoreaccess="0" saverec="0" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Расчет коэффициентов" keeppos="0" /><action type="5" /></actions>'
+      end
     end
     object dxTabSheet6: TdxTabSheet
       Caption = 'Файлы'
@@ -798,7 +832,7 @@ object Form13: TdxForm
         Width = 123
         Caption = 'Добавить файл'
         TabOrder = 0
-        ActionOnClick = '<actions><action type="9" id="0AABDA55-EC7B-453E-9ECF-BD99CEB2D42E" _express="[Заголовок]" /><if cond="Result = true"><action type="7" expression="QUERYUPDATE(''Файлы документы1'')"/><action type="5" /></if></actions>'
+        ActionOnClick = '<actions><action type="9" id="0AABDA55-EC7B-453E-9ECF-BD99CEB2D42E" _express="''Документ к расчету №''+CSTR([Счетчик])" /><if cond="Result = true"><action type="7" expression="QUERYUPDATE(''Файлы документы1'')"/><action type="5" /></if></actions>'
       end
       object dxQueryGrid9: TdxQueryGrid
         Left = 8
@@ -961,6 +995,13 @@ object Form13: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262547'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262549
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262549'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
