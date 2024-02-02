@@ -265,7 +265,7 @@ object Form93: TdxForm
     Width = 199
     Caption = 'Записать и пересчитать'
     TabOrder = 8
-    ActionOnClick = '<actions><action type="5" /><action type="3" form="Клиенты" filter="[Идентификатор]=[Клиент]" table="" field="Долг_клиента" expression=""/><action type="3" form="Выставленные счета" filter="[Клиент2]=[Клиент]&[Оплачен]=1" table="" field="Оплачен" expression=""/></actions>'
+    ActionOnClick = '<actions><action type="5" /><action type="3" form="Клиенты" filter="[Идентификатор]=[Клиент]" table="" field="Долг_клиента" expression=""/><action type="3" form="Выставленные счета" filter="[Клиент2]=[Клиент]&amp;[Оплачен]=1" table="" field="Оплачен" expression=""/></actions>'
   end
   object dxObjectField2: TdxObjectField
     Left = 448

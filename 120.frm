@@ -1,6 +1,6 @@
 object Form120: TdxForm
   Left = 10
-  Height = 497
+  Height = 597
   Top = 10
   Width = 752
   Id = 120
@@ -25,7 +25,7 @@ object Form120: TdxForm
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 20
     Height = 24
-    Top = 44
+    Top = 80
     Width = 224
     CharCase = ecNormal
     MaxLength = 0
@@ -50,15 +50,15 @@ object Form120: TdxForm
   object dxLabel1: TdxLabel
     Left = 32
     Height = 16
-    Top = 16
+    Top = 52
     Width = 86
     Caption = 'Шифр пробы'
     ParentColor = False
   end
   object dxLabel2: TdxLabel
-    Left = 24
+    Left = 12
     Height = 16
-    Top = 172
+    Top = 288
     Width = 82
     Caption = 'Примечание'
     ParentColor = False
@@ -66,7 +66,7 @@ object Form120: TdxForm
   object dxLabel3: TdxLabel
     Left = 24
     Height = 16
-    Top = 80
+    Top = 116
     Width = 74
     Caption = 'Продукция'
     ParentColor = False
@@ -74,7 +74,7 @@ object Form120: TdxForm
   object dxObjectField1: TdxObjectField
     Left = 108
     Height = 24
-    Top = 76
+    Top = 112
     Width = 596
     CharCase = ecNormal
     MaxLength = 0
@@ -87,7 +87,7 @@ object Form120: TdxForm
   object dxCalcEdit1: TdxCalcEdit
     Left = 144
     Height = 24
-    Top = 120
+    Top = 156
     Width = 80
     CharCase = ecNormal
     MaxLength = 0
@@ -103,25 +103,25 @@ object Form120: TdxForm
     Precission = 0
     Required = True
     DefaultValue = '0'
-    CheckExpression = 'block('#13#10'iif(newrec=1,'#13#10'setfield(''Номер_образца'',IIF([Проба|Количество_образцов]>1,'#13#10'nz(DBMAX(''Образцы'', ''Номер_образца'', ''[!Проба]=[Проба]''), 0)+1,0)),'#13#10'''''), '''')'
+    CheckExpression = 'block('#13#10'iif(newrec=1,'#13#10'setfield(''Номер_образца'',IIF([Номер_образца]=null,'#13#10'nz(DBMAX(''Образцы'', ''Номер_образца'', ''[!Проба]=[Проба]''), 0)+1,1)),'#13#10'''''), '''')'
     Editable = True
-    NullToZero = True
-    GroupDigits = True
-    PadZeros = True
+    NullToZero = False
+    GroupDigits = False
+    PadZeros = False
   end
   object dxLabel4: TdxLabel
     Left = 28
     Height = 16
-    Top = 120
+    Top = 156
     Width = 103
     Caption = 'Номер образца'
     ParentColor = False
   end
   object dxEdit2: TdxEdit
-    Left = 368
+    Left = 316
     Height = 24
-    Top = 120
-    Width = 216
+    Top = 156
+    Width = 380
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
@@ -186,13 +186,15 @@ object Form120: TdxForm
   object dxPageControl1: TdxPageControl
     Left = 8
     Height = 216
-    Top = 262
+    Top = 366
     Width = 716
-    ActivePage = dxTabSheet3
-    TabIndex = 0
+    ActivePage = dxTabSheet1
+    Anchors = [akLeft, akBottom]
+    TabIndex = 2
     TabOrder = 7
     object dxTabSheet3: TdxTabSheet
       Caption = 'Исследования'
+      StopTab = False
       object dxQueryGrid2: TdxQueryGrid
         Left = 4
         Height = 156
@@ -355,6 +357,7 @@ object Form120: TdxForm
     end
     object dxTabSheet2: TdxTabSheet
       Caption = 'Изменения'
+      StopTab = False
       object dxQueryGrid1: TdxQueryGrid
         Left = 8
         Height = 168
@@ -401,6 +404,7 @@ object Form120: TdxForm
     end
     object dxTabSheet1: TdxTabSheet
       Caption = 'Информация о заявке'
+      StopTab = False
       object dxLookupComboBox3: TdxLookupComboBox
         Left = 20
         Height = 24
@@ -459,7 +463,7 @@ object Form120: TdxForm
         Id = 8541
         FieldName = 'Дата поступления'
         DateNow = False
-        Expression = 'NZ([Проба|Дата_поступления], DATE)'
+        Expression = 'NZ([Проба|Дата_поступления], SRV_DATE)'
         Required = False
         Editable = False
       end
@@ -539,20 +543,43 @@ object Form120: TdxForm
         Caption = 'Госзадание'
         ParentColor = False
       end
+      object dxLabel13: TdxLabel
+        Left = 272
+        Height = 16
+        Top = 163
+        Width = 84
+        Caption = 'Шифр Аргус'
+        ParentColor = False
+      end
+      object dxEdit4: TdxEdit
+        Left = 368
+        Height = 24
+        Top = 163
+        Width = 220
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 5
+        Id = 8664
+        FieldName = 'Шифр_аргус'
+        FieldSize = 50
+        Required = False
+        Expression = '[Проба|Шифр_Аргус_Меркурий]'
+        Editable = True
+      end
     end
   end
   object dxLabel10: TdxLabel
-    Left = 272
+    Left = 260
     Height = 16
-    Top = 120
+    Top = 160
     Width = 40
     Caption = 'Шифр'
     ParentColor = False
   end
   object dxTimeEdit1: TdxTimeEdit
-    Left = 672
+    Left = 552
     Height = 24
-    Top = 256
+    Top = 44
     Width = 80
     CharCase = ecNormal
     MaxLength = 0
@@ -568,9 +595,9 @@ object Form120: TdxForm
     DefaultValue = 'TIME'
   end
   object dxDateEdit3: TdxDateEdit
-    Left = 544
+    Left = 424
     Height = 24
-    Top = 256
+    Top = 44
     Width = 132
     CharCase = ecNormal
     MaxLength = 0
@@ -590,39 +617,101 @@ object Form120: TdxForm
     Required = False
     Editable = True
   end
-  object dxLabel13: TdxLabel
-    Left = 272
-    Height = 16
-    Top = 156
-    Width = 84
-    Caption = 'Шифр Аргус'
-    ParentColor = False
-  end
-  object dxEdit4: TdxEdit
-    Left = 368
-    Height = 24
-    Top = 156
-    Width = 220
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 10
-    Id = 8664
-    FieldName = 'Шифр_аргус'
-    FieldSize = 50
-    Required = False
-    Expression = '[Проба|Шифр_Аргус_Меркурий]'
-    Editable = True
-  end
   object dxEdit1: TdxMemo
-    Left = 20
+    Left = 16
     Height = 48
-    Top = 196
+    Top = 312
     Width = 696
     ScrollBars = ssBoth
     TabOrder = 1
     Id = 1954
     FieldName = 'Примечание'
     FieldSize = 400
+    Required = False
+    SourceTId = 0
+    SourceFId = 0
+    Delimiter = ', '
+    Editable = False
+    UpdateTree = False
+  end
+  object dxLabel15: TdxLabel
+    Left = 24
+    Height = 16
+    Top = 231
+    Width = 89
+    Caption = 'Консервация'
+    ParentColor = False
+  end
+  object dxLookupComboBox4: TdxLookupComboBox
+    Left = 600
+    Height = 24
+    Top = 236
+    Width = 96
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 10
+    Id = 263015
+    FieldName = 'Консервация_ид'
+    SourceTId = 6851
+    SourceFId = 262620
+    Filter = '[Показатель|Методика] in DBMERGE(''Исследование'', ''Методика из ОА|Методика'', ''[!Образец]=RECID("Образцы")'')'
+    Required = False
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Editable = False
+    ListFields = <>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = False
+    UpdateTree = False
+  end
+  object dxLabel30: TdxLabel
+    Left = 20
+    Height = 16
+    Top = 194
+    Width = 93
+    Caption = 'Вид упаковки'
+    ParentColor = False
+  end
+  object dxComboBox2: TdxComboBox
+    Left = 144
+    Height = 24
+    Top = 192
+    Width = 548
+    AutoComplete = True
+    AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+    ItemHeight = 16
+    Items.Strings = (
+      'Пластиковый пакет'
+      'Сейф-пакет'
+      'Банка'
+      'Бутылка'
+      'Мешок матерчатый'
+      'Мешки матерчатый и полиэтиленовый'
+    )
+    MaxLength = 0
+    TabOrder = 11
+    Id = 263016
+    FieldName = 'Вид упаковки'
+    SourceTId = 6870
+    SourceFId = 263029
+    FieldSize = 50
+    Required = False
+    Editable = False
+  end
+  object dxMemo1: TdxMemo
+    Left = 152
+    Height = 46
+    Top = 234
+    Width = 428
+    ScrollBars = ssBoth
+    TabOrder = 12
+    Id = 263026
+    FieldName = 'Консервация'
+    FieldSize = 300
     Required = False
     SourceTId = 0
     SourceFId = 0
@@ -758,6 +847,24 @@ object Form120: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f131107'
+      end    
+      item
+        Tag = 263015
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263015l'
+      end    
+      item
+        Tag = 263016
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263016'
+      end    
+      item
+        Tag = 263026
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263026'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

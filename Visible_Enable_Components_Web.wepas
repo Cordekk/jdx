@@ -1,0 +1,268 @@
+{@module
+Author=Павел Дуборкин
+Version=1.7
+HomePage=https://forum.mydataexpress.ru/viewtopic.php?f=16&t=2733
+Description=Видимость/доступность компонентов по условию. Веб-версия.
+@}
+
+
+{@action
+Id=BE798939-0563-4DC7-8789-BBB636BD45FA
+@}
+
+type
+  TContextKind = (cScroll, cCancel, cPost, cInsert, cEdit, cDuplicate, cChange);
+  TContext = set of TContextKind;
+
+  TVCRec = record
+    Fm: TdxForm;
+    Expr: String;
+    Cmps: TVariantArray2d;
+    AfterScroll, AfterCancel, AfterPost, AfterInsert, AfterEdit,
+    AfterDuplicate: TNotifyEvent;
+    FieldChange: TFieldChangeEvent;
+    Context: TContext;
+  end;
+
+var
+  VCData: array of TVCRec;
+  VC_OldDBClose: TNotifyEvent;
+
+// Обработчик события закрытия базы данных
+procedure VC_DBClose(Sender: TObject);
+begin
+  SetLength(VCData, 0);
+  if VC_OldDBClose <> nil then VC_OldDBClose(Sender);
+end;
+
+// Поиск нужного элемента массива по форме
+function VC_GetIndex(Fm: TObject; ContextKind: TContextKind): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := High(VCData) downto 0 do
+    if (VCData[i].Fm = Fm) and not (ContextKind in VCData[i].Context) then
+    begin
+      Result := i;
+      Exit;
+    end;
+
+  // Если ничего не найдено, значит сработало вложенное событие. Сбрасываем
+  // флаги и начинаем обработку события по следующему кругу.
+  for i := 0 to High(VCData) do
+    Exclude(VCData[i].Context, ContextKind);
+  Result := VC_GetIndex(Fm, ContextKind);
+end;
+
+procedure SetReadOnly(C: TControl; B: Boolean);
+begin
+end;
+
+// Само действие
+procedure VC_SetEnableOrVisible(var VC: TVCRec);
+var
+  b: Boolean;
+  i,j: Integer;
+  C: TControl;
+  Prop:string;
+  dxFile:TdxFile;
+  dxDBImage:TdxDBImage;
+  dxPageControl:TdxPageControl;
+  dxTabSheet:TdxTabSheet;
+begin
+  // Результат вычисления выражения должен быть логического типа
+  b := Session.EvalExpr(VC.Expr, VC.Fm);
+  for i := 0 to Length(VC.Cmps) - 1 do
+  begin
+    // Находим компонент по имени (в Cmps хранятся имена компонентов).
+    C := TControl( VC.Fm.FindComponent(VC.Cmps[i][0]));
+    Prop := VarToStr(VC.Cmps[i][1]);
+    if C = nil then Continue;
+
+    if Prop = 'Доступность' then C.Enabled := b
+    else if Prop = 'Редактирование' then SetReadOnly(C, b)
+    else
+    begin
+      // если компонент -  закладки
+      if C.ClassName = 'TdxTabSheet' then
+      begin
+        dxTabSheet:= TdxTabSheet(C);
+        dxTabSheet.TabVisible := b;
+        dxPageControl:=TdxPageControl(dxTabSheet.Parent);
+        dxPageControl.Visible := dxPageControl.ActivePageIndex >= 0;
+      end
+      else
+        C.Visible := b;
+    end;
+  end;
+end;
+
+// Действие при переходе на запись
+procedure VC_AfterScroll(Sender: TObject);
+var
+  VC: TVCRec;
+  i: Integer;
+begin
+  // Находим наш элемент
+  i := VC_GetIndex(Sender, cScroll);
+  VC := VCData[i];
+  Include(VCData[i].Context, cScroll);
+  try
+    // Вызываем старый обработчик события, если он есть
+    if VC.AfterScroll <> nil then VC.AfterScroll(Sender);
+  finally
+    Exclude(VCData[i].Context, cScroll);
+  end;
+  // Само действие
+  VC_SetEnableOrVisible(VC);
+end;
+
+// Действие при отмене изменений записи
+procedure VC_AfterCancel(Sender: TObject);
+var
+  VC: TVCRec;
+  i: Integer;
+begin
+  i := VC_GetIndex(Sender, cCancel);
+  VC := VCData[i];
+  Include(VCData[i].Context, cCancel);
+  try
+    if VC.AfterCancel <> nil then VC.AfterCancel(Sender);
+  finally
+    Exclude(VCData[i].Context, cCancel);
+  end;
+  VC_SetEnableOrVisible(VC);
+end;
+
+// Действие при сохранении записи
+procedure VC_AfterPost(Sender: TObject);
+var
+  VC: TVCRec;
+  i: Integer;
+begin
+  i := VC_GetIndex(Sender, cPost);
+  VC := VCData[i];
+  Include(VCData[i].Context, cPost);
+  try
+    if VC.AfterPost <> nil then VC.AfterPost(Sender);
+  finally
+    Exclude(VCData[i].Context, cPost);
+  end;
+  VC_SetEnableOrVisible(VC);
+end;
+
+// Действие при изменении поля
+procedure VC_FieldChange(Sender, Control: TObject; const FieldName: String);
+var
+  VC: TVCRec;
+  i: Integer;
+begin
+  i := VC_GetIndex(Sender, cChange);
+  VC := VCData[i];
+  Include(VCData[i].Context, cChange);
+  try
+    if VC.FieldChange <> nil then VC.FieldChange(Sender, Control, FieldName);
+  finally
+    Exclude(VCData[i].Context, cChange);
+  end;
+  VC_SetEnableOrVisible(VC);
+end;
+
+// Действие при вставке записи
+procedure VC_AfterInsert(Sender: TObject);
+var
+  VC: TVCRec;
+  i: Integer;
+begin
+  i := VC_GetIndex(Sender, cInsert);
+  VC := VCData[i];
+  Include(VCData[i].Context, cInsert);
+  try
+    if VC.AfterInsert <> nil then VC.AfterInsert(Sender);
+  finally
+    Exclude(VCData[i].Context, cInsert);
+  end;
+  VC_SetEnableOrVisible(VC);
+end;
+
+// Действие при копировании записи
+procedure VC_AfterDuplicate(Sender: TObject);
+var
+  VC: TVCRec;
+  i: Integer;
+begin
+  i := VC_GetIndex(Sender, cDuplicate);
+  VC := VCData[i];
+  Include(VCData[i].Context, cDuplicate);
+  try
+    if VC.AfterDuplicate <> nil then VC.AfterDuplicate(Sender);
+  finally
+    Exclude(VCData[i].Context, cDuplicate);
+  end;
+  VC_SetEnableOrVisible(VC);
+end;
+
+// Действие при редактировании записи
+procedure VC_AfterEdit(Sender: TObject);
+var
+  VC: TVCRec;
+  i: Integer;
+begin
+  i := VC_GetIndex(Sender, cEdit);
+  VC := VCData[i];
+  Include(VCData[i].Context, cEdit);
+  try
+    if VC.AfterEdit <> nil then VC.AfterEdit(Sender);
+  finally
+    Exclude(VCData[i].Context, cEdit);
+  end;
+  VC_SetEnableOrVisible(VC);
+end;
+
+// Эту функцию вызывает программа, когда выполняет подключаемое действие.
+function VisibleEnableByCondition(aExpr: String; aCmps: TVariantArray2d;
+  StateEvents: Boolean): Boolean;
+var
+  i: Integer;
+begin
+  Result := True;
+
+  i := Length(VCData);
+  // При первом использовании действия устанавливаем обработчик закрытия базы,
+  // чтобы можно было выполнить какие-либо завершающие действия, например,
+  // освободить память.
+  if i = 0 then
+  begin
+    //VC_OldDBClose := MainWindow.OnDatabaseClose;
+    //MainWindow.OnDatabaseClose := @VC_DBClose;
+  end;
+  // Каждый вызов действия увеличивает массив на один элемент.
+  SetLength(VCData, i+1);
+  // Сохраняем в последний элемент все необходимое для дальнейшей работы действия,
+  // подключаемся к событиям.
+  with VCData[i] do
+  begin
+    Fm := Self;
+    Expr := aExpr;
+    Cmps := aCmps;
+    AfterPost := Self.OnAfterPost;
+    AfterScroll := Self.OnAfterScroll;
+    AfterCancel := Self.OnAfterCancel;
+    FieldChange := Self.OnFieldChange;
+    AfterDuplicate := Self.OnAfterDuplicate;
+    Self.OnAfterPost := @VC_AfterPost;
+    Self.OnAfterScroll := @VC_AfterScroll;
+    Self.OnAfterCancel := @VC_AfterCancel;
+    Self.OnFieldChange := @VC_FieldChange;
+    Self.OnAfterDuplicate := @VC_AfterDuplicate;
+    if StateEvents then
+    begin
+      AfterInsert := Self.OnAfterInsert;
+      AfterEdit := Self.OnAfterEdit;
+      Self.OnAfterInsert := @VC_AfterInsert;
+      Self.OnAfterEdit := @VC_AfterEdit;
+    end;
+  end;
+end;
+

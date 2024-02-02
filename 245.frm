@@ -6,7 +6,7 @@ object Form245: TdxForm
   Id = 245
   PId = 0
   FormCaption = 'СфераГР'
-  FormGroup = 'Справочники'
+  FormGroup = 'ТМЦ'
   Font.Height = -13
   Font.Name = 'Verdana'
   AutoOpen = True

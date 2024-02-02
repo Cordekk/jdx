@@ -72,6 +72,7 @@ object Form222: TdxForm
     TabOrder = 1
     object dxTabSheet3: TdxTabSheet
       Caption = 'Задачи по документам'
+      StopTab = False
       object dxQueryGrid4: TdxQueryGrid
         Left = 8
         Height = 164

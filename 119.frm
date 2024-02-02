@@ -6,7 +6,7 @@ object Form119: TdxForm
   Id = 119
   PId = 0
   FormCaption = 'Виды документов'
-  FormGroup = 'Общие'
+  FormGroup = 'Справочники'
   Font.Height = -13
   Font.Name = 'Verdana'
   AutoOpen = True
@@ -126,7 +126,7 @@ object Form119: TdxForm
     Id = 8411
     FieldName = 'КОД'
     FieldSize = 10
-    Required = False
+    Required = True
     Editable = False
   end
   object dxLabel4: TdxLabel

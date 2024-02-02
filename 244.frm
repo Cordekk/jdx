@@ -62,20 +62,6 @@ object Form244: TdxForm
     Caption = 'Вид измерений'
     ParentColor = False
   end
-  object dxEdit1: TdxEdit
-    Left = 20
-    Height = 24
-    Top = 136
-    Width = 584
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 1
-    Id = 2655
-    FieldName = 'Вид измерений'
-    FieldSize = 50
-    Required = False
-    Editable = False
-  end
   object dxLabel3: TdxLabel
     Left = 24
     Height = 16
@@ -94,7 +80,21 @@ object Form244: TdxForm
     TabOrder = 2
     Id = 2656
     FieldName = 'Требуемая точность'
-    FieldSize = 50
+    FieldSize = 300
+    Required = False
+    Editable = False
+  end
+  object dxEdit1: TdxEdit
+    Left = 20
+    Height = 24
+    Top = 136
+    Width = 584
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 1
+    Id = 2655
+    FieldName = 'Вид измерений'
+    FieldSize = 300
     Required = False
     Editable = False
   end

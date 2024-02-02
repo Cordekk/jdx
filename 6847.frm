@@ -19,7 +19,7 @@ object Form14: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 100
+  Index = 99
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Тип неопределенности]=''Тип А''" grid="cmp;ve_prop|dxQueryGrid1;Доступность|dxButton2;Доступность|dxLabel15;Доступность|dxButton4;Видимость" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Сотрудник|user]=USER" grid="cmp;ve_prop|dxLookupComboBox2;Редактирование" stateevents="0" /></actions>'
   object dxCalcEdit5: TdxCalcEdit

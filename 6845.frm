@@ -19,7 +19,7 @@ object Form13: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 99
+  Index = 98
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="1=0" grid="cmp;ve_prop|dxQueryGrid2;Доступность" stateevents="0" /></actions>'
   object dxCounter1: TdxCounter
@@ -269,6 +269,7 @@ object Form13: TdxForm
     TabOrder = 7
     object dxTabSheet1: TdxTabSheet
       Caption = 'Модель измерений'
+      StopTab = False
       object dxMemo1: TdxMemo
         Left = 28
         Height = 136
@@ -440,7 +441,7 @@ object Form13: TdxForm
         SourceTId = 0
         SourceFId = 0
         Delimiter = ', '
-        Expression = 'MERGE(''Бюджет неопределенности1'', ''Символьные обозначения'', newline)'
+        Expression = '// GET(''Бюджет неопределенности1'', ''Символьные обозначения'')'#13#10'/*REPLACEALL(DBMERGE(''Бюджет неопределенности'', ''Символ'', ''[!Расчет неопределенности]=RECID("Расчет неопределенности")''),'';'', newline)'#13#10'для уточнения формулы расчетов смотри надпись наверху и вычисялемые поля в запросе  ''Бюджет неопределенности1'''#13#10'*/'#13#10'Getvar(''Symbol'')'
         Editable = False
         UpdateTree = False
       end
@@ -448,9 +449,10 @@ object Form13: TdxForm
         Left = 632
         Height = 16
         Top = 360
-        Width = 134
-        Caption = 'Перечень символов'
+        Width = 139
+        Caption = 'Перечень символов '
         ParentColor = False
+        Expression = 'Block(SETVAR(''Symbol'',null) ,'#13#10'''Перечень символов'')'
       end
       object dxLabel17: TdxLabel
         Left = 184
@@ -471,6 +473,7 @@ object Form13: TdxForm
     end
     object dxTabSheet2: TdxTabSheet
       Caption = 'Бюджет неопределенности'
+      StopTab = False
       object dxQueryGrid1: TdxQueryGrid
         Left = 0
         Height = 554
@@ -521,6 +524,7 @@ object Form13: TdxForm
     end
     object dxTabSheet3: TdxTabSheet
       Caption = 'Расчет коэффициентов'
+      StopTab = False
       object dxQueryGrid2: TdxQueryGrid
         Left = 0
         Height = 626
@@ -562,11 +566,12 @@ object Form13: TdxForm
         Width = 120
         Caption = 'Пересчитать'
         TabOrder = 1
-        ActionOnClick = '<actions><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Бюджет неопределенности1" keeppos="0" /><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Результат по методике;IIF(COUNT(''Бюджет неопределенности1'')&gt;0,JS_EVAL('#13#10'MERGE(''Бюджет неопределенности1'', ''Текст_для_формулы'', newline)'#13#10'+cstr([Итоговая формула]) + ''&003B''),0)" ignoreaccess="0" saverec="0" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Расчет коэффициентов" keeppos="0" /><action type="5" /></actions>'
+        ActionOnClick = '<actions><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Бюджет неопределенности1" keeppos="0" /><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Результат по методике;IIF(COUNT(''Бюджет неопределенности1'')&gt;0,JS_EVAL('#13#10'MERGE(''Бюджет неопределенности1'', ''Текст_для_формулы'', newline)'#13#10'+cstr([Итоговая формула]) + ''&amp;003B''),0)" ignoreaccess="0" saverec="0" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Расчет коэффициентов" keeppos="0" /><action type="5" /></actions>'
       end
     end
     object dxTabSheet4: TdxTabSheet
       Caption = 'Итоговый расчет'
+      StopTab = False
       object dxLabel10: TdxLabel
         Left = 16
         Height = 16
@@ -820,11 +825,12 @@ object Form13: TdxForm
         Width = 120
         Caption = 'Пересчитать'
         TabOrder = 8
-        ActionOnClick = '<actions><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Бюджет неопределенности1" keeppos="0" /><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Результат по методике;IIF(COUNT(''Бюджет неопределенности1'')&gt;0,JS_EVAL('#13#10'MERGE(''Бюджет неопределенности1'', ''Текст_для_формулы'', newline)'#13#10'+cstr([Итоговая формула]) + ''&003B''),0)" ignoreaccess="0" saverec="0" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Расчет коэффициентов" keeppos="0" /><action type="5" /></actions>'
+        ActionOnClick = '<actions><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Бюджет неопределенности1" keeppos="0" /><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Результат по методике;IIF(COUNT(''Бюджет неопределенности1'')&gt;0,JS_EVAL('#13#10'MERGE(''Бюджет неопределенности1'', ''Текст_для_формулы'', newline)'#13#10'+cstr([Итоговая формула]) + ''&amp;003B''),0)" ignoreaccess="0" saverec="0" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Расчет коэффициентов" keeppos="0" /><action type="5" /></actions>'
       end
     end
     object dxTabSheet6: TdxTabSheet
       Caption = 'Файлы'
+      StopTab = False
       object dxButton2: TdxButton
         Left = 36
         Height = 22
@@ -872,6 +878,7 @@ object Form13: TdxForm
     end
     object dxTabSheet5: TdxTabSheet
       Caption = 'Изменения'
+      StopTab = False
     end
   end
   object Grid: TdxGrid

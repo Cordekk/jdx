@@ -67,29 +67,6 @@ object Form18: TdxForm
     Expression = '//'
     Editable = False
   end
-  object dxLabel3: TdxLabel
-    Left = 404
-    Height = 16
-    Top = 112
-    Width = 64
-    Caption = 'ID формы'
-    ParentColor = False
-  end
-  object dxEdit3: TdxEdit
-    Left = 496
-    Height = 24
-    Top = 108
-    Width = 60
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 2
-    Id = 4510
-    FieldName = 'ID формы'
-    FieldSize = 50
-    Required = False
-    Expression = '//'
-    Editable = False
-  end
   object dxLabel4: TdxLabel
     Left = 56
     Height = 16
@@ -112,7 +89,7 @@ object Form18: TdxForm
     Top = 192
     Width = 604
     ScrollBars = ssBoth
-    TabOrder = 3
+    TabOrder = 2
     Id = 4511
     FieldName = 'Описание записи'
     FieldSize = 300
@@ -132,7 +109,7 @@ object Form18: TdxForm
     ReadOnly = True
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 4
+    TabOrder = 3
     HideButton = False
     Id = 4512
     FieldName = 'Файл'
@@ -156,7 +133,7 @@ object Form18: TdxForm
     Width = 336
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 5
+    TabOrder = 4
     Id = 4513
     FieldName = 'Имя файла'
     FieldSize = 50
@@ -170,7 +147,8 @@ object Form18: TdxForm
     Top = 308
     Width = 248
     Caption = 'Запись создана'
-    TabOrder = 6
+    TabOrder = 5
+    StopTab = False
     object dxLabel8: TdxLabel
       Left = 8
       Height = 16
@@ -243,7 +221,7 @@ object Form18: TdxForm
     Width = 428
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 7
+    TabOrder = 6
     Id = 4516
     FieldName = 'Сотрудник'
     SourceTId = 24
@@ -265,12 +243,12 @@ object Form18: TdxForm
     UpdateTree = False
   end
   object dxCheckBox1: TdxCheckBox
-    Left = 572
+    Left = 200
     Height = 23
-    Top = 108
+    Top = 468
     Width = 214
     Caption = 'Запрет на удаление'
-    TabOrder = 8
+    TabOrder = 7
     ValueChecked = '1'
     ValueUnchecked = '0'
     Id = 4518
@@ -307,9 +285,9 @@ object Form18: TdxForm
     Top = 332
     Width = 428
     ScrollBars = ssBoth
-    TabOrder = 9
+    TabOrder = 8
     Id = 4519
-    FieldName = 'Заметка4519'
+    FieldName = 'ХЭШ'
     FieldSize = 100
     Required = False
     SourceTId = 0
@@ -324,7 +302,7 @@ object Form18: TdxForm
     Top = 472
     Width = 82
     Caption = 'Архив'
-    TabOrder = 10
+    TabOrder = 9
     ValueChecked = '1'
     ValueUnchecked = '0'
     Id = 8609
@@ -334,6 +312,23 @@ object Form18: TdxForm
     Expression = 'DBGETBYID([Форма], ''Archiv'', CNUM([ID записи]))'
     Editable = False
     DefaultValue = '0'
+  end
+  object dxFile2: TdxFile
+    Left = 504
+    Height = 24
+    Top = 236
+    Width = 156
+    ReadOnly = True
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 10
+    HideButton = False
+    Id = 262700
+    FieldName = 'Файл подписи'
+    StorageType = 0
+    FieldSize = 100
+    Required = False
+    ButtonWidth = 23
   end
   object Grid: TdxGrid
     Left = 0
@@ -354,12 +349,6 @@ object Form18: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f4509'
-      end    
-      item
-        Tag = 4510
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f4510'
       end    
       item
         Tag = 4511
@@ -416,6 +405,12 @@ object Form18: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f8609'
+      end    
+      item
+        Tag = 262700
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262700d'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

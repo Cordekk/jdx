@@ -1,0 +1,46 @@
+{@module
+Author=Runenkov
+Version=1.12
+Description=Действие для вывода списка форм в ComboBox
+@}
+
+
+{@action
+ID=650D0CBE-8511-4666-AB7A-1D5DA01F4FDE
+OrigName=GetDBForms
+Name=Вывод списка форм
+Group=Сервис
+UI=<ui>
+<component name="cbx" caption="Компонент для вывода списка форм:"
+filter="TdxComboBox" />
+</ui>
+Description=<b>Действие выводит список форм в компонент "список"</b>
+@}
+
+function FormsList:TStrings;
+var
+  FL: TStringListUtf8;
+  i: Integer;
+begin
+  FL := TStringListUtf8.Create;
+  GetForms(FL);
+  for i := 0 to FL.Count - 1 do
+  FL[i] := Trim(FL[i]);
+  FL.Sort;
+  Result:=FL;
+end;
+
+procedure RefreshFormsList(Sender:TObject);
+begin
+TdxCombobox(Sender).Items := FormsList;
+end;
+
+procedure GetDBForms(Component:string);
+var FL:TdxCombobox;
+begin
+if Component='' then exit;
+FL:=TdxCombobox(Self.FindComponent(Component));
+FL.OnEnter := @RefreshFormsList;
+end;
+
+

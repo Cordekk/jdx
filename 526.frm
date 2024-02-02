@@ -19,7 +19,7 @@ object Form526: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 80
+  Index = 79
   SoftCheck = False
   object Grid: TdxGrid
     Left = 0

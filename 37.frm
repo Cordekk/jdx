@@ -6,7 +6,7 @@ object Form37: TdxForm
   Id = 37
   PId = 0
   FormCaption = 'Примечание'
-  FormGroup = '!Вспомогательные'
+  FormGroup = 'Справочники'
   Font.Height = -17
   Font.Name = 'Verdana'
   AutoOpen = True
@@ -22,16 +22,38 @@ object Form37: TdxForm
   Index = 39
   SoftCheck = False
   object dxEdit1: TdxEdit
-    Left = 20
+    Left = 32
     Height = 28
-    Top = 40
-    Width = 620
+    Top = 96
+    Width = 608
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 168
     FieldName = 'Примечание'
     FieldSize = 150
+    Required = False
+    Editable = False
+  end
+  object dxComboBox1: TdxComboBox
+    Left = 32
+    Height = 28
+    Top = 48
+    Width = 596
+    AutoComplete = True
+    AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+    ItemHeight = 20
+    Items.Strings = (
+      'Цель отбор'
+      'Основание отбора'
+    )
+    MaxLength = 0
+    TabOrder = 1
+    Id = 262680
+    FieldName = 'Список'
+    SourceTId = 0
+    SourceFId = 0
+    FieldSize = 50
     Required = False
     Editable = False
   end
@@ -44,9 +66,15 @@ object Form37: TdxForm
     Color = clWindow
     Columns = <    
       item
+        Tag = 262680
+        Title.Caption = ' '
+        Width = 158
+        FieldName = 'f262680'
+      end    
+      item
         Tag = 168
         Title.Caption = ' '
-        Width = 100
+        Width = 627
         FieldName = 'f168'
       end>
     DefaultRowHeight = 20
@@ -55,7 +83,6 @@ object Form37: TdxForm
     Font.Name = 'Verdana'
     Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgDisplayMemoText]
     ParentDoubleBuffered = False
-    ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
     GridLineStyle = psSolid

@@ -35,6 +35,7 @@ object Form235: TdxForm
       'Реактив'
       'Материал'
       'СИЗ'
+      'Не материальные'
     )
     MaxLength = 0
     TabOrder = 0

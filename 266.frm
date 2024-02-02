@@ -483,7 +483,7 @@ object Form266: TdxForm
     Id = 8637
     FieldName = 'Архив'
     SourceTId = 530
-    SourceFId = 8614
+    SourceFId = 0
     Required = False
     SourceTable = 0
     DestTable = 0
@@ -543,6 +543,7 @@ object Form266: TdxForm
     TabOrder = 22
     object dxTabSheet1: TdxTabSheet
       Caption = 'Данные отчета'
+      StopTab = False
       object dxQueryGrid1: TdxQueryGrid
         Left = 0
         Height = 226
@@ -580,6 +581,7 @@ object Form266: TdxForm
     end
     object dxTabSheet2: TdxTabSheet
       Caption = 'Карта Шухарта'
+      StopTab = False
       object dxChart1: TdxChart
         Left = 12
         Height = 224
@@ -687,6 +689,14 @@ object Form266: TdxForm
           ShowPoints = True
         end
       end
+    end
+    object dxTabSheet3: TdxTabSheet
+      Caption = 'Статистический контроль'
+      StopTab = False
+    end
+    object dxTabSheet4: TdxTabSheet
+      Caption = 'Файлы'
+      StopTab = False
     end
   end
   object dxCheckBox3: TdxCheckBox

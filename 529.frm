@@ -6,7 +6,7 @@ object Form529: TdxForm
   Id = 529
   PId = 0
   FormCaption = 'Дополнение заявки'
-  FormGroup = 'Приемка'
+  FormGroup = 'Справочники'
   Font.Height = -13
   Font.Name = 'Verdana'
   AutoOpen = True
@@ -19,7 +19,7 @@ object Form529: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 81
+  Index = 80
   SoftCheck = False
   object dxEdit1: TdxEdit
     Left = 16

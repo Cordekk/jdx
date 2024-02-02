@@ -94,13 +94,13 @@ object Form25: TdxForm
     Left = 232
     Height = 28
     Top = 108
-    Width = 80
+    Width = 200
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 2433
     FieldName = 'КОД'
-    FieldSize = 4
+    FieldSize = 20
     Required = False
     Editable = True
   end

@@ -1,6 +1,6 @@
 object Form246: TdxForm
   Left = 10
-  Height = 646
+  Height = 747
   Top = 10
   Width = 1128
   Id = 246
@@ -11,6 +11,7 @@ object Form246: TdxForm
   Font.Name = 'Verdana'
   CalcFields.Strings = (
     '№_проб=RECNO(''Результаты_пробы'')'
+    'Место проведения испытаний=MERGE(''Результаты_исследований'', ''Место проведения испытаний'', ''; '')'
     'Образцы=REPLACEALL('#13#10'DBMERGE(''Исследование'', ''Образец|Шифр_аргус'', ''[!Заявка клиента]=[Заявка клиента]  & [!Проба] in MERGE("Результаты_пробы", "ID2", ";") & [!Показатель|Группа показателя] = GET("Группы_показателей_результатов", "Группа показателя")&[!Методика из ОА]=GET("Показатели и результаты объединенные", "Методика_ид")'')'#13#10','';'',newline)'
     'Результат=REPLACEALL('#13#10'DBMERGE(''Исследование'', ''Значение'', ''[!Заявка клиента]=[Заявка клиента]  & [!Проба] in MERGE("Результаты_пробы", "ID2", ";") & [!Показатель|Группа показателя] = GET("Группы_показателей_результатов", "Группа показателя")&[!Методика из ОА]=GET("Показатели и результаты объединенные", "Методика_ид")'')'#13#10','';'',newline)'
     'Продукция_партия=MERGE(''Результаты_пробы'', ''Продукция_партия'', ''; '')'
@@ -35,11 +36,11 @@ object Form246: TdxForm
   Tree = Tree.Owner
   Index = 44
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Подписано]&lt;&gt;1 & [Утверждено] &lt;&gt; 1 & [ФГИС] &lt;&gt; 1" grid="cmp;ve_prop|dxDateEdit1;Доступность" stateevents="1" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Подписано]&lt;&gt;1 &amp; [Утверждено] &lt;&gt; 1 &amp; [ФГИС] &lt;&gt; 1" grid="cmp;ve_prop|dxDateEdit1;Доступность" stateevents="1" /></actions>'
   object dxQueryGrid4: TdxQueryGrid
     Left = 860
     Height = 82
-    Top = 563
+    Top = 664
     Width = 268
     Anchors = [akRight, akBottom]
     AutoAdvance = aaNone
@@ -103,7 +104,7 @@ object Form246: TdxForm
     ParentColor = False
   end
   object dxLookupComboBox1: TdxLookupComboBox
-    Left = 768
+    Left = 772
     Height = 24
     Top = 8
     Width = 276
@@ -129,7 +130,7 @@ object Form246: TdxForm
     UpdateTree = False
   end
   object dxLabel4: TdxLabel
-    Left = 688
+    Left = 692
     Height = 16
     Top = 8
     Width = 72
@@ -261,7 +262,7 @@ object Form246: TdxForm
   object dxLookupComboBox5: TdxLookupComboBox
     Left = 28
     Height = 24
-    Top = 607
+    Top = 708
     Width = 300
     Anchors = [akRight, akBottom]
     CharCase = ecNormal
@@ -287,7 +288,7 @@ object Form246: TdxForm
   object dxLabel9: TdxLabel
     Left = 32
     Height = 16
-    Top = 587
+    Top = 688
     Width = 79
     Anchors = [akRight, akBottom]
     Caption = 'Согласовал'
@@ -296,7 +297,7 @@ object Form246: TdxForm
   object dxCheckBox1: TdxCheckBox
     Left = 132
     Height = 23
-    Top = 583
+    Top = 684
     Width = 90
     Anchors = [akRight, akBottom]
     Caption = 'Подписано'
@@ -313,7 +314,7 @@ object Form246: TdxForm
   object dxLookupComboBox6: TdxLookupComboBox
     Left = 404
     Height = 24
-    Top = 607
+    Top = 708
     Width = 300
     Anchors = [akRight, akBottom]
     CharCase = ecNormal
@@ -340,7 +341,7 @@ object Form246: TdxForm
   object dxLabel11: TdxLabel
     Left = 408
     Height = 16
-    Top = 583
+    Top = 684
     Width = 64
     Anchors = [akRight, akBottom]
     Caption = 'Утвердил'
@@ -349,7 +350,7 @@ object Form246: TdxForm
   object dxCheckBox2: TdxCheckBox
     Left = 484
     Height = 23
-    Top = 579
+    Top = 684
     Width = 174
     Anchors = [akRight, akBottom]
     Caption = 'Утверждено'
@@ -365,18 +366,36 @@ object Form246: TdxForm
   end
   object dxPageControl1: TdxPageControl
     Left = 4
-    Height = 422
+    Height = 510
     Top = 136
     Width = 1112
-    ActivePage = dxTabSheet1
-    TabIndex = 0
+    ActivePage = dxTabSheet6
+    TabIndex = 1
     TabOrder = 10
     object dxTabSheet1: TdxTabSheet
       Caption = 'Результаты'
+      StopTab = False
+      object dxMemo6: TdxMemo
+        Left = 176
+        Height = 52
+        Top = 364
+        Width = 252
+        ScrollBars = ssBoth
+        TabOrder = 10
+        Id = 262710
+        FieldName = 'Образцы_выбранные'
+        FieldSize = 300
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Editable = False
+        UpdateTree = False
+      end
       object dxQueryGrid1: TdxQueryGrid
         Left = 440
-        Height = 368
-        Top = 25
+        Height = 404
+        Top = 41
         Width = 660
         AutoAdvance = aaNone
         Color = clWindow
@@ -409,9 +428,9 @@ object Form246: TdxForm
       end
       object dxQueryGrid2: TdxQueryGrid
         Left = 8
-        Height = 366
+        Height = 390
         Top = 24
-        Width = 132
+        Width = 160
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -450,10 +469,10 @@ object Form246: TdxForm
         ParentColor = False
       end
       object dxQueryGrid3: TdxQueryGrid
-        Left = 152
-        Height = 370
-        Top = 24
-        Width = 280
+        Left = 172
+        Height = 382
+        Top = 28
+        Width = 264
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -492,7 +511,7 @@ object Form246: TdxForm
         ParentColor = False
       end
       object dxLabel13: TdxLabel
-        Left = 488
+        Left = 444
         Height = 16
         Top = 4
         Width = 178
@@ -500,11 +519,16 @@ object Form246: TdxForm
         ParentColor = False
       end
       object dxCheckBox3: TdxCheckBox
-        Left = 888
+        Left = 476
         Height = 23
-        Top = 0
-        Width = 214
-        Caption = 'Вне области аккредитации'
+        Top = 452
+        Width = 266
+        Caption = 'Есть вне области аккредитации'
+        Font.Color = clRed
+        Font.Height = -15
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
+        ParentFont = False
         TabOrder = 3
         ValueChecked = '1'
         ValueUnchecked = '0'
@@ -513,11 +537,11 @@ object Form246: TdxForm
         CheckedText = 'Да'
         UnCheckedText = 'Нет'
         Expression = 'IIF(COUNTIF(''Результаты_исследований'', ''[акр]=0'')>0,1,0)'
-        Editable = True
+        Editable = False
         DefaultValue = '0'
       end
       object dxCheckBox5: TdxCheckBox
-        Left = 672
+        Left = 628
         Height = 23
         Top = 0
         Width = 58
@@ -533,9 +557,9 @@ object Form246: TdxForm
         DefaultValue = '1'
       end
       object dxCheckBox6: TdxCheckBox
-        Left = 320
+        Left = 316
         Height = 23
-        Top = 0
+        Top = 424
         Width = 106
         Caption = 'Все образцы'
         TabOrder = 5
@@ -548,9 +572,254 @@ object Form246: TdxForm
         Editable = False
         DefaultValue = '1'
       end
+      object dxCheckBox7: TdxCheckBox
+        Left = 708
+        Height = 23
+        Top = 0
+        Width = 118
+        Caption = 'Только в ОА'
+        TabOrder = 6
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262708
+        FieldName = 'В_ОА'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '1'
+      end
+      object dxCheckBox8: TdxCheckBox
+        Left = 852
+        Height = 23
+        Top = 0
+        Width = 126
+        Caption = 'Только вне ОА'
+        TabOrder = 7
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262709
+        FieldName = 'Вне_ОА'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '1'
+      end
+      object dxButton3: TdxButton
+        Left = 8
+        Height = 30
+        Top = 416
+        Width = 120
+        Caption = 'Выбрать пробу'
+        TabOrder = 8
+        ActionOnClick = '<actions><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Проба;GET(''Результаты_пробы'', ''ID'')" ignoreaccess="1" saverec="0" /></actions>'
+      end
+      object dxButton4: TdxButton
+        Left = 176
+        Height = 30
+        Top = 416
+        Width = 128
+        Caption = 'Выбрать образец'
+        TabOrder = 9
+        ActionOnClick = '<actions><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Образцы_выбранные;Block('#13#10'setvar(''образец_идентификатор'',GET(''Результаты_образцы'', ''Идентификатор'')),'#13#10'IIF(FIND((''&amp;003B''+getvar(''образец_идентификатор'')+''&amp;003B''),NZ([:Образцы_выбранные],''''),1)&gt;0,'#13#10'REPLACEALL(NZ([Образцы_выбранные],''''), (''&amp;003B'' + getvar(''образец_идентификатор'')+''&amp;003B''), ''&amp;003B'') ,'#13#10'NZ([Образцы_выбранные],''&amp;003B'')+getvar(''образец_идентификатор'')+''&amp;003B'')'#13#10')" ignoreaccess="1" saverec="0" /></actions>'
+      end
+      object dxButton5: TdxButton
+        Left = 8
+        Height = 30
+        Top = 452
+        Width = 120
+        Caption = 'Снять выбор'
+        TabOrder = 11
+        ActionOnClick = '<actions><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Проба;null" ignoreaccess="1" saverec="0" /></actions>'
+      end
+      object dxButton6: TdxButton
+        Left = 176
+        Height = 30
+        Top = 452
+        Width = 128
+        Caption = 'Снять выбор'
+        TabOrder = 12
+        ActionOnClick = '<actions><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Образцы_выбранные;null" ignoreaccess="1" saverec="0" /></actions>'
+      end
+    end
+    object dxTabSheet6: TdxTabSheet
+      Caption = 'Оборудование'
+      StopTab = False
+      object dxMemo5: TdxMemo
+        Left = 31
+        Height = 100
+        Top = 39
+        Width = 776
+        ScrollBars = ssBoth
+        TabOrder = 0
+        Id = 262697
+        FieldName = 'Выбранное оборудование'
+        FieldSize = 300
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Expression = 'MERGE(''Результаты_исследований'', ''Выбранное оборудование'', ''; '')'
+        Editable = True
+        UpdateTree = False
+      end
+      object dxQueryGrid10: TdxQueryGrid
+        Left = 24
+        Height = 162
+        Top = 175
+        Width = 792
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 1
+        SelectedColor = clHighlight
+        GridLineStyle = psSolid
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = False
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -17
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 2953
+        ManualRefresh = False
+      end
+      object dxLabel27: TdxLabel
+        Left = 96
+        Height = 16
+        Top = 8
+        Width = 174
+        Caption = 'Выбранное оборудование'
+        ParentColor = False
+      end
+      object dxLabel28: TdxLabel
+        Left = 48
+        Height = 16
+        Top = 152
+        Width = 159
+        Caption = 'Таблица оборудования'
+        ParentColor = False
+      end
+    end
+    object dxTabSheet7: TdxTabSheet
+      Caption = 'Дополнительно'
+      StopTab = False
+      object dxLabel29: TdxLabel
+        Left = 44
+        Height = 16
+        Top = 12
+        Width = 171
+        Caption = 'Дополнения к протоколу'
+        ParentColor = False
+      end
+      object dxMemo7: TdxMemo
+        Left = 302
+        Height = 88
+        Top = 9
+        Width = 412
+        ScrollBars = ssBoth
+        TabOrder = 0
+        Id = 262787
+        FieldName = 'Дополнения к протоколу'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Editable = False
+        UpdateTree = False
+      end
+      object dxLabel30: TdxLabel
+        Left = 44
+        Height = 16
+        Top = 120
+        Width = 250
+        Caption = 'Дополнения к методикам испытаний'
+        ParentColor = False
+      end
+      object dxMemo8: TdxMemo
+        Left = 306
+        Height = 92
+        Top = 117
+        Width = 404
+        ScrollBars = ssBoth
+        TabOrder = 1
+        Id = 262788
+        FieldName = 'Дополнения к методикам испытаний'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Editable = False
+        UpdateTree = False
+      end
+      object dxLabel31: TdxLabel
+        Left = 44
+        Height = 16
+        Top = 228
+        Width = 231
+        Caption = 'Отклонени от методик испытаний'
+        ParentColor = False
+      end
+      object dxMemo9: TdxMemo
+        Left = 302
+        Height = 100
+        Top = 225
+        Width = 400
+        ScrollBars = ssBoth
+        TabOrder = 2
+        Id = 262789
+        FieldName = 'Отклонени от методик испытаний'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Editable = False
+        UpdateTree = False
+      end
+      object dxLabel32: TdxLabel
+        Left = 44
+        Height = 16
+        Top = 336
+        Width = 198
+        Caption = 'Условия окружающей среды'
+        ParentColor = False
+      end
+      object dxMemo10: TdxMemo
+        Left = 302
+        Height = 100
+        Top = 333
+        Width = 396
+        ScrollBars = ssBoth
+        TabOrder = 3
+        Id = 262790
+        FieldName = 'Условия окружающей среды'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Editable = False
+        UpdateTree = False
+      end
     end
     object dxTabSheet5: TdxTabSheet
       Caption = 'Объединение результатов'
+      StopTab = False
       object dxQueryGrid8: TdxQueryGrid
         Left = 568
         Height = 54
@@ -816,6 +1085,7 @@ object Form246: TdxForm
     end
     object dxTabSheet2: TdxTabSheet
       Caption = 'Файлы'
+      StopTab = False
       object dxQueryGrid5: TdxQueryGrid
         Left = 4
         Height = 370
@@ -853,9 +1123,62 @@ object Form246: TdxForm
     end
     object dxTabSheet3: TdxTabSheet
       Caption = 'Изменения'
+      StopTab = False
+      object dxQueryGrid9: TdxQueryGrid
+        Left = 4
+        Height = 420
+        Top = 7
+        Width = 760
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 0
+        SelectedColor = clHighlight
+        GridLineStyle = psSolid
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = False
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -17
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 2942
+        ManualRefresh = True
+      end
+      object dxCheckBox4: TdxCheckBox
+        Left = 900
+        Height = 23
+        Top = 370
+        Width = 194
+        Caption = 'Внесено во ФГИС'
+        TabOrder = 1
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262362
+        FieldName = 'ФГИС'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
     end
     object dxTabSheet4: TdxTabSheet
       Caption = 'Информация'
+      StopTab = False
       object dxLabel14: TdxLabel
         Left = 16
         Height = 16
@@ -932,7 +1255,7 @@ object Form246: TdxForm
         SourceTId = 0
         SourceFId = 0
         Delimiter = ', '
-        Expression = 'MERGE(''Результаты_пробы'', ''Продукция_Название'', ''; '')'
+        Expression = 'MERGE(''Результаты_пробы'', ''Продукция'', ''; '')'
         Editable = False
         UpdateTree = False
       end
@@ -1054,7 +1377,7 @@ object Form246: TdxForm
   object dxButton1: TdxButton
     Left = 756
     Height = 30
-    Top = 603
+    Top = 704
     Width = 100
     Anchors = [akRight, akBottom]
     Caption = 'Печать'
@@ -1070,10 +1393,10 @@ object Form246: TdxForm
     MaxLength = 0
     TabOrder = 13
     Id = 262318
-    FieldName = 'Номер_Аргус'
+    FieldName = 'Номер_документа'
     FieldSize = 50
     Required = False
-    Expression = 'iif([Вид документа|Внешний номер]=1,GET(''Результаты_пробы'', ''Шифр_Аргус_Меркурий'')+''П'','#13#10'Block('#13#10'setvar(''ND'',[Вид документа|Шаблон_номера]),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''№'',ZEROS([Номер],[Вид документа|Число]))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''NN'',NZ([Вид документа|Номенклатура],''''))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''KOD'',NZ([Вид документа|КОД],''''))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''URD'',NZ([Вид документа|Уровень документа СМК],''''))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''YYYY'',CSTR(YEAROF([Дата])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''MM'',CSTR(MONTHOF([Дата])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''DD'',CSTR(DAYOF([Дата])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''YY'',CUT(CSTR(YEAROF([Дата])),3,2))),'#13#10'getvar(''ND'')'#13#10')'#13#10')'
+    Expression = 'iif([Вид документа|Внешний номер]=1,GET(''Результаты_пробы'', ''Шифр_Аргус_Меркурий'')+''П'','#13#10'Block('#13#10'setvar(''ND'',[Вид документа|Шаблон_номера]),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''№'',ZEROS([Номер],[Вид документа|Число]))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''NN'',NZ([Вид документа|Номенклатура],''''))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''KOD'',NZ([Вид документа|КОД],''''))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''URD'',NZ([Вид документа|Уровень документа СМК],''''))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''YYYY'',CSTR(YEAROF([Дата])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''MM'',CSTR(MONTHOF([Дата])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''DD'',CSTR(DAYOF([Дата])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''YY'',CUT(CSTR(YEAROF([Дата])),3,2))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''PRKD'',[Сотрудник1|Подразделение|КОД])),'#13#10'getvar(''ND'')'#13#10')'#13#10')'
     Editable = True
   end
   object dxButton2: TdxButton
@@ -1085,22 +1408,6 @@ object Form246: TdxForm
     TabOrder = 14
     ActionOnClick = '<actions><action type="5" /></actions>'
   end
-  object dxCheckBox4: TdxCheckBox
-    Left = 616
-    Height = 23
-    Top = 560
-    Width = 194
-    Caption = 'Внесено во ФГИС'
-    TabOrder = 15
-    ValueChecked = '1'
-    ValueUnchecked = '0'
-    Id = 262362
-    FieldName = 'ФГИС'
-    CheckedText = 'Да'
-    UnCheckedText = 'Нет'
-    Editable = False
-    DefaultValue = '0'
-  end
   object dxLabel26: TdxLabel
     Left = 12
     Height = 16
@@ -1108,6 +1415,32 @@ object Form246: TdxForm
     Width = 119
     Caption = 'Номер документа'
     ParentColor = False
+  end
+  object dxLookupComboBox13: TdxLookupComboBox
+    Left = 772
+    Height = 24
+    Top = 36
+    Width = 228
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 15
+    Id = 262782
+    FieldName = 'Подразделение1'
+    SourceTId = 25
+    SourceFId = 77
+    Required = False
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Expression = '[Сотрудник1|Подразделение]'
+    Editable = True
+    ListFields = <>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = False
+    UpdateTree = False
   end
   object Grid: TdxGrid
     Left = 0
@@ -1308,6 +1641,62 @@ object Form246: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262488'
+      end    
+      item
+        Tag = 262697
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262697'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262708
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262708'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262709
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262709'
+      end    
+      item
+        Tag = 262710
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262710'
+      end    
+      item
+        Tag = 262782
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262782l'
+      end    
+      item
+        Tag = 262787
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262787'
+      end    
+      item
+        Tag = 262788
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262788'
+      end    
+      item
+        Tag = 262789
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262789'
+      end    
+      item
+        Tag = 262790
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262790'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

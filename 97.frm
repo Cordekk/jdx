@@ -181,12 +181,13 @@ object Form97: TdxForm
     Height = 352
     Top = 166
     Width = 890
-    ActivePage = dxTabSheet4
+    ActivePage = dxTabSheet3
     Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 4
+    TabIndex = 0
     TabOrder = 7
     object dxTabSheet3: TdxTabSheet
       Caption = 'Описание проб'
+      StopTab = False
       object dxGrid1: TdxGrid
         Left = 4
         Height = 296
@@ -223,6 +224,7 @@ object Form97: TdxForm
     end
     object dxTabSheet2: TdxTabSheet
       Caption = 'Пробы контроля'
+      StopTab = False
       object dxQueryGrid1: TdxQueryGrid
         Left = 8
         Height = 292
@@ -264,11 +266,12 @@ object Form97: TdxForm
         Width = 100
         Caption = 'Дублировать'
         TabOrder = 2
-        ActionOnClick = '<actions><action type="9" id="62900B52-9BF5-4E72-833F-9B47AB4F4399" _qg="Образцы контроля" _fm="Пробы" _ls="Только форма" /></actions>'
+        ActionOnClick = '<actions><action type="9" id="62900B52-9BF5-4E72-833F-9B47AB4F4399" _qg="Образцы контроля" _fm="Пробы" _ls="Форма+Подчиненные таблицы" /></actions>'
       end
     end
     object dxTabSheet1: TdxTabSheet
       Caption = 'Комментарий'
+      StopTab = False
       object dxMemo2: TdxMemo
         Left = 8
         Height = 260
@@ -297,6 +300,7 @@ object Form97: TdxForm
     end
     object dxTabSheet5: TdxTabSheet
       Caption = 'Результаты'
+      StopTab = False
       object dxQueryGrid3: TdxQueryGrid
         Left = 8
         Height = 298
@@ -343,6 +347,7 @@ object Form97: TdxForm
     end
     object dxTabSheet4: TdxTabSheet
       Caption = 'Файлы'
+      StopTab = False
       object dxQueryGrid2: TdxQueryGrid
         Left = 0
         Height = 282
@@ -508,11 +513,15 @@ object Form97: TdxForm
     AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
     ItemHeight = 16
     Items.Strings = (
-      'МСИ'
-      'Повторные испытания'
+      'МСИ (ПК)'
       'Параллельные испытания'
+      'Повторные испытания'
       'Стандартные образцы'
       'Метод добавок'
+      'Метод разбавления'
+      'Метод разбавления с добавкой'
+      'Метод варьирования навески'
+      'Контрольная методика'
     )
     MaxLength = 0
     TabOrder = 9
@@ -587,7 +596,7 @@ object Form97: TdxForm
     Id = 8631
     FieldName = 'Архив'
     SourceTId = 530
-    SourceFId = 8614
+    SourceFId = 0
     Required = False
     SourceTable = 0
     DestTable = 0

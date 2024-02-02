@@ -1,6 +1,6 @@
 object Form6: TdxForm
   Left = 10
-  Height = 699
+  Height = 905
   Top = 10
   Width = 1020
   Id = 6
@@ -25,7 +25,7 @@ object Form6: TdxForm
   Tree = Tree.Owner
   Index = 16
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="DC4A2A06-F7FF-4A5E-89FF-025F21121D22" allfields="1" logfields="Field" users="User" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="DC4A2A06-F7FF-4A5E-89FF-025F21121D22" allfields="1" logfields="Field" users="User" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' | ROLE=''Администратор''" grid="cmp;ve_prop|dxButton6;Доступность|dxLookupComboBox3;Доступность" stateevents="0" /></actions>'
   object DxEdit1: TdxEdit
     Left = 124
     Height = 28
@@ -160,47 +160,6 @@ object Form6: TdxForm
     Caption = 'КПП'
     ParentColor = False
   end
-  object dxLookupComboBox1: TdxLookupComboBox
-    Left = 16
-    Height = 28
-    Top = 380
-    Width = 216
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 8
-    Id = 121
-    FieldName = 'Контактное_лицо'
-    SourceTId = 33
-    SourceFId = 116
-    Required = False
-    SourceTable = 0
-    DestTable = 0
-    PromptFillTable = False
-    ClearTableBeforeFill = False
-    Editable = False
-    ListFields = <>
-    DropDownCount = 8
-    ListWidthExtra = 0
-    HideList = False
-    HideButton = False
-    UpdateTree = False
-  end
-  object dxLabel11: TdxLabel
-    Left = 12
-    Height = 20
-    Top = 352
-    Width = 202
-    Caption = 'ФИО контактного лица'
-    ParentColor = False
-  end
-  object dxLabel12: TdxLabel
-    Left = 16
-    Height = 20
-    Top = 408
-    Width = 190
-    Caption = 'Контакты сотрудника'
-    ParentColor = False
-  end
   object dxLookupComboBox2: TdxLookupComboBox
     Left = 816
     Height = 28
@@ -208,7 +167,7 @@ object Form6: TdxForm
     Width = 196
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 9
+    TabOrder = 8
     Id = 138
     FieldName = 'Страна_клиента'
     SourceTId = 31
@@ -233,29 +192,6 @@ object Form6: TdxForm
     Top = 56
     Width = 62
     Caption = 'Страна'
-    ParentColor = False
-  end
-  object DxEdit7: TdxEdit
-    Left = 276
-    Height = 28
-    Top = 380
-    Width = 160
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 10
-    Id = 144
-    FieldName = 'Должность'
-    FieldSize = 150
-    Required = False
-    Editable = False
-    DefaultValue = '''Менеджер'''
-  end
-  object dxLabel16: TdxLabel
-    Left = 280
-    Height = 20
-    Top = 352
-    Width = 96
-    Caption = 'Должность'
     ParentColor = False
   end
   object dxEdit10: TdxEdit
@@ -295,7 +231,7 @@ object Form6: TdxForm
     Width = 116
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 11
+    TabOrder = 9
     Id = 448
     FieldName = 'Идентификатор'
     FieldSize = 20
@@ -304,31 +240,17 @@ object Form6: TdxForm
     Editable = False
     DefaultValue = 'RECID(''Клиенты'')'
   end
-  object dxEdit13: TdxEdit
-    Left = 16
-    Height = 28
-    Top = 428
-    Width = 420
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 12
-    Id = 1842
-    FieldName = 'Контакты сотрудника'
-    FieldSize = 50
-    Required = False
-    Expression = '[Контактное_лицо|Телефон] + '' '' + [Контактное_лицо|Эл.почта]'
-    Editable = True
-  end
   object dxPageControl1: TdxPageControl
-    Left = 24
-    Height = 232
+    Left = 20
+    Height = 408
     Top = 460
     Width = 976
-    ActivePage = dxTabSheet3
-    TabIndex = 2
-    TabOrder = 13
+    ActivePage = dxTabSheet6
+    TabIndex = 1
+    TabOrder = 10
     object dxTabSheet1: TdxTabSheet
       Caption = 'Реквизиты'
+      StopTab = False
       object dxLabel14: TdxLabel
         Left = 24
         Height = 20
@@ -340,7 +262,7 @@ object Form6: TdxForm
       object DxEdit8: TdxEdit
         Left = 8
         Height = 28
-        Top = 163
+        Top = 175
         Width = 276
         CharCase = ecNormal
         MaxLength = 0
@@ -355,17 +277,17 @@ object Form6: TdxForm
       end
       object dxLabel17: TdxLabel
         Left = 8
-        Height = 20
+        Height = 40
         Top = 135
-        Width = 219
-        Caption = 'Основание для договора'
+        Width = 229
+        Caption = 'Основание для договора'#13#10'(Устав или доверенность)'
         ParentColor = False
       end
       object dxEdit14: TdxEdit
-        Left = 240
+        Left = 268
         Height = 28
         Top = 39
-        Width = 720
+        Width = 692
         CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
@@ -408,10 +330,10 @@ object Form6: TdxForm
         ParentColor = False
       end
       object dxMemo1: TdxMemo
-        Left = 244
+        Left = 268
         Height = 60
         Top = 75
-        Width = 680
+        Width = 688
         ScrollBars = ssBoth
         TabOrder = 2
         Id = 146
@@ -427,7 +349,7 @@ object Form6: TdxForm
       object dxLabel22: TdxLabel
         Left = 312
         Height = 20
-        Top = 143
+        Top = 151
         Width = 291
         Caption = 'Фамилия И.О. доверенного лица'
         ParentColor = False
@@ -435,7 +357,7 @@ object Form6: TdxForm
       object dxEdit9: TdxEdit
         Left = 308
         Height = 28
-        Top = 163
+        Top = 175
         Width = 652
         CharCase = ecNormal
         MaxLength = 0
@@ -461,8 +383,134 @@ object Form6: TdxForm
         Editable = False
       end
     end
+    object dxTabSheet6: TdxTabSheet
+      Caption = 'Сотрудники клиента'
+      StopTab = False
+      object dxLabel11: TdxLabel
+        Left = 8
+        Height = 20
+        Top = 311
+        Width = 202
+        Caption = 'ФИО контактного лица'
+        ParentColor = False
+      end
+      object dxLookupComboBox1: TdxLookupComboBox
+        Left = 12
+        Height = 28
+        Top = 339
+        Width = 216
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 0
+        Id = 121
+        FieldName = 'Контактное_лицо'
+        SourceTId = 33
+        SourceFId = 116
+        Required = False
+        SourceTable = 0
+        DestTable = 0
+        PromptFillTable = False
+        ClearTableBeforeFill = False
+        Editable = False
+        ListFields = <>
+        DropDownCount = 8
+        ListWidthExtra = 0
+        HideList = False
+        HideButton = False
+        UpdateTree = False
+      end
+      object dxLabel16: TdxLabel
+        Left = 260
+        Height = 20
+        Top = 311
+        Width = 96
+        Caption = 'Должность'
+        ParentColor = False
+      end
+      object DxEdit7: TdxEdit
+        Left = 256
+        Height = 28
+        Top = 339
+        Width = 160
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 1
+        Id = 144
+        FieldName = 'Должность'
+        FieldSize = 150
+        Required = False
+        Editable = False
+        DefaultValue = '''Менеджер'''
+      end
+      object dxLabel12: TdxLabel
+        Left = 428
+        Height = 20
+        Top = 315
+        Width = 190
+        Caption = 'Контакты сотрудника'
+        ParentColor = False
+      end
+      object dxEdit13: TdxEdit
+        Left = 428
+        Height = 28
+        Top = 335
+        Width = 420
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 2
+        Id = 1842
+        FieldName = 'Контакты сотрудника'
+        FieldSize = 50
+        Required = False
+        Expression = '[Контактное_лицо|Телефон] + '' '' + [Контактное_лицо|Эл.почта]'
+        Editable = True
+      end
+      object dxGrid1: TdxGrid
+        Left = 4
+        Height = 274
+        Top = 32
+        Width = 948
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 3
+        SelectedColor = clHighlight
+        GridLineStyle = psSolid
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = True
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnDuplicate, gbnShopping, gbnMoveUp, gbnMoveDown]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -17
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 6861
+      end
+      object dxButton7: TdxButton
+        Left = 856
+        Height = 30
+        Top = 336
+        Width = 60
+        Caption = '++'
+        TabOrder = 5
+        ActionOnClick = '<actions><action type="9" id="715F1733-6C6D-4CCF-BA1E-A547EA6D87E1" tbl="Сотрудники клиента" values="field;expr|Контактное_лицо;[Контактное_лицо]|Должность;[Должность]" action="Сохранить запись" ignoreaccess="1" /></actions>'
+      end
+    end
     object dxTabSheet2: TdxTabSheet
       Caption = 'Расчеты'
+      StopTab = False
       object dxGroupBox1: TdxGroupBox
         Left = 0
         Height = 225
@@ -470,6 +518,7 @@ object Form6: TdxForm
         Width = 969
         Caption = 'Задолженность'
         TabOrder = 0
+        StopTab = False
         object dxQueryGrid1: TdxQueryGrid
           Left = 8
           Height = 156
@@ -592,6 +641,7 @@ object Form6: TdxForm
     end
     object dxTabSheet3: TdxTabSheet
       Caption = 'Заявки и пробы'
+      StopTab = False
       object dxQueryGrid3: TdxQueryGrid
         Left = 0
         Height = 188
@@ -809,6 +859,7 @@ object Form6: TdxForm
     end
     object dxTabSheet4: TdxTabSheet
       Caption = 'Изменения'
+      StopTab = False
       object dxQueryGrid5: TdxQueryGrid
         Left = 16
         Height = 172
@@ -855,6 +906,7 @@ object Form6: TdxForm
     end
     object dxTabSheet5: TdxTabSheet
       Caption = 'Реестр актов'
+      StopTab = False
       object dxQueryGrid6: TdxQueryGrid
         Left = 8
         Height = 162
@@ -904,7 +956,7 @@ object Form6: TdxForm
     Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgDisplayMemoText]
     ParentDoubleBuffered = False
     ShowHint = True
-    TabOrder = 14
+    TabOrder = 11
     SelectedColor = clHighlight
     GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
@@ -931,7 +983,7 @@ object Form6: TdxForm
     Top = 84
     Width = 99
     Caption = 'Записать'
-    TabOrder = 15
+    TabOrder = 12
     ActionOnClick = '<actions><action type="5" /></actions>'
   end
   object dxLabel20: TdxLabel
@@ -949,7 +1001,7 @@ object Form6: TdxForm
     Width = 376
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 16
+    TabOrder = 13
     Id = 1914
     FieldName = 'Поиск'
     FieldSize = 50
@@ -962,8 +1014,8 @@ object Form6: TdxForm
     Top = 92
     Width = 75
     Caption = 'Поиск'
-    TabOrder = 17
-    ActionOnClick = '<actions><action type="7" expression=" block('#13#10'    setvar(''a'', DA_FIRMGET(''82e65ac9c197edf793bd964734d84873c7a74d7b'', [Поиск])),'#13#10'      iif(getvar(''a'')=''По запросу ничего не найдено'','#13#10'        msgbox(''DaData'',''По запросу: &quot;''+[поиск]+''&quot; ничего не найдено''),'#13#10'        setfield(''Результат'', DA_FIRMNAME +'' ИНН '' + DA_FIRMINN))'#13#10'      )"/></actions>'
+    TabOrder = 14
+    ActionOnClick = '<actions><action type="7" expression=" block('#13#10'    setvar(''a'', DA_FIRMGET(getvar(''dadata''), NZ([Поиск],''''))),'#13#10'      iif(getvar(''a'')=''По запросу ничего не найдено'','#13#10'        msgbox(''DaData'',''По запросу: &quot;''+NZ([Поиск],'''')+''&quot; ничего не найдено''),'#13#10'        setfield(''Результат'', DA_FIRMNAME +'' ИНН '' + DA_FIRMINN))'#13#10'      )"/></actions>'
   end
   object dxButton3: TdxButton
     Left = 476
@@ -971,7 +1023,7 @@ object Form6: TdxForm
     Top = 92
     Width = 27
     Caption = 'Х'
-    TabOrder = 18
+    TabOrder = 15
     ActionOnClick = '<actions><action type="8" fields="Поиск"/></actions>'
   end
   object dxEdit16: TdxEdit
@@ -981,7 +1033,7 @@ object Form6: TdxForm
     Width = 488
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 19
+    TabOrder = 16
     Id = 1915
     FieldName = 'Результат'
     FieldSize = 50
@@ -994,7 +1046,7 @@ object Form6: TdxForm
     Top = 132
     Width = 127
     Caption = 'Заполнить'
-    TabOrder = 20
+    TabOrder = 17
     ActionOnClick = '<actions><action type="7" expression="block('#13#10'      setfield(''ИНН'',DA_FIRMINN),'#13#10'      setfield(''КПП'',DA_FIRMKPP),'#13#10'      setfield(''Наименование_полное'',DA_FIRMFULLNAMEOPF),'#13#10'      setfield(''Наименование_сокращенное'',DA_FIRMNAMEOPF),'#13#10'      setfield(''Юр.Адрес'',DA_FIRMADDR),'#13#10'      setfield(''Руководитель'',DA_MANAGER),'#13#10'      setfield(''Должность_руководителя'',DA_MANAGERPOST),'#13#10'      setfield(''Страна_клиента'',DBGETID(''Страны и регионы'', ''[!Место1]==&quot;Российская&quot;'')),'#13#10'      setfield(''ОГРН'',DA_FIRMOGRN)'#13#10'      )"/></actions>'
   end
   object dxButton5: TdxButton
@@ -1003,8 +1055,8 @@ object Form6: TdxForm
     Top = 88
     Width = 151
     Caption = 'Проверить ИНН'
-    TabOrder = 21
-    ActionOnClick = '<actions><action type="7" expression=" block('#13#10'    setvar(''a'', DA_FIRMGET(''82e65ac9c197edf793bd964734d84873c7a74d7b'', [ИНН])),'#13#10'      iif(getvar(''a'')=''По запросу ничего не найдено'','#13#10'        msgbox(''DaData'',''По запросу: &quot;''+[поиск]+''&quot; ничего не найдено''),'#13#10'        setfield(''Результат'', DA_FIRMNAME))'#13#10'      )"/></actions>'
+    TabOrder = 18
+    ActionOnClick = '<actions><action type="7" expression=" block('#13#10'    setvar(''a'', DA_FIRMGET(getvar(''dadata''), NZ([ИНН],''''))),'#13#10'      iif(getvar(''a'')=''По запросу ничего не найдено'','#13#10'        msgbox(''DaData'',''По запросу: &quot;''+NZ([ИНН],'''')+''&quot; ничего не найдено''),'#13#10'        setfield(''Результат'', DA_FIRMNAME))'#13#10'      )"/></actions>'
   end
   object dxEdit18: TdxEdit
     Left = 920
@@ -1013,7 +1065,7 @@ object Form6: TdxForm
     Width = 100
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 22
+    TabOrder = 19
     Id = 7354
     FieldName = 'Проверка'
     FieldSize = 50
@@ -1036,12 +1088,12 @@ object Form6: TdxForm
     Width = 372
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 23
+    TabOrder = 20
     Id = 262363
     FieldName = 'ОГРН'
     FieldSize = 50
     Required = False
-    Expression = '// [ИНН]'#13#10'BLOCK('#13#10'setvar(''a'', DA_FIRMGET(''82e65ac9c197edf793bd964734d84873c7a74d7b'', [ИНН])),'#13#10'iif(getvar(''a'')=''По запросу ничего не найдено'','#13#10'        msgbox(''DaData'',''По запросу: "''+[поиск]+''" ничего не найдено''),'#13#10'        DA_FIRMOGRN)'#13#10'        )'
+    Expression = '// [ИНН]'#13#10'BLOCK('#13#10'setvar(''a'', DA_FIRMGET(getvar(''dadata''), NZ([ИНН],''''))),'#13#10'iif(getvar(''a'')=''По запросу ничего не найдено'','#13#10'        msgbox(''DaData'',''По запросу: "''+[ИНН]+''" ничего не найдено''),'#13#10'        DA_FIRMOGRN)'#13#10'        )'
     Editable = True
   end
   object DxEdit3: TdxMemo
@@ -1077,7 +1129,7 @@ object Form6: TdxForm
     )
     MaxLength = 0
     Style = csDropDownList
-    TabOrder = 24
+    TabOrder = 21
     Id = 262364
     FieldName = 'ТИП КЛИЕНТА'
     SourceTId = 0
@@ -1086,6 +1138,18 @@ object Form6: TdxForm
     Required = True
     Expression = 'IIF(LENGTH([ИНН])=10, ''Юр. лицо'','#13#10'IIF(LENGTH([ОГРН])=15, ''ИП'','#13#10'IIF(LENGTH([ИНН])=12, ''Физ. лицо'', ''Иностранное лицо'')'#13#10')'#13#10')'
     Editable = True
+  end
+  object dxLabel25: TdxLabel
+    Left = 76
+    Height = 40
+    Top = 384
+    Width = 316
+    Caption = 'Добавьте сотрудников, '#13#10'чтобы клиент мог добавлять заявки'
+    Font.Color = clRed
+    Font.Height = -17
+    Font.Name = 'Verdana'
+    ParentColor = False
+    ParentFont = False
   end
   object Grid: TdxGrid
     Left = 0

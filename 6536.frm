@@ -19,7 +19,7 @@ object Form6536: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 92
+  Index = 91
   SoftCheck = False
   object dxEdit1: TdxEdit
     Left = 80

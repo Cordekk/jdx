@@ -19,7 +19,7 @@ object Form531: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 83
+  Index = 82
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 160

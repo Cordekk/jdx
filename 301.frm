@@ -270,7 +270,6 @@ object Form301: TdxForm
     Id = 8425
     FieldName = 'Цена'
     Precission = 0
-    Expression = '[Остаток|Стоимость]/[Остаток|Остаток]'
     Required = False
     DefaultValue = '0'
     Editable = True

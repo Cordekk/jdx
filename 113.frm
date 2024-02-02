@@ -21,7 +21,7 @@ object Form113: TdxForm
   Tree = Tree.Owner
   Index = 13
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="C648A6AF-7C32-4AAA-AD19-7864AB61208C" allfields="1" logfields="Field" users="User" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Исполнитель|user] = user    &  [Выполнено]=0" grid="cmp;ve_prop|dxButton2;Доступность|dxMemo2;Редактирование|dxCheckBox1;Доступность" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Сотрудник|user] = user" grid="cmp;ve_prop|dxDateEdit1;Доступность|dxDateEdit2;Доступность|dxMemo1;Редактирование|dxComboBox1;Доступность|dxButton7;Видимость" stateevents="0" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="C648A6AF-7C32-4AAA-AD19-7864AB61208C" allfields="1" logfields="Field" users="User" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Исполнитель|user] = user    &amp;  [Выполнено]=0" grid="cmp;ve_prop|dxButton2;Доступность|dxMemo2;Редактирование|dxCheckBox1;Доступность" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Сотрудник|user] = user" grid="cmp;ve_prop|dxDateEdit1;Доступность|dxDateEdit2;Доступность|dxMemo1;Редактирование|dxComboBox1;Доступность|dxButton7;Видимость" stateevents="0" /></actions>'
   object dxLabel1: TdxLabel
     Left = 22
     Height = 16
@@ -492,6 +492,7 @@ object Form113: TdxForm
     TabOrder = 19
     object dxTabSheet1: TdxTabSheet
       Caption = 'Выполнение'
+      StopTab = False
       object dxCheckBox1: TdxCheckBox
         Left = 34
         Height = 16
@@ -708,6 +709,7 @@ object Form113: TdxForm
     end
     object dxTabSheet3: TdxTabSheet
       Caption = 'Доработка'
+      StopTab = False
       object dxButton7: TdxButton
         Left = 16
         Height = 30
@@ -720,6 +722,7 @@ object Form113: TdxForm
     end
     object dxTabSheet2: TdxTabSheet
       Caption = 'Изменение'
+      StopTab = False
       object dxLabel14: TdxLabel
         Left = 12
         Height = 16

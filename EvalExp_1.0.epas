@@ -1,0 +1,22 @@
+{@module
+Author= cordek
+Version=1.0
+Description= Функция для выполнения произвольных встроенных функций DataExpress, сохраненных в текстовом поле формы
+@}
+
+{@function
+OrigName=EvalExp
+Name=EvalExp
+Args=s
+Result=v
+Group=Скрипты
+Description=Позволяет выполнить произвольные функции. Заполнять функции надо также, как в редакторе выражений и в контексте текущей формы. Результатом будет строка, поэтому если необходимо сохранить в поле текст, дата или время, то используйте соответствующие функции для преобразования CNUM, CDATE, CTIME
+@}
+
+function EvalExp(s:string):variant;
+var
+Fm: Tdxform;
+begin
+Fm:= Self;
+result:= EvalExpr(s, Fm);
+end;

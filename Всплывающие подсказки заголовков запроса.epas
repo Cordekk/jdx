@@ -1,0 +1,58 @@
+{@module
+author=Алексей Земсков
+version=1.0
+description=Всплывающие подсказки заголовков запроса.
+@}
+
+{@action
+id=569775AE-4F7A-422C-8CA2-CA731C4F673A
+target=form
+origname=ColumnSettings
+name=Всплывающие подсказки заголовков запроса
+group=Настройки
+ui=<ui>
+  <query name="queryname" caption="Запрос" required="1"/>
+  <grid name="fields" caption="Поля запроса" height="200">
+    <field name="queryfield" caption="Поле" source="queryname"/>
+    <text name="fieldhint" caption="Текст подсказки"/>
+  </grid>
+</ui>
+description=Позволяет показывать всплывающие подсказки заголовков запроса. <br><br>
+Если не указаны конкретные подсказки для заголовков запроса, подсказка будет показываться
+в том случае, если текст не умещается по ширине заголовка. Если заголовкам назначены
+подсказки, будут показаны они, не зависимо от ширины колонки.<br><br>
+<b>Запрос</b> - Запрос, к которому будет применяться расширение.<br><br>
+<b>Поля запроса</b> - поля, заголовкам которых присвоены свои подсказки<br><br>@}
+
+procedure DrawColumnTitle(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+var
+  Q: TdxQueryGrid;
+  FieldHintCMP: TComponent;
+begin
+  Q := TdxQueryGrid(Sender);
+  if gdHot in State then
+    begin
+      FieldHintCMP := Q.FindComponent('QTitleNameHint' + IntToStr(DataCol));
+      if FieldHintCMP <> nil then
+        Q.Hint := TCustomEdit(FieldHintCMP).Text
+      else if Column.Width < Q.Canvas.TextWidth(Column.Title.Caption) then
+        Q.Hint := Column.Title.Caption
+      else Q.Hint := '';
+    end;
+end;
+
+procedure ColumnSettings(aQ: string; QueryFields: TVariantArray2d);
+var
+  Q: TdxQueryGrid;
+  i: integer;
+begin
+  Q := self.Queries[aQ];
+  Q.OnDrawColumnTitle := @DrawColumnTitle;
+
+  for i := 0 to High(QueryFields) do
+    with TCustomEdit.Create(Q) do
+      begin
+        Name := 'QTitleNameHint' + IntToStr(Q.FindColumnByTitle(QueryFields[i][0]).Index);
+        Text := QueryFields[i][1];
+      end;
+end;

@@ -6,7 +6,7 @@ object Form224: TdxForm
   Id = 224
   PId = 0
   FormCaption = 'Шаблон печати'
-  FormGroup = '!Вспомогательные'
+  FormGroup = 'Справочники'
   Font.Height = -13
   Font.Name = 'Verdana'
   AutoOpen = True
@@ -236,10 +236,22 @@ object Form224: TdxForm
     Color = clWindow
     Columns = <    
       item
-        Tag = 2530
+        Tag = 131123
         Title.Caption = ' '
-        Width = 141
-        FieldName = 'f2530'
+        Width = 100
+        FieldName = 'f131123'
+      end    
+      item
+        Tag = 2475
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f2475'
+      end    
+      item
+        Tag = 2625
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f2625l'
       end    
       item
         Tag = 2473
@@ -254,10 +266,11 @@ object Form224: TdxForm
         FieldName = 'f2474'
       end    
       item
-        Tag = 2475
+        Tag = 131124
         Title.Caption = ' '
-        Width = 100
-        FieldName = 'f2475'
+        Width = 0
+        Visible = False
+        FieldName = 'f131124d'
       end    
       item
         Tag = 2624
@@ -266,22 +279,10 @@ object Form224: TdxForm
         FieldName = 'f2624l'
       end    
       item
-        Tag = 2625
+        Tag = 2530
         Title.Caption = ' '
-        Width = 100
-        FieldName = 'f2625l'
-      end    
-      item
-        Tag = 131123
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f131123'
-      end    
-      item
-        Tag = 131124
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f131124d'
+        Width = 141
+        FieldName = 'f2530'
       end>
     DefaultRowHeight = 21
     DoubleBuffered = True
@@ -309,6 +310,7 @@ object Form224: TdxForm
     WordWrap = False
     AllowChangeSort = True
     Id = 0
+    SortCols = '0;1'
   end
   object Tree: TdxFormTree
     Left = 0

@@ -1,3 +1,10 @@
+{@module
+Author=Develop-soft
+Version=1.0
+Description=Description=<b>Действие дублирует запись указанного запроса.<b><br>
+<i>(работает только если в запросе указан 1 источник без группировок)</i>.
+@}
+
 {@action
 ID=62900B52-9BF5-4E72-833F-9B47AB4F4399
 target=button

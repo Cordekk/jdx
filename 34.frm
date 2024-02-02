@@ -52,7 +52,7 @@ object Form34: TdxForm
     Id = 473
     FieldName = 'Идентификатор'
     Precission = 0
-    Expression = 'RECID(''Вид транспорта'')'
+    Expression = '// [Вид транспорта]'#13#10'RECID(''Вид транспорта'')'
     Required = False
     DefaultValue = '0'
     Editable = False

@@ -73,6 +73,7 @@ object Form237: TdxForm
     TabOrder = 1
     object dxTabSheet7: TdxTabSheet
       Caption = 'Вне области на согласование'
+      StopTab = False
       object dxQueryGrid7: TdxQueryGrid
         Left = 8
         Height = 492
@@ -110,6 +111,7 @@ object Form237: TdxForm
     end
     object dxTabSheet1: TdxTabSheet
       Caption = 'Не внесены заявки'
+      StopTab = False
       object dxQueryGrid1: TdxQueryGrid
         Left = 8
         Height = 492
@@ -147,6 +149,7 @@ object Form237: TdxForm
     end
     object dxTabSheet3: TdxTabSheet
       Caption = 'Результаты'
+      StopTab = False
       object dxQueryGrid3: TdxQueryGrid
         Left = 8
         Height = 492
@@ -184,6 +187,7 @@ object Form237: TdxForm
     end
     object dxTabSheet5: TdxTabSheet
       Caption = 'Не выставленные счета'
+      StopTab = False
       object dxQueryGrid6: TdxQueryGrid
         Left = 8
         Height = 508
@@ -221,6 +225,7 @@ object Form237: TdxForm
     end
     object dxTabSheet6: TdxTabSheet
       Caption = 'Не закрыт акт'
+      StopTab = False
       object dxQueryGrid5: TdxQueryGrid
         Left = 0
         Height = 520

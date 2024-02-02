@@ -1,0 +1,36 @@
+{@module
+author=DataExpress
+version=1.0
+description=добавить пункт меню "Помощь".
+@}
+
+{@action
+id=0DB7F22D-EECA-4767-A0B2-62F315F3D193
+target=main
+origname=AddMenu
+name=Добавить пункт меню
+group=Инструменты
+ui=
+<ui>
+  <checkbox name="hidehelp" caption="Добавить в меню Помощь"/>
+<ui>
+description=Добавляет пункты меню "Помощь".
+@}
+
+procedure AddMenu(hidehelp: Boolean);
+var
+  M: TMainMenu;
+  MI, HelpMnu, HelpMnu2: TMenuItem;
+
+begin
+  M := MainWindow.Menu;
+  HelpMnu := M.Items[M.Items.Count - 1];
+  HelpMnu2 := M.Items[1];
+  if   hidehelp then
+  begin
+  MI:= TMenuItem.Create(M)
+  MI.Assign(HelpMnu2.Items[0]);
+  HelpMnu.Add(MI);
+  HelpMnu2.Visible := False;
+  end
+end;

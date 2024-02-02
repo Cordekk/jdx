@@ -1,0 +1,59 @@
+{@module
+Author=Павел Дуборкин
+Version=1.0
+Description=Выбор объекта из окна отчета.
+@}
+
+{@action
+Id=3BB1B3E7-370A-4055-B4F0-D77D7E8B734E
+Target=button
+OrigName=SelectObjectFromReport
+Name=Выбрать объект из отчета
+Group=Работа с отчетами
+UI=<ui>
+  <report name="rp" caption="Отчет" required="1"/>
+  <field name="rpfield" caption="Поле отчета" required="1" source="rp"/>
+  <object name="obj" caption="Объект" required="1"/>
+</ui>
+Description=Выберите отчет, из которого будет выбран объект. Отбор должен быть
+настроен таким образом, чтобы в выборке был идентификатор объекта (ID).<br>
+<b>Поле отчета</b> - поле, содержащее идентификатор объекта.<br>
+<b>Объект</b> - поле на текущей форме, в которое подставляется идентификатор
+объекта.
+@}
+
+procedure QGridDblClick(Sender: TObject);
+var
+  V: Variant;
+begin
+  with TReportWindow(TdxQueryGrid(Sender).GetTopParent) do
+  begin
+    V := QGrid.Fields[ Params['field'] ];
+    if V <> Null then
+    begin
+      Params['objid'] := V;
+      ModalResult := mrOk;
+    end;
+  end;
+end;
+
+procedure RpShow(Sender: TObject);
+begin
+  with TReportWindow(Sender) do
+  begin
+    ToolBar.Buttons[0].Visible := False;
+    QGrid.OnDblClick := @QGridDblClick;
+  end;
+end;
+
+procedure SelectObjectFromReport(const Rp, RpField, Obj: String);
+begin
+  with TReportWindow.Create do
+  begin
+    OnShow := @RpShow;
+    Params['field'] := RpField;
+    if (ShowReport(Rp) = mrOk) and (Self.State in [dsInsert, dsEdit]) then
+      Self[Obj] := Params['objid'];
+    Free;
+  end;
+end;

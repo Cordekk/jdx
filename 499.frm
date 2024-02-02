@@ -65,7 +65,7 @@ object Form499: TdxForm
     Id = 8249
     FieldName = 'ТМЦ'
     SourceTId = 102
-    SourceFId = 2496
+    SourceFId = 7260
     Required = False
     SourceTable = 0
     DestTable = 0
@@ -257,41 +257,12 @@ object Form499: TdxForm
     Id = 8462
     FieldName = 'Стоимость'
     Precission = 2
-    Expression = '[Цена]*[Количество]'
     Required = False
     DefaultValue = '0'
     Editable = False
     NullToZero = True
     GroupDigits = True
     PadZeros = True
-  end
-  object dxEdit1: TdxEdit
-    Left = 148
-    Height = 24
-    Top = 16
-    Width = 312
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 8
-    Id = 8467
-    FieldName = 'Наименование'
-    FieldSize = 50
-    Required = False
-    Expression = '// [№]'#13#10'[ТМЦ|Наименование ТМЦ]'
-    Editable = True
-  end
-  object dxCounter1: TdxCounter
-    Left = 20
-    Height = 24
-    Top = 16
-    Width = 32
-    ReadOnly = True
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 9
-    Id = 8468
-    FieldName = '№'
-    Required = False
   end
   object Grid: TdxGrid
     Left = 0
@@ -348,18 +319,6 @@ object Form499: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f8462'
-      end    
-      item
-        Tag = 8467
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f8467'
-      end    
-      item
-        Tag = 8468
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f8468'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

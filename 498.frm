@@ -79,6 +79,7 @@ object Form97498: TdxForm
     TabOrder = 2
     object dxTabSheet1: TdxTabSheet
       Caption = 'Общие'
+      StopTab = False
       object dxGroupBox2: TdxGroupBox
         Left = 12
         Height = 184
@@ -86,6 +87,7 @@ object Form97498: TdxForm
         Width = 432
         Caption = 'Случаи регистрации событий в логе:'
         TabOrder = 0
+        StopTab = False
         object dxCheckBox2: TdxCheckBox
           Left = 20
           Height = 23
@@ -169,6 +171,7 @@ object Form97498: TdxForm
         Width = 432
         Caption = 'Автоочистка'
         TabOrder = 1
+        StopTab = False
         object dxDateEdit1: TdxDateEdit
           Left = 264
           Height = 24
@@ -236,6 +239,7 @@ object Form97498: TdxForm
     end
     object dxTabSheet2: TdxTabSheet
       Caption = 'Доступ'
+      StopTab = False
       object dxGroupBox3: TdxGroupBox
         Left = 12
         Height = 108
@@ -243,6 +247,7 @@ object Form97498: TdxForm
         Width = 432
         Caption = 'Доступ к форме параметров'
         TabOrder = 0
+        StopTab = False
         object dxLabel4: TdxLabel
           Left = 8
           Height = 16

@@ -100,8 +100,8 @@ object Form300: TdxForm
     TabOrder = 2
     Id = 8472
     FieldName = 'Ед. изм.'
-    ObjId = 0
-    FieldId = 0
+    ObjId = 8470
+    FieldId = 1826
   end
   object dxLabel12: TdxLabel
     Left = 16

@@ -10,7 +10,7 @@ object Form100: TdxForm
   Font.Height = -13
   Font.Name = 'Verdana'
   AutoOpen = True
-  ViewType = vtGridOnly
+  ViewType = vtGridRight
   ParentField = 0
   LevelCount = 5
   Grid = Grid.Owner
@@ -134,7 +134,7 @@ object Form100: TdxForm
     MaxLength = 0
     TabOrder = 3
     Id = 1875
-    FieldName = 'Помещение2'
+    FieldName = 'Помещение'
     SourceTId = 104
     SourceFId = 1829
     Required = False
@@ -199,7 +199,7 @@ object Form100: TdxForm
     MaxLength = 0
     TabOrder = 5
     Id = 1878
-    FieldName = 'Сотрудник1'
+    FieldName = 'Сотрудник'
     SourceTId = 24
     SourceFId = 87
     Required = True
@@ -218,7 +218,7 @@ object Form100: TdxForm
     UpdateTree = False
   end
   object dxCounter1: TdxCounter
-    Left = 172
+    Left = 248
     Height = 24
     Top = 40
     Width = 80
@@ -231,12 +231,93 @@ object Form100: TdxForm
     Required = False
   end
   object dxLabel7: TdxLabel
-    Left = 176
+    Left = 248
     Height = 16
-    Top = 24
+    Top = 20
     Width = 42
     Caption = 'Номер'
     ParentColor = False
+  end
+  object dxCalcEdit2: TdxCalcEdit
+    Left = 112
+    Height = 24
+    Top = 200
+    Width = 100
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 7
+    HideButton = False
+    CalculatorLayout = clNormal
+    AsInteger = 0
+    ButtonWidth = 24
+    NumGlyphs = 1
+    Flat = True
+    Id = 262611
+    FieldName = 'Напряжение'
+    Precission = 1
+    Required = False
+    DefaultValue = '0'
+    Editable = False
+    NullToZero = True
+    GroupDigits = True
+    PadZeros = True
+  end
+  object dxLabel8: TdxLabel
+    Left = 20
+    Height = 16
+    Top = 204
+    Width = 84
+    Caption = 'Напряжение'
+    ParentColor = False
+  end
+  object dxCalcEdit4: TdxCalcEdit
+    Left = 348
+    Height = 24
+    Top = 200
+    Width = 100
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 8
+    HideButton = False
+    CalculatorLayout = clNormal
+    AsInteger = 0
+    ButtonWidth = 24
+    NumGlyphs = 1
+    Flat = True
+    Id = 262612
+    FieldName = 'Частота'
+    Precission = 1
+    Required = False
+    DefaultValue = '0'
+    Editable = False
+    NullToZero = True
+    GroupDigits = True
+    PadZeros = True
+  end
+  object dxLabel9: TdxLabel
+    Left = 256
+    Height = 16
+    Top = 204
+    Width = 55
+    Caption = 'Частота'
+    ParentColor = False
+  end
+  object dxTimeEdit1: TdxTimeEdit
+    Left = 124
+    Height = 24
+    Top = 40
+    Width = 100
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 9
+    HideButton = False
+    Id = 262613
+    FieldName = 'Время'
+    CurTime = False
+    TimeFormat = ttHHMM
+    Expression = '//[Помещение2] [Влажн][Давл][Темп]'#13#10'TIME'
+    Editable = False
+    Required = False
   end
   object Grid: TdxGrid
     Left = 0
@@ -249,43 +330,61 @@ object Form100: TdxForm
       item
         Tag = 1879
         Title.Caption = ' '
-        Width = 63
+        Width = 56
         FieldName = 'f1879'
       end    
       item
         Tag = 1877
         Title.Caption = ' '
-        Width = 94
+        Width = 85
         FieldName = 'f1877'
       end    
       item
-        Tag = 1875
+        Tag = 262613
         Title.Caption = ' '
-        Width = 285
+        Width = 100
+        FieldName = 'f262613'
+      end    
+      item
+        Tag = 1875
+        Title.Caption = 'Помещение'
+        Width = 200
         FieldName = 'f1875l'
       end    
       item
         Tag = 1869
         Title.Caption = ' '
-        Width = 110
+        Width = 62
         FieldName = 'f1869'
       end    
       item
         Tag = 1871
         Title.Caption = ' '
-        Width = 100
+        Width = 71
         FieldName = 'f1871'
       end    
       item
         Tag = 1873
         Title.Caption = ' '
-        Width = 100
+        Width = 74
         FieldName = 'f1873'
+      end    
+      item
+        Tag = 262611
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262611'
+      end    
+      item
+        Tag = 262612
+        Title.Caption = ' '
+        Width = 75
+        FieldName = 'f262612'
       end    
       item
         Tag = 1878
         Title.Caption = 'Сотрудник'
-        Width = 210
+        Width = 176
         FieldName = 'f1878l'
       end>
     DefaultRowHeight = 20
@@ -313,7 +412,7 @@ object Form100: TdxForm
     WordWrap = False
     AllowChangeSort = False
     Id = 0
-    SortCols = '0;0'
+    SortCols = '0;1'
   end
   object Tree: TdxFormTree
     Left = 0

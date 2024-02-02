@@ -1,7 +1,7 @@
 object Form103: TdxForm
-  Left = 7
+  Left = 10
   Height = 602
-  Top = 7
+  Top = 10
   Width = 498
   Id = 103
   PId = 0
@@ -23,7 +23,7 @@ object Form103: TdxForm
   SoftCheck = False
   object dxCounter1: TdxCounter
     Left = 36
-    Height = 22
+    Height = 24
     Top = 8
     Width = 80
     ReadOnly = True
@@ -36,7 +36,7 @@ object Form103: TdxForm
   end
   object dxDateEdit1: TdxDateEdit
     Left = 32
-    Height = 22
+    Height = 24
     Top = 256
     Width = 100
     CharCase = ecNormal
@@ -47,7 +47,7 @@ object Form103: TdxForm
     OKCaption = 'OK'
     CancelCaption = 'Cancel'
     DateOrder = doNone
-    ButtonWidth = 22
+    ButtonWidth = 24
     Flat = True
     NumGlyphs = 1
     Id = 2513
@@ -58,7 +58,7 @@ object Form103: TdxForm
   end
   object dxDateEdit2: TdxDateEdit
     Left = 32
-    Height = 22
+    Height = 24
     Top = 376
     Width = 100
     CharCase = ecNormal
@@ -69,7 +69,7 @@ object Form103: TdxForm
     OKCaption = 'OK'
     CancelCaption = 'Cancel'
     DateOrder = doNone
-    ButtonWidth = 22
+    ButtonWidth = 24
     Flat = True
     NumGlyphs = 1
     Id = 2514
@@ -81,7 +81,7 @@ object Form103: TdxForm
   end
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 32
-    Height = 22
+    Height = 24
     Top = 188
     Width = 412
     CharCase = ecNormal
@@ -106,7 +106,7 @@ object Form103: TdxForm
   end
   object dxComboBox1: TdxComboBox
     Left = 36
-    Height = 22
+    Height = 24
     Top = 124
     Width = 228
     AutoComplete = True
@@ -130,31 +130,31 @@ object Form103: TdxForm
   end
   object dxLabel1: TdxLabel
     Left = 32
-    Height = 17
+    Height = 16
     Top = 160
-    Width = 175
+    Width = 173
     Caption = 'Организация-поверитель'
     ParentColor = False
   end
   object dxLabel2: TdxLabel
     Left = 32
-    Height = 17
+    Height = 16
     Top = 228
-    Width = 285
-    Caption = 'Дата поверки, калибровки или проверки'
+    Width = 296
+    Caption = 'Дата поверки, калибровки или аттестации'
     ParentColor = False
   end
   object dxLabel3: TdxLabel
     Left = 32
-    Height = 17
+    Height = 16
     Top = 352
-    Width = 354
-    Caption = 'Срок действия поверки, калибровки или проверки'
+    Width = 364
+    Caption = 'Срок действия поверки, калибровки или аттестации'
     ParentColor = False
   end
   object dxEdit1: TdxEdit
     Left = 36
-    Height = 22
+    Height = 24
     Top = 316
     Width = 432
     CharCase = ecNormal
@@ -168,23 +168,23 @@ object Form103: TdxForm
   end
   object dxLabel4: TdxLabel
     Left = 36
-    Height = 17
+    Height = 16
     Top = 292
-    Width = 99
+    Width = 98
     Caption = 'Документ (№)'
     ParentColor = False
   end
   object dxLabel5: TdxLabel
     Left = 48
-    Height = 17
+    Height = 16
     Top = 100
-    Width = 96
+    Width = 93
     Caption = 'Вид проверки'
     ParentColor = False
   end
   object dxLookupComboBox2: TdxLookupComboBox
     Left = 204
-    Height = 22
+    Height = 24
     Top = 12
     Width = 284
     CharCase = ecNormal
@@ -211,17 +211,17 @@ object Form103: TdxForm
   end
   object dxLabel6: TdxLabel
     Left = 56
-    Height = 17
+    Height = 16
     Top = 412
-    Width = 210
+    Width = 206
     Caption = 'Примечание (перечень работ)'
     ParentColor = False
   end
   object dxLabel7: TdxLabel
     Left = 124
-    Height = 17
+    Height = 16
     Top = 12
-    Width = 73
+    Width = 72
     Caption = 'Сотрудник'
     ParentColor = False
   end
@@ -244,24 +244,24 @@ object Form103: TdxForm
   end
   object dxLabel8: TdxLabel
     Left = 16
-    Height = 17
+    Height = 16
     Top = 16
     Width = 15
     Caption = '№'
     ParentColor = False
   end
   object dxLookupComboBox3: TdxLookupComboBox
-    Left = 48
-    Height = 22
+    Left = 132
+    Height = 24
     Top = 56
-    Width = 420
+    Width = 100
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     Id = 7254
     FieldName = 'тмц'
     SourceTId = 102
-    SourceFId = 2559
+    SourceFId = 2496
     Required = False
     SourceTable = 0
     DestTable = 0
@@ -272,13 +272,21 @@ object Form103: TdxForm
       item
         FieldId = 2499
         Width = 100
-        Searchable = True
+        Searchable = False
       end>
     DropDownCount = 8
     ListWidthExtra = 0
     HideList = False
     HideButton = False
     UpdateTree = False
+  end
+  object dxLabel9: TdxLabel
+    Left = 76
+    Height = 16
+    Top = 60
+    Width = 30
+    Caption = 'ТМЦ'
+    ParentColor = False
   end
   object Grid: TdxGrid
     Left = 0

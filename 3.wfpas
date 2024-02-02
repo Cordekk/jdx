@@ -1,0 +1,309 @@
+
+procedure CreateSamples(Sender: TObject);
+var
+  Pr, Sm: TdxForm;
+  Q, T, sp: TdxQueryGrid;
+  ii, n, ID, nn: Integer;
+begin
+  //Self.Edit;
+  //while Self.EOF = False do //для импорта образцов из всех заявок
+  //begin //для импорта всех заявок
+  // Если проб нет, то выходим, иначе продолжаем.
+  dxQueryGrid2.Refresh;
+  Q := Self.Queries['Пробы1'];
+  if Self['Пробы'] = 0 then Exit;
+     Q.DisableScrollEvents;  //отключи события контроля
+    Q.MoveFirst;
+     // Создаем экземпляр форм "Пробы" и "Образцы".
+    Pr := Session.CreateForm('Пробы');
+    Sm := Session.CreateForm('Образцы');
+    while Q.Eof = False do  // пока есть строки в запросе выполняется действие
+     begin
+       // Считываем из базы конкретную запись, которая выделена в запросе.
+       ID :=  Q['Идентификатор'] // Q.RecId; /*сделал запрос не редактируемым, теперь надо брать идентификатор*/
+       Pr.OpenRecord(ID);
+       n := Pr.AsI['Количество_образцов'];
+       T := Pr.Queries['Образцы на исследование'];
+       Pr.Edit;
+       T.Refresh;
+       ii := Pr.AsI['I'];
+       nn := ii; // пока номер следующей пробы будет на один больше, чем номер текущего образца, но надо посчитать максимальный номер среди текущих образцов!!!
+       sp:= Pr.Queries['План_образцов']; //присваиваем этот запрос (План_образцов) переменной для удобства
+       sp.refresh; //обновляем запрос (План_образцов) по плану испытаний из заявки с консервацией, видом упаковки и номером образца, сортировка должна быть по возрастанию номеров образцов
+        if sp.recordcount > n Then n:= sp.recordcount;  //если в запросе (План_образцов) больше планируемых образцов, то увеличиваем количество образцов
+        sp.MoveFirst;
+       // Создаем новые записи в цикле.
+          while ii < n do
+           begin
+           Sm.OpenRecord(0);
+           Sm.Append;
+           ii := ii + 1;
+           nn := nn+1;
+           Sm['Проба'] := ID;
+          //  IF n = 1 Then Sm['Номер_образца'] := 0
+          //  else
+          if sp['Номер_образца']<>null Then    //Если заполнен номер образца в плане испытаний, то присваиваем его, если не заполнен, то номер по порядку. Надо бы сделать проверку на наличие этого номера среди уже принятых образцов!!!
+              begin
+                Sm['Номер_образца'] :=sp['Номер_образца'];
+                if sp.AsI['Номер_образца'] >nn Then nn:= sp.AsI['Номер_образца']; //Добавил проверку нмоера дльше номера будутприсавиваться по порядку от максимального номера в плане образцов
+              end
+            else
+              begin
+                Sm['Номер_образца'] := nn;
+                end;
+            if sp['Вид упаковки'] <>null Then Sm['Вид упаковки'] :=sp['Вид упаковки'] else Sm['Вид упаковки'] := Self['Вид упаковки'] ; //если упаковка в плане нне заполнена, то берем из упаковки пробы
+            Sm['Консервация'] :=sp['Консервация'];  //консервацию просто присваиваем по текстовому значению
+            sp.MoveNext;
+            if Sp.EOF then sp.MoveFirst;
+            Sm.Post;
+            Sm.Close;
+           end;
+        IF ii >= Pr.AsI['Количество_образцов'] Then
+        IF Pr['Пробы приняты'] = 0 Then Pr['Пробы приняты'] := 1;
+        Pr['Количество_образцов']:=n;
+        T.Refresh;
+        Pr.Post;
+        Pr.Close;
+        Q.MoveNext;
+        end;
+    //Очищаем формы;
+    Pr.free;
+    Sm.free;
+    Q.EnableScrollEvents;  // включение
+    Q.Refresh;
+    dxQueryGrid2.Refresh;
+     //Обновляем запрос к форме Образцы;
+    dxQueryGrid3.Refresh;
+  //Self.MoveNext; // //для импорта всех заявок
+  //end; // //для импорта всех заявок
+end;
+
+
+procedure DuplicateBnClick(Sender: TObject); //заменил на действие
+var
+  Fm: TdxForm;
+  Vals: TParamList;
+begin
+  // Если ID записи равно NULL, то выходим из процедуры.
+  // ID всегда равно NULL, если запрос пуст, т. е. не отображает ни одной записи.
+  if dxQueryGrid1.RecId = Null then Exit;
+  // TParamList - хороший способ хранить какие-либо значения или объекты. Это
+  // список, доступ к элементам которого осуществляется по имени. Элемент
+  // может хранить значение Variant или объект TObject.
+  Vals := TParamList.Create;
+  Session.EvalExpr('Setvar("zayavka_id", RECID("Заявка клиента"))',Self);
+  // Создаем экземпляр формы "Пробы". По возможностям созданная форма ничем
+  // не уступает той, которую вы открываете в закладке или в запросе:
+  // работают все выражения, таблицы, запросы и прочее.
+  Fm := Session.CreateForm('Пробы');
+  // Считываем из базы конкретную запись, а именно ту, которая выделена в запросе.
+  Fm.OpenRecord(dxQueryGrid1.RecId);
+  // Сохраняем значения полей записи в списке.
+  // Когда вы впервые присваиваете значение, оно создается в списке автоматически.
+  //Self.post;
+  //Self.Edit;
+  Vals.Values['Заявка клиента2'] := Self.recid;
+  Vals.Values['Продукция'] := Fm['Продукция'];
+  Vals.Values['примечание'] := Fm['примечание'];
+  Vals.Values['Объем партии1'] := Fm['Объем партии1'];
+  Vals.Values['Ед.изм.1'] := Fm['Ед.изм.1'];
+  Vals.Values['Транспорт'] := Fm['Транспорт'];
+  Vals.Values['Номер транспорта'] := Fm['Номер транспорта'];
+  Vals.Values['Объем_пробы'] := Fm['Объем_пробы'];
+  Vals.Values['Ед.изм.2'] := Fm['Ед.изм.2'];
+  Vals.Values['Шифр_Аргус_Меркурий'] := Fm['Шифр_Аргус_Меркурий'];
+    // И прямо в этой же форме мы создаем новую запись (да хоть 1000 записей).
+  Fm.Append;
+  // А теперь обратно: присваиваем сохраненные значения полям новой записи.
+  Fm['Заявка клиента2'] := Vals.Values['Заявка клиента2'];
+  Fm['Продукция'] := Vals.Values['Продукция'];
+  Fm['примечание'] := Vals.Values['примечание'];
+  Fm['Объем партии1'] := Vals.Values['Объем партии1'];
+  Fm['Ед.изм.1'] := Vals.Values['Ед.изм.1'];
+  Fm['Транспорт'] := Vals.Values['Транспорт'];
+  Fm['Номер транспорта'] := Vals.Values['Номер транспорта'];
+  Fm['Объем_пробы'] := Vals.Values['Объем_пробы'];
+  Fm['Ед.изм.2'] := Vals.Values['Ед.изм.2'];
+  Fm['Шифр_Аргус_Меркурий'] := Vals.Values['Шифр_Аргус_Меркурий'];
+  // У формы есть окно редактирования, открываем его. Далее все зависит от
+  // пользователя: сохранять или отменять действие.
+  //if Fm.EditWindow.ShowModal = mrOk then // надо закончить добавление
+  //begin         // надо закончить добавление
+    // Сохраняем запись
+    // Fm.Post;               // надо закончить добавление
+    Self['Дубль'] := Self.recid;
+    // Обновляем запрос
+    dxQueryGrid1.Refresh;
+    dxQueryGrid2.Refresh;
+    // Переходим на новую запись
+    dxQueryGrid1.GotoRecord(Fm.RecId);
+ // end
+  //else
+    // Отменяем изменения
+  //  Fm.Cancel;
+  // Созданные формы обязательно уничтожаются именно этой процедурой
+    Fm.Free;
+  // О списке тоже не забываем
+    Vals.Free;
+end;
+
+
+// Процедура открытия файла по клику на запросе формы хранения файлов
+procedure OpenFile(Sender: TObject);
+var Fm:TdxForm;
+    F:TdxFile;
+    QG:TdxQueryGrid;
+begin
+
+QG := TdxQueryGrid(Sender);
+if QG.RecordCount=0 then exit;
+Fm:=Session.CreateForm('FIleStore2');
+Fm.OpenRecord(QG.Recid);
+F :=TdxFile(Fm.FindComponentByFieldName('Файл'));
+F.SaveToFile(FM['Имя файла']);
+Fm.Free;
+end;
+
+// Процедура проверки запроса при отрытии приложенных файлов (и внесение количества приложенных файлов в имя закладки)
+procedure dxQueryGrid1OnAfterScroll(Sender: TObject);
+var QG:TdxQueryGrid;
+s:string;
+begin
+try
+QG := TdxQueryGrid(Sender);
+// QG.OnDblClick:=@OpenFile; //в вебе даблклик не работает
+except
+//debug('В запросе "'+   //в вебе дебак  не работает    над о использовать селф.месадж
+//QG.QueryName+'" установлено более одного источника.'+#13#10+
+//'Открытие файлов кликом невозможно.'+#13#10+
+//'Удалите лишние источники или отключите действие.'+#13#10);
+end;
+ if QG.RecordCount>0 then
+ s := ' ('+IntToStr(QG.RecordCount)+' шт.)' else
+ s := '';
+ dxPageControl1.Pages[6].Caption:= 'Файлы'+s;  // Указать номер закладки (нумерация начинатеся с 0)
+end;
+
+procedure CreateReseach(Sender: TObject);
+var
+  Sm, Pk: TdxForm;
+  Q: TdxQueryGrid;
+  I: Integer;
+begin
+  Q := Self.Queries['Образцы1'];
+  Q.Refresh;
+  Q.DisableScrollEvents; //поменял на другую команду
+  Q.MoveFirst;
+  // Создаем экземпляр форм "Исследование" и "Показатель для исследования".
+   Sm := Session.CreateForm('Исследование');   //поменял на другую команду
+   Pk := Self.Forms['Показатель42'];
+   I := 0;
+   Pk.DisableScrollEvents;   //поменял на другую команду
+    while Q.Eof = False do  // пока есть строки в запросе выполняется действие
+     begin
+       // Считываем из базы конкретную запись, которая выделена в запросе и добавляем исследования
+       Pk.MoveFirst;
+        while Pk.Eof = False do  // пока есть строки в таблице выполняется действие
+        begin
+          Sm.OpenRecord(0);
+          Sm.Append;
+          // Sm['Проба'] := Q['Проба'];
+          // Sm['Номер_образца'] := Q['Номер образца'];
+          Sm['Образец'] := Q.RecId;
+          // Sm['Заявка клиента'] := Self.RecId;
+          Sm['Методика из ОА'] := Pk['Показатель'];
+          Sm['Норматив'] := Pk['Нормативное значение'];
+          Sm['Нормативный документ'] := Self['Нормативный документ2'];
+          // Sm['Лаборатория'] := Pk['Лаборатория'];
+          Sm['Сотрудник'] := Self['Сотрудник'];
+          if Sm['Уникальность']= 1 then
+           begin;
+            Sm.Post;
+            I := I + 1;
+            end;
+          Sm.Close;
+          Pk.MoveNext;
+        end;
+        Q.MoveNext;
+        end;
+    //Очищаем формы;
+    Sm.free;
+    dxButton7.OnClick; //заполнить Self.['Задание']
+    Q.EnableScrollEvents; //поменял на другую команду
+    Pk.EnableScrollEvents; //поменял на другую команду
+    dxQueryGrid4.Refresh;
+    dxQueryGrid10.Refresh;
+    Self.MsgBox('JDX', IntToStr(I) + ' исследований назначено');  //поменял на другую команду
+    end;
+
+
+   //скрипт для редактирования полей связанных форм.
+
+{procedure Argus_SetFieldValueSQL(Sender: TObject);    // прописать шифр заявки и образца из аргуса сначала в пробы, затем в образцы через SQL
+var
+   n, p, o: Integer;
+  Shifr, SQLst: string;
+  SQL: TdxSQLQuery;
+begin
+  SQLst :='select  id,  [Шифр_Аргус_Меркурий] as sh from [Пробы] where [Заявка клиента2]='+inttostr(Self.recid); // создаем SQL запрос который отберет нам все пробы из заявки, строка формируется.
+  SQL := Session.SQLSelect(SQLst);   //поменял на другую команду
+  p:=0;
+  o:=0;
+	if Sql.RecordCount > 0 then    // если записи есть то начинаем их менять в цикле
+	   begin
+		Sql.MoveFirst; // встанем на первую отобранную запись
+		try
+			while not Sql.Eof do
+			begin
+			 p:=p+1;  // записываем счетчик измененных проб
+			 Sql.Edit; // открываем на редактирование
+			 Sql.Field[1].AsString := Self['Аргус №'];    // в цикле присваиваем нужно значение полю запроса, потом его сохраним
+			 Sql.Post;         // сохраняем измененные значения
+			 Sql.MoveNext;  // двигаемся дальше по запросу
+			end;
+			finally
+			Sql.ApplyUpdates; //применяем изменения, после чего освободим запрос
+			Sql.Free;
+			end;
+		end;
+    Shifr:= Self['Аргус №1']; // прочитать поле с шифром
+		try
+		n:=StrToInt(copy(Shifr,1,POS('-',Shifr)-1)); // извлечь номер (первые цифры)
+		except n:=0;
+		finally
+		end
+    delete(Shifr,1,POS('-',Shifr)-1); // убрать из шифра первые цифры
+    SQLst :='select id, [Шифр_Аргус] as sh from [Образцы] where [Заявка клиента]='+inttostr(Self.recid);  // создаем SQL запрос который отберет нам все образцы из заявки
+    Sql := SQLSelect(SQLst);
+		if Sql.RecordCount > 0 then    // если записи есть то начинаем их менять в цикле
+	   begin
+		Sql.MoveFirst;
+		try
+		while not Sql.Eof do
+			 begin
+			  Sql.Edit; // открываем для редактирования
+			  Sql.Field[1].AsString := inttostr(n)+Shifr; // в цикле присваиваем нужно значение полю запроса, потом его сохраним
+			  Sql.Post;  // сохраняем измененные хначения
+			  Sql.MoveNext;   // двигаемся дальше по запросу
+			  n:= n+1; // меняем номер на следующий (больший на единицу)
+			  o:=o+1; // записываем счетчик измененных образцов
+			 end;
+		 finally
+			Sql.ApplyUpdates; // применяем изменения, после чего освободим запрос
+			Sql.Free; // освободим запрос
+			MsgBox('JDX', IntToStr(p) + ' проб заполнено, '+IntToStr(o)+ ' образцов заполнено'); // проверка
+		// TCONTROL(Self.findcomponent('dxLabel45')).Caption:=IntToStr(p) + ' проб заполнено, '+IntToStr(o)+ ' образцов заполнено';
+			dxQueryGrid1.refresh;
+			end;
+
+	end;
+end;   }
+
+  procedure Form_Create;
+begin
+  dxButton3.OnClick := @CreateSamples; // получение образцов
+ // DuplicateBn.OnClick := @DuplicateBnClick; // внесение пробы (и дублирование), временно заменил на действие дублировать в запросе и добавление новой записи в пробы
+  dxQueryGrid7.OnAfterScroll:=@dxQueryGrid1OnAfterScroll; // открытие приложенных файлов
+  dxButton14.OnClick := @CreateReseach; // назначение исследований по упрощенной схеме
+  // dxButton5.OnClick := @Argus_SetFieldValueSQL; // убрал пока, не рабоатет SQL прописать шифр заявки и образца из аргус лаборатории
+  end;

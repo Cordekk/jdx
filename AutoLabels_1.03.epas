@@ -1,0 +1,60 @@
+{@module
+Author=Runenkov
+Version=1.03
+HomePage=
+Description=Авторасстановка меток компонентов при отладке<br>
+Теперь с якорями
+@}
+
+{@action
+Id=DCE3818B-D757-4326-98DF-A157DB683A36
+Target=form
+OrigName=AutoLabel
+Name=AutoLabel
+Group=Для лентяев
+UI=
+Description=Авторасстановка меток компонентов при отладке
+@}
+
+procedure newLabels(Obj:TComponent);
+var
+  newLabel : TLabel;
+  C: TControl;
+  A: String;
+begin
+  if Obj.Classname in
+  ['TdxEdit','TdxCalcEdit','TdxDateEdit','TdxTimeEdit','TdxComboBox',
+  'TdxLookupComboBox','TdxMemo','TdxCounter','TdxObjectField', 'TdxFile']
+  then with newLabel do
+    begin
+      C:=TControl(Obj);
+      newLabel := TLabel.Create(Self);
+      Parent := C.Parent;
+      Top := C.Top-Height+2;
+      Left := C.Left;
+      Caption := GetPropValue(Obj,'Fieldname');
+      AutoSize := False;
+      Layout := taLeftJustify;
+      Width := C.Width;
+      Font.Size := C.Font.Size-1;
+      A:= GetPropValue(Obj,'Anchors');
+        if Pos('akLeft',A)=0 then
+        begin
+          if Pos ('akTop',A)=0
+          then Anchors := [akRight,akBottom]
+          else Anchors := [akRight,akTop]
+        end
+        else
+          if Pos ('akTop',A)=0
+          then Anchors := [akLeft,akBottom]
+          else Anchors := [akLeft,akTop];
+      C:=nil;
+    end;
+end;
+
+procedure AutoLabel (Sender: TObject);
+var i: integer;
+begin
+  for i := 0 to Self.ComponentCount-1 do
+  newLabels(Self.Components[i]);
+end;

@@ -22,7 +22,7 @@ object Form9: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 96
+  Index = 95
   SoftCheck = False
   object dxLabel1: TdxLabel
     Left = 32

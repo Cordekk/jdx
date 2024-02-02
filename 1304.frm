@@ -67,6 +67,7 @@ object Form1304: TdxForm
     TabOrder = 1
     object dxTabSheet1: TdxTabSheet
       Caption = 'Добавление исследований'
+      StopTab = False
       object dxQueryGrid1: TdxQueryGrid
         Left = 4
         Height = 132
@@ -505,6 +506,7 @@ object Form1304: TdxForm
     end
     object dxTabSheet2: TdxTabSheet
       Caption = 'Добавленные исследования и пробы'
+      StopTab = False
       object dxQueryGrid2: TdxQueryGrid
         Left = 392
         Height = 404
@@ -612,7 +614,7 @@ object Form1304: TdxForm
         Width = 91
         Caption = 'Принять'
         TabOrder = 5
-        ActionOnClick = '<actions><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Исполнитель;DBGETID(''Сотрудники'', ''[!user]=USER'')|Принято;1|Дата принятия;DATE|Лаборатория;[Исполнитель&00A6Подразделение]" ignoreaccess="1" saverec="1" /></actions>'
+        ActionOnClick = '<actions><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Исполнитель;DBGETID(''Сотрудники'', ''[!user]=USER'')|Принято;1|Дата принятия;DATE|Лаборатория;[Исполнитель&amp;00A6Подразделение]" ignoreaccess="1" saverec="1" /></actions>'
       end
       object dxLabel5: TdxLabel
         Left = 492
@@ -728,6 +730,7 @@ object Form1304: TdxForm
     end
     object dxTabSheet3: TdxTabSheet
       Caption = 'Дополнительно'
+      StopTab = False
       object dxCheckBox1: TdxCheckBox
         Left = 20
         Height = 23

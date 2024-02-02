@@ -1,0 +1,1123 @@
+{@module
+author=Vofka18
+version=1.1
+description=Примерный аналог функции "Ввести на основании".
+  Данный модуль позволяет создавать новые записи и заполнять их, в том числе и таблицы,
+  на основании данных текущей формы.
+  Для упрощения работы и меньшего количества настроек, модуль разбит на несколько действий
+  для кнопки.
+  Возможности:
+  - Заполнять форму и таблицу формы, из текущей формы и таблицы.
+  - Заполнять форму и таблицу(запрос) формы, из текущей формы и таблицы.
+  - Заполнять форму и таблицу формы, из текущей формы и таблицы(запроса).
+  - Заполнять форму и таблицу(запрос) формы, из текущей формы и таблицы(запроса).
+  - Добавить только одну запись в стороннюю форму или ее таблицу или запрос.
+@}
+
+function listWindowShow(formName:string):integer;
+var
+  lw:tListWindow;
+begin
+  result:=-1;
+
+  lw:=tListWindow.create(formName,vtDefault);
+  lw.buttons.ShowButtons:=[pbOk,pbCancel];
+  lw.caption:='Выбрать запись (OK-Выбор. 2ЛКМ- Просмотр)';
+  lw.FormView.Form.Open;
+  if lw.ShowModal = mrOk then
+  begin
+    result:=lw.formView.form.recId;
+  end;
+  lw.free;
+end;
+
+function getRecId(formName,expr:string):integer;
+var
+  fm:tdxForm;
+begin
+  result:=-1;
+
+  fm:=tdxForm.create(formName);
+  fm.Open;
+  try
+    if fm.goToRecord(evalExpr(expr,self))then
+    begin
+      result:=fm.recId;
+    end;
+  finally
+    fm.close;
+    fm.free;
+  end;
+end;
+
+function copyData(sFm:tdxForm;var fm:tdxForm;obj:string;rId:integer;fldsArr:tvariantArray2d):integer;
+var
+  i:integer;
+begin
+  result:=-1;
+  if(obj<>'main')then
+    fm.append();
+
+  if(rId>0)then
+    fm[obj]:=rId;
+
+  for i:=0 to high(fldsArr) do
+  begin
+    fm[fldsArr[i][0]]:=evalExpr(fldsArr[i][1],sFm);
+  end;
+  if(obj<>'main')then
+    fm.post;
+  result:=fm.recId;
+end;
+
+{@action
+Id=BD7BCBD9-8B4B-43F8-BAC1-44F457F4C5E3
+Target=button
+OrigName=CopyTabTab
+Name=Из таблицы в таблицу
+Group=Данные
+UI=<ui>
+  <divider caption="Форма источник"/>
+  <checkbox name="saveSource" caption="Сохранить перед копированием" defaultvalue="0"/>
+  <childform name="sourceTab" caption="Таблица" required="1"/>
+  <expr name="sourceFilter" caption="Условие отбора" required="0" source="sourceTab"/>
+
+  <divider caption="Целевая форма"/>
+  <form name="form" caption="Форма" required="1"/>
+  <childform name="table" source="form" caption="Таблица" required="1"/>
+  <checkbox name="showEdtWin" caption="Показать окно редактирования" defaultvalue="1"/>
+  <checkbox name="addExist" caption="Добавить к существующей" defaultvalue="0"/>
+  <expr name="exprRecId" caption="Вычислить ID записи" required="0" />
+
+  <divider caption="Данные для заполнения"/>
+  <grid name="fillFieldsFm" caption="Вычислить поля главной формы" >
+    <field name="mainFld" caption="Поле формы" source="form" filter="text;number;date;time;object;counter;checkbox" required="1"/>
+    <expr name="expr" caption="Выражение" required="1"/>
+  </grid>
+  <grid name="fillFieldsTab" caption="Вычислить поля таблицы" >
+    <field name="fld" caption="Поле таблицы" source="table" filter="text;number;date;time;object;counter;checkbox" required="1"/>
+    <expr name="sourceExpr" caption="Выражение" source="sourceTab" required="1"/>
+  </grid>
+
+  <if expr="GetExprType(exprRecId)<>'' & GetExprType(exprRecId)<>'number'"
+    msg="Результат выражения должен быть числовым! Текущий:`GetTypeText(exprRecId)`."/>
+
+  <if expr="GetExprType(sourceFilter)<>'' & GetExprType(sourceFilter)<>'bool'"
+    msg="Результат фильтра должен быть булево! Текущий:`GetTypeText(sourceFilter)`."/>
+
+  <ifgrid grid="fillFieldsTab">
+    <if expr="!SameTypes(sourceExpr, fld)" msg="Результат выражения не совпадает с типом поля."/>
+  </ifgrid>
+
+  <ifgrid grid="fillFieldsFm">
+    <if expr="!SameTypes(expr, mainFld)" msg="Результат выражения не совпадает с типом поля."/>
+  </ifgrid>
+
+</ui>
+Description= <b>Из таблицы в таблицу</b> <br>
+Копирует данные из текущей формы и ее таблицы в указанную форму и ее таблицу.<br>
+При удачном копировании и сохранении изменений в записи родительской формы функция вернет в
+result ID записи основной формы, в противном случае вернет -1.<br>
+<b>Таблица-</b>Таблица(источник данных) текущей формы <br>
+<b>Условие отбора-</b>Если требуется копировать не все записи таблицы, их можно отфильтровать.
+  Если выражение вернет истину, то запись будет скопирована.<br>
+<b>Целевая форма:</b> <br>
+<b>Форма-</b> Форма родитель в таблицу которой будут занесены данные.<br>
+<b>Таблица-</b> Таблица основной формы. <br>
+<b>Показать окно редактирования-</b> Отобразить окно редактирования записи после внесения изменений. В нем можно
+отменить сохранение снесенных данных. В противном случае, запись будет безусловно сохранена, чему будет свидетельствовать
+сообщение.<br>
+<b>Добавить к существующей-</b> Если установить данный флаг, будет предложен список записей родительской формы.
+ В нем можно выбрать требуемую запись, и после нажатия "ОК", в конец таблицы быдут добавлены данные. А данные
+ родительской формы будут пересчитаны.<br>
+<b>Вычислить ID записи-</b> Если установлен флаг "Добавить к существующей", и данное выражение вернет корректный ID? то
+то окно списка, для выбора записи отображаться не будет, и данные добавятся в запись полученого ID.<br>
+<b>Данные для заполнения</b> Сопоставить поля целевой формы с выражениями (источник текущая форма и таблица)<br>
+@}
+
+function CopyTabTab(saveSource:boolean;sourceTab,sourceFilter,form,table:string;
+  showEdtWin,addExist:boolean;exprRecId:string;fillFieldsFm,fillFieldsTab:tVariantArray2d): integer;
+var
+  mainFm,tableFm,sourceTabFm:tdxForm;
+  rId:integer;
+begin
+  Result := -1;
+  if(saveSource)and(self.state in [dsEdit,dsInsert]) and not(self.viewType=vtSimpleForm)then
+  begin
+    if not(self.validate)then exit;
+    self.post;
+    self.edit;
+  end;
+
+
+  if(addExist)then
+  begin
+    if(evalExpr(exprRecId,self)<>null)then
+    begin
+      rId:=getRecId(form,exprRecid);
+      if(rId<0)then
+      begin
+        rId:=listWindowShow(form);
+      end;
+    end
+    else
+      rId:=listWindowShow(form);
+
+    if(rId>0)then
+    begin
+      mainFm:=tdxForm.create(form);
+      mainFm.openRecord(rId);
+      mainFm.edit();
+    end
+    else
+    begin
+      exit;
+    end;
+  end
+  else
+  begin
+    mainFm:=tdxForm.create(form);
+    mainFm.open();
+    mainFm.append();
+  end;
+  ///////////////////////////////////////////////////////////
+  tableFm:=mainFm.forms[table];
+  sourceTabFm:=self.forms[sourceTab];
+  try
+    copyData(self,mainFm,'main',0,fillFieldsFm);
+    sourceTabFm.moveFirst;
+    while not sourceTabFm.eof do
+    begin
+      if evalExpr(sourceFilter,sourceTabFm)=null or evalExpr(sourceFilter,sourceTabFm)  then
+        copyData(sourceTabFm,tableFm,'',0,fillFieldsTab);
+      sourceTabFm.moveNext();
+    end;
+
+    if(showEdtWin)then
+    begin
+      mainFm.EditWindow.caption:=
+        mainFm.EditWindow.caption+'<Копирование в таблицу: "'+table+'">';
+      if mainFm.EditWindow.ShowModal = mrOk then
+      begin
+        mainFm.Post;
+        Result := mainFm.recId;
+      end
+      else
+      begin
+        mainFm.Cancel;
+      end;
+    end
+    else
+    begin
+      mainFm.Post;
+      msgBox('Копирование данных','Данные успешно скопированы в таблицу:'+table);
+      Result := mainFm.recId;
+    end;
+  except
+    MsgBox('Ошибка', ExceptionParam);
+  finally
+    mainFm.close;
+    mainFm.free();
+    sourceTabFm:=nil;
+    tableFm:=nil;
+  end;
+end;
+
+{@action
+Id=1B4CE217-C9B6-4863-9B6E-741D5C433CD3
+Target=button
+OrigName=CopyFmTab
+Name=Из формы в таблицу
+Group=Данные
+UI=<ui>
+  <divider caption="Форма источник"/>
+  <checkbox name="saveSource" caption="Сохранить перед копированием" defaultvalue="0"/>
+  <form name="sourceForm" caption="Форма данных" required="1"/>
+  <filter name="sourceFilter" caption="Фильтр источника" source="sourceForm" defaultvalue="[ПолеОбъект]=RECID(`Форма родитель`)"/>
+
+  <divider caption="Целевая форма"/>
+  <form name="form" caption="Форма" required="1"/>
+  <childform name="table" source="form" caption="Таблица" required="1"/>
+  <checkbox name="showEdtWin" caption="Показать окно редактирования" defaultvalue="1"/>
+  <checkbox name="addExist" caption="Добавить к существующей" defaultvalue="0"/>
+  <expr name="exprRecId" caption="Вычислить ID записи" required="0" />
+
+  <divider caption="Данные для заполнения"/>
+  <grid name="fillFieldsFm" caption="Вычислить поля главной формы" >
+    <field name="mainFld" caption="Поле формы" source="form" filter="text;number;date;time;object;counter;checkbox" required="1"/>
+    <expr name="expr" caption="Выражение" required="1"/>
+  </grid>
+  <grid name="fillFieldsTab" caption="Вычислить поля таблицы" >
+    <field name="fld" caption="Поле таблицы" source="table" filter="text;number;date;time;object;counter;checkbox" required="1"/>
+    <expr name="sourceExpr" caption="Выражение" source="sourceForm" required="1"/>
+  </grid>
+
+  <if expr="GetExprType(exprRecId)<>'' & GetExprType(exprRecId)<>'number'"
+    msg="Результат выражения должен быть числовым! Текущий:`GetTypeText(exprRecId)`."/>
+
+  <if expr="GetText(sourceFilter)='[ПолеОбъект]=RECID(`Форма родитель`)'" msg="Отредактируйте выражение фильтра" focus="sourceFilter"/>
+
+  <ifgrid grid="fillFieldsTab">
+    <if expr="!SameTypes(sourceExpr, fld)" msg="Результат выражения не совпадает с типом поля."/>
+  </ifgrid>
+
+  <ifgrid grid="fillFieldsFm">
+    <if expr="!SameTypes(expr, mainFld)" msg="Результат выражения не совпадает с типом поля."/>
+  </ifgrid>
+
+</ui>
+Description=<b>Из формы в таблицу</b> <br>
+Копирует данные из текущей формы и ее запроса (вместо таблицы) в указанную форму и ее таблицу.<br>
+При удачном копировании и сохранении изменений в записи родительской формы функция вернет в
+result ID записи основной формы, в противном случае вернет -1.<br>
+<b>Форма данных-</b>Таблица-запрос(источник данных) текущей формы <br>
+<b>Фильтр источника-</b>Обязательно должен содержать фильтр отбора для текущей записи.
+<b>Например: [ОбъектРодитель]=RECID('Текущая форма')</b>, и далее через & остальные условия отбора и фильтры,
+ если требуется копировать не все записи таблицы.<br>
+<b>Целевая форма:</b> <br>
+<b>Форма-</b> Форма родитель в таблицу которой будут занесены данные.<br>
+<b>Таблица-</b> Таблица основной формы. <br>
+<b>Показать окно редактирования-</b> Отобразить окно редактирования записи после внесения изменений. В нем можно
+отменить сохранение снесенных данных. В противном случае, запись будет безусловно сохранена, чему будет свидетельствовать
+сообщение.<br>
+<b>Добавить к существующей-</b> Если установить данный флаг, будет предложен список записей родительской формы.
+ В нем можно выбрать требуемую запись, и после нажатия "ОК", в конец таблицы быдут добавлены данные. А данные
+ родительской формы будут пересчитаны.<br>
+<b>Вычислить ID записи-</b> Если установлен флаг "Добавить к существующей", и данное выражение вернет корректный ID? то
+то окно списка, для выбора записи отображаться не будет, и данные добавятся в запись полученого ID.<br>
+<b>Данные для заполнения</b> Сопоставить поля целевой формы с выражениями (источник текущая форма и таблица)<br>
+@}
+
+function CopyFmTab(saveSource:boolean;sourceForm,sourceFilter,form,table:string;
+  showEdtWin,addExist:boolean;exprRecId:string;fillFieldsFm,fillFieldsTab:tVariantArray2d): integer;
+var
+  mainFm,tableFm,sourceTabFm:tdxForm;
+  rId:integer;
+begin
+  Result := -1;
+  if(saveSource)and(self.state in [dsEdit,dsInsert]) and not(self.viewType=vtSimpleForm)then
+  begin
+    if not(self.validate)then exit;
+    self.post;
+    self.edit;
+  end;
+
+
+  if(addExist)then
+  begin
+    if(evalExpr(exprRecId,self)<>null)then
+    begin
+      rId:=getRecId(form,exprRecid);
+      if(rId<0)then
+      begin
+        rId:=listWindowShow(form);
+      end;
+    end
+    else
+      rId:=listWindowShow(form);
+
+    if(rId>0)then
+    begin
+      mainFm:=tdxForm.create(form);
+      mainFm.openRecord(rId);
+      mainFm.edit();
+    end
+    else
+    begin
+      exit;
+    end;
+  end
+  else
+  begin
+    mainFm:=tdxForm.create(form);
+    mainFm.open();
+    mainFm.append();
+  end;
+  ////////////////////////////////////////////////////////
+  tableFm:=mainFm.forms[table];
+
+  sourceTabFm:=tdxForm.create(sourceForm);
+  sourceTabFm.openRecords(sourceFilter,self,true);
+  try
+    copyData(self,mainFm,'main',0,fillFieldsFm);
+
+    sourceTabFm.moveFirst
+    while not sourceTabFm.eof do
+    begin
+      copyData(sourceTabFm,tableFm,'',0,fillFieldsTab);
+      sourceTabFm.moveNext();
+    end;
+
+    if(showEdtWin)then
+    begin
+      mainFm.EditWindow.caption:=
+        mainFm.EditWindow.caption+'<Копирование в таблицу: "'+table+'">';
+      if mainFm.EditWindow.ShowModal = mrOk then
+      begin
+        mainFm.Post;
+        Result := mainFm.recId;
+      end
+      else
+      begin
+        mainFm.Cancel;
+      end;
+    end
+    else
+    begin
+      mainFm.Post;
+      msgBox('Копирование данных','Данные успешно скопированы в таблицу:'+table);
+      Result := mainFm.recId;
+    end;
+  except
+    MsgBox('Ошибка', ExceptionParam);
+  finally
+    mainFm.close;
+    mainFm.free();
+    sourceTabFm.close;
+    sourceTabFm.free();
+    tableFm:=nil;
+  end;
+end;
+
+{@action
+Id=49CA8401-7B26-484F-8DBA-FFE9706691B3
+Target=button
+OrigName=CopyFmFm
+Name=Из формы в форму
+Group=Данные
+UI=<ui>
+  <divider caption="Форма источник"/>
+  <checkbox name="saveSource" caption="Сохранить перед копированием" defaultvalue="0"/>
+  <form name="sourceForm" caption="Форма данных" required="1"/>
+  <filter name="sourceFilter" caption="Фильтр источника" source="sourceForm" defaultvalue="[ПолеОбъект]=RECID(`Форма родитель`)"/>
+
+  <divider caption="Целевая форма"/>
+  <form name="form" caption="Форма" required="1"/>
+  <object name="obj" caption="Объект родитель" source="form" required="1"/>
+  <Query name="Query" caption="Обновить запрос" source="obj"/>
+  <checkbox name="showEdtWin" caption="Показать окно редактирования" defaultvalue="1"/>
+  <checkbox name="addExist" caption="Добавить к существующей" defaultvalue="0"/>
+  <expr name="exprRecId" caption="Вычислить ID записи" required="0" />
+
+  <divider caption="Данные для заполнения"/>
+  <grid name="fillFieldsFm" caption="Вычислить поля главной формы" >
+    <field name="mainFld" caption="Поле формы" source="obj" filter="text;number;date;time;object;counter;checkbox" required="1"/>
+    <expr name="expr" caption="Выражение" required="1"/>
+  </grid>
+  <grid name="fillFieldsTab" caption="Вычислить поля таблицы" >
+    <field name="fld" caption="Поле таблицы" source="form" filter="text;number;date;time;object;counter;checkbox" required="1"/>
+    <expr name="sourceExpr" caption="Выражение" source="sourceForm" required="1"/>
+  </grid>
+
+  <if expr="GetExprType(exprRecId)<>'' & GetExprType(exprRecId)<>'number'"
+    msg="Результат выражения должен быть числовым! Текущий:`GetTypeText(exprRecId)`."/>
+
+  <if expr="GetText(sourceFilter)='[ПолеОбъект]=RECID(`Форма родитель`)'" msg="Отредактируйте выражение фильтра" focus="sourceFilter"/>
+
+  <ifgrid grid="fillFieldsTab">
+    <if expr="!SameTypes(sourceExpr, fld)" msg="Результат выражения не совпадает с типом поля."/>
+  </ifgrid>
+
+  <ifgrid grid="fillFieldsFm">
+    <if expr="!SameTypes(expr, mainFld)" msg="Результат выражения не совпадает с типом поля."/>
+  </ifgrid>
+
+</ui>
+Description=<b>Из формы в форму</b> <br>
+Копирует данные из текущей формы и ее запроса (вместо таблицы) в указанную форму и ее запрос(вместо таблицы).<br>
+При удачном копировании и сохранении изменений в записи родительской формы функция вернет в
+result ID записи основной формы, в противном случае вернет -1.<br>
+<b>Форма данных-</b>Таблица-запрос(источник данных) текущей формы <br>
+<b>Фильтр источника-</b>Обязательно должен содержать фильтр отбора для текущей записи.
+<b>Например: [ОбъектРодитель]=RECID('Текущая форма')</b>, и далее через & остальные условия отбора и фильтры,
+ если требуется копировать не все записи таблицы.<br>
+<b>Целевая форма:</b> <br>
+<b>Форма-</b> Форма на которую ссылается запрос на основной форме. Т.е. Форма таблица, в которую заносятся данные.<br>
+<b>Объект родитель-</b> Поле объект ссылающееся на форму родителя (обязательно должен уже бать настроен,
+т.к. из него берется родительская форма). <br>
+<b>Обновить запрос-</b> Обновляет запрос на родительской форме, после внесения данных в запрос. <br>
+<b>Показать окно редактирования-</b> Отобразить окно редактирования записи после внесения изменений. В нем можно
+отменить сохранение снесенных данных. В противном случае, запись будет безусловно сохранена, чему будет свидетельствовать
+сообщение.<br>
+<b>Добавить к существующей-</b> Если установить данный флаг, будет предложен список записей родительской формы.
+ В нем можно выбрать требуемую запись, и после нажатия "ОК", в конец таблицы быдут добавлены данные. А данные
+ родительской формы будут пересчитаны.<br>
+<b>Вычислить ID записи-</b> Если установлен флаг "Добавить к существующей", и данное выражение вернет корректный ID? то
+то окно списка, для выбора записи отображаться не будет, и данные добавятся в запись полученого ID.<br>
+<b>Данные для заполнения</b> Сопоставить поля целевой формы с выражениями (источник текущая форма и таблица)<br>
+
+@}
+
+function CopyFmFm(saveSource:boolean;sourceForm,sourceFilter,form,obj,Query:string;
+  showEdtWin,addExist:boolean;exprRecId:string;fillFieldsFm,fillFieldsTab:tVariantArray2d): integer;
+var
+  mainFm,tableFm,sourceTabFm:tdxForm;
+  rId:integer;
+  objComp:tComponent;
+  mainFmName,idStr:string;
+begin
+  Result := -1;
+  if(saveSource)and(self.state in [dsEdit,dsInsert]) and not(self.viewType=vtSimpleForm)then
+  begin
+    if not(self.validate)then exit;
+    self.post;
+    self.edit;
+  end;
+
+  tableFm:=tdxForm.create(form);
+
+  objComp:=tableFm.findComponentByFieldName(obj);
+  mainFmName:=tdxLookupCombobox(objComp).sourceFormName;
+
+  if(addExist)then
+  begin
+    if(evalExpr(exprRecId,self)<>null)then
+    begin
+      rId:=getRecId(mainFmName,exprRecid);
+      if(rId<0)then
+      begin
+        rId:=listWindowShow(mainFmName);
+      end;
+    end
+    else
+      rId:=listWindowShow(mainFmName);
+    //rId:=listWindowShow(mainFmName);
+    if(rId>0)then
+    begin
+      mainFm:=tdxForm.create(mainFmName);
+      mainFm.openRecord(rId);
+      mainFm.edit();
+    end
+    else
+    begin
+      tableFm.free;
+      objComp:=nil;
+      exit;
+    end;
+  end
+  else
+  begin
+    mainFm:=tdxForm.create(mainFmName);
+    mainFm.open();
+    mainFm.append();
+  end;
+  ////////////////////////////////////////////////////
+
+  tableFm.Open;
+
+  sourceTabFm:=tdxForm.create(sourceForm);
+  sourceTabFm.openRecords(sourceFilter,self,true);
+  try
+    copyData(self,mainFm,'main',0,fillFieldsFm);
+
+    sourceTabFm.moveFirst
+    while not sourceTabFm.eof do
+    begin
+      idStr:=idStr+intToStr(copyData(sourceTabFm,tableFm,obj,mainFm.recId,fillFieldsTab))+',';
+      sourceTabFm.moveNext();
+    end;
+    delete(idStr,length(idStr),1);
+    if(Query<>'')then
+      mainFm.Queries[Query].Refresh();
+
+    if(showEdtWin)then
+    begin
+      mainFm.EditWindow.caption:=
+        mainFm.EditWindow.caption+'<Копирование в запрос к форме: "'+form+'">';
+      if mainFm.EditWindow.ShowModal = mrOk then
+      begin
+        mainFm.Post;
+        Result := mainFm.recId;
+      end
+      else
+      begin
+        SQLExecute(Format('delete from t%d where id in (%s);',
+          [tableFm.id,idStr]));
+        mainFm.Cancel;
+      end;
+    end
+    else
+    begin
+      mainFm.Post;
+      msgBox('Копирование данных','Данные успешно скопированы в запрос к форме:'+form);
+      Result := mainFm.recId;
+    end;
+  except
+    MsgBox('Ошибка', ExceptionParam);
+  finally
+    mainFm.close;
+    mainFm.free();
+    sourceTabFm.close;
+    sourceTabFm.free();
+    tableFm.close;
+    tableFm.free();
+    objComp:=nil;
+  end;
+end;
+
+{@action
+Id=FB4D7940-45AF-4BD4-8278-84B2B8C6625E
+Target=button
+OrigName=CopyTabFm
+Name=Из таблицы в форму
+Group=Данные
+UI=<ui>
+  <divider caption="Форма источник"/>
+  <checkbox name="saveSource" caption="Сохранить перед копированием" defaultvalue="0"/>
+  <childform name="sourceTab" caption="Таблица" required="1"/>
+  <expr name="sourceFilter" caption="Условие отбора" required="0" source="sourceTab"/>
+
+  <divider caption="Целевая форма"/>
+  <form name="form" caption="Форма" required="1"/>
+  <object name="obj" caption="Объект родитель" source="form" required="1"/>
+  <Query name="Query" caption="Обновить запрос" source="obj"/>
+  <checkbox name="showEdtWin" caption="Показать окно редактирования" defaultvalue="1"/>
+  <checkbox name="addExist" caption="Добавить к существующей" defaultvalue="0"/>
+  <expr name="exprRecId" caption="Вычислить ID записи" required="0" />
+
+  <divider caption="Данные для заполнения"/>
+  <grid name="fillFieldsFm" caption="Вычислить поля главной формы" >
+    <field name="mainFld" caption="Поле формы" source="obj" filter="text;number;date;time;object;counter;checkbox" required="1"/>
+    <expr name="expr" caption="Выражение" required="1"/>
+  </grid>
+  <grid name="fillFieldsTab" caption="Вычислить поля таблицы" >
+    <field name="fld" caption="Поле таблицы" source="form" filter="text;number;date;time;object;counter;checkbox" required="1"/>
+    <expr name="sourceExpr" caption="Выражение" source="sourceTab" required="1"/>
+  </grid>
+
+  <if expr="GetExprType(exprRecId)<>'' & GetExprType(exprRecId)<>'number'"
+    msg="Результат выражения должен быть числовым! Текущий:`GetTypeText(exprRecId)`."/>
+
+  <if expr="GetExprType(sourceFilter)<>'' & GetExprType(sourceFilter)<>'bool'"
+    msg="Результат фильтра должен быть булево! Текущий:`GetTypeText(sourceFilter)`."/>
+
+  <ifgrid grid="fillFieldsTab">
+    <if expr="!SameTypes(sourceExpr, fld)" msg="Результат выражения не совпадает с типом поля."/>
+  </ifgrid>
+
+  <ifgrid grid="fillFieldsFm">
+    <if expr="!SameTypes(expr, mainFld)" msg="Результат выражения не совпадает с типом поля."/>
+  </ifgrid>
+
+</ui>
+Description=<b>Из таблицы в форму</b> <br>
+Копирует данные из текущей формы и ее таблицы в указанную форму и ее запрос(вместо таблицы).<br>
+При удачном копировании и сохранении изменений в записи родительской формы функция вернет в
+result ID записи основной формы, в противном случае вернет -1.<br>
+<b>Таблица-</b>Таблица(источник данных) текущей формы <br>
+<b>Условие отбора-</b>Если требуется копировать не все записи таблицы, их можно отфильтровать.
+  Если выражение вернет истину, то запись будет скопирована.<br>
+<b>Целевая форма:</b> <br>
+<b>Форма-</b> Форма на которую ссылается запрос на основной форме. Т.е. Форма таблица, в которую заносятся данные.<br>
+<b>Объект родитель-</b> Поле объект ссылающееся на форму родителя (обязательно должен уже бать настроен,
+т.к. из него берется родительская форма). <br>
+<b>Обновить запрос-</b> Обновляет запрос на родительской форме, после внесения данных в запрос. <br>
+<b>Показать окно редактирования-</b> Отобразить окно редактирования записи после внесения изменений. В нем можно
+отменить сохранение снесенных данных. В противном случае, запись будет безусловно сохранена, чему будет свидетельствовать
+сообщение.<br>
+<b>Добавить к существующей-</b> Если установить данный флаг, будет предложен список записей родительской формы.
+ В нем можно выбрать требуемую запись, и после нажатия "ОК", в конец таблицы быдут добавлены данные. А данные
+ родительской формы будут пересчитаны.<br>
+<b>Вычислить ID записи-</b> Если установлен флаг "Добавить к существующей", и данное выражение вернет корректный ID? то
+то окно списка, для выбора записи отображаться не будет, и данные добавятся в запись полученого ID.<br>
+<b>Данные для заполнения</b> Сопоставить поля целевой формы с выражениями (источник текущая форма и таблица)<br>
+@}
+
+function CopyTabFm(saveSource:boolean;sourceTab,sourceFilter,form,obj,Query:string;
+  showEdtWin,addExist:boolean;exprRecId:string;fillFieldsFm,fillFieldsTab:tVariantArray2d): integer;
+var
+  mainFm,tableFm,sourceTabFm:tdxForm;
+  rId:integer;
+  objComp:tComponent;
+  mainFmName,idStr:string;
+begin
+  Result := -1;
+  if(saveSource)and(self.state in [dsEdit,dsInsert]) and not(self.viewType=vtSimpleForm)then
+  begin
+    if not(self.validate)then exit;
+    self.post;
+    self.edit;
+  end;
+
+  tableFm:=tdxForm.create(form);
+
+  objComp:=tableFm.findComponentByFieldName(obj);
+  mainFmName:=tdxLookupCombobox(objComp).sourceFormName;
+
+  if(addExist)then
+  begin
+    if(evalExpr(exprRecId,self)<>null)then
+    begin
+      rId:=getRecId(mainFmName,exprRecid);
+      if(rId<0)then
+      begin
+        rId:=listWindowShow(mainFmName);
+      end;
+    end
+    else
+      rId:=listWindowShow(mainFmName);
+    //rId:=listWindowShow(mainFmName);
+    if(rId>0)then
+    begin
+      mainFm:=tdxForm.create(mainFmName);
+      mainFm.openRecord(rId);
+      mainFm.edit();
+    end
+    else
+    begin
+      tableFm.free;
+      objComp:=nil;
+      exit;
+    end;
+  end
+  else
+  begin
+    mainFm:=tdxForm.create(mainFmName);
+    mainFm.open();
+    mainFm.append();
+  end;
+  ////////////////////////////////////////////////////////
+
+  //tableFm.OpenRecords(format('[%s]=RECID("%s")',[obj,mainFm.formCaption]),mainFm,true);
+  tableFm.Open;
+
+  sourceTabFm:=self.forms[sourceTab];
+  try
+    copyData(self,mainFm,'main',0,fillFieldsFm);
+
+    sourceTabFm.moveFirst
+    while not sourceTabFm.eof do
+    begin
+      if evalExpr(sourceFilter,sourceTabFm)=null or evalExpr(sourceFilter,sourceTabFm) then
+        idStr:=idStr+intToStr(copyData(sourceTabFm,tableFm,obj,mainFm.recId,fillFieldsTab))+',';
+      sourceTabFm.moveNext();
+    end;
+    delete(idStr,length(idStr),1);
+    if(Query<>'')then
+      mainFm.Queries[Query].Refresh();
+
+    if(showEdtWin)then
+    begin
+      mainFm.EditWindow.caption:=
+        mainFm.EditWindow.caption+'<Копирование в запрос к форме: "'+form+'">';
+      if mainFm.EditWindow.ShowModal = mrOk then
+      begin
+        mainFm.Post;
+        Result := mainFm.recId;
+      end
+      else
+      begin
+        SQLExecute(Format('delete from t%d where id in (%s);',
+          [tableFm.id,idStr]));
+        mainFm.Cancel;
+      end;
+    end
+    else
+    begin
+      mainFm.Post;
+      msgBox('Копирование данных','Данные успешно скопированы в запрос к форме:'+form);
+      Result := mainFm.recId;
+    end;
+  except
+    MsgBox('Ошибка', ExceptionParam);
+  finally
+    mainFm.close;
+    mainFm.free();
+    tableFm.close;
+    tableFm.free();
+    sourceTabFm:=nil;
+    objComp:=nil;
+  end;
+end;
+
+{@action
+Id=79680333-3E85-428F-823D-9E26D0F05A3A
+Target=button
+OrigName=oneRecord
+Name=Добавить одну запись
+Group=Данные
+UI=<ui>
+  <divider caption="Форма источник"/>
+  <checkbox name="saveSource" caption="Сохранить перед копированием" defaultvalue="0"/>
+
+  <divider caption="Целевая форма"/>
+  <form name="form" caption="Форма" required="1"/>
+  <childform name="table" caption="Таблица" source="form" required="0"/>
+  <object name="obj" caption="Объект родитель" source="form" required="0"/>
+  <Query name="Query" caption="Обновить запрос" source="obj"/>
+  <checkbox name="showEdtWin" caption="Показать окно редактирования" defaultvalue="1"/>
+  <checkbox name="addExist" caption="Добавить к существующей" defaultvalue="0"/>
+  <expr name="exprRecId" caption="Вычислить ID записи" required="0" />
+
+  <divider caption="Данные для заполнения"/>
+  <grid name="fillFieldsTab" caption="Вычислить поля таблицы" >
+    <field name="fldObj" caption="Поле объекта" source="obj" filter="text;number;date;time;object;counter;checkbox" required="0"/>
+    <field name="fldFm" caption="Поле формы" source="form" filter="text;number;date;time;object;counter;checkbox" required="0"/>
+    <field name="fldTab" caption="Поле таблицы" source="table" filter="text;number;date;time;object;counter;checkbox" required="0"/>
+    <expr name="sourceExpr" caption="Выражение" required="1"/>
+  </grid>
+
+  <if expr="GetExprType(exprRecId)<>'' & GetExprType(exprRecId)<>'number'"
+    msg="Результат выражения должен быть числовым! Текущий:`GetTypeText(exprRecId)`."/>
+
+  <if expr="GetText(table)<>'' & GetText(obj)<>''" msg="Нужно выбрать что-то одно! Таблица или запрос(Объект родитель)?" focus="table"/>
+
+  <ifgrid grid="fillFieldsTab">
+    <if expr="!SameTypes(sourceExpr, fldObj)" msg="Результат выражения не совпадает с типом поля." focus="fldObj"/>
+    <if expr="!SameTypes(sourceExpr, fldFm)" msg="Результат выражения не совпадает с типом поля." focus="fldFm"/>
+    <if expr="!SameTypes(sourceExpr, fldTab)" msg="Результат выражения не совпадает с типом поля." focus="fldTab"/>
+  </ifgrid>
+</ui>
+Description= <b>Добавить одну запись</b> <br>
+Добавляет всего одну запись, на основании текущей формы, в стороннюю основную форму или таблицу, или запрос, в зависимости от настроек полей.<br>
+При удачном копировании и сохранении изменений в записи родительской формы функция вернет в
+result ID записи основной формы, в противном случае вернет -1.<br>
+<b>Целевая форма</b> <br>
+<b>Форма</b> Форма в которую добавится запись (может быть как формой запроса или родительской формой).<br>
+<b>Таблица</b> Если параметр не пустой, то подразумеваетя, что предыдущий параметр (Форма) выбран как родительская
+форма, а данный параметр таблица для внесения записи. Если оставить тоже пустым, запись добавится только в "Форму"<br>
+<b>Объект родитель</b>Если параметр не пустой, то подразумеваетя, что предыдущий параметр (Форма) выбран как родительская
+форма, а данный параметр запрос "таблица" для внесения записи. Если оставить тоже пустым, запись добавится только в "Форму" <br>
+<b>Обновить запрос-</b> Обновляет запрос на родительской форме, после внесения данных в запрос. <br>
+<b>Показать окно редактирования-</b> Отобразить окно редактирования записи после внесения изменений. В нем можно
+отменить сохранение снесенных данных. В противном случае, запись будет безусловно сохранена, чему будет свидетельствовать
+сообщение.<br>
+<b>Добавить к существующей-</b> Если установить данный флаг, будет предложен список записей родительской формы.
+ В нем можно выбрать требуемую запись, и после нажатия "ОК", в конец таблицы быдут добавлены данные. А данные
+ родительской формы будут пересчитаны.<br>
+<b>Вычислить ID записи-</b> Если установлен флаг "Добавить к существующей", и данное выражение вернет корректный ID? то
+то окно списка, для выбора записи отображаться не будет, и данные добавятся в запись полученого ID.<br>
+<b>Данные для заполнения</b> Сопоставить поля целевой формы с выражениями (источник текущая форма и таблица).
+Данные будут внесены во все поля которые выбраты как целевые. Чтобы избежать путаницы не рекомендуется
+в одной строке указывать несколько целевых полей, но при совпадении типов и необходимости, это возможно.<br>
+@}
+
+function oneRecord(saveSource:boolean;form,table,obj,Query:string;
+  showEdtWin,addExist:boolean;exprRecId:string;fillFields:tVariantArray2d): integer;
+var
+  mainFm,tableFm:tdxForm;
+  rId,i:integer;
+  objComp:tComponent;
+  mainFmName,idStr:string;
+begin
+  Result := -1;
+  if(saveSource) and(self.state in [dsEdit,dsInsert])and not(self.viewType=vtSimpleForm)then
+  begin
+    if not(self.validate)then exit;
+    self.post;
+    self.edit;
+  end;
+
+  // Запись в главную форму.
+  if((form<>'')and(table='')and(obj=''))then
+  begin
+     if(addExist)then
+    begin
+      if(evalExpr(exprRecId,self)<>null)then
+      begin
+        rId:=getRecId(form,exprRecid);
+        if(rId<0)then
+        begin
+          rId:=listWindowShow(form);
+        end;
+      end
+      else
+        rId:=listWindowShow(form);
+      //rId:=listWindowShow(form);
+      if(rId>0)then
+      begin
+        mainFm:=tdxForm.create(form);
+        mainFm.openRecord(rId);
+        mainFm.edit();
+      end
+      else
+      begin
+        exit;
+      end;
+    end
+    else
+    begin
+      mainFm:=tdxForm.create(form);
+      mainFm.open();
+      mainFm.append();
+    end;
+    try
+      for i:=0 to high(fillFields) do
+      begin
+        if(fillFields[i][1]<>'')then
+        begin
+          mainFm[fillFields[i][1]]:=evalExpr(fillFields[i][3],self);
+        end;
+      end;
+
+      if(showEdtWin)then
+      begin
+        mainFm.EditWindow.caption:=
+          mainFm.EditWindow.caption+'<Одна запись в форму: "'+form+'">';
+        if mainFm.EditWindow.ShowModal = mrOk then
+        begin
+          mainFm.Post;
+          Result := mainFm.recId;
+        end
+        else
+        begin
+          mainFm.Cancel;
+        end;
+      end
+      else
+      begin
+        mainFm.Post;
+        msgBox('Копирование данных','Данные успешно скопированы в форму:'+form);
+        Result := mainFm.recId;
+      end;
+    except
+      MsgBox('Ошибка', ExceptionParam);
+    finally
+      mainFm.close;
+      mainFm.free;
+      exit;
+    end;
+  end;
+
+  // Запись в таблицу формы
+  if((form<>'')and(table<>'')and(obj=''))then
+  begin
+    if(addExist)then
+    begin
+      if(evalExpr(exprRecId,self)<>null)then
+      begin
+        rId:=getRecId(form,exprRecid);
+        if(rId<0)then
+        begin
+          rId:=listWindowShow(form);
+        end;
+      end
+      else
+        rId:=listWindowShow(form);
+
+      if(rId>0)then
+      begin
+        mainFm:=tdxForm.create(form);
+        mainFm.openRecord(rId);
+        mainFm.edit();
+      end
+      else
+      begin
+        exit;
+      end;
+    end
+    else
+    begin
+      mainFm:=tdxForm.create(form);
+      mainFm.open();
+      mainFm.append();
+    end;
+    tableFm:=mainFm.forms[table];
+    tableFm.append();
+    try
+      for i:=0 to high(fillFields) do
+      begin
+        if(fillFields[i][1]<>'')then
+        begin
+          mainFm[fillFields[i][1]]:=evalExpr(fillFields[i][3],self);
+        end;
+
+        if(fillFields[i][2]<>'')then
+        begin
+          tableFm[fillFields[i][2]]:=evalExpr(fillFields[i][3],self);
+        end;
+      end;
+      tableFm.post;
+
+      if(showEdtWin)then
+      begin
+        mainFm.EditWindow.caption:=
+          mainFm.EditWindow.caption+'<Одна запись в таблицу: "'+table+'">';
+        if mainFm.EditWindow.ShowModal = mrOk then
+        begin
+          mainFm.Post;
+          Result := mainFm.recId;
+        end
+        else
+        begin
+          mainFm.Cancel;
+        end;
+      end
+      else
+      begin
+        mainFm.Post;
+        msgBox('Копирование данных','Данные успешно скопированы в таблицу:'+table);
+        Result := mainFm.recId;
+      end;
+    except
+      MsgBox('Ошибка', ExceptionParam);
+    finally
+      mainFm.close;
+      mainFm.free;
+      tableFm:=nil;
+      exit;
+    end;
+  end;
+
+  // Запись в таблицу запрос
+  if((form<>'')and(table='')and(obj<>''))then
+  begin
+    tableFm:=tdxForm.create(form);
+    objComp:=tableFm.findComponentByFieldName(obj);
+    mainFmName:=tdxLookupCombobox(objComp).sourceFormName;
+
+    if(addExist)then
+    begin
+      if(evalExpr(exprRecId,self)<>null)then
+      begin
+        rId:=getRecId(mainFmName,exprRecid);
+        if(rId<0)then
+        begin
+          rId:=listWindowShow(mainFmName);
+        end;
+      end
+      else
+        rId:=listWindowShow(mainFmName);
+      //rId:=listWindowShow(mainFmName);
+      if(rId>0)then
+      begin
+        mainFm:=tdxForm.create(mainFmName);
+        mainFm.openRecord(rId);
+        mainFm.edit();
+      end
+      else
+      begin
+        exit;
+      end;
+    end
+    else
+    begin
+      mainFm:=tdxForm.create(mainFmName);
+      mainFm.open();
+      mainFm.append();
+    end;
+
+    tableFm.open();
+    tableFm.append();
+    idStr:='';
+    try
+      tableFm[obj]:=mainFm.recId;
+      for i:=0 to high(fillFields) do
+      begin
+        if(fillFields[i][0]<>'')then
+        begin
+          mainFm[fillFields[i][0]]:=evalExpr(fillFields[i][3],self);
+        end;
+
+        if(fillFields[i][1]<>'')then
+        begin
+          tableFm[fillFields[i][1]]:=evalExpr(fillFields[i][3],self);
+        end;
+      end;
+      tableFm.post;
+      if(Query<>'')then
+        mainFm.Queries[Query].Refresh();
+      idStr:=intToStr(tableFm.recId);
+
+      if(showEdtWin)then
+      begin
+        mainFm.EditWindow.caption:=
+          mainFm.EditWindow.caption+'<Одна запись в запрос к форме: "'+form+'">';
+        if mainFm.EditWindow.ShowModal = mrOk then
+        begin
+          mainFm.Post;
+          Result := mainFm.recId;
+        end
+        else
+        begin
+          SQLExecute(Format('delete from t%d where id=(%s);',
+            [tableFm.id,idStr]));
+          mainFm.Cancel;
+        end;
+      end
+      else
+      begin
+        mainFm.Post;
+        msgBox('Копирование данных','Данные успешно скопированы в запрос формы:'+form);
+        Result := mainFm.recId;
+      end;
+    except
+      MsgBox('Ошибка', ExceptionParam);
+    finally
+      mainFm.close;
+      mainFm.free;
+      tableFm.close;
+      tableFm.free;
+      objComp:=nil;
+      exit;
+    end;
+  end;
+
+end;
+
+{@function
+OrigName=CreateRecLink
+Name=Rec_Link
+Args=s
+Result=s
+Group=Инструменты
+Description= Функция возвращает некую ссылку на запись формы, для дальнейшего открытия записи,
+функцией кнопки "Открыть запись по ссылке".
+Ссылка в виде: "Имя которое передается в функцию"\Имя текущей формы\ID записи.
+Передаваемое имя может быть любым, оно не участвует в идентивикации ссылки, а просто задает первую
+ветку ссылки для понимания пользователем.
+@}
+function CreateRecLink(name:string): string;
+begin
+  result:=name+'\'+self.formCaption+'\'+intToStr(self.recId);
+end;
+
+{@action
+Id=9EE322EF-0C18-4EA9-98C1-3858D44E0788
+Target=button
+OrigName=openFmLink
+Name=Открыть запись по ссылке
+Group=Данные
+UI=<ui>
+  <divider caption="Открыть запись формы"/>
+  <field name="linkFld" caption="Поле со ссылкой на форму" filter="text" required="1"/>
+  <checkbox name="editing" caption="Разрешить редактирование записи" defaultvalue="0"/>
+</ui>
+Description=
+Открывает ссылку на запись созданную функцией Rec_Link. Запись открывается с возможностью редактирования,
+или только просмотра.
+@}
+
+function openFmLink(linkFld:string;editing:boolean): boolean;
+var
+  form:tdxForm;
+  sl:tStringList;
+  rId:integer;
+begin
+  result:=false;
+  sl:=tStringList.Create();
+  sl.strictDelimiter:=true;
+  sl.delimiter:='\';
+  sl.delimitedText:=self[linkFld];
+  if(sl.count<>3) or not(tryStrToInt(sl[2],rId))then RaiseException(erCustomError, '"'+self[linkFld]+'"'+'Не является ссылкой на форму, или содержит ошибку!');
+  try
+    form:=tdxForm.create(sl[1]);
+  except
+    RaiseException(erCustomError, 'Форма "'+sl[1]+'"'+' не найдена');
+  end;
+  form.open;
+  if(form.goToRecord(rId))then
+  begin
+    if(editing)then form.edit;
+    form.EditWindow.ShowModal();
+  end
+  else
+  begin
+    msgBox('Запись не найдена.','ID='+sl[2]+' запись отсутствует!');
+  end;
+
+  form.close();
+  form.free;
+  sl.free;
+  result:=true;
+end;

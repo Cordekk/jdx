@@ -2,7 +2,7 @@ object Form104: TdxForm
   Left = 10
   Height = 806
   Top = 10
-  Width = 810
+  Width = 842
   Id = 104
   PId = 0
   FormCaption = 'Помещения'
@@ -94,7 +94,7 @@ object Form104: TdxForm
     Id = 1831
     FieldName = 'Подразделение'
     SourceTId = 25
-    SourceFId = 77
+    SourceFId = 78
     Required = False
     SourceTable = 0
     DestTable = 0
@@ -131,7 +131,6 @@ object Form104: TdxForm
     FieldName = 'МинТемп'
     Precission = 0
     Required = False
-    DefaultValue = '0'
     Editable = False
     NullToZero = False
     GroupDigits = True
@@ -155,7 +154,6 @@ object Form104: TdxForm
     FieldName = 'МаксТемп'
     Precission = 0
     Required = False
-    DefaultValue = '0'
     Editable = False
     NullToZero = False
     GroupDigits = True
@@ -179,7 +177,6 @@ object Form104: TdxForm
     FieldName = 'МинДавление'
     Precission = 0
     Required = False
-    DefaultValue = '0'
     Editable = False
     NullToZero = False
     GroupDigits = True
@@ -219,7 +216,6 @@ object Form104: TdxForm
     FieldName = 'МаксДавление'
     Precission = 0
     Required = False
-    DefaultValue = '0'
     Editable = False
     NullToZero = False
     GroupDigits = True
@@ -251,7 +247,6 @@ object Form104: TdxForm
     FieldName = 'МинВлажн'
     Precission = 0
     Required = False
-    DefaultValue = '0'
     Editable = False
     NullToZero = False
     GroupDigits = True
@@ -275,7 +270,6 @@ object Form104: TdxForm
     FieldName = 'МаксВлажн'
     Precission = 0
     Required = False
-    DefaultValue = '0'
     Editable = False
     NullToZero = False
     GroupDigits = True
@@ -370,7 +364,6 @@ object Form104: TdxForm
     FieldName = 'НапряжениеМин'
     Precission = 0
     Required = False
-    DefaultValue = '0'
     Editable = False
     NullToZero = False
     GroupDigits = True
@@ -394,7 +387,6 @@ object Form104: TdxForm
     FieldName = 'НапряжениеМакс'
     Precission = 0
     Required = False
-    DefaultValue = '0'
     Editable = False
     NullToZero = False
     GroupDigits = True
@@ -418,7 +410,6 @@ object Form104: TdxForm
     FieldName = 'ЧастотаМин'
     Precission = 0
     Required = False
-    DefaultValue = '0'
     Editable = False
     NullToZero = False
     GroupDigits = True
@@ -450,7 +441,6 @@ object Form104: TdxForm
     FieldName = 'ЧастотаМакс'
     Precission = 0
     Required = False
-    DefaultValue = '0'
     Editable = False
     NullToZero = False
     GroupDigits = True
@@ -704,6 +694,19 @@ object Form104: TdxForm
     TabOrder = 23
     ActionOnClick = '<actions><action type="2" template="" expression="GET(''Печать ТМЦ1'', ''Файл'')" outfile="" fileaction="1" saverecord="1"/></actions>'
   end
+  object dxRecordId1: TdxRecordId
+    Left = 792
+    Height = 24
+    Top = 776
+    Width = 100
+    ReadOnly = True
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 24
+    FieldName = 'ID'
+    StopTab = False
+    Id = 263078
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 100
@@ -825,6 +828,12 @@ object Form104: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262403l'
+      end    
+      item
+        Tag = 263078
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263078'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

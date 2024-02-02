@@ -1,0 +1,34 @@
+{@module
+author=Vofka18
+version=1.0
+description=Глобальные константы БД
+@}
+
+{@action
+id=C501E6A6-FC68-42F1-B73F-BBEC9FAC3336
+target=main
+origname=SettisBD
+name=Глобальные константы БД
+group=Инструменты
+ui=
+  <ui>
+    <grid name="Settins" caption="Настройки">
+      <text name="setName" caption="Имя константы"  required="1"/>
+      <expr name="Value" caption="Значение"  required="1"/>
+    </grid>
+  </ui>
+description= Расширение позволяет запоминать определенные константы, для дальнейшего использования,
+при расчетах в базе данных.
+Например хранить наименование организации, величину наценки на продукцию, и т.д.
+Выражение может вернуть любой тип.
+Обращаться к константам нужно через GETVAR('Наименование переменной').
+@}
+procedure SettisBD(tabSet:tVariantarray2d);
+var
+  i:integer;
+begin
+  for i:=0 to high(tabSet) do
+  begin
+    EvalExpr('setvar("'+tabSet[i][0]+'",'+tabSet[i][1]+')', nil);
+  end;
+end;

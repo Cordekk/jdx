@@ -1,0 +1,39 @@
+{@module
+Author=Cordek
+Version=0.1
+Description=Функция вычисления натурального логарифма - Ln
+@}
+{@function
+OrigName=Ln
+Name=Ln
+Args=n
+Result=n
+Group=Математика
+Description=Функция вычисляет логарифм числа a по основанию е - натуральный логарифм.
+заполнять по схеме    Ln([a])
+a не должно быть отрицательным числом
+результат число, точность до шестого знака.
+@}
+
+function Ln(a :Extended):Extended;
+var tek, rez, b1, lna, eps :Extended;
+i : longint;
+begin
+//отправка скрипта на исполнение
+if (a > 0) then
+begin
+a := (a-1)/(a+1);
+eps := 0.00000001;
+rez := 0;
+b1 := a;
+i := 1;
+while abs(b1/i)>=eps do
+ begin
+ rez := rez + b1/i;
+ i:=i+2;
+ b1 := b1*a*a;
+ end;
+Result:= 2*rez;
+end;
+end;
+

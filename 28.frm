@@ -2,7 +2,7 @@ object Form28: TdxForm
   Left = 10
   Height = 647
   Top = 10
-  Width = 794
+  Width = 1074
   Id = 28
   PId = 0
   FormCaption = 'Направление деятельности'
@@ -102,12 +102,14 @@ object Form28: TdxForm
     Left = 12
     Height = 506
     Top = 124
-    Width = 748
+    Width = 1048
     ActivePage = dxTabSheet1
+    Anchors = [akTop, akLeft, akRight, akBottom]
     TabIndex = 0
     TabOrder = 3
     object dxTabSheet1: TdxTabSheet
       Caption = 'Нумератор заявок'
+      StopTab = False
       object dxEdit6: TdxEdit
         Left = 4
         Height = 28
@@ -269,8 +271,189 @@ object Form28: TdxForm
         ParentColor = False
       end
     end
+    object dxTabSheet5: TdxTabSheet
+      Caption = 'Нумератор отбора'
+      StopTab = False
+      object dxLabel14: TdxLabel
+        Left = 24
+        Height = 20
+        Top = 57
+        Width = 266
+        Caption = 'Настройка нумератора отбора'
+        ParentColor = False
+      end
+      object dxEdit8: TdxEdit
+        Left = 24
+        Height = 28
+        Top = 81
+        Width = 300
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 0
+        Id = 262661
+        FieldName = 'Шаблон_номера_отбора'
+        FieldSize = 50
+        Required = False
+        CheckExpression = 'IIF([Шаблон_номера_пробы]=null,''Не должно быть пустым'' ,'''' )'
+        Editable = False
+        DefaultValue = '''ZZZZ-№'''
+      end
+      object dxLabel15: TdxLabel
+        Left = 336
+        Height = 40
+        Top = 77
+        Width = 216
+        Caption = 'Нумерация отбора идет '#13#10'с начала внутри:'
+        ParentColor = False
+      end
+      object dxCheckBox13: TdxCheckBox
+        Left = 340
+        Height = 23
+        Top = 125
+        Width = 266
+        Caption = 'ZZZZ - внутри заявки'
+        TabOrder = 1
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262662
+        FieldName = 'ZZZZ2'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '1'
+      end
+      object dxCheckBox14: TdxCheckBox
+        Left = 339
+        Height = 23
+        Top = 151
+        Width = 278
+        Caption = 'URD - внутри направления'
+        TabOrder = 2
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262663
+        FieldName = 'URD2'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox15: TdxCheckBox
+        Left = 339
+        Height = 23
+        Top = 180
+        Width = 302
+        Caption = 'KOD - внутри подразделения'
+        TabOrder = 3
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262664
+        FieldName = 'KOD2'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox16: TdxCheckBox
+        Left = 339
+        Height = 23
+        Top = 205
+        Width = 246
+        Caption = 'YYYY - внутри года'
+        TabOrder = 4
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262665
+        FieldName = 'YYYY2'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox17: TdxCheckBox
+        Left = 339
+        Height = 23
+        Top = 230
+        Width = 210
+        Caption = 'MM - внутри месяца'
+        TabOrder = 5
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262666
+        FieldName = 'MM2'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox18: TdxCheckBox
+        Left = 339
+        Height = 23
+        Top = 253
+        Width = 206
+        Caption = 'DD - внутри дня'
+        TabOrder = 6
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262667
+        FieldName = 'DD2'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxLabel16: TdxLabel
+        Left = 24
+        Height = 260
+        Top = 109
+        Width = 346
+        Caption = 'Шаблон нумератора'#13#10'№ - номер документа по порядку'#13#10'ZZZZ - внутри заявки'#13#10'URD - направление деятельности'#13#10'KOD - код подразделения'#13#10'YYYY - год - 4 цифры'#13#10'YY - год, 2 последние цифры'#13#10'MM - месяц,    '#13#10'DD - день'#13#10'VPr1 - учитывать Вид пробы (1 буква)'#13#10'VPr2 - учитывать Вид пробы (2 буквы)'#13#10'И любые знаки и любой текст '#13#10'между ними'
+        ParentColor = False
+      end
+      object dxLabel17: TdxLabel
+        Left = 20
+        Height = 20
+        Top = 377
+        Width = 349
+        Caption = 'Минимальное количество цифр номера'
+        ParentColor = False
+      end
+      object dxLabel18: TdxLabel
+        Left = 24
+        Height = 40
+        Top = 409
+        Width = 382
+        Caption = 'Начальный номер необходимо установить'#13#10' в последней пробе по этому направлению'
+        ParentColor = False
+      end
+      object dxCalcEdit4: TdxCalcEdit
+        Left = 388
+        Height = 28
+        Top = 369
+        Width = 80
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 7
+        HideButton = False
+        CalculatorLayout = clNormal
+        AsInteger = 0
+        ButtonWidth = 28
+        NumGlyphs = 1
+        Flat = True
+        Id = 262668
+        FieldName = 'Число2'
+        Precission = 0
+        Required = False
+        DefaultValue = '2'
+        Editable = False
+        NullToZero = True
+        GroupDigits = True
+        PadZeros = True
+      end
+    end
     object dxTabSheet2: TdxTabSheet
       Caption = 'Нумератор проб'
+      StopTab = False
       object dxEdit7: TdxEdit
         Left = 24
         Height = 28
@@ -450,10 +633,82 @@ object Form28: TdxForm
     end
     object dxTabSheet3: TdxTabSheet
       Caption = 'Свойства полей'
+      StopTab = False
     end
     object dxTabSheet4: TdxTabSheet
       Caption = 'Видимость полей'
+      StopTab = False
     end
+    object dxTabSheet6: TdxTabSheet
+      Caption = 'Подразделения'
+      StopTab = False
+      object dxGrid1: TdxGrid
+        Left = 12
+        Height = 378
+        Top = 28
+        Width = 400
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 0
+        SelectedColor = clHighlight
+        GridLineStyle = psSolid
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = False
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnDuplicate, gbnShopping, gbnMoveUp, gbnMoveDown]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -17
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 6854
+      end
+      object dxMemo1: TdxMemo
+        Left = 12
+        Height = 48
+        Top = 416
+        Width = 408
+        ScrollBars = ssBoth
+        TabOrder = 1
+        Id = 262677
+        FieldName = 'Подразделения'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Expression = '//[Направление]   [Префикс_направление]'#13#10''';''+MERGE(''Подразделения для направления'', ''ИД'', '';'')+ '';'''
+        Editable = False
+        UpdateTree = False
+      end
+    end
+  end
+  object dxEdit3: TdxEdit
+    Left = 992
+    Height = 28
+    Top = 12
+    Width = 100
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 4
+    Id = 262974
+    FieldName = 'ИД'
+    FieldSize = 50
+    Required = False
+    Expression = '/*[Направление][Подразделения]               */'#13#10'RECID(''Направление деятельности'')'
+    Editable = False
   end
   object Grid: TdxGrid
     Left = 0
@@ -581,6 +836,72 @@ object Form28: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262461'
+      end    
+      item
+        Tag = 262661
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262661'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262662
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262662'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262663
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262663'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262664
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262664'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262665
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262665'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262666
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262666'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262667
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262667'
+      end    
+      item
+        Tag = 262668
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262668'
+      end    
+      item
+        Tag = 262677
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262677'
+      end    
+      item
+        Tag = 262974
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262974'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

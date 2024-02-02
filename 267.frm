@@ -70,7 +70,7 @@ object Form267: TdxForm
     Flat = True
     NumGlyphs = 1
     Id = 4544
-    FieldName = 'Дата1'
+    FieldName = 'Дата'
     DateNow = True
     Expression = '//[Номер]'#13#10'DATE'
     Required = False
@@ -286,7 +286,7 @@ object Form267: TdxForm
     MaxLength = 0
     TabOrder = 7
     Id = 4549
-    FieldName = 'Прибор'
+    FieldName = 'Оборудование'
     SourceTId = 102
     SourceFId = 2559
     Required = False
@@ -442,7 +442,7 @@ object Form267: TdxForm
     Left = 52
     Height = 306
     Top = 356
-    Width = 460
+    Width = 664
     AutoAdvance = aaNone
     Color = clWindow
     Columns = <>
@@ -626,7 +626,7 @@ object Form267: TdxForm
     Id = 8633
     FieldName = 'Архив'
     SourceTId = 530
-    SourceFId = 8614
+    SourceFId = 0
     Required = False
     SourceTable = 0
     DestTable = 0

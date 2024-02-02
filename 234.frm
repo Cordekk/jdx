@@ -1,8 +1,8 @@
 object Form234: TdxForm
   Left = 10
-  Height = 336
+  Height = 621
   Top = 10
-  Width = 699
+  Width = 744
   Id = 234
   PId = 233
   FormCaption = 'Показатель3'
@@ -22,11 +22,10 @@ object Form234: TdxForm
   SoftCheck = False
   Shopping = '2551|0|0|0|0|0|0'
   object dxLookupComboBox1: TdxLookupComboBox
-    Left = 12
+    Left = 20
     Height = 24
-    Top = 84
+    Top = 176
     Width = 634
-    Anchors = [akTop, akLeft, akRight, akBottom]
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
@@ -53,11 +52,10 @@ object Form234: TdxForm
     UpdateTree = False
   end
   object dxEdit1: TdxEdit
-    Left = 16
+    Left = 28
     Height = 24
-    Top = 192
+    Top = 455
     Width = 642
-    Anchors = [akTop, akLeft, akRight, akBottom]
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
@@ -68,20 +66,18 @@ object Form234: TdxForm
     Editable = False
   end
   object dxLabel1: TdxLabel
-    Left = 20
+    Left = 28
     Height = 16
-    Top = 228
-    Width = 403
-    Anchors = [akTop, akLeft, akRight, akBottom]
+    Top = 508
+    Width = 89
     Caption = 'Лаборатория'
     ParentColor = False
   end
   object dxLookupComboBox2: TdxLookupComboBox
-    Left = 16
+    Left = 28
     Height = 24
-    Top = 256
+    Top = 539
     Width = 638
-    Anchors = [akTop, akLeft, akRight, akBottom]
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
@@ -95,7 +91,7 @@ object Form234: TdxForm
     PromptFillTable = False
     ClearTableBeforeFill = False
     Expression = '[Показатель|Лаборатория]'
-    Editable = True
+    Editable = False
     ListFields = <    
       item
         FieldId = 77
@@ -109,38 +105,34 @@ object Form234: TdxForm
     UpdateTree = False
   end
   object dxLabel2: TdxLabel
-    Left = 16
+    Left = 28
     Height = 16
-    Top = 172
-    Width = 396
-    Anchors = [akTop, akLeft, akRight, akBottom]
+    Top = 426
+    Width = 82
     Caption = 'Примечание'
     ParentColor = False
   end
   object dxLabel3: TdxLabel
-    Left = 32
+    Left = 20
     Height = 16
-    Top = 48
-    Width = 392
-    Anchors = [akTop, akLeft, akRight, akBottom]
+    Top = 153
+    Width = 78
     Caption = 'Показатель'
     ParentColor = False
   end
   object dxLabel4: TdxLabel
-    Left = 12
+    Left = 28
     Height = 16
-    Top = 116
-    Width = 471
-    Anchors = [akTop, akLeft, akRight, akBottom]
+    Top = 354
+    Width = 157
     Caption = 'Нормативное значение'
     ParentColor = False
   end
   object dxEdit2: TdxEdit
-    Left = 12
+    Left = 28
     Height = 24
-    Top = 144
+    Top = 391
     Width = 614
-    Anchors = [akTop, akLeft, akRight, akBottom]
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
@@ -150,6 +142,191 @@ object Form234: TdxForm
     Required = False
     Editable = False
     DefaultValue = '''Не допускается'''
+  end
+  object dxLookupComboBox3: TdxLookupComboBox
+    Left = 24
+    Height = 24
+    Top = 40
+    Width = 544
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 4
+    Id = 262634
+    FieldName = 'Группа продукции'
+    SourceTId = 15
+    SourceFId = 46
+    Required = False
+    DefaultValue = '[Группа продукции]'
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Expression = '//[Показатель]'#13#10'[!Группа продукции]'
+    Editable = True
+    ListFields = <>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = False
+    UpdateTree = False
+  end
+  object dxLookupComboBox4: TdxLookupComboBox
+    Left = 24
+    Height = 24
+    Top = 100
+    Width = 544
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 5
+    Id = 262635
+    FieldName = 'Продукция'
+    SourceTId = 7
+    SourceFId = 28
+    Filter = '[Группа продукции2]=[Группа продукции]'
+    Required = False
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Expression = '//[Группа продукции]'#13#10'[!Продукция]'
+    Editable = True
+    ListFields = <>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = False
+    UpdateTree = False
+  end
+  object dxLabel5: TdxLabel
+    Left = 24
+    Height = 16
+    Top = 16
+    Width = 125
+    Caption = 'Группа продукции'
+    ParentColor = False
+  end
+  object dxLabel6: TdxLabel
+    Left = 24
+    Height = 16
+    Top = 80
+    Width = 74
+    Caption = 'Продукция'
+    ParentColor = False
+  end
+  object dxLabel7: TdxLabel
+    Left = 24
+    Height = 16
+    Top = 224
+    Width = 78
+    Caption = '№ Образца'
+    ParentColor = False
+  end
+  object dxEdit3: TdxEdit
+    Left = 668
+    Height = 24
+    Top = 8
+    Width = 80
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 6
+    Id = 262770
+    FieldName = 'Образец'
+    FieldSize = 50
+    Required = False
+    Editable = False
+  end
+  object dxLabel8: TdxLabel
+    Left = 24
+    Height = 16
+    Top = 256
+    Width = 89
+    Caption = 'Консервация'
+    ParentColor = False
+  end
+  object dxLookupComboBox5: TdxLookupComboBox
+    Left = 152
+    Height = 24
+    Top = 256
+    Width = 396
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 7
+    Id = 262771
+    FieldName = 'Консервация'
+    SourceTId = 6851
+    SourceFId = 262620
+    Filter = '[Показатель|Методика] = [Показатель|Методика]'
+    Required = False
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Editable = False
+    ListFields = <>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = False
+    UpdateTree = False
+  end
+  object dxLabel30: TdxLabel
+    Left = 24
+    Height = 16
+    Top = 302
+    Width = 93
+    Caption = 'Вид упаковки'
+    ParentColor = False
+  end
+  object dxComboBox2: TdxComboBox
+    Left = 152
+    Height = 24
+    Top = 298
+    Width = 388
+    AutoComplete = True
+    AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+    ItemHeight = 16
+    Items.Strings = (
+      'Пластиковый пакет'
+      'Сейф-пакет'
+      'Банка'
+      'Бутылка'
+      'Мешок матерчатый'
+      'Мешки матерчатый и полиэтиленовый'
+    )
+    MaxLength = 0
+    TabOrder = 8
+    Id = 262772
+    FieldName = 'Вид упаковки'
+    SourceTId = 0
+    SourceFId = 0
+    FieldSize = 50
+    Required = False
+    Expression = '[Консервация|Вид упаковки]'
+    Editable = True
+  end
+  object dxCalcEdit1: TdxCalcEdit
+    Left = 152
+    Height = 24
+    Top = 220
+    Width = 80
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 9
+    HideButton = False
+    CalculatorLayout = clNormal
+    AsInteger = 0
+    ButtonWidth = 24
+    NumGlyphs = 1
+    Flat = True
+    Id = 263019
+    FieldName = 'Номер_образца'
+    Precission = 0
+    Expression = '[Консервация|Номер_образца]'
+    Required = False
+    Editable = True
+    NullToZero = False
+    GroupDigits = False
+    PadZeros = False
   end
   object Grid: TdxGrid
     Left = 0
@@ -182,6 +359,42 @@ object Form234: TdxForm
         Title.Caption = ' '
         Width = 129
         FieldName = 'f2685l'
+      end    
+      item
+        Tag = 262634
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262634l'
+      end    
+      item
+        Tag = 262635
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262635l'
+      end    
+      item
+        Tag = 262770
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262770'
+      end    
+      item
+        Tag = 262771
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262771l'
+      end    
+      item
+        Tag = 262772
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262772'
+      end    
+      item
+        Tag = 263019
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263019'
       end>
     DefaultRowHeight = 21
     DoubleBuffered = True

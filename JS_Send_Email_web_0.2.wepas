@@ -1,0 +1,69 @@
+{@module
+Author=Cordek
+Version=0.2
+Description=Отправка почты с помощью встроенных в Windows скриптов, поддержка многострочного сообщения
+версия для веб-сервера с работой через запуск файла скрипта
+@}
+{@function
+Name=JS_Send_Email
+@}
+
+
+//проверить на веб-сервере
+function JS_Send_Email(sSMTPServer, sSMTPport, sSender, sPassword, sRecipient, sSubject, sMessageText :string):variant;
+var FileName, s:string;
+FS: TFileStream;
+begin
+//JS:=CreateOleObject('MSScriptControl.ScriptControl'); // создаем оле объект подключения к javascript
+//JS.Language := 'JScript'; // задаем язык, есть еще vbscript
+// переменные для отправки почты // (проверить на переносы в тексте!)
+
+sMessageText:=stringReplace(sMessageText, #13#10, '\n\r',[rfReplaceAll]);
+
+s := '' + 'var sSMTPServer 	= "'+ sSMTPServer +'"'+#13#10;
+s := s + 'var sSMTPport 	= '+ sSMTPport +#13#10;
+s := s + 'var sSender 	= "'+ sSender +'"'+#13#10;
+s := s + 'var sPassword 	= "'+ sPassword +'"'+#13#10;
+s := s + 'var sRecipient 	= "'+ sRecipient +'"'+#13#10;
+s := s + 'var sSubject 	= "'+ sSubject +'"'+#13#10;
+s := s + 'var sMessageText = "'+ sMessageText +'";'+#13#10;
+
+//s := s + 'var strPathFile 	= "'+ strPathFile +'"'+#13#10;    // для отправки файлов!
+
+// скрипт для отправки почты
+s := s + 'var iConf = new ActiveXObject("CDO.Configuration")' + #13#10;
+s := s + 'Filds = iConf.Fields' + #13#10;
+s := s + 'Filds.Item("http://schemas.microsoft.com/cdo/configuration/smtpauthenticate") 		= 1' + #13#10;
+s := s + 'Filds.Item("http://schemas.microsoft.com/cdo/configuration/sendusername") 			= sSender' + #13#10;
+s := s + 'Filds.Item("http://schemas.microsoft.com/cdo/configuration/sendpassword") 			= sPassword' + #13#10;
+s := s + 'Filds.Item("http://schemas.microsoft.com/cdo/configuration/sendusing")				= 2' + #13#10;
+s := s + 'Filds.Item("http://schemas.microsoft.com/cdo/configuration/smtpserverport") 		= sSMTPport' + #13#10;
+s := s + 'Filds.Item("http://schemas.microsoft.com/cdo/configuration/smtpserver") 			= sSMTPServer' + #13#10;
+s := s + 'Filds.Item("http://schemas.microsoft.com/cdo/configuration/languagecode")	 		= 1049' + #13#10;
+s := s + 'Filds.Item("http://schemas.microsoft.com/cdo/configuration/smtpusessl") 			= 2' + #13#10;
+s := s + 'Filds.Item("http://schemas.microsoft.com/cdo/configuration/smtpconnectiontimeout") 	= 60' + #13#10;
+s := s + 'Filds.Update();' + #13#10;
+s := s + 'var iMsg  = new ActiveXObject("CDO.Message")' + #13#10;
+s := s + 'iMsg.Configuration = iConf' + #13#10;
+s := s + 'iMsg.From    	= sSender' + #13#10;
+s := s + 'iMsg.To      	= sRecipient' + #13#10;
+s := s + 'iMsg.Subject 	= sSubject' + #13#10;
+s := s + 'iMsg.BodyPart.Charset = "windows-1251"' + #13#10;
+s := s + 'iMsg.TextBody 	= sMessageText' + #13#10;
+//s := s + 'iMsg.AddAttachment strPathFile' + #13#10;  // для отправки файлов!
+s := s + 'iMsg.Send()' + #13#10;
+//сохраним тело скрипта в файл на диске
+FileName := Session.GetCacheDir +  '\script.js';
+FS := TFileStream.Create(FileName, fmCreate)
+FS.Write(s, Length(s));
+ //отправка скрипта на исполнение
+ ShellExecute('open', 'cscript', FileName, ExtractFilePath(FileName), 0);
+//JS.Eval(s);
+result:= 'Письмо отправлено';
+//удалим файл, чтобы потом не мешался
+DeleteFile(FileName);
+//JS:=Unassigned;
+//JS:=null;
+
+end;
+

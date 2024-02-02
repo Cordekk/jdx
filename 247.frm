@@ -303,22 +303,6 @@ object Form247: TdxForm
     Caption = 'Заключение'
     ParentColor = False
   end
-  object dxEdit4: TdxEdit
-    Left = 728
-    Height = 24
-    Top = 0
-    Width = 80
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 10
-    Id = 262464
-    FieldName = 'Идентификатор'
-    FieldSize = 20
-    Required = False
-    Expression = '// [Номер]'#13#10'RECID(''ТехОбслуживание ТМЦ'')'
-    Editable = False
-    DefaultValue = 'RECID(''Документы'')'
-  end
   object dxLookupComboBox3: TdxLookupComboBox
     Left = 385
     Height = 24
@@ -326,7 +310,7 @@ object Form247: TdxForm
     Width = 304
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 11
+    TabOrder = 10
     Id = 262465
     FieldName = 'Сотрудник'
     SourceTId = 24
@@ -353,7 +337,7 @@ object Form247: TdxForm
     Width = 304
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 12
+    TabOrder = 11
     Id = 262466
     FieldName = 'Подразделение'
     SourceTId = 25
@@ -384,6 +368,19 @@ object Form247: TdxForm
     Width = 30
     Caption = 'ТМЦ'
     ParentColor = False
+  end
+  object dxRecordId1: TdxRecordId
+    Left = 724
+    Height = 24
+    Top = 0
+    Width = 100
+    ReadOnly = True
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 12
+    FieldName = 'ID'
+    StopTab = False
+    Id = 263046
   end
   object Grid: TdxGrid
     Left = 0
@@ -454,12 +451,6 @@ object Form247: TdxForm
         FieldName = 'f262361'
       end    
       item
-        Tag = 262464
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f262464'
-      end    
-      item
         Tag = 262465
         Title.Caption = ' '
         Width = 100
@@ -470,6 +461,12 @@ object Form247: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262466l'
+      end    
+      item
+        Tag = 263046
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263046'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

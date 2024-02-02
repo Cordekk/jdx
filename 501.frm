@@ -37,7 +37,6 @@ object Form501: TdxForm
     DestTable = 0
     PromptFillTable = False
     ClearTableBeforeFill = False
-    Expression = '[Остаток|Номенклатура ТМЦ]'
     Editable = True
     ListFields = <>
     DropDownCount = 8
@@ -66,13 +65,12 @@ object Form501: TdxForm
     FieldName = 'ТМЦ'
     SourceTId = 102
     SourceFId = 7260
-    Filter = '[Номенклатура]=[Номенклатура]&[Количество]>0'
+    Filter = '[Номенклатура]=[Номенклатура]'
     Required = True
     SourceTable = 0
     DestTable = 0
     PromptFillTable = False
     ClearTableBeforeFill = False
-    Expression = '[Остаток|ТМЦ]'
     Editable = True
     ListFields = <>
     DropDownCount = 8
@@ -99,8 +97,8 @@ object Form501: TdxForm
     TabOrder = 2
     Id = 8429
     FieldName = 'Ед. изм.'
-    ObjId = 0
-    FieldId = 0
+    ObjId = 8427
+    FieldId = 1826
   end
   object dxLabel3: TdxLabel
     Left = 20
@@ -142,37 +140,6 @@ object Form501: TdxForm
     Caption = 'Количество'
     ParentColor = False
   end
-  object dxComboBox1: TdxComboBox
-    Left = 160
-    Height = 24
-    Top = 336
-    Width = 404
-    AutoComplete = True
-    AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
-    ItemHeight = 16
-    Items.Strings = (
-      'Израсходован на проведение испытаний'
-      'Сломался (разбился) и востановлению не подлежит'
-      'Утилизирован в соответствии с требованиями по истечению срока годности'
-    )
-    MaxLength = 0
-    TabOrder = 4
-    Id = 8431
-    FieldName = 'Причина списания'
-    SourceTId = 0
-    SourceFId = 0
-    FieldSize = 50
-    Required = True
-    Editable = False
-  end
-  object dxLabel5: TdxLabel
-    Left = 20
-    Height = 16
-    Top = 344
-    Width = 126
-    Caption = 'Причина списания'
-    ParentColor = False
-  end
   object dxLookupComboBox3: TdxLookupComboBox
     Left = 164
     Height = 24
@@ -180,7 +147,7 @@ object Form501: TdxForm
     Width = 396
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 5
+    TabOrder = 4
     Id = 8432
     FieldName = 'Сотрудник 1'
     SourceTId = 24
@@ -191,7 +158,7 @@ object Form501: TdxForm
     DestTable = 0
     PromptFillTable = False
     ClearTableBeforeFill = False
-    Expression = 'NZ([Остаток|Сотрудник],[Сотрудник 1])'
+    Expression = '[!Сотрудник 1]'
     Editable = True
     ListFields = <>
     DropDownCount = 8
@@ -215,7 +182,7 @@ object Form501: TdxForm
     Width = 396
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 6
+    TabOrder = 5
     Id = 8433
     FieldName = 'Склад 1'
     SourceTId = 104
@@ -226,7 +193,7 @@ object Form501: TdxForm
     DestTable = 0
     PromptFillTable = False
     ClearTableBeforeFill = False
-    Expression = 'NZ([Остаток|Склад], [Склад 1])'
+    Expression = '[!Склад 1]'
     Editable = True
     ListFields = <>
     DropDownCount = 8
@@ -258,7 +225,7 @@ object Form501: TdxForm
     Width = 100
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 7
+    TabOrder = 6
     HideButton = False
     CalculatorLayout = clNormal
     AsInteger = 0
@@ -268,7 +235,7 @@ object Form501: TdxForm
     Id = 8434
     FieldName = 'Цена'
     Precission = 0
-    Expression = '[Остаток|Стоимость]/[Остаток|Остаток]'
+    Expression = 'DBGET(''Остаток ТМЦ'', ''Стоимость'', ''[!Номенклатура ТМЦ]=[Номенклатура]&[!ТМЦ]=[ТМЦ]&[!Сотрудник]=[!Сотрудник 1]&[!Склад]=[!Склад 1]'')/'#13#10'DBGET(''Остаток ТМЦ'', ''Остаток'', ''[!Номенклатура ТМЦ]=[Номенклатура]&[!ТМЦ]=[ТМЦ]&[!Сотрудник]=[!Сотрудник 1]&[!Склад]=[!Склад 1]'')'
     Required = False
     DefaultValue = '0'
     Editable = True
@@ -299,7 +266,7 @@ object Form501: TdxForm
     Width = 100
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 8
+    TabOrder = 7
     HideButton = False
     CalculatorLayout = clNormal
     AsInteger = 0
@@ -356,12 +323,6 @@ object Form501: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f8430'
-      end    
-      item
-        Tag = 8431
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f8431'
       end    
       item
         Tag = 8432

@@ -24,7 +24,7 @@ object Form233: TdxForm
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 8
     Height = 24
-    Top = 164
+    Top = 208
     Width = 392
     CharCase = ecNormal
     MaxLength = 0
@@ -49,7 +49,7 @@ object Form233: TdxForm
   object dxLabel1: TdxLabel
     Left = 8
     Height = 16
-    Top = 196
+    Top = 240
     Width = 159
     Caption = 'Нормативный документ'
     ParentColor = False
@@ -57,7 +57,7 @@ object Form233: TdxForm
   object dxLookupComboBox2: TdxLookupComboBox
     Left = 4
     Height = 24
-    Top = 220
+    Top = 264
     Width = 776
     CharCase = ecNormal
     MaxLength = 0
@@ -66,7 +66,7 @@ object Form233: TdxForm
     FieldName = 'Документ'
     SourceTId = 227
     SourceFId = 2528
-    Filter = '[Направление]=[Направление]'
+    Filter = '[?Направление]=[Направление]|[?Лаборатория]=[Лаборатория]'
     Required = False
     SourceTable = 232
     DestTable = 234
@@ -87,7 +87,7 @@ object Form233: TdxForm
   object dxLabel2: TdxLabel
     Left = 8
     Height = 16
-    Top = 140
+    Top = 184
     Width = 187
     Caption = 'Направление деятельности'
     ParentColor = False
@@ -95,7 +95,7 @@ object Form233: TdxForm
   object dxLookupComboBox3: TdxLookupComboBox
     Left = 8
     Height = 24
-    Top = 104
+    Top = 148
     Width = 776
     CharCase = ecNormal
     MaxLength = 0
@@ -126,7 +126,7 @@ object Form233: TdxForm
   object dxLabel3: TdxLabel
     Left = 8
     Height = 16
-    Top = 80
+    Top = 128
     Width = 74
     Caption = 'Продукция'
     ParentColor = False
@@ -134,7 +134,7 @@ object Form233: TdxForm
   object dxLookupComboBox4: TdxLookupComboBox
     Left = 8
     Height = 24
-    Top = 44
+    Top = 104
     Width = 776
     CharCase = ecNormal
     MaxLength = 0
@@ -157,17 +157,17 @@ object Form233: TdxForm
     UpdateTree = False
   end
   object dxLabel4: TdxLabel
-    Left = 24
+    Left = 12
     Height = 16
-    Top = 16
+    Top = 80
     Width = 125
     Caption = 'Группа продукции'
     ParentColor = False
   end
   object dxEdit1: TdxEdit
-    Left = 28
+    Left = 180
     Height = 24
-    Top = 532
+    Top = 12
     Width = 436
     CharCase = ecNormal
     MaxLength = 0
@@ -176,13 +176,13 @@ object Form233: TdxForm
     FieldName = 'Название шаблона'
     FieldSize = 50
     Required = False
-    Expression = 'NZ([Продукция|Название],[Группа продукции|Название])'
+    Expression = 'NZ([Название шаблона],NZ([Продукция|Название],[Группа продукции|Название]))'
     Editable = True
   end
   object dxGrid1: TdxGrid
     Left = 8
     Height = 228
-    Top = 280
+    Top = 324
     Width = 776
     AutoAdvance = aaNone
     Color = clWindow
@@ -227,6 +227,54 @@ object Form233: TdxForm
     Expression = '// [Название шаблона]'#13#10'RECID(''Шаблон показателей'')'
     Editable = False
   end
+  object dxLabel5: TdxLabel
+    Left = 32
+    Height = 16
+    Top = 16
+    Width = 128
+    Caption = 'Название шаблона'
+    ParentColor = False
+  end
+  object dxLookupComboBox5: TdxLookupComboBox
+    Left = 176
+    Height = 24
+    Top = 47
+    Width = 594
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 8
+    Id = 262976
+    FieldName = 'Лаборатория'
+    SourceTId = 25
+    SourceFId = 78
+    Filter = '// [ИД] in [Направление|Подразделения]'
+    Required = False
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Expression = '[Документ|Лаборатория]'
+    Editable = True
+    ListFields = <    
+      item
+        FieldId = 77
+        Width = 100
+        Searchable = True
+      end>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = False
+    UpdateTree = False
+  end
+  object dxLabel6: TdxLabel
+    Left = 40
+    Height = 16
+    Top = 45
+    Width = 89
+    Caption = 'Лаборатория'
+    ParentColor = False
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 100
@@ -270,6 +318,12 @@ object Form233: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f2553'
+      end    
+      item
+        Tag = 262976
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262976l'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

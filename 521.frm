@@ -62,14 +62,14 @@ object Form521: TdxForm
     Left = 8
     Height = 16
     Top = 56
-    Width = 105
-    Caption = 'Нноменклатура'
+    Width = 97
+    Caption = 'Номенклатура'
     ParentColor = False
   end
   object dxCalcEdit1: TdxCalcEdit
     Left = 166
     Height = 24
-    Top = 88
+    Top = 136
     Width = 123
     CharCase = ecNormal
     MaxLength = 0
@@ -93,7 +93,7 @@ object Form521: TdxForm
   object dxLabel3: TdxLabel
     Left = 8
     Height = 16
-    Top = 88
+    Top = 136
     Width = 79
     Caption = 'Количество'
     ParentColor = False
@@ -101,7 +101,7 @@ object Form521: TdxForm
   object dxObjectField1: TdxObjectField
     Left = 166
     Height = 24
-    Top = 120
+    Top = 168
     Width = 123
     CharCase = ecNormal
     MaxLength = 0
@@ -114,7 +114,7 @@ object Form521: TdxForm
   object dxLabel4: TdxLabel
     Left = 8
     Height = 16
-    Top = 120
+    Top = 168
     Width = 45
     Caption = 'Ед.изм'
     ParentColor = False
@@ -135,6 +135,61 @@ object Form521: TdxForm
     Delimiter = ', '
     Editable = False
     UpdateTree = False
+  end
+  object dxLabel5: TdxLabel
+    Left = 16
+    Height = 16
+    Top = 88
+    Width = 30
+    Caption = 'ТМЦ'
+    ParentColor = False
+  end
+  object dxLookupComboBox2: TdxLookupComboBox
+    Left = 168
+    Height = 24
+    Top = 88
+    Width = 516
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 4
+    Id = 262740
+    FieldName = 'ТМЦ'
+    SourceTId = 102
+    SourceFId = 7260
+    Filter = '[Номенклатура]=[Номенклатура]'
+    Required = False
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Editable = False
+    ListFields = <    
+      item
+        FieldId = 2560
+        Width = 100
+        Searchable = True
+      end>
+    DropDownCount = 8
+    ListWidthExtra = 100
+    HideList = False
+    HideButton = True
+    UpdateTree = False
+  end
+  object dxCheckBox1: TdxCheckBox
+    Left = 344
+    Height = 23
+    Top = 136
+    Width = 222
+    Caption = 'Обязательно для протокола'
+    TabOrder = 5
+    ValueChecked = '1'
+    ValueUnchecked = '0'
+    Id = 262741
+    FieldName = 'Обязательно для протокола'
+    CheckedText = 'Да'
+    UnCheckedText = 'Нет'
+    Editable = False
+    DefaultValue = '0'
   end
   object Grid: TdxGrid
     Left = 0
@@ -167,6 +222,19 @@ object Form521: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f8502'
+      end    
+      item
+        Tag = 262740
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262740l'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262741
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262741'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
