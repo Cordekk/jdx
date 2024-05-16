@@ -162,9 +162,9 @@ object Form231: TdxForm
     Height = 718
     Top = 108
     Width = 1084
-    ActivePage = dxTabSheet3
+    ActivePage = dxTabSheet1
     Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 3
+    TabIndex = 1
     TabOrder = 5
     object dxTabSheet5: TdxTabSheet
       Caption = 'Фитосанитария'

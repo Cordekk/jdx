@@ -1,0 +1,208 @@
+{@module
+Author=cordek
+Version=1.2
+Description=Печать записи из любой формы, возвращает путь сформированного файла.
+могут быть ошикби, версия экспериментальная
+
+Для SQL запроса можно использовать как grid в таблице, так и form в абзаце.
+SQL запрос пишется там же, где название запроса или таблицы<br>
+grid|Select ta.[Описание индикатора] as opis, ta.[Название индикатора] as Naz from [А] ta<br>
+
+Рекомендую писать наименования полей после <B>as</B>, поскольку иначе тяжело сопоставить, что надо печатать.<br>
+После тега с запросом просто указываете названия полей, как обычно . [Naz], [opis]
+Регистр названия поля не важен, в запросе все названия становятся прописными.
+
+Выражения прописываете вместо обычного поля, добавляя спереди $$
+Пример [$$USER+' '+CSTR(Date())]
+Вычисляется в контексте формы, в которой происходит печать.
+
+@}
+
+
+{@action
+Id=08951CB2-B27A-4BCF-B714-F0B209F0D7AF
+Target=button
+OrigName=AnotherPrint
+Name=Альтерантивная Печать
+Group=FileStore2
+UI=
+	<divider caption="Выберите форму ИЛИ напишите выражение:" />
+   <form name="FormName" caption="Форма"/>
+   <expr name="Form_exp" caption="Имя формы (выражение):"/>
+   <divider caption="Напишите выражение, которое дает id записи выбранной формы" />
+   <expr name="ID_exp" caption="id записи (выражение):"/>
+   <divider caption="Если форма будет пустая, то печать будет идти из текущей формы" />
+  <divider caption="Выберите файл шаблона ИЛИ напишите выражение:" />
+  <file name="File_Open" caption="Выберите файл шаблона" />
+  <expr name="Path_template" caption="Путь к файлу шаблона (выражение):"/>
+  <divider caption="Путь для сохранения нового файла и его имя:" />
+  <expr name="Path_Doc" caption="Введите выражение:" required />
+  <checkbox name="FileAction" caption="Открыть документ"/>
+
+
+Description=Действие позволяет выбрать другую форму или задать её имя в выражении, необходимо задать также id записи. Если форма и id не заняты, то печать будет из текущей формы.
+Шаблон также ставится в виде выражения, и путь для сохранения готового документа В результате выполнения действие возвращает путь к сформированному (напечатанному) файлу.
+<br><br>
+
+<B>"Форма"</B> - выбирается из списка либо имя формы задается в выражении, например получаем из запроса. Как и в любом выражении могут быть
+использованы функции, имена полей в квадратных скобках, текст в кавычках или числа.
+Если имя формы указано не верно, то программа не сможет выполнить печать. Если не заполнить форму, то будет использоваться текуща форма, из которой вызывается действие.
+<br><br>
+
+<B>"id записи"</B> - id записи целевой формы задается в выражении, например получаем из запроса. Как и в любом выражении могут быть
+использованы функции, имена полей в квадратных скобках, текст в кавычках или числа.
+Если id записи не указано, то используется текущая запись.
+<br><br>
+
+
+<B>"Путь к файлу шаблона"</B> - указывается в виде выражения, например:
+'С:\Документы\Шаблоны\Шаблон договора.docx'. Как и в любом выражении могут быть
+использованы функции, имена полей в квадратных скобках, текст в кавычках или числа.
+Если путь указан не верно, то программа не сможет найти файла шаблона и выполнить
+печати. Если файл выбран с помощью кнопки выбора файла и указан в выражении, то
+приоритетным является файл указанный посредством кнопки.
+<br><br>
+
+<B>"Путь для сохранения нового файла и его имя"</B> - указывается в виде выражения, например
+concat ('С:\Документы\', [Дата договора], '\', 'Договор с ', [Имя клиента], '.docx')
+Как и в любом выражении могут быть использованы функции, имена полей в квадратных
+скобках, текст в кавычках или числа. Если указан не существующий путь, то программа
+его создаст.
+<br><br>
+
+<B>"Открыть документ"</B> - после создания файла, программа пытается
+открыть его в сопоставленном в системе приложении (например, Word, Writer и т.д.). Если галочку не ставить, то программа просто сформирует файл.
+В результате выполнения действие возвращает путь к сформированному (напечатанному) файлу.
+<br><br>
+
+
+В шаблоне можно прописать SQL запрос. Для SQL запроса можно использовать как grid в таблице, так и form в абзаце.
+SQL запрос пишется там же, где название запроса или таблицы. Запрос надо выделять кавычками, как при складывании строки с полями в выражениях.<br>
+grid|'Select ta.[Описание индикатора] as opis, ta.[Название индикатора] as Naz from [А] ta'<br>
+grid|'Select ta.[Описание индикатора] as opis, ta.[Название индикатора] as Naz from [А] ta where ta.[Описание индикатора] in('+[Описание]+')'<br>
+Соответственно в запрос передаются значения полей формы, а также доступны выражения, но все должно быть в виде строки!<br>
+
+рекомендую писать наименования полей после as, поскольку иначе тяжело сопоставить, что надо печатать.
+После тега с запросом просто указываете названия полей, как обычно . [Naz], [opis]
+Регистр названия поля не важен, в запросе все названия становятся прописными.<br>
+
+Выражения прописываете вместо обычного поля, добавляя спереди $$
+Пример [$$USER+' '+CSTR(Date())]
+Вычисляется в контексте формы, в которой происходит печать.
+<br><br>
+@}
+
+var
+  PathTemp, PathDoc, err: string;
+  SQLex: TdxSQLQuery ; // надо вывести глобальную переменную, соответственно можно вывести сюда и запрос с данными, а потом искать поля в FieldName, плюс создать переменные столбца и строки для прибавления по одной. количество столбцов можно регулировать в шаблоне
+
+
+procedure PrintForm(Sender: TObject; Action: TPrintAction; const SourceName, FieldName: String; var Value: String; var Accept: Boolean); // проводит вычисление формулы заданной в шаблоне.
+ var
+ i: integer;
+ sql1: string;
+begin
+   if Action = paBeginData  then // попытался вписать SQL запрос, запрос может быть только один, иначе не будут правильно определяться поля
+      begin
+      if pos('select', LowerCase(SourceName))>0 then
+	     begin
+	         try
+			sql1:=StringReplace(SourceName, '&apos;', '''', [rfReplaceAll]); // возвращает одинарные кавычки обратно
+            sql1:=StringReplace(sql1, '&quot;', '"', [rfReplaceAll]);   // возвращает двойные кавычки обратно
+            SQLex:=sqlselect(EvalExpr(sql1, Self));
+            if SQLex<>nil then SQLex.open;
+	          except;
+             debug('ошибка  SQL ' + ExceptionParam);
+		        end;
+		    Accept := True;
+	       if SQLex.RecordCount>0 then SQLex.MoveFirst
+	        else Accept := False;
+	       end;
+         end
+  else if Action = paNextData   then
+    begin
+    if pos('select', LowerCase(SourceName))>0 then
+	    begin
+        IF (SQLex <> nil) and (not SQLex.EOF) then
+		       begin
+			       SQLex.MoveNext;
+			       Accept := True;
+	      	  end
+		      else
+           Accept := False;
+	      end;
+     end
+  else if Action = paPrintField then
+  begin
+     if SQLex <> nil then
+     begin
+       for i:=0 to SQLex.FieldCount-1 do // проход по названиям солбцов SQL запроса в поисках полей
+        begin
+        if  Uppercase(FieldName)=SQLex.Field[i].FieldName then
+		      begin
+             Value := SQLex.Field[i].asString;;
+             Accept := True;
+	        end;
+        end;
+      end;
+	 if pos('$$', FieldName)>0 then
+     begin
+		FieldName:=StringReplace(FieldName, '&apos;', '''', [rfReplaceAll]); // возвращает одинарные кавычки обратно
+		FieldName:=StringReplace(FieldName, '&quot;', '"', [rfReplaceAll]);   // возвращает двойные кавычки обратно
+		FieldName:= StringReplace(FieldName, '$$', '', [rfReplaceAll])
+		try
+		Value := nz(EvalExpr(FieldName, Self), '');
+		except
+		debug('ошибка выражения ' + ExceptionParam);
+		Value := '!!Ошибка!!'
+		end;
+		Accept := True;
+	 end;
+   end;
+end;
+
+
+function AnotherPrint (FormName, Form_exp, ID_exp, File_Open, Path_template, Path_Doc, FileAction: variant): string;
+var
+  FormPrint: TdxForm;
+begin
+  if File_Open = '' then  // если не выбран шаблон, то обрабатываем выражение и получаем имя шаблона из него
+    PathTemp := nz (EvalExpr (Path_template, Self), '')
+  else PathTemp := File_Open;
+  if Path_Doc <> '' then  // Заполняем путь к формируемому файлу из выражения, если выражения нет, то ставим пустую строку, при печати будет выбран путь по умолчанию
+  PathDoc := nz (EvalExpr (Path_Doc, Self), '')
+  else PathDoc:='';
+
+  if PathTemp = '' then  // обязательно надо указать шаблон для печати
+  begin
+    MsgBox ('Печать документа', 'Не указан файл шаблона для печати!');
+    exit;
+  end;
+  if ((FormName <> '') or (Form_exp <> ''))  and (ID_exp = '') then // если указана другая форма, то обязательно надо указать ID записи
+  begin
+    MsgBox ('Печать документа', 'Не указана запись формы для печати!');
+    exit;
+  end;
+
+	if FormName <> '' then
+	begin
+	FormPrint:=TdxForm.Create(FormName);
+	FormPrint.OpenRecord(Strtoint(EvalExpr(ID_exp, Self))); // создаем нужную выбранную форму и из выражения поставляем ID записи
+	end
+	else
+	if Form_exp <> ''then
+	begin
+	FormPrint:=TdxForm.Create(EvalExpr(Form_exp, Self));
+	FormPrint.OpenRecord(Strtoint(EvalExpr(ID_exp, Self))); // создаем нужную форму из выражения и из выражения поставляем ID записи
+	end
+	else
+	FormPrint:=Self;  // если формы не выбраны, то подставляется текущая форма.
+	if FormPrint<>self then FormPrint.LockMode := lmNoLock;
+	if FormPrint<>self then FormPrint.Edit; // открываем форму на редактирование
+  FormPrint.OnPrint := @PrintForm;
+	Result:=FormPrint.Print (PathTemp, PathDoc, err, FileAction);   // Печать идет по выбранной форме и записи, в резалт фозвращается имя напечатанного файла
+	if err <> '' then ShowPrintErrors (err); //обработка ошибок
+	if FormPrint<>self then FormPrint.LockMode := lmPessimistic;
+  if FormPrint<>self then FormPrint.Cancel;
+	if FormPrint<>self then FormPrint.Close;
+  end;

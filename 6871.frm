@@ -20,6 +20,7 @@ object Form48: TdxForm
   Tree = Tree.Owner
   Index = 0
   SoftCheck = False
+  Shopping = '263032|0|0|0|0|0|0'
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 98
     Height = 24
@@ -66,7 +67,7 @@ object Form48: TdxForm
   object dxCalcEdit2: TdxCalcEdit
     Left = 28
     Height = 24
-    Top = 156
+    Top = 152
     Width = 52
     CharCase = ecNormal
     MaxLength = 0
@@ -79,7 +80,7 @@ object Form48: TdxForm
     Flat = True
     Id = 263033
     FieldName = 'МинТемп'
-    Precission = 0
+    Precission = 1
     Required = False
     Editable = False
     NullToZero = False
@@ -89,7 +90,7 @@ object Form48: TdxForm
   object dxCalcEdit3: TdxCalcEdit
     Left = 128
     Height = 24
-    Top = 156
+    Top = 152
     Width = 64
     CharCase = ecNormal
     MaxLength = 0
@@ -102,7 +103,7 @@ object Form48: TdxForm
     Flat = True
     Id = 263034
     FieldName = 'МаксТемп'
-    Precission = 0
+    Precission = 1
     Required = False
     Editable = False
     NullToZero = False
@@ -125,7 +126,7 @@ object Form48: TdxForm
     Flat = True
     Id = 263035
     FieldName = 'МинДавление'
-    Precission = 0
+    Precission = 1
     Required = False
     Editable = False
     NullToZero = False
@@ -151,7 +152,7 @@ object Form48: TdxForm
   object dxCalcEdit5: TdxCalcEdit
     Left = 344
     Height = 24
-    Top = 156
+    Top = 152
     Width = 52
     CharCase = ecNormal
     MaxLength = 0
@@ -164,7 +165,7 @@ object Form48: TdxForm
     Flat = True
     Id = 263036
     FieldName = 'МаксДавление'
-    Precission = 0
+    Precission = 1
     Required = False
     Editable = False
     NullToZero = False
@@ -195,7 +196,7 @@ object Form48: TdxForm
     Flat = True
     Id = 263037
     FieldName = 'МинВлажн'
-    Precission = 0
+    Precission = 1
     Required = False
     Editable = False
     NullToZero = False
@@ -226,7 +227,7 @@ object Form48: TdxForm
     Flat = True
     Id = 263038
     FieldName = 'НапряжениеМин'
-    Precission = 0
+    Precission = 1
     Required = False
     Editable = False
     NullToZero = False
@@ -249,7 +250,7 @@ object Form48: TdxForm
     Flat = True
     Id = 263039
     FieldName = 'НапряжениеМакс'
-    Precission = 0
+    Precission = 1
     Required = False
     Editable = False
     NullToZero = False
@@ -272,7 +273,7 @@ object Form48: TdxForm
     Flat = True
     Id = 263040
     FieldName = 'ЧастотаМин'
-    Precission = 0
+    Precission = 1
     Required = False
     Editable = False
     NullToZero = False
@@ -303,7 +304,7 @@ object Form48: TdxForm
     Flat = True
     Id = 263041
     FieldName = 'ЧастотаМакс'
-    Precission = 0
+    Precission = 1
     Required = False
     Editable = False
     NullToZero = False
@@ -334,7 +335,7 @@ object Form48: TdxForm
     Flat = True
     Id = 263042
     FieldName = 'МаксВлажн'
-    Precission = 0
+    Precission = 1
     Required = False
     Editable = False
     NullToZero = False

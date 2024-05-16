@@ -188,9 +188,9 @@ object Form120: TdxForm
     Height = 216
     Top = 366
     Width = 716
-    ActivePage = dxTabSheet1
+    ActivePage = dxTabSheet3
     Anchors = [akLeft, akBottom]
-    TabIndex = 2
+    TabIndex = 0
     TabOrder = 7
     object dxTabSheet3: TdxTabSheet
       Caption = 'Исследования'

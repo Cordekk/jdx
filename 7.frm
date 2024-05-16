@@ -361,6 +361,7 @@ object Form7: TdxForm
     end
     object dxTabSheet4: TdxTabSheet
       Caption = 'Заявки'
+      StopTab = False
       object dxQueryGrid4: TdxQueryGrid
         Left = 29
         Height = 208

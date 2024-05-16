@@ -1,0 +1,49 @@
+                      {@module
+Author=Cordek
+Version=1.0
+Description=Модуль содержит действие и функцию для редактирования выражения (формулы), которое записано в поле формы, из действия кнопки, может пригодиться для зацикливания действий.
+@}
+
+{@action
+Id=4F90D458-2780-4898-9613-99185C291AEE
+OrigName=ShowExprEditorFunction
+Name=Открыть редактор выражений
+Group=DX_plus+
+UI=
+<ui>
+<field name="Expr" caption="Поле формы с формулой" filter="text;number;date;time;object;counter;checkbox" required="1"/>
+    <text name="FormName" caption="Введите форму, в которой будет работать выражение"/>
+</ui>
+Description=Действие запускает редактор выражений.
+@}
+
+{@function
+OrigName=ShowExprEditorFunction
+Name=ShowExprEditor
+Args=ss
+Result=s
+Group=DX plus
+Description=<B>Описание:</B><br>
+Открывает редактор выражений, возвращает в результате формулу <br><br>
+<B>Параметры:</B><br>
+Выражение, которое надо редактировать (можно написать либо имя поля, либо выбрать поле),или написать выражение.<br>
+<br> Имя формы, в которой будет работать данное выражение.<br>
+<br> <B>Пример:</B><br>
+<code>
+ShowExprEditorFunction([Формула],'Форма1')
+ShowExprEditorFunction('Формула','Форма1')
+ShowExprEditorFunction('"Block("+[Формула]+")"','Форма1')
+</code>
+@}
+
+
+function ShowExprEditorFunction(Expr, FormName: String):String;
+
+begin
+  try
+  Expr:=Self[Expr];
+  Except
+  end;
+  Result:= ShowExprEditor(Expr, FormName);
+end;
+

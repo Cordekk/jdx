@@ -1,0 +1,126 @@
+{@module
+author=Алексей Земсков, cordek
+version=1.3
+description=Строит дерево для запроса.
+Для работы базового расширения требуется создать дерево простой формы на которой находится запрос, для этого добавляем объект, по которому
+выстраиваем дерево.<br>
+Расширение было доработано и теперь дерево строится по форме, с которого запрос берет данные. Необходимо указать эту форму при настройке расширения.
+можно сделать несколько деревьев на одной форме к разным запросам
+@}
+
+{@action
+id=4F540287-EECC-43D2-B0A2-DBDB473DD5CF
+target=form
+origname=QueryTree
+name=Дерево для запроса
+group=Дерево для запроса
+ui=<ui>
+  <query name="query" caption="Запрос" required="1"/>
+  <form name="FormName" caption="Форма"/>
+  <number name="shirina" caption="Ширина дерева" defaultvalue="0"/>
+  <checkbox name="otlevogokraya" caption="Привязать к левому краю формы"/>
+  <text name="qvar" caption="Переменная в запросе"/>
+</ui>
+description=Работает с формой в режиме "Простая форма". Добавляет слева от выбранного
+запроса дерево. Информация в дерево добавляется из дерева формы. Соответственно, изначально необходимо
+настроить дерево формы<br><br>
+<b>Запрос</b> - Запрос, к которому добавляется дерево.<br><br>
+<b>Ширина дерева</b> - ширина дерева в пикселях.<br><br>
+<b>Привязать к левому краю формы</b> - ширина дерева будет проигнорирована, левая сторона дерева
+будет привязана к левой стороне формы.<br><br>
+<b>Переменная в запросе</b> - переменная, которая будет служить фильтром в запросе. Ей будет присваиваться
+Id записи из дерева.
+Например, фильтр запроса можно составить так:<br><br>
+  [?!Наименование] = getvar('A')<br><br>
+при этом необходимо в данном поле записать - A. В эту переменную запишется Id записи из дерева.
+Таким образом, происходит фильтрация с учетом иерархии. Обратите внимание, что в поле источника в фильтре
+запроса стоит знак "?", таким образом, при отсутствии значения переменной, либо в корне дерева,
+фильтрация по этому значению осуществляться не будет.<br>
+
+Для работы базового расширения требуется создать дерево простой формы на которой находится запрос, для этого добавляем объект, по которому
+выстраиваем дерево.<br>
+Расширение было доработано и теперь дерево строится по форме, с которого запрос берет данные. Необходимо указать эту форму при настройке расширения.<br><br>
+@}
+ var         // переменные действия, существуют внутри действия на форме, когда форма закрывается, переменные тоже уничожаются
+Fm: TdxForm;   // в фоне открываю форму и её дерево
+FmTr: TdxFormTree;
+SelfFm: TdxForm;
+
+procedure SelectionChanged(Sender: TObject);
+var
+  ObjId: integer;
+ // SelfFm: TdxForm;
+  Tr: TTreeView;
+  QueryName, QVar: String;
+begin
+  SelfFm := TdxForm(TTreeView(Sender).Owner);
+  Tr := TTreeView(Sender);
+
+ // ObjId := SelfFm.Tree.GetFieldValueByNode(Tr.Selected);
+  ObjId := Fm.Tree.GetFieldValueByNode(Tr.Selected);   //поставил получение значений с формы в фоне
+  QueryName := StringReplace(Tr.Name,'QueryTree','',[rfReplaceAll]);
+  QVar := SelfFm.Params['QVar'];
+
+  if ObjId <> 0 then EvalExpr('setvar(' + '''' + QVar +'''' + ', ' + IntToStr(ObjId) + ')', nil)
+  else EvalExpr('setvar(' + '''' + QVar +'''' + ', null)', nil);
+
+  TdxQueryGrid(SelfFm.FindComponent(QueryName)).Refresh;
+
+end;
+
+procedure TrUpdate(Sender: TObject);
+var
+  Tr: TTreeView;
+  // FmTr: TdxFormTree; вынес в фон
+  //SelfFm: TdxForm;
+begin
+  //SelfFm := TFormView(TdxFormTree(TMenuItem(Sender).GetParentMenu.Owner).Parent.Owner).Form; // передается то объект не этой формы, а формы с дерева
+  Tr := TTreeView(SelfFm.Params.Objects['Tr']);
+  //FmTr := TdxFormTree(SelfFm.Params.Objects['FmTr']); // само дерево берется с формы в фоне
+  Tr.OnSelectionChanged := nil;
+  Tr.ClearSelection(false);
+  FmTr.UpdateTree; // обновляем дерево с формы в фоне
+  Tr.Items := FmTr.Items;
+  Tr.Refresh;
+  Tr.OnSelectionChanged := @SelectionChanged;
+end;
+
+
+procedure QueryTree(aQuery, FormName: String; aSh, aLockToLeft: integer; aQVar: String);
+var
+  Tr: TTreeView;
+  Query: TdxQueryGrid;
+  Sh, LockToLeft: integer;
+   // FmTr: TdxFormTree; вынес в фон
+begin
+  Query := self.Queries[aQuery];
+  Sh := aSh;
+  LockToLeft := aLockToLeft;
+  Fm := TdxForm.Create(FormName); // создаем форму, по которой построен запрос, чтобы взять дерево с неё
+  SelfFm:=self; // сразу закрепляяю форму, на которой находится наше дерево
+  // FmTr :=Self.Tree; // здесь дерево собственной формы
+  FmTr := Fm.Tree; // берем дерево с формы, с которой берет данные запрос
+  Tr := TTreeView.Create(self);
+  Tr.Name := self.Queries[aQuery].Name + 'QueryTree';
+  if (LockToLeft = 0) and (Sh <> 0) then Tr.SetBounds(Query.Left - Sh, Query.Top, Sh, Query.Height)
+  else Tr.SetBounds(0, Query.Top, Query.Left, Query.Height);
+  Tr.Parent := Query.Parent; // присваимевам дерево компоненту формы, на которой расположен запрос (закладка или группа)
+  Tr.ReadOnly := True;
+  Tr.TabOrder := Query.TabOrder;
+  Tr.Color := Query.Color;
+  Tr.Font := Query.Font;
+  Tr.Anchors := Query.Anchors - [akRight];
+  Tr.ScrollBars := ssBoth;
+  FmTr.UpdateTree; // обновляем дерево с формы в фоне
+  Tr.Items := FmTr.Items;
+  Tr.PopupMenu := FmTr.PopupMenu;
+  Tr.PopupMenu.Items[0].OnClick := @TrUpdate;
+  Tr.ReadOnly := true;
+  Tr.LockSelectionChangeEvent;
+  Tr.UnlockSelectionChangeEvent;
+  Tr.OnSelectionChanged := @SelectionChanged;
+
+  self.Params.Objects['Tr'] := Tr;
+  //self.Params.Objects['FmTr'] := FmTr; //эта часть не нужна
+  self.Params['QVar'] := aQVar;
+end;

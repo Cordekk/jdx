@@ -1,0 +1,149 @@
+{@module
+Author=cordek
+Version=1.3
+Description=Печать записи из любой формы, возвращает путь сформированного файла.
+могут быть ошикби, версия экспериментальная
+Веб-версия
+Для SQL запроса можно использовать как grid в таблице, так и form в абзаце.
+SQL запрос пишется там же, где название запроса или таблицы<br>
+grid|Select ta.[Описание индикатора] as opis, ta.[Название индикатора] as Naz from [А] ta<br>
+
+Рекомендую писать наименования полей после <B>as</B>, поскольку иначе тяжело сопоставить, что надо печатать.<br>
+После тега с запросом просто указываете названия полей, как обычно . [Naz], [opis]
+Регистр названия поля не важен, в запросе все названия становятся прописными.
+
+Выражения прописываете вместо обычного поля, добавляя спереди $$
+Пример [$$USER+' '+CSTR(Date())]
+Вычисляется в контексте формы, в которой происходит печать.
+
+@}
+
+
+{@action
+Id=08951CB2-B27A-4BCF-B714-F0B209F0D7AF
+@}
+
+var
+  SQLex: TdxSQLQuery ; // надо вывести глобальную переменную, соответственно можно вывести сюда и запрос с данными, а потом искать поля в FieldName, плюс создать переменные столбца и строки для прибавления по одной. количество столбцов можно регулировать в шаблоне
+
+
+procedure PrintForm_web(Sender: TObject; Action: TPrintAction; const SourceName, FieldName: String; var Value: String; var Accept: Boolean); // проводит вычисление формулы заданной в шаблоне.
+ var
+ i: integer;
+ sql1: string;
+begin
+   if Action = paBeginData  then // попытался вписать SQL запрос, запрос может быть только один, иначе не будут правильно определяться поля
+      begin
+      if pos('select', LowerCase(SourceName))>0 then
+	     begin
+	         try
+			      sql1:=StringReplace(SourceName, '&apos;', '''', [rfReplaceAll]); // возвращает одинарные кавычки обратно
+            sql1:=StringReplace(sql1, '&quot;', '"', [rfReplaceAll]);   // возвращает двойные кавычки обратно
+            SQLex:=Session.sqlselect(session.EvalExpr(sql1, Self));
+            if SQLex<>nil then SQLex.Edit;  // есть проблемы с SQL поскольку нет процедуры Open
+	          except;
+             Session.debug('ошибка  SQL ' + ExceptionParam);
+		        end;
+		     Accept := True;
+	       try if SQLex.RecordCount>0 then SQLex.MoveFirst
+	            else Accept := False;
+          except;
+          Session.debug('ошибка  SQL ');
+          end;
+	       end;
+         end
+  else if Action = paNextData   then
+    begin
+    if pos('select', LowerCase(SourceName))>0 then
+	    begin
+
+        try if (SQLex <> nil) and (not SQLex.EOF) then
+		        begin
+			       SQLex.MoveNext;
+			       Accept := True;
+	      	   end
+		       else
+           Accept := False;
+          except;
+          Session.debug('ошибка  SQL ');
+          end;
+
+	      end;
+     end
+  else if Action = paPrintField then
+  begin
+     if SQLex <> nil then
+     begin
+       for i:=0 to SQLex.FieldCount-1 do // проход по названиям солбцов SQL запроса в поисках полей
+        begin
+        if  Uppercase(FieldName)=SQLex.Field[i].FieldName then
+		      begin
+             Value := SQLex.Field[i].asString;;
+             Accept := True;
+	        end;
+        end;
+      end;
+	 if pos('$$', FieldName)>0 then
+     begin
+		FieldName:=StringReplace(FieldName, '&apos;', '''', [rfReplaceAll]); // возвращает одинарные кавычки обратно
+		FieldName:=StringReplace(FieldName, '&quot;', '"', [rfReplaceAll]);   // возвращает двойные кавычки обратно
+		FieldName:= StringReplace(FieldName, '$$', '', [rfReplaceAll])
+		try
+		Value := nz(Session.EvalExpr(FieldName, Self), '');
+		except
+		Session.debug('ошибка выражения ' + ExceptionParam);
+		Value := '!!Ошибка!!'
+		end;
+		Accept := True;
+	 end;
+   end;
+end;
+
+
+function AnotherPrint (FormName, Form_exp, ID_exp, File_Open, Path_template, Path_Doc, FileAction: variant): string;
+var
+   PathTemp, PathDoc,  err: string;
+  FormPrint: TdxForm;
+begin
+  if File_Open = '' then  // если не выбран шаблон, то обрабатываем выражение и получаем имя шаблона из него
+    PathTemp := nz (Session.EvalExpr (Path_template, Self), '')
+  else PathTemp := File_Open;
+  if Path_Doc <> '' then  // Заполняем путь к формируемому файлу из выражения, если выражения нет, то ставим пустую строку, при печати будет выбран путь по умолчанию
+  PathDoc := nz (Session.EvalExpr (Path_Doc, Self), '')
+  else PathDoc:='';
+
+  if PathTemp = '' then  // обязательно надо указать шаблон для печати
+  begin
+    Self.MsgBox ('Печать документа', 'Не указан файл шаблона для печати!');
+    exit;
+  end;
+  if ((FormName <> '') or (Form_exp <> ''))  and (ID_exp = '') then // если указана другая форма, то обязательно надо указать ID записи
+  begin
+    Self.MsgBox ('Печать документа', 'Не указана запись формы для печати!');
+    exit;
+  end;
+
+	if FormName <> '' then
+	begin
+	FormPrint:=Session.CreateForm(FormName);
+	FormPrint.OpenRecord(Strtoint(Session.EvalExpr(ID_exp, Self))); // создаем нужную выбранную форму и из выражения поставляем ID записи
+	end
+	else
+	if Form_exp <> ''then
+	begin
+	FormPrint:=TdxForm.Create(Session.EvalExpr(Form_exp, Self));
+	FormPrint.OpenRecord(Strtoint(Session.EvalExpr(ID_exp, Self))); // создаем нужную форму из выражения и из выражения поставляем ID записи
+	end
+	else
+	FormPrint:=Self;  // если формы не выбраны, то подставляется текущая форма.
+	// if FormPrint<>self then FormPrint.LockMode := lmNoLock;  //в веб-версии свойство не редактируется
+	if FormPrint<>self then FormPrint.Edit; // открываем форму на редактирование
+  FormPrint.OnPrint := @PrintForm_web;
+	Result:=FormPrint.Print (PathTemp, PathDoc, err, FileAction);   // Печать идет по выбранной форме и записи, в резалт фозвращается имя напечатанного файла
+  // if err <> '' then Session.debug(err);  //обработка ошибок
+  if err <> '' then Self.MsgBox ('Ошибка печати',err); //обработка ошибок
+	//if FormPrint<>self then FormPrint.LockMode := lmPessimistic;  //в веб-версии свойство не редактируется
+  if FormPrint<>self then FormPrint.Cancel;
+	if FormPrint<>self then FormPrint.Close;
+  end;
+

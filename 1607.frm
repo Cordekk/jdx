@@ -1,6 +1,6 @@
 object Form1607: TdxForm
   Left = 10
-  Height = 471
+  Height = 518
   Top = 10
   Width = 747
   Id = 1607
@@ -10,6 +10,9 @@ object Form1607: TdxForm
   Font.Name = 'Verdana'
   AutoOpen = True
   ViewType = vtGridOnly
+  Coloring.Strings = (
+    'clYellow;[ОА]=0'
+  )
   ParentField = 0
   LevelCount = 5
   Grid = Grid.Owner
@@ -198,16 +201,31 @@ object Form1607: TdxForm
     FieldName = 'Консервация'
     SourceTId = 6851
     SourceFId = 262620
-    Filter = '[Показатель|Методика]=[Показатель|Методика]'
+    Filter = '[Показатель|Методика]=[Показатель|Методика]'#13#10'| [Показатель]=null'
     Required = False
     SourceTable = 0
     DestTable = 0
     PromptFillTable = False
     ClearTableBeforeFill = False
     Editable = False
-    ListFields = <>
+    ListFields = <    
+      item
+        FieldId = 262622
+        Width = 100
+        Searchable = True
+      end    
+      item
+        FieldId = 262623
+        Width = 100
+        Searchable = True
+      end    
+      item
+        FieldId = 262619
+        Width = 100
+        Searchable = True
+      end>
     DropDownCount = 8
-    ListWidthExtra = 0
+    ListWidthExtra = 200
     HideList = False
     HideButton = False
     UpdateTree = False
@@ -289,10 +307,11 @@ object Form1607: TdxForm
     ParentColor = False
   end
   object dxCheckBox1: TdxCheckBox
-    Left = 688
+    Left = 664
     Height = 23
-    Top = 444
+    Top = 428
     Width = 90
+    Caption = 'в ОА'
     TabOrder = 8
     ValueChecked = '1'
     ValueUnchecked = '0'
@@ -361,6 +380,20 @@ object Form1607: TdxForm
     FieldName = 'ед.изм.'
     ObjId = 262626
     FieldId = 262625
+  end
+  object dxObjectField3: TdxObjectField
+    Left = 32
+    Height = 24
+    Top = 484
+    Width = 100
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 12
+    Id = 263118
+    FieldName = 'ИД_показателя_методики'
+    ObjId = 26158
+    FieldId = 263116
+    StopTab = False
   end
   object Grid: TdxGrid
     Left = 0
@@ -442,6 +475,12 @@ object Form1607: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f263028'
+      end    
+      item
+        Tag = 263118
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263118'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

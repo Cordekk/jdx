@@ -11,7 +11,7 @@ object Form246: TdxForm
   Font.Name = 'Verdana'
   CalcFields.Strings = (
     '№_проб=RECNO(''Результаты_пробы'')'
-    'Место проведения испытаний=MERGE(''Результаты_исследований'', ''Место проведения испытаний'', ''; '')'
+    'Место проведения испытаний=DBMERGE(''Адрес'', ''Адрес'', ''[!ID] in MERGE("Результаты_исследований", "Адрес_ИД", ";")'')'
     'Образцы=REPLACEALL('#13#10'DBMERGE(''Исследование'', ''Образец|Шифр_аргус'', ''[!Заявка клиента]=[Заявка клиента]  & [!Проба] in MERGE("Результаты_пробы", "ID2", ";") & [!Показатель|Группа показателя] = GET("Группы_показателей_результатов", "Группа показателя")&[!Методика из ОА]=GET("Показатели и результаты объединенные", "Методика_ид")'')'#13#10','';'',newline)'
     'Результат=REPLACEALL('#13#10'DBMERGE(''Исследование'', ''Значение'', ''[!Заявка клиента]=[Заявка клиента]  & [!Проба] in MERGE("Результаты_пробы", "ID2", ";") & [!Показатель|Группа показателя] = GET("Группы_показателей_результатов", "Группа показателя")&[!Методика из ОА]=GET("Показатели и результаты объединенные", "Методика_ид")'')'#13#10','';'',newline)'
     'Продукция_партия=MERGE(''Результаты_пробы'', ''Продукция_партия'', ''; '')'
@@ -20,6 +20,7 @@ object Form246: TdxForm
     'Все образцы выкл=SETFIELD(''Все образцы'',0)'
     'Все исследования вкл=SETFIELD(''Все исследования'',1)'
     'Все исследования выкл=SETFIELD(''Все исследования'',0)  '
+    'Взамен протокола=''взамен протокола''+[Результат1|Номер_документа]+'' от ''+cstr([Результат1|Дата])'
   )
   AutoOpen = True
   ViewType = vtGridOnly
@@ -36,7 +37,7 @@ object Form246: TdxForm
   Tree = Tree.Owner
   Index = 44
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Подписано]&lt;&gt;1 &amp; [Утверждено] &lt;&gt; 1 &amp; [ФГИС] &lt;&gt; 1" grid="cmp;ve_prop|dxDateEdit1;Доступность" stateevents="1" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Подписано]&lt;&gt;1 &amp; [Утверждено] &lt;&gt; 1 &amp; [ФГИС] &lt;&gt; 1" grid="cmp;ve_prop|dxDateEdit1;Доступность" stateevents="1" /><comment text="При изменении поля заявка, надо проверить сколько проб в ней, если одна, то выбираем ее"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton3" fields="fl|Заявка клиента" /></actions>'
   object dxQueryGrid4: TdxQueryGrid
     Left = 860
     Height = 82
@@ -369,8 +370,8 @@ object Form246: TdxForm
     Height = 510
     Top = 136
     Width = 1112
-    ActivePage = dxTabSheet6
-    TabIndex = 1
+    ActivePage = dxTabSheet1
+    TabIndex = 0
     TabOrder = 10
     object dxTabSheet1: TdxTabSheet
       Caption = 'Результаты'
@@ -645,28 +646,29 @@ object Form246: TdxForm
       Caption = 'Оборудование'
       StopTab = False
       object dxMemo5: TdxMemo
-        Left = 31
-        Height = 100
-        Top = 39
-        Width = 776
+        Left = 27
+        Height = 97
+        Top = 127
+        Width = 509
         ScrollBars = ssBoth
         TabOrder = 0
         Id = 262697
         FieldName = 'Выбранное оборудование'
-        FieldSize = 300
+        FieldSize = 0
         Required = False
         SourceTId = 0
         SourceFId = 0
         Delimiter = ', '
-        Expression = 'MERGE(''Результаты_исследований'', ''Выбранное оборудование'', ''; '')'
+        Expression = 'MERGE(''Результаты_исследований'', ''Выбранное оборудование'', '';'')'
         Editable = True
+        DefaultValue = ''''''
         UpdateTree = False
       end
       object dxQueryGrid10: TdxQueryGrid
-        Left = 24
+        Left = 20
         Height = 162
-        Top = 175
-        Width = 792
+        Top = 263
+        Width = 1060
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -697,20 +699,87 @@ object Form246: TdxForm
         ManualRefresh = False
       end
       object dxLabel27: TdxLabel
-        Left = 96
+        Left = 248
         Height = 16
-        Top = 8
+        Top = 108
         Width = 174
         Caption = 'Выбранное оборудование'
         ParentColor = False
       end
       object dxLabel28: TdxLabel
-        Left = 48
+        Left = 44
         Height = 16
-        Top = 152
+        Top = 240
         Width = 159
         Caption = 'Таблица оборудования'
         ParentColor = False
+      end
+      object dxLookupComboBox16: TdxLookupComboBox
+        Left = 224
+        Height = 24
+        Top = 28
+        Width = 528
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 2
+        Id = 263079
+        FieldName = 'Оборудование'
+        SourceTId = 102
+        SourceFId = 7260
+        Filter = '[Вид]=''Оборудование'''#13#10'&'#13#10'{[!Заводской (серийный) №] notin REPLACEALL(REPLACEALL(NZ([Выбранное оборудование],'''')+'';''+NZ([Выбранное оборудование1],''''),'' зав №'','';''),''; ''  ,'';'')'#13#10'& [!Наименование ТМЦ] notin REPLACEALL(REPLACEALL(NZ([Выбранное оборудование],'''')+'';''+NZ([Выбранное оборудование1],''''),'' зав №'','';''),''; ''  ,'';'')}'
+        Required = False
+        SourceTable = 0
+        DestTable = 0
+        PromptFillTable = False
+        ClearTableBeforeFill = False
+        Editable = False
+        ListFields = <        
+          item
+            FieldId = 2560
+            Width = 100
+            Searchable = True
+          end>
+        DropDownCount = 8
+        ListWidthExtra = 100
+        HideList = False
+        HideButton = False
+        UpdateTree = False
+      end
+      object dxButton7: TdxButton
+        Left = 768
+        Height = 30
+        Top = 24
+        Width = 36
+        Caption = '+'
+        TabOrder = 3
+        ActionOnClick = '<actions><action type="7" expression="IIF([Оборудование]=null,'''','#13#10'Block('#13#10'setfield('#13#10'''Выбранное оборудование1'', NZ([Выбранное оборудование1],'''')+'#13#10'NZ(NZ([Оборудование|Наименование ТМЦ],'''')+'' зав №''+  NZ([Оборудование|Заводской (серийный) №],'''') + ''; '','''')'#13#10'),'#13#10'setfield(''Оборудование'',null)'#13#10')'#13#10')"/></actions>'
+      end
+      object dxLabel33: TdxLabel
+        Left = 32
+        Height = 16
+        Top = 36
+        Width = 165
+        Caption = 'Добавить оборудование'
+        ParentColor = False
+      end
+      object dxMemo11: TdxMemo
+        Left = 552
+        Height = 100
+        Top = 127
+        Width = 532
+        ScrollBars = ssBoth
+        TabOrder = 4
+        Id = 263083
+        FieldName = 'Выбранное оборудование1'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Expression = 'MERGE(''Результаты_исследований'', ''Выбранное оборудование'', '';'')'
+        Editable = True
+        DefaultValue = ''''''
+        UpdateTree = False
       end
     end
     object dxTabSheet7: TdxTabSheet
@@ -763,6 +832,7 @@ object Form246: TdxForm
         SourceTId = 0
         SourceFId = 0
         Delimiter = ', '
+        Expression = 'Replaceall(MERGE(''Результаты_исследований'', ''Дополнения'', ''; ''),''; ;'','';'')'
         Editable = False
         UpdateTree = False
       end
@@ -782,7 +852,7 @@ object Form246: TdxForm
         ScrollBars = ssBoth
         TabOrder = 2
         Id = 262789
-        FieldName = 'Отклонени от методик испытаний'
+        FieldName = 'Отклонение от методик испытаний'
         FieldSize = 0
         Required = False
         SourceTId = 0
@@ -884,7 +954,7 @@ object Form246: TdxForm
         SourceTId = 0
         SourceFId = 0
         Delimiter = ', '
-        Expression = 'IIF(COUNT(''Результаты_пробы'')>1,''Согласно приложению'','#13#10'GET(''Результаты_пробы'', ''Продукция_Название'')+ NZ('' '' +GET(''Результаты_пробы'', ''Примечание''),'''')'#13#10')'
+        Expression = 'IIF(COUNT(''Результаты_пробы'')>1,''Согласно приложению'','#13#10'GET(''Результаты_пробы'', ''Продукция'')+ NZ('' '' +GET(''Результаты_пробы'', ''Примечание''),'''')'#13#10')'
         Editable = False
         UpdateTree = False
       end
@@ -934,7 +1004,7 @@ object Form246: TdxForm
         FieldName = 'Количество и Объем проб'
         FieldSize = 50
         Required = False
-        Expression = 'IIF(COUNT(''Результаты_пробы'')>1,''Согласно приложению'','#13#10'CSTR(GET(''Результаты_пробы'', ''Количество_образцов''))+ '' шт, ''+'#13#10'CSTR(GET(''Результаты_пробы'', ''Объем_пробы''))+ NZ('' '' +GET(''Результаты_пробы'', ''Ед.изм.2_Сокр''),'''')'#13#10')'
+        Expression = 'IIF(COUNT(''Результаты_пробы'')>1,''Согласно приложению'','#13#10'CSTR(GET(''Результаты_пробы'', ''Количество_образцов''))+ '' шт, ''+'#13#10'CSTR(GET(''Результаты_пробы'', ''Объем_пробы''))+ NZ('' '' +GET(''Результаты_пробы'', ''Ед.изм.2''),'''')'#13#10')'
         Editable = False
       end
       object dxLabel21: TdxLabel
@@ -1160,9 +1230,9 @@ object Form246: TdxForm
         ManualRefresh = True
       end
       object dxCheckBox4: TdxCheckBox
-        Left = 900
+        Left = 804
         Height = 23
-        Top = 370
+        Top = 416
         Width = 194
         Caption = 'Внесено во ФГИС'
         TabOrder = 1
@@ -1174,6 +1244,86 @@ object Form246: TdxForm
         UnCheckedText = 'Нет'
         Editable = False
         DefaultValue = '0'
+      end
+      object dxLookupComboBox7: TdxLookupComboBox
+        Left = 790
+        Height = 24
+        Top = 50
+        Width = 230
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 2
+        Id = 263169
+        FieldName = 'Результат1'
+        SourceTId = 246
+        SourceFId = 262318
+        Required = False
+        SourceTable = 0
+        DestTable = 0
+        PromptFillTable = False
+        ClearTableBeforeFill = False
+        Expression = 'Block('#13#10'Setvar(''результат'',DBGETID(''Результат'', ''[!Проба]=[Проба]&[!Отменен]=0'')),'#13#10'IIF(getvar(''результат'')<>0,Setvar(''решение'','#13#10'YESNOBOX(''Замена результата!'',''Вы хотите создать новый документ на замену старому?'')),''''),'#13#10'IIF(getvar(''решение'')=1,Block(setfield(''Заменяет'',1),getvar(''результат'')),'#13#10'IIF(getvar(''решение'')=2,getvar(''результат''),null))'#13#10' )'
+        Editable = True
+        ListFields = <        
+          item
+            FieldId = 2670
+            Width = 100
+            Searchable = True
+          end>
+        DropDownCount = 8
+        ListWidthExtra = 0
+        HideList = False
+        HideButton = False
+        UpdateTree = False
+      end
+      object dxLabel34: TdxLabel
+        Left = 801
+        Height = 16
+        Top = 24
+        Width = 214
+        Caption = 'Заменяет/дополняет результат'
+        ParentColor = False
+      end
+      object dxCheckBox9: TdxCheckBox
+        Left = 804
+        Height = 23
+        Top = 456
+        Width = 214
+        Caption = 'Отменен'
+        TabOrder = 3
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 263170
+        FieldName = 'Отменен'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox10: TdxCheckBox
+        Left = 795
+        Height = 23
+        Top = 92
+        Width = 125
+        Caption = 'Заменяет'
+        TabOrder = 4
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 263171
+        FieldName = 'Заменяет'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxButton8: TdxButton
+        Left = 800
+        Height = 30
+        Top = 141
+        Width = 252
+        Caption = 'Отмена старого протокола'
+        TabOrder = 5
+        ActionOnClick = '<actions><if cond="[Заменяет]=1"><action type="3" form="Результат" filter="[ID]=[Результат1]" table="" field="Отменен" expression="1"/></if></actions>'
       end
     end
     object dxTabSheet4: TdxTabSheet
@@ -1290,8 +1440,8 @@ object Form246: TdxForm
         SourceTId = 0
         SourceFId = 0
         Delimiter = ', '
-        Expression = 'IIF([Есть приложение]= ''[Х]'', ''есть приложение'',''без приложения'')'
-        Editable = False
+        Expression = 'IIF([Есть приложение]= ''[Х]'', ''приложение;'','''')'#13#10'+IIF([ВнеАккредитация]=1, ''внеОА'','''')'
+        Editable = True
         UpdateTree = False
       end
       object dxCounter1: TdxCounter
@@ -1371,6 +1521,19 @@ object Form246: TdxForm
         Width = 42
         Caption = 'Номер'
         ParentColor = False
+      end
+      object dxRecordId1: TdxRecordId
+        Left = 1096
+        Height = 24
+        Top = -156
+        Width = 100
+        ReadOnly = True
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 8
+        FieldName = 'ID'
+        StopTab = False
+        Id = 263172
       end
     end
   end
@@ -1697,6 +1860,44 @@ object Form246: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262790'
+      end    
+      item
+        Tag = 263079
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263079l'
+      end    
+      item
+        Tag = 263083
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263083'
+      end    
+      item
+        Tag = 263169
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263169l'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 263170
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263170'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 263171
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263171'
+      end    
+      item
+        Tag = 263172
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263172'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

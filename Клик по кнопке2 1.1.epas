@@ -1,0 +1,57 @@
+{@module
+Author=Cordek
+Version=1.1
+Description=Модуль содержит действие для клика по кнопке формы из действия кнопки, может пригодиться для зацикливания действий.
+Добавил функцию для клика по кнопке
+@}
+
+
+
+{@action
+Id=A971EF36-34CB-4A2C-9007-3A2D140BEDBC
+OrigName=ClickButton
+Name=Клик по кнопке 2
+Group=DX_plus+
+UI=
+<ui>
+  <component name="bn" caption="Выберите кнопку" filter="TdxButton" required="1"/>
+</ui>
+Description=Действие эмулирует клик по кнопке.
+@}
+
+
+
+procedure ClickButton(const BnName: String);
+var
+Bn: TdxButton;
+begin
+	Bn := TdxButton(Self.FindComponent(BnName));
+	Bn.Click;
+end;
+
+ {@function
+OrigName=ClickButtonf
+Name=ClickButtonf
+Args=s
+Result=
+Group=DX plus
+Description=<B>Описание:</B><br>
+Кликает по указанной кнопке, результат не возврашает <br><br>
+<B>Параметры:</B><br>
+имя кнопки  - строка.<br>
+<br> <B>Пример:</B><br>
+<code>
+ClickButton('dxButton1')
+</code>
+@}
+
+
+function ClickButtonf(const BnName: String): String;
+var
+Bn: TdxButton;
+begin
+	Bn := TdxButton(Self.FindComponent(BnName));
+	Bn.Click;
+end;
+
+

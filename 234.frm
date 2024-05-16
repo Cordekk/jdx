@@ -255,16 +255,31 @@ object Form234: TdxForm
     FieldName = 'Консервация'
     SourceTId = 6851
     SourceFId = 262620
-    Filter = '[Показатель|Методика] = [Показатель|Методика]'
+    Filter = '[Показатель|Методика] = [Показатель|Методика]'#13#10'| [Показатель]=null'
     Required = False
     SourceTable = 0
     DestTable = 0
     PromptFillTable = False
     ClearTableBeforeFill = False
     Editable = False
-    ListFields = <>
+    ListFields = <    
+      item
+        FieldId = 262622
+        Width = 100
+        Searchable = True
+      end    
+      item
+        FieldId = 262623
+        Width = 100
+        Searchable = True
+      end    
+      item
+        FieldId = 262619
+        Width = 100
+        Searchable = True
+      end>
     DropDownCount = 8
-    ListWidthExtra = 0
+    ListWidthExtra = 200
     HideList = False
     HideButton = False
     UpdateTree = False
@@ -281,7 +296,7 @@ object Form234: TdxForm
     Left = 152
     Height = 24
     Top = 298
-    Width = 388
+    Width = 440
     AutoComplete = True
     AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
     ItemHeight = 16
@@ -297,8 +312,8 @@ object Form234: TdxForm
     TabOrder = 8
     Id = 262772
     FieldName = 'Вид упаковки'
-    SourceTId = 0
-    SourceFId = 0
+    SourceTId = 6870
+    SourceFId = 263029
     FieldSize = 50
     Required = False
     Expression = '[Консервация|Вид упаковки]'

@@ -1,8 +1,8 @@
 object Form233: TdxForm
   Left = 10
-  Height = 595
+  Height = 697
   Top = 10
-  Width = 824
+  Width = 1396
   Id = 233
   PId = 0
   FormCaption = 'Шаблон показателей'
@@ -14,7 +14,7 @@ object Form233: TdxForm
   ParentField = 0
   LevelCount = 5
   Grid = Grid.Owner
-  ShowScrollBars = False
+  ShowScrollBars = True
   ConfirmSaveRecord = False
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
@@ -47,17 +47,17 @@ object Form233: TdxForm
     UpdateTree = False
   end
   object dxLabel1: TdxLabel
-    Left = 8
+    Left = 460
     Height = 16
-    Top = 240
+    Top = 184
     Width = 159
     Caption = 'Нормативный документ'
     ParentColor = False
   end
   object dxLookupComboBox2: TdxLookupComboBox
-    Left = 4
+    Left = 456
     Height = 24
-    Top = 264
+    Top = 208
     Width = 776
     CharCase = ecNormal
     MaxLength = 0
@@ -181,9 +181,9 @@ object Form233: TdxForm
   end
   object dxGrid1: TdxGrid
     Left = 8
-    Height = 228
-    Top = 324
-    Width = 776
+    Height = 432
+    Top = 256
+    Width = 1380
     AutoAdvance = aaNone
     Color = clWindow
     Columns = <>
@@ -213,9 +213,9 @@ object Form233: TdxForm
     Id = 234
   end
   object dxEdit2: TdxEdit
-    Left = 680
+    Left = 1308
     Height = 24
-    Top = 568
+    Top = 8
     Width = 80
     CharCase = ecNormal
     MaxLength = 0
@@ -286,50 +286,50 @@ object Form233: TdxForm
       item
         Tag = 2544
         Title.Caption = ' '
-        Width = 100
+        Width = 167
         FieldName = 'f2544l'
+      end    
+      item
+        Tag = 2550
+        Title.Caption = ' '
+        Width = 315
+        FieldName = 'f2550'
       end    
       item
         Tag = 2545
         Title.Caption = ' '
-        Width = 100
+        Width = 176
         FieldName = 'f2545l'
       end    
       item
         Tag = 2548
         Title.Caption = ' '
-        Width = 100
+        Width = 157
         FieldName = 'f2548l'
       end    
       item
         Tag = 2549
         Title.Caption = ' '
-        Width = 100
+        Width = 173
         FieldName = 'f2549l'
-      end    
-      item
-        Tag = 2550
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f2550'
-      end    
-      item
-        Tag = 2553
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f2553'
       end    
       item
         Tag = 262976
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262976l'
+      end    
+      item
+        Tag = 2553
+        Title.Caption = ' '
+        Width = 63
+        FieldName = 'f2553'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
     Font.Height = -13
     Font.Name = 'Verdana'
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
     ParentDoubleBuffered = False
     ReadOnly = True
     ShowHint = True
@@ -364,7 +364,11 @@ object Form233: TdxForm
     ReadOnly = True
     RowSelect = True
     Options = [tvoAllowMultiselect, tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoRowSelect, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips]
-    Fields = <>
+    Fields = <    
+      item
+        FieldId = 2544
+        FieldSource = tfsForm
+      end>
     ExpandLevels = 0
   end
 end

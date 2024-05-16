@@ -35,7 +35,6 @@ object Form33: TdxForm
     FieldName = 'Флажок'
     CheckedText = 'Да'
     UnCheckedText = 'Нет'
-    CheckExpression = 'IIF([Эл.почта]<>null & [Флажок]=0 & [Фраза]<>null,BLOCK(JS_SEND_EMAIL("smtp.mail.ru",''465'', "jdx_lims@mail.ru", "Z2nLWtHZPy64jA5ncHki", [Эл.почта] , "Регистрация в ЛИМС" , "В ЛИМС вам создана учетная запиь с электронной почтой: "+[Эл.почта]+'' и секретной фразой: ''+[Фраза]+newline'#13#10'+'' Вход по адресу http://91.225.77.122:4085/jdx/?client''), '''')'#13#10', '''')'
     Expression = '//'
     Editable = False
     DefaultValue = '1'
@@ -207,6 +206,15 @@ object Form33: TdxForm
     Delimiter = ', '
     Editable = False
     UpdateTree = False
+  end
+  object dxButton2: TdxButton
+    Left = 204
+    Height = 30
+    Top = 592
+    Width = 196
+    Caption = 'Отправить на почту'
+    TabOrder = 9
+    ActionOnClick = '<actions><comment text="отправляем на e-mail нформацию по входу"/><action type="7" expression="IIF([Эл.почта]&lt;&gt;null &amp; [Флажок]=0 &amp; [Фраза]&lt;&gt;null,BLOCK(JS_SEND_EMAIL(&quot;smtp.mail.ru&quot;,''465'', &quot;jdx_lims@mail.ru&quot;, &quot;Z2nLWtHZPy64jA5ncHki&quot;, [Эл.почта] , &quot;Регистрация в ЛИМС&quot; , &quot;В ЛИМС вам создана учетная запиь с электронной почтой: &quot;+[Эл.почта]+'' и секретной фразой: ''+[Фраза]+newline'#13#10'+'' Вход по адресу http://91.225.77.122:4085/jdx/?client''), '''')'#13#10', '''')"/></actions>'
   end
   object Grid: TdxGrid
     Left = 0

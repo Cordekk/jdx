@@ -483,7 +483,7 @@ object Form266: TdxForm
     Id = 8637
     FieldName = 'Архив'
     SourceTId = 530
-    SourceFId = 0
+    SourceFId = 8613
     Required = False
     SourceTable = 0
     DestTable = 0

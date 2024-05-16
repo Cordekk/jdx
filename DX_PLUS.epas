@@ -1,6 +1,6 @@
 {@module
 Author=DataExpress
-Version=1.72
+Version=1.72.1 - добавил изменения в изменения группы записей
 HomePage=https://forum.mydataexpress.ru/viewtopic.php?f=16&t=3295
 Description=Множество полезных вещей.
 @}
@@ -1073,7 +1073,7 @@ begin
       Exit;
   end;
 
-  RecId := Tbl.RecId;
+  RecId := Tbl.RecId;   // здесь записывается номер строки
   Tbl.DisableControls;
   Tbl.DisableScrollEvents;
   Tbl.MoveFirst;
@@ -1110,6 +1110,7 @@ begin
     end;
     Tbl.MoveNext;
   end;
+  Tbl.GotoRecord(RecId);  // чтобы при изменении пзаписей таблицы всё оставалось на месте
   Result := True;
 
   finally

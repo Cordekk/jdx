@@ -1,0 +1,19 @@
+{@module
+Author= cordek
+Version=1.0
+Description= Функция для выполнения произвольных встроенных функций DataExpress, сохраненных в текстовом поле формы
+веб-версия
+@}
+
+{@function
+Name=EvalExp
+
+@}
+
+function EvalExp(s:string):variant;
+var
+Fm: Tdxform;
+begin
+Fm:= Self;
+result:= Session.EvalExpr(s, Fm);
+end;

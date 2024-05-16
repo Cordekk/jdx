@@ -63,6 +63,21 @@ object Form30: TdxForm
     ObjId = 262676
     FieldId = 262313
   end
+  object dxEdit1: TdxEdit
+    Left = 26
+    Height = 24
+    Top = 255
+    Width = 146
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 2
+    Id = 263203
+    FieldName = 'ИД_направления'
+    FieldSize = 50
+    Required = False
+    Expression = '[!ИД]'
+    Editable = False
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 150
@@ -80,8 +95,16 @@ object Form30: TdxForm
       item
         Tag = 262678
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262678'
+      end    
+      item
+        Tag = 263203
+        Title.Caption = ' '
+        Width = 0
+        Visible = False
+        FieldName = 'f263203'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

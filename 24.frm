@@ -872,14 +872,14 @@ object Form24: TdxForm
       object dxCheckBox3: TdxCheckBox
         Left = 508
         Height = 23
-        Top = 76
+        Top = 104
         Width = 154
         Caption = 'Исследования'
         TabOrder = 4
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 2407
-        FieldName = 'Проведение исследований'
+        FieldName = 'Исследования'
         CheckedText = 'Да'
         UnCheckedText = 'Нет'
         Editable = False
@@ -888,7 +888,7 @@ object Form24: TdxForm
       object dxCheckBox5: TdxCheckBox
         Left = 508
         Height = 23
-        Top = 104
+        Top = 132
         Width = 238
         Caption = 'Подпись исследований'
         TabOrder = 5
@@ -904,7 +904,7 @@ object Form24: TdxForm
       object dxCheckBox8: TdxCheckBox
         Left = 508
         Height = 23
-        Top = 136
+        Top = 164
         Width = 222
         Caption = 'Подпись протокола'
         TabOrder = 6
@@ -912,6 +912,22 @@ object Form24: TdxForm
         ValueUnchecked = '0'
         Id = 262317
         FieldName = 'Подпись протокола'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox9: TdxCheckBox
+        Left = 508
+        Height = 23
+        Top = 80
+        Width = 304
+        Caption = 'Назначение исследований'
+        TabOrder = 9
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 263080
+        FieldName = 'Назначение исследований'
         CheckedText = 'Да'
         UnCheckedText = 'Нет'
         Editable = False
@@ -1314,6 +1330,13 @@ object Form24: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262975'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 263080
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263080'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

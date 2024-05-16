@@ -2,7 +2,7 @@ object Form3: TdxForm
   Left = 10
   Height = 891
   Top = 10
-  Width = 1223
+  Width = 1273
   Id = 3
   PId = 0
   FormCaption = 'Заявка клиента'
@@ -30,10 +30,11 @@ object Form3: TdxForm
     'Дата печати=SRV_DATE'
     'Подразделение=DBGET(''Сотрудники'', ''Подразделение|Название_подразделения'', ''[!user]=USER'')'
     'Шифр_образцов=DBMERGEALL(''Образцы'', ''Шифр_аргус'', ''[!Проба]=GET("Пробы1", "ID")  '')'
-    'Подготовка образцов=Block(Setvar(''Подготовка образцов'',ReplaceALL(MERGE(''Показатель42'', ''Консервация'', ''; ''),'' ;'','''')),'#13#10'IIF( getvar(''Подготовка образцов'')='''' | getvar(''Подготовка образцов'')='' '', ''нет'', getvar(''Подготовка образцов''))'#13#10')'
+    'Подготовка образцов=Block(Setvar(''Подготовка образцов'',REPEATREMR(MERGE(''Показатель42'', ''Консервация'', ''; ''),''; '')),'#13#10'IIF( getvar(''Подготовка образцов'')='''' | getvar(''Подготовка образцов'')='';'', ''нет'', getvar(''Подготовка образцов''))'#13#10')'
     'Условия транспортировки=''автотранспортом'''
     'Дополнительные сведения=''нет'''
     'Должность пробоотборщика=DBGET(''Сотрудники клиента'', ''Должность'', ''[Контактное_лицо]=[Проботборщик]&[!Идентификатор]=[Клиент|Идентификатор]'')'
+    'В присутствии=NZ(TAKE(''Дополнения Заявка клиента'', ''Значение'', ''[Наименование поля]="В присутствии"''), [Контактное лицо|ФамилияИО])'
   )
   AutoOpen = True
   ViewType = vtGridOnly
@@ -49,9 +50,13 @@ object Form3: TdxForm
     'Архив=FILTER:531|0|0|1'
   )
   Coloring.Strings = (
-    'clRed;[Образцы_непринятые]>0'
-    'clYellow;[Заявка]=1  & [Результат]=0 & [Отказ] = 0 '
-    '$008080FF;[Заявка]=0'
+    '$008080FF;//[Цвет]=''розовый'''#13#10'CASEOF([Статус],[Направление2|Цвета заявки])=''розовый'''
+    'clYellow;//[Цвет]'#13#10'CASEOF([Статус],[Направление2|Цвета заявки])=''желтый'''
+    '$004080FF;//[Цвет]'#13#10'CASEOF([Статус],[Направление2|Цвета заявки])=''оранжевый'''
+    'clRed;//[Цвет]'#13#10'CASEOF([Статус],[Направление2|Цвета заявки])=''красный'''
+    'clBlue;//[Цвет]'#13#10'CASEOF([Статус],[Направление2|Цвета заявки])=''синий'''
+    'clAqua;//[Цвет]=''голубой'''#13#10'CASEOF([Статус],[Направление2|Цвета заявки])=''голубой'''
+    'clLime;//[Цвет]'#13#10'CASEOF([Статус],[Направление2|Цвета заявки])=''зеленый'''
   )
   HelpText.Strings = (
     '<body bgcolor=#fff8dc>'
@@ -62,7 +67,10 @@ object Form3: TdxForm
     ''
     'После регистрации заявки надо заполнять остальные поля.'
     ''
-    'Для ускорения записи продукции, необходимо нажимать дублирование или кнопки Ctrl + D.'
+    'Для добавления проб, необходимо нажимать Добавить пробу или Скопировать все.'
+    'Кнопка добавить пробу октрывает на редактирование новую пробу, но заполняет данными из старой, если она есть.'
+    'Кнопка Скопировать все добавляет копии всех старых проб, которые есть в запросе от предыдущей заявки.'
+    'Если старых проб нет, то добаляется новая проба.'
     'Если сейф-пакета нет, то надо писать опечатано (при добавлении продукции, по умолчанию пишется опечатано).'
     'Для печати протокола отбора необходимо заполнить Цель заявки (выбрать группу показателей по которым будут проводиться испытаний).'
     'Нажать печать отбора и распечатать открывшийся документ.'
@@ -78,11 +86,11 @@ object Form3: TdxForm
   Tree = Tree.Owner
   Index = 14
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="9A42E20C-39FB-403A-B04A-CA5904B07376" allfields="1" logfields="Field" users="User" /><comment text="Нужен для отслеживания изменений на форме"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Клиент]&lt;&gt;null &amp;  [Направление2]&lt;&gt;null" grid="cmp;ve_prop|dxButton4;Доступность|dxButton11;Доступность|dxButton12;Доступность|dxButton9;Доступность|dxButton8;Доступность|DuplicateBn;Доступность|dxLookupComboBox14;Доступность" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''''  | ROLE = ''Администратор''" grid="cmp;ve_prop|dxLookupComboBox21;Редактирование|dxCheckBox4;Редактирование|dxCheckBox5;Редактирование|dxCheckBox6;Редактирование|dxCalcEdit7;Редактирование|dxCheckBox14;Редактирование" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Аргус-лаборатория]=1 | [Госзадание]=1" grid="cmp;ve_prop|dxEdit7;Видимость|dxEdit10;Видимость|dxLabel42;Видимость|dxLabel43;Видимость|dxButton5;Видимость|dxLabel44;Видимость|dxEdit11;Видимость|dxButton23;Видимость|DxLookupComboBox11;Видимость|dxLabel21;Видимость" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' //  | ROLE = ''Администратор''" grid="cmp;ve_prop|dxLookupComboBox3;Доступность|dxLookupComboBox13;Доступность" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Только проба]=1" grid="cmp;ve_prop|dxLabel52;Видимость|dxMemo8;Видимость" stateevents="0" /><comment text="Если отбор не требуется, то эти поля не отображаются"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Отбор проб]=1" grid="cmp;ve_prop|dxQueryGrid11;Видимость|dxLookupComboBox15;Видимость|dxButton26;Видимость|dxButton27;Видимость|dxLabel46;Видимость" stateevents="1" /><comment text="Добавить НД в таблицу"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton7" fields="fl|Нормативный документ|Нормативный документ2" /><comment text="Добавление проб при добавлении заявки клиента из заявки от клиента"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton25" fields="fl|Направление2" /><action type="9" id="AFB9DFCF-7996-43A1-A83A-BBCFC5A19928" queries="qry;fld;bn|Отборы проб заявки;;dxButton27|Пробы1;;dxButton28" defact="0" /></actions>'
+  ActionOnCreate = '<actions><comment text="Нужен для отслеживания изменений на форме"/><action type="9" id="9A42E20C-39FB-403A-B04A-CA5904B07376" allfields="1" logfields="Field" users="User" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Клиент]&lt;&gt;null &amp;  [Направление2]&lt;&gt;null" grid="cmp;ve_prop|dxButton4;Доступность|dxButton11;Доступность|dxButton12;Доступность|dxButton9;Доступность|dxButton8;Доступность|DuplicateBn;Доступность|dxLookupComboBox14;Доступность|DuplicateBn1;Доступность|dxLookupComboBox20;Доступность|dxButton29;Видимость" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''''  | ROLE = ''Администратор''" grid="cmp;ve_prop|dxLookupComboBox21;Редактирование|dxCheckBox4;Редактирование|dxCheckBox5;Редактирование|dxCheckBox6;Редактирование|dxCalcEdit7;Редактирование|dxCheckBox14;Редактирование" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Аргус-лаборатория]=1 | [Госзадание]=1" grid="cmp;ve_prop|dxEdit7;Видимость|dxEdit10;Видимость|dxLabel42;Видимость|dxLabel43;Видимость|dxButton5;Видимость|dxLabel44;Видимость|dxEdit11;Видимость|dxButton23;Видимость|DxLookupComboBox11;Видимость|dxLabel21;Видимость" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' //  | ROLE = ''Администратор''" grid="cmp;ve_prop|dxLookupComboBox3;Доступность|dxLookupComboBox13;Доступность|dxTabSheet12;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Только проба]=1" grid="cmp;ve_prop|dxLabel52;Видимость|dxMemo8;Видимость" stateevents="0" /><comment text="Если отбор не требуется, то эти поля не отображаются"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Отбор проб]=1" grid="cmp;ve_prop|dxQueryGrid11;Видимость|dxLabel31;Видимость|dxLookupComboBox15;Видимость|dxButton26;Видимость|dxButton27;Видимость|dxLabel46;Видимость" stateevents="1" /><action type="9" id="49BDDFC2-FD4C-4945-9382-E70E33F37FE2" bn="dxButton31" when="После сохранения" /><action type="9" id="49BDDFC2-FD4C-4945-9382-E70E33F37FE2" bn="dxButton29" when="После сохранения" /><comment text="Добавить НД в таблицу"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton7" fields="fl|Нормативный документ|Нормативный документ2" /><action type="9" id="AFB9DFCF-7996-43A1-A83A-BBCFC5A19928" queries="qry;fld;bn|Отборы проб заявки;;dxButton27|Пробы1;;dxButton28|Образцы1;;dxButton33" defact="0" /><comment text="Добавить методики из шаблона показателей"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton29" fields="fl|Шаблон показателей" /><comment text="добавить дополнительные поля в таблицу из направления"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton31" fields="fl|Направление2" /><comment text="Добавление проб при добавлении заявки клиента из заявки от клиента"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton25" fields="fl|Направление2" /></actions>'
   object dxButton20: TdxButton
-    Left = 838
+    Left = 888
     Height = 30
-    Top = 800
+    Top = 760
     Width = 100
     Caption = 'Печать'
     TabOrder = 22
@@ -156,13 +164,13 @@ object Form3: TdxForm
     Left = 4
     Height = 532
     Top = 216
-    Width = 1220
-    ActivePage = dxTabSheet2
+    Width = 1270
+    ActivePage = dxTabSheet9
     Anchors = [akTop, akLeft, akRight]
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 4
     object dxTabSheet9: TdxTabSheet
-      Caption = 'Информация о партии'
+      Caption = 'Информация'
       StopTab = False
       object dxLabel12: TdxLabel
         Left = 19
@@ -421,10 +429,10 @@ object Form3: TdxForm
       end
       object dxLabel55: TdxLabel
         Left = 12
-        Height = 40
-        Top = 352
+        Height = 100
+        Top = 324
         Width = 1179
-        Caption = 'Сведения о партии заполняются, если продукция перемещается из одного места в другое и перед транспортировкой или после неё'#13#10'клиент хочет проверить соответствие партии продукции требованиям НД'
+        Caption = 'Сведения о партии заполняются, если продукция перемещается из одного места в другое и перед транспортировкой или после неё'#13#10'клиент хочет проверить соответствие партии продукции требованиям НД.'#13#10'Сведения о пробах надо вносить в таблицу Пробы'#13#10'Дополнительные сведения надо вносить в таблицу Дополнительно.'#13#10'сведения о месте отбора и т.п. на вкладке Отбор проб'
         Font.Color = clRed
         Font.Height = -17
         Font.Name = 'Verdana'
@@ -439,7 +447,7 @@ object Form3: TdxForm
         Left = 160
         Height = 436
         Top = 36
-        Width = 1052
+        Width = 1102
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
@@ -456,7 +464,7 @@ object Form3: TdxForm
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
         ShowButtons = True
-        VisibleButtons = [gbnDelete, gbnRefresh, gbnGoto]
+        VisibleButtons = [gbnDelete, gbnRefresh]
         VisibleCaptions = []
         FlatButtons = True
         ButtonsColor = clBtnFace
@@ -502,19 +510,19 @@ object Form3: TdxForm
         Width = 64
         Caption = 'Пробы '
         ParentColor = False
-        Expression = '// запишем в дубль NULL'#13#10'Block(IIF(NEWREC=0,SETFIELD(''Дубль'', NULL),''Пробы''),''Пробы'')'
+        Expression = '// запишем в дубль NULL // забыл зачем это нужно'#13#10'//Block(IIF(NEWREC=0,SETFIELD(''Дубль'', NULL),''''),''Пробы'')'
       end
       object DuplicateBn: TdxButton
-        Left = 288
+        Left = 264
         Height = 26
-        Top = 4
+        Top = 8
         Width = 160
         Caption = 'Добавить пробу'
         Font.Height = -16
         Font.Name = 'Verdana'
         ParentFont = False
         TabOrder = 3
-        ActionOnClick = '<actions><action type="5" /><if cond="result"><action type="7" expression="Setvar(''zayavka_id'', RECID(''Заявка клиента''))"/><if cond="COUNT(''Пробы1'')&gt;0"><action type="9" id="62900B52-9BF5-4E72-833F-9B47AB4F4399" _qg="Пробы1" _fm="Пробы" _ls="Форма+Подчиненные таблицы" /></if><else><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Пробы" values="field;expr|Заявка клиента2;RECID(''Заявка клиента'')|Направление;[Направление2]" ignoreaccess="0" obj="" qry="Пробы1" /></else></if><else><action type="10" title="Внимание" message="Заполните Клиента и Направление!" msgtype="0" exprmsg="" buttons="1;0;0;0;0;0;0;0;0;0;0"/></else><action type="7" expression="BLOCK('#13#10'Setvar(''zayavka_id'', null),'#13#10'Setfield(''Дубль'',null))"/></actions>'
+        ActionOnClick = '<actions><action type="5" /><if cond="result"><if cond="COUNT(''Пробы1'')&gt;0"><action disabled="1" type="9" id="62900B52-9BF5-4E72-833F-9B47AB4F4399" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" _qg="Пробы1" _fm="Пробы" _ls="Форма+Подчиненные таблицы" /><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Пробы" values="field;expr|Дополнительное поле;GET(''Пробы1'', ''Дополнительное поле'')|Заявка клиента2;RECID(''Заявка клиента'')|Направление;[Направление2]|Продукция;GET(''Пробы1'', ''Продукция_id'')|Примечание;GET(''Пробы1'', ''Примечание'')|Категория;GET(''Пробы1'', ''Категория'')|Сорт;GET(''Пробы1'', ''Сорт_id'')|Репродукция;GET(''Пробы1'', ''Репродукция'')|Сортовая чистота;GET(''Пробы1'', ''Сортовая чистота'')|Ед.изм.1;GET(''Пробы1'', ''Ед.изм.1_id'')|Ед.изм.2;GET(''Пробы1'', ''Ед.изм.2_id'')     |Объем партии1;GET(''Пробы1'', ''Объем партии'')|Число мест;GET(''Пробы1'', ''Число мест'')     |Производитель;GET(''Пробы1'', ''Производитель_id'')|Место происхождения;GET(''Пробы1'', ''Место происхождения'')|Страна происхождения;GET(''Пробы1'', ''Страна происхождения_id'')|Год урожая;GET(''Пробы1'', ''Год урожая'')|Срок годности;GET(''Пробы1'', ''Срок годности'')|Место хранения;GET(''Пробы1'', ''Место хранения'')|Вид упаковки;GET(''Пробы1'', ''Вид упаковки'')|Количество_образцов;GET(''Пробы1'', ''Количество образцов'')|Объем_пробы;GET(''Пробы1'', ''Объем пробы'')|Транспорт;GET(''Пробы1'', ''Транспорт_id'')|Номер транспорта;GET(''Пробы1'', ''Номер партии (транспорт)'')|Дата получения семян;GET(''Пробы1'', ''Дата получения семян'')|Способ выращивания;GET(''Пробы1'', ''Способ выращивания'')|Товарная группа;GET(''Пробы1'', ''Товарная группа'')|Сортовой документ;GET(''Пробы1'', ''Сортовой документ'')|Протравливание;GET(''Пробы1'', ''Протравливание'')|Прошлые испытания;GET(''Пробы1'', ''Прошлые испытания'')" ignoreaccess="0" obj="" qry="Пробы1" /></if><else><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Пробы" values="field;expr|Заявка клиента2;RECID(''Заявка клиента'')|Направление;[Направление2]" ignoreaccess="0" obj="" qry="Пробы1" /></else></if><else><action type="10" title="Внимание" message="Заполните Клиента и Направление!" msgtype="0" exprmsg="" buttons="1;0;0;0;0;0;0;0;0;0;0"/></else><action type="7" expression="BLOCK('#13#10'Setfield(''Дубль'',RECID(''Заявка клиента'')))"/></actions>'
       end
       object dxButton3: TdxButton
         Left = 4
@@ -597,7 +605,7 @@ object Form3: TdxForm
         Font.Name = 'Verdana'
         ParentColor = False
         ParentFont = False
-        Expression = '//[Номер]'#13#10'Block('#13#10'IIF (([Образцы в заявке]-[Образцы])>0, ''Непринятые образцы '' + CSTR([Образцы в заявке]-[Образцы]) + '' шт'', ''Приняты!'')'#13#10')'
+        Expression = '//[Номер]'#13#10'Block(IIF([Пробы]>0,'#13#10'IIF (([Образцы в заявке]-[Образцы])>0, ''Непринятые образцы '' + CSTR([Образцы в заявке]-[Образцы]) + '' шт'', ''Приняты!'')'#13#10','''')'#13#10')'
       end
       object dxLookupComboBox14: TdxLookupComboBox
         Left = 8
@@ -617,7 +625,7 @@ object Form3: TdxForm
         DestTable = 0
         PromptFillTable = False
         ClearTableBeforeFill = False
-        Expression = '// [Номер]   для автоматического выбора предыдущей заявки, чтобы можно было скопировать пробы из неё.'#13#10'//DBMAX(''Заявка клиента'', ''Идентификатор'', "[!Идентификатор]<[Идентификатор]&[!Клиент]=[Клиент]")'
+        Expression = '// [Номер]   для автоматического выбора предыдущей заявки, чтобы можно было скопировать пробы из неё.'#13#10'//DBMAX(''Заявка клиента'', ''Идентификатор'', "[!Идентификатор]<[Идентификатор]&[!Клиент]=[Клиент]")'#13#10'//RECID(''Заявка клиента'')'
         Editable = True
         ListFields = <        
           item
@@ -638,7 +646,7 @@ object Form3: TdxForm
         Width = 168
         Caption = 'Перейти к пробе'
         TabOrder = 8
-        ActionOnClick = '<actions><action type="9" id="E30DB736-3D71-4710-A25A-53525B5425E4" form="Пробы" recid="CNUM(GET(''Пробы1'', ''Идентификатор''))" ignoreaccess="0" obj="" qry="Пробы1" /></actions>'
+        ActionOnClick = '<actions><if cond="CNUM(GET(''Пробы1'', ''ИДЗаявка''))=RECID(''Заявка клиента'')"><action type="9" id="E30DB736-3D71-4710-A25A-53525B5425E4" form="Пробы" recid="CNUM(GET(''Пробы1'', ''Идентификатор''))" ignoreaccess="0" obj="" qry="Пробы1" /></if><else><action type="10" title="Внимание" message="Редактировать пробы предыдущей заявки запрещено. Нажмите добавить пробу!" msgtype="0" exprmsg="" buttons="1;0;0;0;0;0;0;0;0;0;0"/></else></actions>'
       end
       object dxLabel56: TdxLabel
         Left = 1
@@ -647,6 +655,94 @@ object Form3: TdxForm
         Width = 144
         Caption = 'Скопировать из '#13#10'прошлой заявки'
         ParentColor = False
+      end
+      object DuplicateBn1: TdxButton
+        Left = 436
+        Height = 26
+        Top = 8
+        Width = 160
+        Caption = 'Скопировать все'
+        Font.Height = -16
+        Font.Name = 'Verdana'
+        ParentFont = False
+        TabOrder = 9
+        ActionOnClick = '<actions><action type="5" /><if cond="result"><comment text="если пробы несколько и из другой заявки, то копируем все"/><if cond="COUNT(''Пробы1'')&gt;1 &amp;[Дубль]&lt;&gt;RECID(''Заявка клиента'')"><comment text="заполним пробы из запроса Пробы1, таким образом скопируются все пробы"/><action type="9" id="35B8560B-A110-4BF9-B886-635E7BED9058" fm="Пробы" qry="Пробы1" fields="fl;qfl;expr|Дополнительное поле;Дополнительное поле;|Заявка клиента2;;RECID(''Заявка клиента'')|Направление;;[Направление2]|Продукция;Продукция_id;|Примечание;Примечание;|Категория;Категория;|Сорт;Сорт_id;|Репродукция;Репродукция;|Сортовая чистота;Сортовая чистота;|Дата получения семян;Дата получения семян;|Способ выращивания;Способ выращивания;|Товарная группа;Товарная группа;|Сортовой документ;Сортовой документ;|Прошлые испытания;Прошлые испытания;|Протравливание;Протравливание;|Ед.изм.1;Ед.изм.1_id;|Объем партии1;Объем партии;|Число мест;Число мест;|Производитель;Производитель_id;|Место происхождения;Место происхождения;|Страна происхождения;Страна происхождения_id;|Год урожая;Год урожая;|Срок годности;Срок годности;|Место хранения;Место хранения;|Вид упаковки;Вид упаковки;|Количество_образцов;Количество образцов;|Объем_пробы;Объем пробы;|Ед.изм.2;Ед.изм.2_id;|Транспорт;Транспорт_id;|Номер транспорта;Номер партии (транспорт);" msg="Вы хотите скопировать все пробы из предыдущей заявки?" /></if><elseif cond="COUNT(''Пробы1'')&gt;0"><comment text="если проба одна, то добавляем её копию"/><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Пробы" values="field;expr|Дополнительное поле;GET(''Пробы1'', ''Дополнительное поле'')|Заявка клиента2;RECID(''Заявка клиента'')|Направление;[Направление2]|Продукция;GET(''Пробы1'', ''Продукция_id'')|Примечание;GET(''Пробы1'', ''Примечание'')|Категория;GET(''Пробы1'', ''Категория'')|Сорт;GET(''Пробы1'', ''Сорт_id'')|Репродукция;GET(''Пробы1'', ''Репродукция'')|Сортовая чистота;GET(''Пробы1'', ''Сортовая чистота'')|Ед.изм.1;GET(''Пробы1'', ''Ед.изм.1_id'')|Ед.изм.2;GET(''Пробы1'', ''Ед.изм.2_id'')     |Объем партии1;GET(''Пробы1'', ''Объем партии'')|Число мест;GET(''Пробы1'', ''Число мест'')     |Производитель;GET(''Пробы1'', ''Производитель_id'')|Место происхождения;GET(''Пробы1'', ''Место происхождения'')|Страна происхождения;GET(''Пробы1'', ''Страна происхождения_id'')|Год урожая;GET(''Пробы1'', ''Год урожая'')|Срок годности;GET(''Пробы1'', ''Срок годности'')|Место хранения;GET(''Пробы1'', ''Место хранения'')|Вид упаковки;GET(''Пробы1'', ''Вид упаковки'')|Количество_образцов;GET(''Пробы1'', ''Количество образцов'')|Объем_пробы;GET(''Пробы1'', ''Объем пробы'')|Транспорт;GET(''Пробы1'', ''Транспорт_id'')|Номер транспорта;GET(''Пробы1'', ''Номер партии (транспорт)'')|Дата получения семян;GET(''Пробы1'', ''Дата получения семян'')|Способ выращивания;GET(''Пробы1'', ''Способ выращивания'')|Товарная группа;GET(''Пробы1'', ''Товарная группа'')|Сортовой документ;GET(''Пробы1'', ''Сортовой документ'')|Протравливание;GET(''Пробы1'', ''Протравливание'')|Прошлые испытания;GET(''Пробы1'', ''Прошлые испытания'')" ignoreaccess="0" obj="" qry="" /></elseif><else><comment text="если проб нет, то добавляем новую"/><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Пробы" values="field;expr|Заявка клиента2;RECID(''Заявка клиента'')|Направление;[Направление2]" ignoreaccess="0" obj="" qry="Пробы1" /></else></if><else><action type="10" title="Внимание" message="Заполните Клиента и Направление!" msgtype="0" exprmsg="" buttons="1;0;0;0;0;0;0;0;0;0;0"/></else><action type="7" expression="BLOCK('#13#10'Setfield(''Дубль'',RECID(''Заявка клиента'')))"/></actions>'
+      end
+    end
+    object dxTabSheet11: TdxTabSheet
+      Caption = 'Дополнительно'
+      StopTab = False
+      object dxGrid2: TdxGrid
+        Left = 0
+        Height = 450
+        Top = 46
+        Width = 932
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 0
+        SelectedColor = clHighlight
+        GridLineStyle = psSolid
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = True
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnShopping]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 50
+        ButtonFont.Height = -17
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 6875
+      end
+      object dxButton31: TdxButton
+        Left = 712
+        Height = 30
+        Top = 12
+        Width = 212
+        Caption = 'Обновить дополнения'
+        TabOrder = 2
+        ActionOnClick = '<actions><comment text="Нужно объявить переменную, чтобы не мешать заполнению и изменению таблицы"/><action type="7" expression="setvar(''Вычисления дополнительного поля'',1)"/><comment text="Добавим недостающие поля"/><action type="9" id="A971EF36-34CB-4A2C-9007-3A2D140BEDBC" bn="dxButton30" /><comment text="Пересчитаем по формуле"/><action type="9" id="8D8123AE-0A6C-4349-9152-F9399322BE50" tbl="Дополнения Заявка клиента" values="field;expr|Значение;TEXT(''{''+[Формула]+''}'')" filter="[Формула]&lt;&gt;'''' &amp; [Формула]&lt;&gt;null" prompt="" /><action type="7" expression="Setfield(''Дополнительное поле'',MERGE(''Дополнения Заявка клиента'', ''Ключ-значение'', '';''))"/><action type="7" expression="setvar(''Вычисления дополнительного поля'',0)"/></actions>'
+      end
+      object dxMemo10: TdxMemo
+        Left = 936
+        Height = 88
+        Top = 400
+        Width = 308
+        Font.Height = -13
+        Font.Name = 'Verdana'
+        ParentFont = False
+        ScrollBars = ssBoth
+        TabOrder = 3
+        Id = 263155
+        FieldName = 'Дополнительное поле'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Expression = '//'
+        Editable = False
+        UpdateTree = False
+      end
+      object dxLabel62: TdxLabel
+        Left = 936
+        Height = 20
+        Top = 368
+        Width = 316
+        Caption = 'Вычисления дополнительного поля'
+        ParentColor = False
+        Expression = '// данный расчет необходим, поскольку функция мешает при заполнении и пересчете таблицы по кнопке. в кнопке надо добавить объявление переменной'#13#10'Block(IIF(NEWREC=0'#13#10'& nz(getvar(''Вычисления дополнительного поля''),0)=0,'#13#10'IIF( MERGE(''Дополнения Заявка клиента'', ''Ключ-значение'', '';'')<>[Дополнительное поле],'#13#10'CLICKBUTTONF(''dxButton31'')'#13#10'//Setfield(''Дополнительное поле'', MERGE(''Дополнения Заявка клиента'', ''Ключ-значение'', '';''))  // подстановка значений без пересчета'#13#10','''')'#13#10','''')'#13#10',''Дополнительное поле'')'
       end
     end
     object dxTabSheet10: TdxTabSheet
@@ -711,7 +807,7 @@ object Form3: TdxForm
         DefaultValue = 'DATE'
       end
       object dxLabel24: TdxLabel
-        Left = 675
+        Left = 681
         Height = 20
         Top = 167
         Width = 106
@@ -840,9 +936,10 @@ object Form3: TdxForm
         FieldName = 'Место отбора'
         FieldSize = 0
         Required = False
-        SourceTId = 0
-        SourceFId = 0
+        SourceTId = 6874
+        SourceFId = 263088
         Delimiter = ', '
+        Filter = '[Клиент]=[Клиент]'#13#10'| [Клиент]=null'#13#10'&[Регион]=[Район отбора]'
         Editable = False
         UpdateTree = False
       end
@@ -923,34 +1020,35 @@ object Form3: TdxForm
         ManualRefresh = False
       end
       object dxLabel49: TdxLabel
-        Left = 668
+        Left = 673
         Height = 20
-        Top = 112
+        Top = 116
         Width = 109
         Caption = 'Цель отбора'
         ParentColor = False
       end
       object dxMemo7: TdxMemo
-        Left = 796
-        Height = 28
+        Left = 784
+        Height = 40
         Top = 112
-        Width = 328
+        Width = 400
         ScrollBars = ssBoth
         TabOrder = 10
         Id = 262721
         FieldName = 'Цель отбора'
         FieldSize = 0
         Required = False
-        SourceTId = 0
-        SourceFId = 0
+        SourceTId = 37
+        SourceFId = 168
         Delimiter = ', '
+        Filter = '[Список]=''Цель отбора'''
         Expression = '[Направление2|Направление]'
         Editable = True
         DefaultValue = 'IIF([Госзадание]=0,''Заявка заказчика'', ''Государственное задание'')'
         UpdateTree = False
       end
       object dxLabel50: TdxLabel
-        Left = 672
+        Left = 681
         Height = 20
         Top = 196
         Width = 188
@@ -974,7 +1072,7 @@ object Form3: TdxForm
         Required = False
       end
       object dxLabel51: TdxLabel
-        Left = 676
+        Left = 680
         Height = 20
         Top = 232
         Width = 219
@@ -998,10 +1096,10 @@ object Form3: TdxForm
         Required = False
       end
       object dxMemo8: TdxMemo
-        Left = 264
+        Left = 208
         Height = 28
         Top = 156
-        Width = 344
+        Width = 440
         ScrollBars = ssBoth
         TabOrder = 13
         Id = 262769
@@ -1015,7 +1113,7 @@ object Form3: TdxForm
         UpdateTree = False
       end
       object dxLabel52: TdxLabel
-        Left = 8
+        Left = 4
         Height = 20
         Top = 156
         Width = 188
@@ -1023,16 +1121,16 @@ object Form3: TdxForm
         ParentColor = False
       end
       object dxLabel53: TdxLabel
-        Left = 12
+        Left = 4
         Height = 20
-        Top = 184
+        Top = 188
         Width = 187
         Caption = 'Сотрудник заказчика'
         ParentColor = False
-        Expression = '''От заказчика ''+NZ(DBGET(''Сотрудники клиента'', ''Должность'', ''[Контактное_лицо]=[Проботборщик]&[!Идентификатор]=[Клиент|Идентификатор]''),'''')'
+        Expression = 'IIF([Только проба]=1,''Пробу отобрал '',''От заказчика '')'#13#10'+NZ(DBGET(''Сотрудники клиента'', ''Должность'', ''[Контактное_лицо]=[Пробоотборщик]&[!Идентификатор]=[Клиент|Идентификатор]''),'''')'
       end
       object DxLookupComboBox24: TdxLookupComboBox
-        Left = 264
+        Left = 276
         Height = 28
         Top = 184
         Width = 344
@@ -1040,7 +1138,7 @@ object Form3: TdxForm
         MaxLength = 0
         TabOrder = 14
         Id = 262885
-        FieldName = 'Проботборщик'
+        FieldName = 'Пробоотборщик'
         SourceTId = 33
         SourceFId = 116
         Filter = '[ФамилияИО] in REPLACEALL(DBMERGEALL(''Сотрудники клиента'', ''Контактное_лицо|ФамилияИО'', ''[!ИНН]=[Клиент|ИНН]''),''; '','';'')'
@@ -1076,15 +1174,41 @@ object Form3: TdxForm
         TabOrder = 16
         ActionOnClick = '<actions><action type="9" id="E30DB736-3D71-4710-A25A-53525B5425E4" form="Отбор проб" recid="CNUM(GET(''Отборы проб заявки'', ''ID''))" ignoreaccess="0" obj="" qry="Отборы проб заявки" /></actions>'
       end
+      object dxLabel61: TdxLabel
+        Left = 4
+        Height = 20
+        Top = 208
+        Width = 88
+        Caption = 'dxLabel61'
+        Font.Color = clRed
+        Font.Height = -17
+        Font.Name = 'Verdana'
+        ParentColor = False
+        ParentFont = False
+        Expression = 'IIF([Пробоотборщик]=null,''Смотри дополнительные поля'','''')'
+      end
+      object dxButton32: TdxButton
+        Left = 639
+        Height = 23
+        Top = 189
+        Width = 24
+        Caption = '+'
+        Font.Color = clRed
+        Font.Height = -21
+        Font.Name = 'Verdana'
+        ParentFont = False
+        TabOrder = 17
+        ActionOnClick = '<actions><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Контактные лица" values="field;expr" ignoreaccess="0" obj="Пробоотборщик" qry="" /><action type="9" id="E30DB736-3D71-4710-A25A-53525B5425E4" form="Клиенты" recid="[Клиент]" ignoreaccess="1" obj="" qry="" /></actions>'
+      end
     end
     object dxTabSheet4: TdxTabSheet
       Caption = 'Образцы'
       StopTab = False
       object dxQueryGrid3: TdxQueryGrid
         Left = 0
-        Height = 392
+        Height = 388
         Top = 28
-        Width = 492
+        Width = 556
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -1123,10 +1247,10 @@ object Form3: TdxForm
         ParentColor = False
       end
       object dxQueryGrid4: TdxQueryGrid
-        Left = 496
+        Left = 564
         Height = 424
         Top = 28
-        Width = 656
+        Width = 684
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -1160,7 +1284,7 @@ object Form3: TdxForm
         Left = 236
         Height = 28
         Top = -1
-        Width = 84
+        Width = 72
         CharCase = ecNormal
         MaxLength = 0
         TabOrder = 4
@@ -1198,9 +1322,9 @@ object Form3: TdxForm
         DefaultValue = '1'
       end
       object dxButton13: TdxButton
-        Left = 0
-        Height = 22
-        Top = 424
+        Left = 400
+        Height = 30
+        Top = 416
         Width = 148
         Caption = 'Импорт образцов'
         Font.Height = -15
@@ -1243,9 +1367,9 @@ object Form3: TdxForm
         PadZeros = True
       end
       object dxCheckBox14: TdxCheckBox
-        Left = 292
+        Left = 336
         Height = 23
-        Top = 424
+        Top = 4
         Width = 154
         Caption = 'Отобразить все'
         TabOrder = 8
@@ -1258,15 +1382,24 @@ object Form3: TdxForm
         Editable = False
         DefaultValue = '1'
       end
+      object dxButton33: TdxButton
+        Left = 8
+        Height = 28
+        Top = 416
+        Width = 184
+        Caption = 'Перейти к образцу'
+        TabOrder = 9
+        ActionOnClick = '<actions><action type="9" id="E30DB736-3D71-4710-A25A-53525B5425E4" form="Образцы" recid="GET(''Образцы1'', ''ID'')" ignoreaccess="0" obj="" qry="Образцы1" /></actions>'
+      end
     end
     object dxTabSheet7: TdxTabSheet
       Caption = 'Задание'
       StopTab = False
       object dxMemo9: TdxMemo
         Left = 4
-        Height = 28
+        Height = 16
         Top = 168
-        Width = 552
+        Width = 554
         Anchors = [akTop, akLeft, akRight, akBottom]
         ScrollBars = ssBoth
         TabOrder = 14
@@ -1274,8 +1407,8 @@ object Form3: TdxForm
         FieldName = 'ЗаданиеID'
         FieldSize = 0
         Required = False
-        SourceTId = 227
-        SourceFId = 2528
+        SourceTId = 0
+        SourceFId = 0
         Delimiter = '; '
         Filter = '[Направление]=[Направление2]'
         Expression = 'MERGE(''НД заявки'', ''ID'', ''; '')+'';'''
@@ -1294,7 +1427,7 @@ object Form3: TdxForm
         Left = 4
         Height = 28
         Top = 204
-        Width = 552
+        Width = 562
         Anchors = [akTop, akLeft, akRight, akBottom]
         ScrollBars = ssBoth
         TabOrder = 0
@@ -1302,8 +1435,8 @@ object Form3: TdxForm
         FieldName = 'Задание'
         FieldSize = 0
         Required = False
-        SourceTId = 227
-        SourceFId = 2528
+        SourceTId = 0
+        SourceFId = 0
         Delimiter = '; '
         Filter = '[Направление]=[Направление2]'
         Expression = 'MERGE(''НД заявки'', ''Нормативный документ'', ''; '')'
@@ -1322,6 +1455,7 @@ object Form3: TdxForm
         FieldName = 'Нормативный документ'
         SourceTId = 227
         SourceFId = 2528
+        Filter = '[Направление]=[Направление2]'#13#10'|[Направление]=null'
         Required = False
         CheckExpression = '//IIF([Нормативный документ]<>null | [Задание] = null, ''Добавьте нормативный документ'', '''')'#13#10' //IIF([Нормативный документ]<>null, ''Добавьте нормативный документ'', '''')'
         SourceTable = 0
@@ -1368,7 +1502,7 @@ object Form3: TdxForm
         Left = 548
         Height = 188
         Top = 80
-        Width = 652
+        Width = 702
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
@@ -1557,10 +1691,10 @@ object Form3: TdxForm
         DefaultValue = '0'
       end
       object dxGrid3: TdxGrid
-        Left = 8
-        Height = 118
+        Left = 0
+        Height = 116
         Top = 72
-        Width = 504
+        Width = 512
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -1647,21 +1781,12 @@ object Form3: TdxForm
         FieldName = 'Нормативный документ2'
         SourceTId = 227
         SourceFId = 2528
+        Filter = '[Направление]=[Направление2]'#13#10'|[Направление]=null'
         Required = False
-        SourceTable = 232
-        DestTable = 1607
-        FieldsTables.Strings = (
-          '262776=262618'
-          '262628=262630'
-          '262775=262626'
-          '262773=26160'
-          '262774='
-          '2541=26158'
-          '2542=26159'
-          '262629=262631'
-        )
+        SourceTable = 0
+        DestTable = 0
         PromptFillTable = False
-        ClearTableBeforeFill = True
+        ClearTableBeforeFill = False
         Editable = False
         ListFields = <>
         DropDownCount = 8
@@ -1690,24 +1815,21 @@ object Form3: TdxForm
         FieldName = 'Шаблон показателей'
         SourceTId = 233
         SourceFId = 2550
-        Filter = '[?Документ]= [Нормативный документ2]'#13#10'|[Направление]=[Направление2]'
+        Filter = '[?Документ]= [Нормативный документ2] | [?Документ] in [ЗаданиеID]'#13#10'&[Направление]=[Направление2]'
         Required = False
-        SourceTable = 234
-        DestTable = 1607
-        FieldsTables.Strings = (
-          '2685=26160'
-          '2551=26158'
-          '2552=26159'
-          '131008=131009'
-          '262634=262630'
-          '262635=262631'
-        )
+        SourceTable = 0
+        DestTable = 0
         PromptFillTable = False
-        ClearTableBeforeFill = True
+        ClearTableBeforeFill = False
         Editable = False
         ListFields = <        
           item
             FieldId = 2545
+            Width = 100
+            Searchable = True
+          end        
+          item
+            FieldId = 2553
             Width = 100
             Searchable = True
           end>
@@ -1719,9 +1841,9 @@ object Form3: TdxForm
       end
       object dxGrid1: TdxGrid
         Left = 4
-        Height = 352
+        Height = 349
         Top = 135
-        Width = 1208
+        Width = 1252
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -1751,18 +1873,18 @@ object Form3: TdxForm
         Id = 1607
       end
       object dxButton14: TdxButton
-        Left = 844
+        Left = 980
         Height = 30
-        Top = 73
+        Top = 76
         Width = 263
         Caption = 'Назначить исследования'
         TabOrder = 4
         ActionOnClick = '<actions><action type="5" /></actions>'
       end
       object dxLookupComboBox21: TdxLookupComboBox
-        Left = 844
+        Left = 980
         Height = 28
-        Top = 28
+        Top = 31
         Width = 264
         CharCase = ecNormal
         MaxLength = 0
@@ -1777,7 +1899,7 @@ object Form3: TdxForm
         DestTable = 0
         PromptFillTable = False
         ClearTableBeforeFill = False
-        Expression = '// [Нормативный документ2]  [№ счета]'#13#10'OBJID("Сотрудники", "user", USER)'
+        Expression = '// [Шаблон показателей]'#13#10'OBJID("Сотрудники", "user", USER)'
         Editable = True
         ListFields = <>
         DropDownCount = 8
@@ -1793,6 +1915,41 @@ object Form3: TdxForm
         Width = 147
         Caption = 'План испытаний'
         ParentColor = False
+      end
+      object dxLabel57: TdxLabel
+        Left = 983
+        Height = 20
+        Top = 7
+        Width = 219
+        Caption = 'Исследования назначает'
+        ParentColor = False
+      end
+      object dxButton29: TdxButton
+        Left = 728
+        Height = 24
+        Top = 80
+        Width = 172
+        Caption = 'Добавить в план'
+        TabOrder = 6
+        ActionOnClick = '<actions><action type="5" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Показатели и методики для заявки" keeppos="0" /><action type="9" id="A1039C22-88FA-4E7A-A030-FDBCED2E7D61" tbl="Показатель42" qry="Показатели и методики для заявки" fields="tf;qf;expr|Группа продукции;Группа продукции;|Лаборатория;Лаборатория;|Нормативное значение;Нормативное значение;|Показатель;Показатель;|Примечание;Примечание;|Продукция;Продукция;|Консервация;Консервация;|Вид упаковки;Вид упаковки;|Номер_образца;Номер_образца;" noclr="1" prompt="" /><action type="5" /></actions>'
+      end
+      object dxButton34: TdxButton
+        Left = 728
+        Height = 24
+        Top = 108
+        Width = 172
+        Caption = 'Обновить план'
+        TabOrder = 7
+        ActionOnClick = '<actions><action type="5" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Показатели и методики для заявки" keeppos="0" /><action type="9" id="A1039C22-88FA-4E7A-A030-FDBCED2E7D61" tbl="Показатель42" qry="Показатели и методики для заявки" fields="tf;qf;expr|Группа продукции;Группа продукции;|Лаборатория;Лаборатория;|Нормативное значение;Нормативное значение;|Показатель;Показатель;|Примечание;Примечание;|Продукция;Продукция;|Консервация;Консервация;|Вид упаковки;Вид упаковки;|Номер_образца;Номер_образца;" noclr="0" prompt="" /><action type="5" /></actions>'
+      end
+      object dxButton35: TdxButton
+        Left = 728
+        Height = 24
+        Top = 52
+        Width = 172
+        Caption = 'Очистить план'
+        TabOrder = 8
+        ActionOnClick = '<actions><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Шаблон показателей;null" ignoreaccess="0" saverec="0" /><action type="9" id="68F6220C-C814-4994-8D03-E2D9A95BB50D" table="Показатель42" prompt="" ignoreaccess="0" /><action type="5" /></actions>'
       end
     end
     object dxTabSheet5: TdxTabSheet
@@ -1979,7 +2136,7 @@ object Form3: TdxForm
         Left = 4
         Height = 156
         Top = 4
-        Width = 474
+        Width = 524
         Anchors = [akTop, akLeft, akRight, akBottom]
         Caption = 'Комментарий принявшего заявку сотрудника'
         ParentColor = False
@@ -1988,7 +2145,7 @@ object Form3: TdxForm
         Left = 4
         Height = 208
         Top = 32
-        Width = 668
+        Width = 718
         Anchors = [akTop, akLeft, akRight, akBottom]
         ScrollBars = ssBoth
         TabOrder = 0
@@ -2003,7 +2160,7 @@ object Form3: TdxForm
         UpdateTree = False
       end
       object dxCheckBox9: TdxCheckBox
-        Left = 892
+        Left = 942
         Height = 31
         Top = 36
         Width = 244
@@ -2016,12 +2173,13 @@ object Form3: TdxForm
         FieldName = 'Аккредитация'
         CheckedText = 'Да'
         UnCheckedText = 'Нет'
+        CheckExpression = '//проверяем методики вне области по плану испытаний'#13#10'IIF(COUNTIF(''Показатель42'', ''[ОА]=0'')>0'#13#10'& [Аккредитация]=1'#13#10',''Есть методики вне области'','#13#10''''')'
         Expression = '// [Номер]'#13#10'IIF(COUNTIF(''Показатель42'', ''[ОА]=0'')>0,0,1)'
         Editable = False
         DefaultValue = '0'
       end
       object dxButton15: TdxButton
-        Left = 700
+        Left = 750
         Height = 26
         Top = 68
         Width = 188
@@ -2031,19 +2189,19 @@ object Form3: TdxForm
         ActionOnClick = '<actions><action type="7" expression="SETFIELD(''Аккредитация'', 0)"/></actions>'
       end
       object dxButton16: TdxButton
-        Left = 700
+        Left = 750
         Height = 22
         Top = 124
-        Width = 200
+        Width = 190
         Anchors = [akTop, akRight]
         Caption = 'Согласовано'
         TabOrder = 3
-        ActionOnClick = '<actions><action type="7" expression="SETFIELD(''Согласовано'', 1)"/><if cond="RESULT=1"><action type="7" expression="SETFIELD(''Согласовал'', ''Согласовал ''+ DBGET(''Сотрудники'', ''ФамилияИО'', ''[!user] = User''))"/></if></actions>'
+        ActionOnClick = '<actions><action type="7" expression="SETFIELD(''Согласовано'', 1)"/><if cond="RESULT=1"><action type="7" expression="SETFIELD(''Согласовал'',  DBGET(''Сотрудники'', ''ФамилияИО'', ''[!user] = User''))"/></if></actions>'
       end
       object dxEdit5: TdxEdit
-        Left = 684
+        Left = 732
         Height = 28
-        Top = 164
+        Top = 180
         Width = 540
         Anchors = [akTop, akRight]
         CharCase = ecNormal
@@ -2053,11 +2211,11 @@ object Form3: TdxForm
         FieldName = 'Согласовал'
         FieldSize = 50
         Required = False
-        Expression = '//'
+        Expression = '//   [Согласовано]'#13#10'/*IIF([Аккредитация]=1,'#13#10'DBGET(''Сотрудники'', ''ФамилияИО'', ''[!Должность]=="Руководитель" &[!Подразделение]=[Подразделение1]''),'#13#10' '''')*/'#13#10' IIF( [Согласовано]=1,DBGET(''Сотрудники'', ''ФамилияИО'', ''[!user] = User''),'''')'
         Editable = False
       end
       object dxCheckBox10: TdxCheckBox
-        Left = 896
+        Left = 948
         Height = 31
         Top = 116
         Width = 214
@@ -2070,19 +2228,27 @@ object Form3: TdxForm
         FieldName = 'Согласовано'
         CheckedText = 'Да'
         UnCheckedText = 'Нет'
-        Expression = '// [Номер]'#13#10'IIF([Аккредитация]=1, 1, 0)'
+        Expression = '// [Номер]'#13#10'//IIF([Аккредитация]=1, 1, 0)'
         Editable = False
         DefaultValue = '0'
       end
       object dxButton17: TdxButton
-        Left = 696
+        Left = 752
         Height = 26
         Top = 36
-        Width = 192
+        Width = 186
         Anchors = [akTop, akRight]
         Caption = 'В области'
         TabOrder = 6
         ActionOnClick = '<actions><action type="7" expression="SETFIELD(''Аккредитация'', 1)"/></actions>'
+      end
+      object dxLabel60: TdxLabel
+        Left = 752
+        Height = 20
+        Top = 156
+        Width = 101
+        Caption = 'Согласовал'
+        ParentColor = False
       end
     end
     object dxTabSheet8: TdxTabSheet
@@ -2092,7 +2258,7 @@ object Form3: TdxForm
         Left = -4
         Height = 392
         Top = 44
-        Width = 820
+        Width = 870
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
@@ -2127,7 +2293,7 @@ object Form3: TdxForm
         Left = 960
         Height = 28
         Top = 23
-        Width = 212
+        Width = 262
         Anchors = [akTop, akLeft, akRight, akBottom]
         CharCase = ecNormal
         MaxLength = 0
@@ -2154,7 +2320,7 @@ object Form3: TdxForm
         Width = 232
         Caption = '+ протокол испытаний'
         TabOrder = 3
-        ActionOnClick = '<actions><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Результат" values="field;expr|Вид документа;DBGETID(''Виды документов'', ''[!Вид документа]==&quot;Протокол&quot;'')|Заявка клиента;RECID(''Заявка клиента'')" ignoreaccess="0" obj="" qry="Результаты к заявке" /><action type="5" /><action type="7" expression="JS_SEND_EMAIL(&quot;smtp.mail.ru&quot;,''465'', &quot;jdx_lims@mail.ru&quot;, &quot;Z2nLWtHZPy64jA5ncHki&quot;, [Контактное лицо|Эл.почта] , &quot;Уведомление от ЛИМС&quot; , &quot;По вашей заявке в лабораторию №&quot;+[Шифр_заявки]+&quot; сформирован протокол испытаний&quot;)"/></actions>'
+        ActionOnClick = '<actions><action type="7" expression="setvar(''Результаты к заявке'', COUNT(''Результаты к заявке''))"/><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Результат" values="field;expr|Вид документа;DBGETID(''Виды документов'', ''[!Вид документа]==&quot;Протокол&quot;'')|Заявка клиента;RECID(''Заявка клиента'')" ignoreaccess="0" obj="" qry="Результаты к заявке" /><action type="5" /><comment text="нужно отправить оповещение по электронной почте, пока отключил"/><action type="7" expression="/*IIF('#13#10'getvar(''Результаты к заявке'')&lt;COUNT(''Результаты к заявке'')  //проверяем, что протоколов стало больше'#13#10'&amp; [Контактное лицо|Эл.почта]&lt;&gt;null //проверяем, что эл. почта есть'#13#10'&amp; [Контактное лицо|Эл.почта]&lt;&gt;'''','#13#10'JS_SEND_EMAIL(&quot;smtp.mail.ru&quot;,''465'', &quot;jdx_lims@mail.ru&quot;, &quot;Z2nLWtHZPy64jA5ncHki&quot;, [Контактное лицо|Эл.почта] ,'#13#10' &quot;Уведомление от ЛИМС&quot; , &quot;По вашей заявке в лабораторию №&quot;+[Шифр_заявки]+&quot; сформирован протокол испытаний&quot;),'#13#10''''')                       */"/></actions>'
       end
       object dxButton24: TdxButton
         Left = 404
@@ -2239,40 +2405,6 @@ object Form3: TdxForm
         Editable = False
         DefaultValue = '0'
       end
-      object dxQueryGrid2: TdxQueryGrid
-        Left = 12
-        Height = 88
-        Top = 343
-        Width = 448
-        AutoAdvance = aaNone
-        Color = clWindow
-        Columns = <>
-        DefaultRowHeight = 20
-        DoubleBuffered = True
-        Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgDisplayMemoText]
-        ParentDoubleBuffered = False
-        ShowHint = True
-        TabOrder = 3
-        SelectedColor = clHighlight
-        GridLineStyle = psSolid
-        SelectedTextColor = clHighlightText
-        InactiveSelectedColor = clSilver
-        InactiveSelectedTextColor = clBlack
-        ShowButtons = False
-        VisibleButtons = [gbnDelete, gbnRefresh, gbnGoto]
-        VisibleCaptions = []
-        FlatButtons = True
-        ButtonsColor = clBtnFace
-        ButtonSize = 25
-        ButtonFont.Height = -17
-        ButtonFont.Name = 'Verdana'
-        AlignmentButtons = taLeftJustify
-        HideButtonsWhenLostFocus = False
-        WordWrap = False
-        AllowChangeSort = False
-        Id = 91
-        ManualRefresh = True
-      end
       object dxLookupComboBox18: TdxLookupComboBox
         Left = 780
         Height = 28
@@ -2280,7 +2412,7 @@ object Form3: TdxForm
         Width = 376
         CharCase = ecNormal
         MaxLength = 0
-        TabOrder = 4
+        TabOrder = 3
         Id = 8612
         FieldName = 'Архив'
         SourceTId = 530
@@ -2302,59 +2434,9 @@ object Form3: TdxForm
         Left = 792
         Height = 24
         Top = 352
-        Width = 130
+        Width = 180
         Anchors = [akTop, akLeft, akRight, akBottom]
         Caption = 'Архив'
-        ParentColor = False
-      end
-      object dxLabel38: TdxLabel
-        Left = 20
-        Height = 20
-        Top = 312
-        Width = 58
-        Caption = 'Пробы'
-        ParentColor = False
-      end
-      object dxQueryGrid10: TdxQueryGrid
-        Left = 476
-        Height = 88
-        Top = 343
-        Width = 284
-        AutoAdvance = aaNone
-        Color = clWindow
-        Columns = <>
-        DefaultRowHeight = 20
-        DoubleBuffered = True
-        Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgDisplayMemoText]
-        ParentDoubleBuffered = False
-        ShowHint = True
-        TabOrder = 5
-        SelectedColor = clHighlight
-        GridLineStyle = psSolid
-        SelectedTextColor = clHighlightText
-        InactiveSelectedColor = clSilver
-        InactiveSelectedTextColor = clBlack
-        ShowButtons = False
-        VisibleButtons = []
-        VisibleCaptions = []
-        FlatButtons = True
-        ButtonsColor = clBtnFace
-        ButtonSize = 25
-        ButtonFont.Height = -17
-        ButtonFont.Name = 'Verdana'
-        AlignmentButtons = taLeftJustify
-        HideButtonsWhenLostFocus = False
-        WordWrap = False
-        AllowChangeSort = False
-        Id = 2471
-        ManualRefresh = True
-      end
-      object dxLabel39: TdxLabel
-        Left = 480
-        Height = 20
-        Top = 316
-        Width = 125
-        Caption = 'Исследования'
         ParentColor = False
       end
       object dxCalcEdit7: TdxCalcEdit
@@ -2364,7 +2446,7 @@ object Form3: TdxForm
         Width = 96
         CharCase = ecNormal
         MaxLength = 0
-        TabOrder = 6
+        TabOrder = 4
         HideButton = True
         CalculatorLayout = clNormal
         AsInteger = 0
@@ -2398,7 +2480,7 @@ object Form3: TdxForm
         Width = 100
         CharCase = ecNormal
         MaxLength = 0
-        TabOrder = 7
+        TabOrder = 5
         Id = 262435
         FieldName = 'Нумератор'
         FieldSize = 50
@@ -2420,7 +2502,7 @@ object Form3: TdxForm
           'Внутри страны'
         )
         MaxLength = 0
-        TabOrder = 8
+        TabOrder = 6
         Id = 7326
         FieldName = 'Импэкс'
         SourceTId = 0
@@ -2446,48 +2528,18 @@ object Form3: TdxForm
         Caption = 'История'
         ParentColor = False
       end
-      object dxQueryGrid12: TdxQueryGrid
-        Left = 772
-        Height = 66
-        Top = 240
-        Width = 344
-        AutoAdvance = aaNone
-        Color = clWindow
-        Columns = <>
-        DefaultRowHeight = 20
-        DoubleBuffered = True
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
-        ParentDoubleBuffered = False
-        ShowHint = True
-        TabOrder = 9
-        SelectedColor = clHighlight
-        GridLineStyle = psSolid
-        SelectedTextColor = clHighlightText
-        InactiveSelectedColor = clSilver
-        InactiveSelectedTextColor = clBlack
-        ShowButtons = False
-        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
-        VisibleCaptions = []
-        FlatButtons = True
-        ButtonsColor = clBtnFace
-        ButtonSize = 25
-        ButtonFont.Height = -17
-        ButtonFont.Name = 'Verdana'
-        AlignmentButtons = taLeftJustify
-        HideButtonsWhenLostFocus = False
-        WordWrap = False
-        AllowChangeSort = False
-        Id = 2980
-        ManualRefresh = False
-      end
+    end
+    object dxTabSheet12: TdxTabSheet
+      Caption = 'Скрытые запросы'
+      StopTab = False
       object dxLookupComboBox25: TdxLookupComboBox
-        Left = 784
+        Left = 12
         Height = 28
-        Top = 168
+        Top = 8
         Width = 184
         CharCase = ecNormal
         MaxLength = 0
-        TabOrder = 10
+        TabOrder = 0
         Id = 262978
         FieldName = 'заявка от клиента'
         SourceTId = 6863
@@ -2517,13 +2569,217 @@ object Form3: TdxForm
         UpdateTree = False
       end
       object dxButton25: TdxButton
-        Left = 772
+        Left = 0
         Height = 30
-        Top = 200
+        Top = 40
         Width = 344
         Caption = 'Заполнить пробы из запроса'
-        TabOrder = 11
-        ActionOnClick = '<actions><action type="5" /><action type="9" id="35B8560B-A110-4BF9-B886-635E7BED9058" fm="Пробы" qry="Пробы из заявки клиента" fields="fl;qfl;expr|Заявка клиента2;;RECID(''Заявка клиента'')|Cостояние пробы;Cостояние пробы;|Вид упаковки;Вид упаковки;|Год урожая;Год урожая;|Дата получения семян;Дата получения семян;|Ед.изм.1;Ед.изм.1;|Ед.изм.2;Ед.изм.2;|Категория;Категория;|Количество_образцов;Количество_образцов;|Место происхождения;Место происхождения;|Место хранения;Место хранения;|Номер транспорта;Номер транспорта;|Объем партии1;Объем партии1;|Объем_пробы;Объем_пробы;|Примечание;Примечание;|Продукция;Продукция;|Производитель;Производитель;|Протравливание;Протравливание;|Прошлые испытания;Прошлые испытания;|Репродукция;Репродукция;|Сейф-пакет;Сейф-пакет;|Сорт;Сорт;|Сортовая чистота;Сортовая чистота;|Сортовой документ;Сортовой документ;|Способ выращивания;Способ выращивания;|Срок годности;Срок годности;|Страна происхождения;Страна происхождения;|Товарная группа;Товарная группа;|Транспорт;Транспорт;|Число мест;Число мест;" msg="" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Пробы1" keeppos="0" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Пробы из заявки клиента" keeppos="0" /><action type="8" fields="заявка от клиента"/><action type="5" /></actions>'
+        TabOrder = 1
+        ActionOnClick = '<actions><if cond="[заявка от клиента]&lt;&gt;null"><action type="5" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Пробы из заявки клиента" keeppos="0" /><action type="9" id="35B8560B-A110-4BF9-B886-635E7BED9058" fm="Пробы" qry="Пробы из заявки клиента" fields="fl;qfl;expr|Заявка клиента2;;RECID(''Заявка клиента'')|Cостояние пробы;Cостояние пробы;|Вид упаковки;Вид упаковки;|Год урожая;Год урожая;|Дата получения семян;Дата получения семян;|Ед.изм.1;Ед.изм.1;|Ед.изм.2;Ед.изм.2;|Категория;Категория;|Количество_образцов;Количество_образцов;|Место происхождения;Место происхождения;|Место хранения;Место хранения;|Номер транспорта;Номер транспорта;|Объем партии1;Объем партии1;|Объем_пробы;Объем_пробы;|Примечание;Примечание;|Продукция;Продукция;|Производитель;Производитель;|Протравливание;Протравливание;|Прошлые испытания;Прошлые испытания;|Репродукция;Репродукция;|Сейф-пакет;Сейф-пакет;|Сорт;Сорт;|Сортовая чистота;Сортовая чистота;|Сортовой документ;Сортовой документ;|Способ выращивания;Способ выращивания;|Срок годности;Срок годности;|Страна происхождения;Страна происхождения;|Товарная группа;Товарная группа;|Транспорт;Транспорт;|Число мест;Число мест;" msg="" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Пробы1" keeppos="0" /><action type="8" fields="заявка от клиента"/><action type="5" /></if></actions>'
+      end
+      object dxQueryGrid12: TdxQueryGrid
+        Left = 0
+        Height = 80
+        Top = 80
+        Width = 448
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 2
+        SelectedColor = clHighlight
+        GridLineStyle = psSolid
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = False
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -17
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 2980
+        ManualRefresh = True
+      end
+      object dxLabel38: TdxLabel
+        Left = 8
+        Height = 20
+        Top = 164
+        Width = 58
+        Caption = 'Пробы'
+        ParentColor = False
+      end
+      object dxQueryGrid2: TdxQueryGrid
+        Left = 0
+        Height = 88
+        Top = 195
+        Width = 448
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 3
+        SelectedColor = clHighlight
+        GridLineStyle = psSolid
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = False
+        VisibleButtons = [gbnDelete, gbnRefresh, gbnGoto]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -17
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 91
+        ManualRefresh = True
+      end
+      object dxLabel39: TdxLabel
+        Left = 8
+        Height = 20
+        Top = 292
+        Width = 125
+        Caption = 'Исследования'
+        ParentColor = False
+      end
+      object dxQueryGrid10: TdxQueryGrid
+        Left = 4
+        Height = 81
+        Top = 319
+        Width = 448
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 4
+        SelectedColor = clHighlight
+        GridLineStyle = psSolid
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = False
+        VisibleButtons = []
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -17
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 2471
+        ManualRefresh = True
+      end
+      object dxQueryGrid13: TdxQueryGrid
+        Left = 492
+        Height = 223
+        Top = 36
+        Width = 316
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 5
+        SelectedColor = clHighlight
+        GridLineStyle = psSolid
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = False
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -17
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 3009
+        ManualRefresh = True
+      end
+      object dxQueryGrid14: TdxQueryGrid
+        Left = 492
+        Height = 179
+        Top = 309
+        Width = 328
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 6
+        SelectedColor = clHighlight
+        GridLineStyle = psSolid
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = False
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -13
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 3010
+        ManualRefresh = True
+      end
+      object dxButton30: TdxButton
+        Left = 500
+        Height = 30
+        Top = 4
+        Width = 300
+        Caption = 'Добавить дополнительные поля'
+        TabOrder = 7
+        ActionOnClick = '<actions><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Дополнительные поля для заявки" keeppos="0" /><action type="9" id="A1039C22-88FA-4E7A-A030-FDBCED2E7D61" tbl="Дополнения Заявка клиента" qry="Дополнительные поля для заявки" fields="tf;qf;expr|Наименование поля;Наименование поля;|Источник;Источник;|Фильтр;Фильтр;|Значение;Значение;|Формула;Формула;" noclr="1" prompt="" /></actions>'
+      end
+      object dxLabel59: TdxLabel
+        Left = 844
+        Height = 20
+        Top = 16
+        Width = 113
+        Caption = 'Скрыть поля'
+        ParentColor = False
+        Expression = 'TEXT(''{''+NZ([Направление2|Видимость полей заявки],''null'')+''}'')'
       end
     end
   end
@@ -2785,7 +3041,7 @@ object Form3: TdxForm
     ActionOnClick = '<actions><action type="5" /></actions>'
   end
   object dxButton2: TdxButton
-    Left = 648
+    Left = 698
     Height = 27
     Top = 760
     Width = 189
@@ -2857,7 +3113,7 @@ object Form3: TdxForm
       00000000000000000000
     }
     TabOrder = 9
-    ActionOnClick = '<actions><action type="2" template="" expression="GET(''Шаблоны'', ''Файл'')" outfile="" fileaction="1" saverecord="1"/></actions>'
+    ActionOnClick = '<actions><action type="5" /><action type="9" id="08951CB2-B27A-4BCF-B714-F0B209F0D7AF" formname="" form_exp="" id_exp="" file_open="" path_template="GET(''Шаблоны'', ''Файл'')" path_doc="" fileaction="1" /></actions>'
   end
   object dxLookupComboBox3: TdxLookupComboBox
     Left = 904
@@ -2890,17 +3146,25 @@ object Form3: TdxForm
     Left = 8
     Height = 20
     Top = 184
-    Width = 243
+    Width = 269
     Caption = 'Направление деятельности'
+    Font.Height = -17
+    Font.Name = 'Verdana'
+    Font.Style = [fsBold]
     ParentColor = False
+    ParentFont = False
   end
   object dxLookupComboBox12: TdxLookupComboBox
-    Left = 260
+    Left = 280
     Height = 28
     Top = 180
-    Width = 404
+    Width = 384
     CharCase = ecNormal
+    Font.Height = -17
+    Font.Name = 'Verdana'
+    Font.Style = [fsBold]
     MaxLength = 0
+    ParentFont = False
     TabOrder = 11
     Id = 176
     FieldName = 'Направление2'
@@ -2960,7 +3224,7 @@ object Form3: TdxForm
     Expression = '''Долг '' + CSTR(ROUNDTO(-[Клиент|Долг_клиента],2))'
   end
   object dxQueryGrid6: TdxQueryGrid
-    Left = 844
+    Left = 894
     Height = 113
     Top = 760
     Width = 358
@@ -3079,7 +3343,7 @@ object Form3: TdxForm
     UpdateTree = False
   end
   object dxLabel30: TdxLabel
-    Left = 82
+    Left = 132
     Height = 20
     Top = 773
     Width = 154
@@ -3088,7 +3352,7 @@ object Form3: TdxForm
     ParentColor = False
   end
   object dxDateEdit5: TdxDateEdit
-    Left = 254
+    Left = 304
     Height = 28
     Top = 773
     Width = 134
@@ -3164,7 +3428,7 @@ object Form3: TdxForm
     UpdateTree = False
   end
   object dxLabel32: TdxLabel
-    Left = 74
+    Left = 124
     Height = 20
     Top = 815
     Width = 159
@@ -3173,7 +3437,7 @@ object Form3: TdxForm
     ParentColor = False
   end
   object dxDateEdit3: TdxDateEdit
-    Left = 248
+    Left = 298
     Height = 28
     Top = 815
     Width = 144
@@ -3197,7 +3461,7 @@ object Form3: TdxForm
     Editable = True
   end
   object dxLabel41: TdxLabel
-    Left = 64
+    Left = 114
     Height = 20
     Top = 856
     Width = 173
@@ -3206,7 +3470,7 @@ object Form3: TdxForm
     ParentColor = False
   end
   object dxEdit8: TdxEdit
-    Left = 248
+    Left = 298
     Height = 28
     Top = 848
     Width = 144
@@ -3221,6 +3485,46 @@ object Form3: TdxForm
     Expression = 'CSTR(MAX(''Пробы2'', ''Время поступления''))'
     Editable = True
   end
+  object dxEdit12: TdxComboBox
+    Left = 816
+    Height = 28
+    Top = 180
+    Width = 248
+    AutoComplete = True
+    AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+    ItemHeight = 20
+    Items.Strings = (
+      'Новая'
+      'На рассмотрении'
+      'Требуется отбор'
+      'Не приняты образцы'
+      'Приняты образцы'
+      'Назначены исследования'
+      'Исследования завершены'
+      'Протокол сформирован'
+      'Отказ'
+    )
+    MaxLength = 0
+    TabOrder = 26
+    Id = 263142
+    FieldName = 'Статус'
+    SourceTId = 37
+    SourceFId = 168
+    Filter = '[Список]= ''Заявка клиента'''#13#10'& [Фильтр]= ''Статус'''
+    FieldSize = 50
+    Required = False
+    CheckExpression = 'Block(Setfield(''Статус'', Evalexp(NZ([Направление2|Статусы заявки],''[Статус]''))),'#13#10''''')'
+    Expression = '/* Вся логика завязана на таблице статусы в направлениях детялеьности,'#13#10'там они собираются одну большую формулу в поле статусы заявки,'#13#10'а рядом поле цвета заявки, в заявке также есть поле цвета, на основании которого раскрашивается таблица с заявками'#13#10'следующие поля нужн для срабатывания пересчета статуса при их изменнии'#13#10'[Заявка] [Согласовано] [Отбор проб] [Отказ]  [Результат] [Образцы] [Исследования]'#13#10'COUNT(''Исследования1'') COUNT(''Пробы1'') COUNT(''Образцы1'')'#13#10' COUNT(''Результаты к заявке'') COUNT(''Файлы заявки'')*/'#13#10'// Evalexp(NZ([Направление2|Статусы заявки],''[Статус]''))  //не срабатывает нормально в веб-версии'#13#10'TEXT(''{''+NZ([Направление2|Статусы заявки],''[Статус]'')+''}'')'
+    Editable = True
+  end
+  object dxLabel58: TdxLabel
+    Left = 740
+    Height = 20
+    Top = 184
+    Width = 57
+    Caption = 'Статус'
+    ParentColor = False
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 100
@@ -3229,6 +3533,12 @@ object Form3: TdxForm
     AutoAdvance = aaNone
     Color = clWindow
     Columns = <    
+      item
+        Tag = 263142
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263142'
+      end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 2592
@@ -3672,7 +3982,8 @@ object Form3: TdxForm
       item
         Tag = 131120
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f131120'
       end    
       item
@@ -3707,7 +4018,8 @@ object Form3: TdxForm
       item
         Tag = 262482
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262482'
       end    
       item
@@ -3719,19 +4031,22 @@ object Form3: TdxForm
       item
         Tag = 262721
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262721'
       end    
       item
         Tag = 262722
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262722'
       end    
       item
         Tag = 262723
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262723'
       end    
       item
@@ -3743,7 +4058,8 @@ object Form3: TdxForm
       item
         Tag = 262781
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262781'
       end    
       item
@@ -3755,8 +4071,15 @@ object Form3: TdxForm
       item
         Tag = 262978
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262978l'
+      end    
+      item
+        Tag = 263155
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263155'
       end>
     DefaultRowHeight = 27
     DoubleBuffered = True
@@ -3784,7 +4107,7 @@ object Form3: TdxForm
     WordWrap = True
     AllowChangeSort = True
     Id = 0
-    SortCols = '3;1|1;1'
+    SortCols = '4;1|2;1'
   end
   object Tree: TdxFormTree
     Left = 0
@@ -3800,8 +4123,12 @@ object Form3: TdxForm
     Options = [tvoAllowMultiselect, tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoRowSelect, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips]
     Fields = <    
       item
+        FieldId = 7335
+        FieldSource = tfsForm
+      end    
+      item
         FieldId = 176
-        FieldSource = tfsObject
+        FieldSource = tfsForm
       end>
     ExpandLevels = 0
   end

@@ -45,7 +45,8 @@ object Form521: TdxForm
     DestTable = 0
     PromptFillTable = False
     ClearTableBeforeFill = False
-    Editable = False
+    Expression = '[ТМЦ|Номенклатура]'
+    Editable = True
     ListFields = <    
       item
         FieldId = 1828
@@ -189,7 +190,7 @@ object Form521: TdxForm
     CheckedText = 'Да'
     UnCheckedText = 'Нет'
     Editable = False
-    DefaultValue = '0'
+    DefaultValue = '1'
   end
   object Grid: TdxGrid
     Left = 0

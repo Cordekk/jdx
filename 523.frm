@@ -6,7 +6,7 @@ object Form523: TdxForm
   Id = 523
   PId = 0
   FormCaption = 'Отчет ОИ'
-  FormGroup = 'Приемка'
+  FormGroup = 'Общие'
   Font.Height = -13
   Font.Name = 'Verdana'
   AutoOpen = True

@@ -109,7 +109,7 @@ begin
         begin
           res := fields[NameField];
           i := i+1;
-          if i >1 then Result := Result + Separator + ' ' + VarToStr(res)
+          if i >1 then Result := Result + Separator  + VarToStr(res)
           else
           Result := Result + VarToStr(res);
         end;

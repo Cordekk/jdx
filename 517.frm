@@ -5,7 +5,7 @@ object Form517: TdxForm
   Width = 596
   Id = 517
   PId = 0
-  FormCaption = 'Комиссия'
+  FormCaption = 'Шаблон задач'
   FormGroup = 'Общие'
   Font.Height = -13
   Font.Name = 'Verdana'
@@ -21,6 +21,7 @@ object Form517: TdxForm
   Tree = Tree.Owner
   Index = 73
   SoftCheck = False
+  RecordsCaption = 'Шаблон задач'
   object dxEdit1: TdxEdit
     Left = 256
     Height = 24

@@ -1,0 +1,238 @@
+procedure debb_onmain (s: string);
+begin
+   debug('расширение="Lock_Block" процедура="' + s + '" ');
+end;
+
+procedure debp (s: string);
+begin
+
+end;
+
+
+{@module
+Author=Stark
+Version=1
+Description=Снимает блокировку записшей записи
+@}
+
+
+{@action
+Id=06E2ED05-56CE-4443-2356-EAABF4C92223
+Target=main
+OrigName=OnMain_Lock
+Name=OnMain_Lock
+Group=Функции Main
+UI=
+Description=Расширение Main снимает блокировку записи из таблицы dx_lock если на нее входит тот же пользователь или запись в режиме блокировки более 15 минут и на нее заходит пользователь.
+@}
+
+
+type
+    TQTData = record
+    OnEd: TNotifyEvent;
+    selfT: TdxForm;
+  end;
+
+var
+    QTArr: array of TQTData;
+    QT_OldDBClose: TNotifyEvent;
+
+
+    OnCreateM1,  OnDest : TCreateFormEvent;
+    OldDBClose: TNotifyEvent;
+    uid: integer;
+
+
+function QT_GetIndex (T: TObject): Integer;
+var  i, j: Integer; s: string;
+begin
+       Result := -1;
+
+       s:= TComponent(T).classname;
+
+         if s= 'TdxForm' then
+         try
+            for i:=0  to Length(QTArr) -1  do
+            if QTArr[i].selfT<>nil then
+            if QTArr[i].selfT = T then
+            if QTArr[i].selfT.Params['tagB'] = TdxForm(T).Params['tagB'] then
+            begin
+               Result := i;
+               Exit;
+            end;
+         except debb_onmain ('ошибка индекс резалт QT_GetIndex 1 '  + ExceptionParam); end;
+
+         if s = 'TEditWindow' then
+         try
+            for i:=0  to Length(QTArr) -1  do
+            if QTArr[i].selfT<>nil then
+            if QTArr[i].selfT = TEditWindow(T).form then
+            if QTArr[i].selfT.Params['tagB'] = TEditWindow(T).form.Params['tagB'] then
+            begin
+               Result := i;
+               Exit;
+            end;
+         except debb_onmain ('ошибка индекс резалт QT_GetIndex 2 '  + ExceptionParam); end;
+end;
+
+procedure QT_Ed (Sender: TObject);
+var QT: TQTData; n, i: integer;
+    q: TdxSqlQuery; s, sql: string;
+begin
+  debp('QT_Ed');
+  try
+     n:=QT_GetIndex(Sender);
+     if n<>-1 then
+     begin
+           QT := QTArr[n];
+           if QT.OnEd<>nil then QT.OnEd(Sender);
+
+           if QT.selfT.CanEdit=asLocked then
+           begin
+             try
+                //debug('зашли так как локд');
+                s:=' from '+
+                   ' dx_lock '+
+                   ' where '  +
+                   '     fmid='+ vartostr(QT.selfT.id) +
+                   ' and recid='+ vartostr(QT.selfT.recid) +
+                   ' and ('+
+                   '      uid='+ vartostr(uid) +
+                   '      or ' +
+                   '      DTime<'''+ vartostr(addminute(date+time, -15)) + '''' +
+                   '      ) ';
+
+                sql:= ' select * '+ s;
+
+                q:=sqlselect(sql);
+                if q<>nil then
+                begin
+                     q.open;
+                     if not q.eof then
+                     begin
+                          sql:= ' delete '+ s + ';';
+
+                          SQLExecute(sql);
+                     end;
+                end;
+
+             except
+                 debb_onmain('QT_Ed 2 ');
+             end;
+           end;
+     end;
+  finally
+     if q<>nil   then q.free;
+  except
+     debb_onmain('QT_Ed ' + ExceptionParam);
+  end;
+end;
+
+
+procedure OnCreateM (Sender: TObject; Form: TdxForm);
+var  s: string; QT: TQTData; n: integer;
+begin
+   if OnCreateM1<>nil then OnCreateM1 (Sender, Form);
+
+   if form.pid=0 then
+   begin
+      if not Form.Params.ParamExists('tagB') then
+      Form.Params['tagB']:=  random(999999999);
+
+      QT.OnEd:= form.OnAfterScroll;
+      form.OnAfterScroll:= @QT_Ed;
+
+      QT.selfT:= Form;
+
+      n := Length(QTArr);
+      SetLength(QTArr, n + 1);
+      QTArr[n] := QT;
+   end;
+end;
+
+
+
+procedure DBClose (Sender: TObject);
+begin
+  try
+     if OldDBClose<>nil then OldDBClose (Sender);
+     SetLength(QTArr, 0);
+  except
+      debb_onmain ('DBClose '  + ExceptionParam);
+  end;
+end;
+
+
+procedure Main_Dest (Sender: TObject; Form: TdxForm);
+var i: integer;
+begin
+  if OnDest<>nil then OnDest (Sender, Form);
+  try
+     i := QT_GetIndex (Form);
+     if i >= 0 then
+     QTArr[i].selfT:= nil;
+  except
+      debb_onmain ('Main_Dest ' + ExceptionParam);
+  end;
+end;
+
+function Get_User_ID: integer;
+var SQL,s : string; q: TdxSQLQuery;x,root: variant; i: integer; u: string;
+begin
+    try
+       u:= GetCurrentUser;
+       SQL := 'select users from dx_users';
+       x:= CreateOleObject('Microsoft.XMLDOM');
+       q:=sqlSelect(SQL);
+       s := q.Ass['USERS'];
+       x.LoadXML(s);
+       root := x.selectSingleNode('//users');
+
+       for i:=0 to root.childNodes.length-1 do
+       if  root.childNodes.item[i].getAttribute('name')=u then
+       begin
+         result:= root.childNodes.item[i].getAttribute('id');
+         break
+       end;
+
+    finally
+       x := Unassigned;
+       q.Free;
+       q:=nil;
+    end;
+end;
+
+procedure OnMain_Lock;
+begin
+   if MainWindow.FindComponent('DesignFr')=nil then
+   if not nz(MainWindow.Params['BlockALLModules'],false) then
+   begin
+       uid:= Get_User_ID;
+
+       OnCreateM1:= MainWindow.OnCreateForm;
+       MainWindow.OnCreateForm:= @OnCreateM;
+
+       OldDBClose := MainWindow.OnDatabaseClose;
+       MainWindow.OnDatabaseClose := @DBClose;
+
+       OnDest:= MainWindow.OnDestroyForm;
+       MainWindow.OnDestroyForm:= @Main_Dest;
+   end;
+end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

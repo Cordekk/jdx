@@ -199,7 +199,7 @@ object Form47: TdxForm
     FieldName = 'Консервация'
     SourceTId = 6851
     SourceFId = 262620
-    Filter = '[Показатель|Методика] = [Показатель|Методика]'
+    Filter = '[Показатель|Методика] = [Показатель|Методика]'#13#10'| [Показатель]=null'
     Required = False
     SourceTable = 0
     DestTable = 0
@@ -313,6 +313,20 @@ object Form47: TdxForm
     GroupDigits = False
     PadZeros = False
   end
+  object dxObjectField1: TdxObjectField
+    Left = 34
+    Height = 24
+    Top = 552
+    Width = 204
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 9
+    Id = 263117
+    FieldName = 'ИД_показателя_методики'
+    ObjId = 262895
+    FieldId = 263116
+    StopTab = False
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 150
@@ -374,6 +388,12 @@ object Form47: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f263020'
+      end    
+      item
+        Tag = 263117
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263117'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

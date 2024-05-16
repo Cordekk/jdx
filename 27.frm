@@ -1,6 +1,6 @@
 object Form27: TdxForm
   Left = 10
-  Height = 273
+  Height = 311
   Top = 10
   Width = 600
   Id = 27
@@ -117,6 +117,19 @@ object Form27: TdxForm
     Required = False
     Editable = False
   end
+  object dxRecordId1: TdxRecordId
+    Left = 12
+    Height = 28
+    Top = 280
+    Width = 79
+    ReadOnly = True
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 4
+    FieldName = 'ID'
+    StopTab = False
+    Id = 263113
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 100
@@ -148,6 +161,12 @@ object Form27: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262704'
+      end    
+      item
+        Tag = 263113
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263113'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

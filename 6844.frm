@@ -226,16 +226,17 @@ object Form12: TdxForm
         SourceTId = 37
         SourceFId = 168
         Delimiter = '; '
+        Filter = '[Список]=''Основание отбора'''
         Expression = '[Заявка клиента|Основание отбора]'
         Editable = True
         UpdateTree = False
       end
       object dxLabel21: TdxLabel
         Left = 8
-        Height = 16
+        Height = 32
         Top = 280
-        Width = 156
-        Caption = 'Инспектор (если есть)'
+        Width = 159
+        Caption = 'Инспектор (сотрудник '#13#10'клиента если есть)'
         ParentColor = False
       end
       object DxLookupComboBox11: TdxLookupComboBox
@@ -309,7 +310,7 @@ object Form12: TdxForm
       object dxLabel31: TdxLabel
         Left = 8
         Height = 16
-        Top = 311
+        Top = 319
         Width = 186
         Caption = 'Сотрудник-пробоотборщик'
         ParentColor = False
@@ -317,7 +318,7 @@ object Form12: TdxForm
       object dxLookupComboBox15: TdxLookupComboBox
         Left = 216
         Height = 24
-        Top = 307
+        Top = 315
         Width = 344
         CharCase = ecNormal
         MaxLength = 0
@@ -464,6 +465,7 @@ object Form12: TdxForm
         SourceTId = 37
         SourceFId = 168
         Delimiter = '; '
+        Filter = '[Список]=''Цель отбора'''
         Expression = '[Заявка клиента|Основание отбора]'
         Editable = True
         UpdateTree = False

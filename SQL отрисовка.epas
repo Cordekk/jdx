@@ -1,0 +1,120 @@
+
+{@module
+Author=Stark
+Version=1
+Description=Отрисовка произвольной строки SQL.
+@}
+
+var q: TdxSqlQuery;
+
+function mysql (sql: string): TdxSQLQuery;
+begin
+     result:= nil;
+     try
+
+        q:=sqlselect(sql);
+        result:= q;
+        if q<>nil then
+        q.open;
+     except
+       debug('dbget_mysql="' + sql + '" '+ ExceptionParam);
+     end;
+end;
+
+{@action
+Id=06E2ED05-56CE-4443-3333-EAABF4C96361
+Target=Button
+OrigName=SQL_Paint
+Name=SQL_Paint
+Group=SQL
+UI=
+<ui>
+  <component name="cmp" caption="TdxPivotGrid" filter="TdxPivotGrid" required="1"/>
+  <expr name="sql" caption="sql"/>
+</ui>
+Description= действие кнопки. Отрисовка произвольной строки SQL. Таблицу выводит на TdxPivotGrid. Для замены название
+столбиков используем формат Name@@Название** (Name - название что будет запрошено в SQL, Название -  будет назван столбик).
+ procedure SQL_Paint (s,sql: string);
+@}
+
+
+procedure SQL_Paint (s,sql: string);
+var G:TdxPivotGrid; i, j, n, k, kk: integer; ss,sss: string;
+begin
+    if self.findcomponent(s)<>nil then
+    if self.findcomponent(s).classname='TdxPivotGrid' then
+    G:= TdxPivotGrid(self.findcomponent(s));
+    try
+       sql:= EvalExpr(sql,self);
+    except;
+       debug('ошибка  SQL_Paint ошибка вычисления выражения строки sql ' + ExceptionParam);
+    end;
+    n:=1;
+    for i:=1 to utf8length(sql) do
+    if utf8copy(sql,i,2)='@@' then          // находим начало строки замены заголовка
+    begin
+        ss:=  trim(UTF8Copy(sql,n+1,UTF8pos('@@',sql,n+1)-(n+1)));
+
+        k:= UTF8pos(' ',sql,i+2);
+        kk:= UTF8pos('**',sql,i+2); // ищем конец строки замены заголовка
+        if k>kk then
+        k:= kk;
+
+        sss:= UTF8Copy(sql,i+2,k-(i+2));
+        //debug('---' + ss + ' == ' + sss);
+        self.Params[ss]:= sss;
+
+        sql:= StringReplace(sql,'@@'+sss+'**','',[]);
+
+        i:=i-(utf8length(sss)+2);
+    end
+    else
+    if utf8copy(sql,i,1) in [' ',','] then
+    n:=i;
+
+
+    if G<>nil then
+    if mysql(sql)<>nil then
+    try
+      q.MoveLast;
+      q.MoveFirst;
+
+      G.RowCount:= q.RecordCount+1;
+      G.ColCount:= q.FieldCount+1;
+
+      for i:=0 to q.FieldCount-1 do // проход по видимым полям //
+      begin
+          ss:= q.Field[i].FieldName;
+          ss:= nz(self.Params[ss],ss);
+          G.Cells[i+1,0]:= ss;
+
+          k:= G.Canvas.TextWidth(ss)+20;
+          ss:= q.Field[i].asString;
+          n:= G.Canvas.TextWidth(ss)+20;
+
+          if k<n then
+          k:= n;
+
+          if k<50 then
+          k:=50;
+
+          G.ColWidths[i+1]:= k;
+      end;
+
+      G.ColWidths[0]:= 20;
+      for i:=1 to q.RecordCount do
+      G.Cells[0,i]:= inttostr(i);
+
+      for i:=0 to q.RecordCount-1 do
+      begin
+         for j:=0 to q.FieldCount-1 do
+         G.Cells[j+1,i+1]:= q.Field[j].asString;
+         q.MoveNext;
+      end;
+
+    finally
+       if q<>nil then q.Free;
+    except;
+       debug('ошибка  SQL_Paint ' + ExceptionParam);
+    end;
+end;

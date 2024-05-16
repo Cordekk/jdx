@@ -171,7 +171,11 @@ procedure ObjectVisible(name: string; Visible:boolean);
 var
   o:TComponent;
 Begin
-  o:=self.FindComponent(name);
+    try
+    o:=self.FindComponentByFieldName(name);
+    except
+      o:=self.FindComponent(name);
+    end;
   if o<> nil then
     TControl(o).Visible:=Visible;
 End;

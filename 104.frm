@@ -46,7 +46,7 @@ object Form104: TdxForm
   object dxCalcEdit1: TdxCalcEdit
     Left = 96
     Height = 24
-    Top = 316
+    Top = 308
     Width = 80
     CharCase = ecNormal
     MaxLength = 0
@@ -68,15 +68,15 @@ object Form104: TdxForm
     PadZeros = True
   end
   object dxLabel2: TdxLabel
-    Left = 28
+    Left = 32
     Height = 16
-    Top = 324
+    Top = 316
     Width = 60
     Caption = 'Площадь'
     ParentColor = False
   end
   object dxLabel3: TdxLabel
-    Left = 36
+    Left = 32
     Height = 16
     Top = 356
     Width = 176
@@ -116,8 +116,8 @@ object Form104: TdxForm
   object dxCalcEdit2: TdxCalcEdit
     Left = 40
     Height = 24
-    Top = 412
-    Width = 52
+    Top = 408
+    Width = 68
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
@@ -129,7 +129,7 @@ object Form104: TdxForm
     Flat = True
     Id = 1832
     FieldName = 'МинТемп'
-    Precission = 0
+    Precission = 1
     Required = False
     Editable = False
     NullToZero = False
@@ -139,7 +139,7 @@ object Form104: TdxForm
   object dxCalcEdit3: TdxCalcEdit
     Left = 140
     Height = 24
-    Top = 412
+    Top = 408
     Width = 64
     CharCase = ecNormal
     MaxLength = 0
@@ -152,7 +152,7 @@ object Form104: TdxForm
     Flat = True
     Id = 1833
     FieldName = 'МаксТемп'
-    Precission = 0
+    Precission = 1
     Required = False
     Editable = False
     NullToZero = False
@@ -160,10 +160,10 @@ object Form104: TdxForm
     PadZeros = True
   end
   object dxCalcEdit4: TdxCalcEdit
-    Left = 260
+    Left = 257
     Height = 24
     Top = 408
-    Width = 56
+    Width = 59
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
@@ -175,7 +175,7 @@ object Form104: TdxForm
     Flat = True
     Id = 1834
     FieldName = 'МинДавление'
-    Precission = 0
+    Precission = 1
     Required = False
     Editable = False
     NullToZero = False
@@ -191,7 +191,7 @@ object Form104: TdxForm
     ParentColor = False
   end
   object dxLabel5: TdxLabel
-    Left = 256
+    Left = 257
     Height = 16
     Top = 380
     Width = 66
@@ -201,8 +201,8 @@ object Form104: TdxForm
   object dxCalcEdit5: TdxCalcEdit
     Left = 356
     Height = 24
-    Top = 412
-    Width = 52
+    Top = 408
+    Width = 56
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
@@ -214,7 +214,7 @@ object Form104: TdxForm
     Flat = True
     Id = 1835
     FieldName = 'МаксДавление'
-    Precission = 0
+    Precission = 1
     Required = False
     Editable = False
     NullToZero = False
@@ -245,7 +245,7 @@ object Form104: TdxForm
     Flat = True
     Id = 1836
     FieldName = 'МинВлажн'
-    Precission = 0
+    Precission = 1
     Required = False
     Editable = False
     NullToZero = False
@@ -268,7 +268,7 @@ object Form104: TdxForm
     Flat = True
     Id = 1837
     FieldName = 'МаксВлажн'
-    Precission = 0
+    Precission = 1
     Required = False
     Editable = False
     NullToZero = False
@@ -284,9 +284,9 @@ object Form104: TdxForm
     ParentColor = False
   end
   object dxEdit2: TdxEdit
-    Left = 92
+    Left = 96
     Height = 24
-    Top = 284
+    Top = 272
     Width = 100
     CharCase = ecNormal
     MaxLength = 0
@@ -298,9 +298,9 @@ object Form104: TdxForm
     Editable = False
   end
   object dxLabel8: TdxLabel
-    Left = 36
+    Left = 32
     Height = 16
-    Top = 288
+    Top = 276
     Width = 42
     Caption = 'Номер'
     ParentColor = False
@@ -347,7 +347,7 @@ object Form104: TdxForm
     ParentColor = False
   end
   object dxCalcEdit8: TdxCalcEdit
-    Left = 32
+    Left = 40
     Height = 24
     Top = 464
     Width = 72
@@ -362,7 +362,7 @@ object Form104: TdxForm
     Flat = True
     Id = 7250
     FieldName = 'НапряжениеМин'
-    Precission = 0
+    Precission = 1
     Required = False
     Editable = False
     NullToZero = False
@@ -370,10 +370,10 @@ object Form104: TdxForm
     PadZeros = True
   end
   object dxCalcEdit9: TdxCalcEdit
-    Left = 144
+    Left = 140
     Height = 24
     Top = 464
-    Width = 72
+    Width = 60
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 12
@@ -385,7 +385,7 @@ object Form104: TdxForm
     Flat = True
     Id = 7251
     FieldName = 'НапряжениеМакс'
-    Precission = 0
+    Precission = 1
     Required = False
     Editable = False
     NullToZero = False
@@ -393,7 +393,7 @@ object Form104: TdxForm
     PadZeros = True
   end
   object dxCalcEdit10: TdxCalcEdit
-    Left = 308
+    Left = 257
     Height = 24
     Top = 464
     Width = 60
@@ -408,7 +408,7 @@ object Form104: TdxForm
     Flat = True
     Id = 7252
     FieldName = 'ЧастотаМин'
-    Precission = 0
+    Precission = 1
     Required = False
     Editable = False
     NullToZero = False
@@ -416,7 +416,7 @@ object Form104: TdxForm
     PadZeros = True
   end
   object dxLabel11: TdxLabel
-    Left = 364
+    Left = 257
     Height = 16
     Top = 440
     Width = 55
@@ -424,7 +424,7 @@ object Form104: TdxForm
     ParentColor = False
   end
   object dxCalcEdit11: TdxCalcEdit
-    Left = 406
+    Left = 356
     Height = 24
     Top = 464
     Width = 60
@@ -439,7 +439,7 @@ object Form104: TdxForm
     Flat = True
     Id = 7253
     FieldName = 'ЧастотаМакс'
-    Precission = 0
+    Precission = 1
     Required = False
     Editable = False
     NullToZero = False
@@ -540,9 +540,9 @@ object Form104: TdxForm
     UpdateTree = False
   end
   object dxLabel14: TdxLabel
-    Left = 260
+    Left = 248
     Height = 16
-    Top = 264
+    Top = 268
     Width = 140
     Caption = 'Оснащение списком'
     ParentColor = False
@@ -581,7 +581,7 @@ object Form104: TdxForm
     Id = 298
   end
   object dxLabel15: TdxLabel
-    Left = 568
+    Left = 636
     Height = 16
     Top = 452
     Width = 147

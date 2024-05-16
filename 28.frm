@@ -1,8 +1,8 @@
 object Form28: TdxForm
   Left = 10
-  Height = 647
+  Height = 861
   Top = 10
-  Width = 1074
+  Width = 1379
   Id = 28
   PId = 0
   FormCaption = 'Направление деятельности'
@@ -21,6 +21,7 @@ object Form28: TdxForm
   Tree = Tree.Owner
   Index = 21
   SoftCheck = False
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="role='''' | role=''Администратор''" grid="cmp;ve_prop|dxTabSheet1;Доступность|dxTabSheet5;Доступность|dxTabSheet2;Доступность|dxTabSheet3;Доступность|dxTabSheet4;Доступность|dxTabSheet6;Доступность" stateevents="1" /></actions>'
   object dxEdit1: TdxEdit
     Left = 16
     Height = 28
@@ -100,9 +101,9 @@ object Form28: TdxForm
   end
   object dxPageControl1: TdxPageControl
     Left = 12
-    Height = 506
+    Height = 720
     Top = 124
-    Width = 1048
+    Width = 1353
     ActivePage = dxTabSheet1
     Anchors = [akTop, akLeft, akRight, akBottom]
     TabIndex = 0
@@ -632,12 +633,150 @@ object Form28: TdxForm
       end
     end
     object dxTabSheet3: TdxTabSheet
-      Caption = 'Свойства полей'
+      Caption = 'Дополнительные поля'
       StopTab = False
+      object dxGrid2: TdxGrid
+        Left = 6
+        Height = 652
+        Top = 24
+        Width = 1154
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 0
+        SelectedColor = clHighlight
+        GridLineStyle = psSolid
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = True
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnDuplicate, gbnMoveUp, gbnMoveDown]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -17
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 6877
+      end
+      object dxButton3: TdxButton
+        Left = 292
+        Height = 22
+        Top = 0
+        Width = 88
+        Caption = 'Импорт'
+        TabOrder = 2
+        ActionOnClick = '<actions><action type="9" id="3495F0CA-B40A-4D26-9E2D-91CF364BF2A3" initfolder="" filename="" charset="UTF-8" skipfirstrow="1" table="Дополнения направления" fields="tablefield|Форма|Наименование поля|Значение|Источник|Фильтр|Формула" /></actions>'
+      end
     end
     object dxTabSheet4: TdxTabSheet
       Caption = 'Видимость полей'
       StopTab = False
+      object dxGrid4: TdxGrid
+        Left = 20
+        Height = 549
+        Top = 27
+        Width = 1288
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 0
+        SelectedColor = clHighlight
+        GridLineStyle = psSolid
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = True
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnDuplicate, gbnMoveUp, gbnMoveDown]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -17
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 6879
+      end
+      object dxMemo4: TdxMemo
+        Left = 16
+        Height = 72
+        Top = 608
+        Width = 284
+        ScrollBars = ssBoth
+        TabOrder = 1
+        Id = 263162
+        FieldName = 'Видимость полей заявки'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Expression = '"Block("+MERGEIF(''Видимость полей'', ''Формула'', '', '', ''[Форма]="Заявка клиента" |[Форма]=null'')+")"'
+        Editable = False
+        UpdateTree = False
+      end
+      object dxMemo5: TdxMemo
+        Left = 340
+        Height = 72
+        Top = 608
+        Width = 284
+        ScrollBars = ssBoth
+        TabOrder = 2
+        Id = 263163
+        FieldName = 'Видимость полей пробы'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Expression = '"Block("+MERGEIF(''Видимость полей'', ''Формула'', '', '', ''[Форма]="Пробы" |[Форма]=null'')+")"'
+        Editable = False
+        UpdateTree = False
+      end
+      object dxMemo6: TdxMemo
+        Left = 692
+        Height = 72
+        Top = 608
+        Width = 284
+        ScrollBars = ssBoth
+        TabOrder = 3
+        Id = 263164
+        FieldName = 'Видимость полей отбора'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Expression = '"Block("+MERGEIF(''Видимость полей'', ''Формула'', '', '', ''[Форма]="Отбор пробы" |[Форма]=null'')+")"'
+        Editable = False
+        UpdateTree = False
+      end
+      object dxButton2: TdxButton
+        Left = 288
+        Height = 22
+        Top = 4
+        Width = 88
+        Caption = 'Импорт'
+        TabOrder = 4
+        ActionOnClick = '<actions><action type="9" id="3495F0CA-B40A-4D26-9E2D-91CF364BF2A3" initfolder="" filename="" charset="UTF-8" skipfirstrow="1" table="Видимость полей" fields="tablefield|Форма|Поле|Поле видно|Условие|Формула" /></actions>'
+      end
     end
     object dxTabSheet6: TdxTabSheet
       Caption = 'Подразделения'
@@ -694,11 +833,165 @@ object Form28: TdxForm
         UpdateTree = False
       end
     end
+    object dxTabSheet7: TdxTabSheet
+      Caption = 'Статусы'
+      StopTab = False
+      object dxGrid3: TdxGrid
+        Left = 24
+        Height = 576
+        Top = 36
+        Width = 1081
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 0
+        SelectedColor = clHighlight
+        GridLineStyle = psSolid
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = True
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnDuplicate, gbnShopping, gbnMoveUp, gbnMoveDown]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -17
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 6878
+      end
+      object dxMemo2: TdxMemo
+        Left = 32
+        Height = 52
+        Top = 628
+        Width = 296
+        ScrollBars = ssBoth
+        TabOrder = 1
+        Id = 263149
+        FieldName = 'Статусы заявки'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Expression = '"Block("+MERGEIF(''Статусы'', ''Формула'', '', '', ''[Форма]="Заявка клиента" |[Форма]=null'')+", getvar(''статус''))"'
+        Editable = False
+        UpdateTree = False
+      end
+      object dxMemo3: TdxMemo
+        Left = 348
+        Height = 52
+        Top = 628
+        Width = 332
+        ScrollBars = ssBoth
+        TabOrder = 2
+        Id = 263152
+        FieldName = 'Цвета заявки'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Expression = '//COUNT(''Статусы'')'#13#10'ReplaceALL(MERGEIF(''Статусы'', ''Связь цвета'', '';'', ''[Форма]="Заявка клиента"|[Форма]=null''), ''; '' , '';'')'
+        Editable = False
+        UpdateTree = False
+      end
+      object dxButton1: TdxButton
+        Left = 248
+        Height = 22
+        Top = 12
+        Width = 88
+        Caption = 'Импорт'
+        TabOrder = 3
+        ActionOnClick = '<actions><action type="9" id="3495F0CA-B40A-4D26-9E2D-91CF364BF2A3" initfolder="" filename="" charset="UTF-8" skipfirstrow="1" table="Статусы" fields="tablefield|Форма|Статус|Цвет|Условие|Формула|Связь цвета" /></actions>'
+      end
+      object dxMemo7: TdxMemo
+        Left = 700
+        Height = 52
+        Top = 630
+        Width = 296
+        ScrollBars = ssBoth
+        TabOrder = 5
+        Id = 263165
+        FieldName = 'Статусы пробы'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Expression = '"Block("+MERGEIF(''Статусы'', ''Формула'', '', '', ''[Форма]="Пробы" |[Форма]=null'')+", getvar(''статус''))"'
+        Editable = False
+        UpdateTree = False
+      end
+      object dxMemo8: TdxMemo
+        Left = 1016
+        Height = 52
+        Top = 636
+        Width = 356
+        ScrollBars = ssBoth
+        TabOrder = 6
+        Id = 263166
+        FieldName = 'Цвета пробы'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Expression = 'MERGEIF(''Статусы'', ''Связь цвета'', '';'', ''[Форма]="Пробы" |[Форма]=null'')'
+        Editable = False
+        UpdateTree = False
+      end
+      object dxMemo10: TdxMemo
+        Left = 1085
+        Height = 52
+        Top = 511
+        Width = 356
+        ScrollBars = ssBoth
+        TabOrder = 7
+        Id = 263168
+        FieldName = 'Цвета отбора'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Expression = 'MERGEIF(''Статусы'', ''Связь цвета'', '';'', ''[Форма]="Отбор проб" |[Форма]=null'')'
+        Editable = False
+        UpdateTree = False
+      end
+      object dxMemo9: TdxMemo
+        Left = 1089
+        Height = 52
+        Top = 431
+        Width = 296
+        ScrollBars = ssBoth
+        TabOrder = 8
+        Id = 263167
+        FieldName = 'Статусы отбора'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Expression = '"Block("+MERGEIF(''Статусы'', ''Формула'', '', '', ''[Форма]="Отбор проб" |[Форма]=null'')+", getvar(''статус''))"'
+        Editable = False
+        UpdateTree = False
+      end
+    end
   end
   object dxEdit3: TdxEdit
-    Left = 992
+    Left = 1276
     Height = 28
-    Top = 12
+    Top = 4
     Width = 100
     CharCase = ecNormal
     MaxLength = 0
@@ -721,174 +1014,194 @@ object Form28: TdxForm
       item
         Tag = 101
         Title.Caption = ' '
-        Width = 729
+        Width = 179
         FieldName = 'f101'
       end    
       item
         Tag = 1799
         Title.Caption = ' '
-        Width = 100
+        Width = 214
         FieldName = 'f1799'
       end    
       item
         Tag = 8569
         Title.Caption = ' '
-        Width = 100
+        Width = 170
         FieldName = 'f8569'
       end    
       item
         Tag = 262443
         Title.Caption = ' '
-        Width = 100
+        Width = 225
         FieldName = 'f262443'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 262445
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262445'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 262446
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262446'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 262447
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262447'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 262448
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262448'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 262449
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262449'
       end    
       item
         Tag = 262450
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262450'
       end    
       item
         Tag = 262454
         Title.Caption = ' '
-        Width = 100
+        Width = 226
         FieldName = 'f262454'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 262455
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262455'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 262456
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262456'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 262457
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262457'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 262458
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262458'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 262459
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262459'
       end    
       item
         Tag = 262460
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262460'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 262461
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262461'
       end    
       item
         Tag = 262661
         Title.Caption = ' '
-        Width = 100
+        Width = 230
         FieldName = 'f262661'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 262662
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262662'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 262663
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262663'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 262664
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262664'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 262665
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262665'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 262666
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262666'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 262667
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262667'
       end    
       item
         Tag = 262668
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262668'
       end    
       item
@@ -900,14 +1213,69 @@ object Form28: TdxForm
       item
         Tag = 262974
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262974'
+      end    
+      item
+        Tag = 263149
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263149'
+      end    
+      item
+        Tag = 263152
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263152'
+      end    
+      item
+        Tag = 263162
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263162'
+      end    
+      item
+        Tag = 263163
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263163'
+      end    
+      item
+        Tag = 263164
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263164'
+      end    
+      item
+        Tag = 263165
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263165'
+      end    
+      item
+        Tag = 263166
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263166'
+      end    
+      item
+        Tag = 263167
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263167'
+      end    
+      item
+        Tag = 263168
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263168'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
     Font.Height = -17
     Font.Name = 'Verdana'
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgDisplayMemoText]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgDisplayMemoText]
     ParentDoubleBuffered = False
     ReadOnly = True
     ShowHint = True

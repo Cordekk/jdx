@@ -1,0 +1,32 @@
+{@module
+Author=Cordek
+Version=1.1
+Description=Модуль содержит действие для клика по кнопке формы из действия кнопки, может пригодиться для зацикливания действий. Веб-версия.
+Добавил функцию для клика по кнопке
+@}
+
+
+  {@action
+Id=A971EF36-34CB-4A2C-9007-3A2D140BEDBC
+  @}
+procedure ClickButton(const BnName: String);
+var
+Bn: TdxButton;
+begin
+	Bn := TdxButton(Self.FindComponent(BnName));
+	Bn.Click;
+end;
+
+
+ {@function
+Name=ClickButtonf
+@}
+
+
+function ClickButtonf(const BnName: String): String;
+var
+Bn: TdxButton;
+begin
+	Bn := TdxButton(Self.FindComponent(BnName));
+	Bn.Click;
+end;

@@ -1,0 +1,129 @@
+{@module
+Author=Cordek
+Version=1
+
+Description=некоторые изменения в модуле DX plus (веб-версия)
+@}
+
+
+procedure DoCalcError(const Param: String; Row: Integer);
+begin
+  if Row > 0 then
+    RaiseException(erCustomError, 'Ошибка вычисления выражения в параметре "' +
+      Param + '" в строке ' + IntToStr(Row) + ': ' + ExceptionParam)
+  else
+    RaiseException(erCustomError, 'Ошибка вычисления выражения в параметре "' +
+      Param + '": ' + ExceptionParam);
+end;
+
+procedure DoError(const Param: String; Row: Integer; const Msg: String);
+begin
+  if Row > 0 then
+    RaiseException(erCustomError, 'Ошибка в параметре "' +
+      Param + '" в строке ' + IntToStr(Row) + ': ' + Msg)
+  else
+    RaiseException(erCustomError, 'Ошибка в параметре "' +
+      Param + '": ' + Msg);
+end;
+
+procedure DoSetFieldError(const Param: String; Row: Integer; V: Variant);
+begin
+  DoError(Param, Row, 'Результат вычисления выражения несовместим с типом поля. ' +
+    'Результат выражения: ' + VarToStr(V));
+end;
+
+function TryEvalExpr(const Expr: String; Fm: TdxForm; const Param: String; Row: Integer): Variant;
+begin
+  try
+    Result := Session.EvalExpr(Expr, Fm);
+  except
+    DoCalcError(Param, Row);
+  end;
+end;
+
+function EvalRecId(const Expr: String; Fm: TdxForm): Variant;
+begin
+  try
+    Result := Session.EvalExpr(Expr, Fm);
+  except
+    DoCalcError('Найти запись по ID', 0);
+  end;
+
+  if (Result <> Null) and not (VarType(Result) in [varInteger, varDouble]) then
+    DoError('Найти запись по ID', 0, 'Некорректное вычисление идентификатора записи. ' +
+      'Идентификатор записи должен быть целым числом. Текущий результат выражения: ' +
+      VarToStr(Result));
+end;
+
+procedure RefreshQuery(Q: TdxQueryGrid; KeepPos: Boolean);
+var
+  RecId, RecNo: Integer;
+begin
+  if KeepPos then
+  begin
+    if Q.Editable then RecId := Q.RecId
+    else RecNo := Q.RecNo;
+  end;
+  Q.Refresh;
+  if RecId > 0 then Q.GotoRecord(RecId)
+  else if RecNo > 0 then Q.MoveTo(RecNo);
+end;
+
+
+{@action
+id=53B8D7C6-1DBB-4135-A8C5-F95314559221
+@}
+
+function AddRecordToForm(const FormName: String; Values: TVariantArray2d;
+  IgnoreAccess: Boolean; const ObjName, QueryName: String): Boolean;
+var
+  i, n: Integer;
+  FlNm, Expr: String;
+  Vl: Variant;
+  Fm: TdxForm;
+  Q: TdxQueryGrid;
+begin
+  Result := False;
+  Fm := Session.CreateForm(FormName);
+  if not IgnoreAccess and (Fm.CanAppend <> asOk) then
+  begin
+    Self.MessageDlg('Внимание', 'Недостаточно прав для добавления записи.', mtWarning, [mbOk], nil);
+    Fm.Free;
+    Exit;
+  end;
+  Fm.OpenRecord(0);
+  Fm.Append;
+  for i := 0 to High(Values) do
+  begin
+    FlNm := Values[i][0];
+    Expr := Values[i][1];
+    Vl := TryEvalExpr(Expr, Self, 'Вставить значения', i+1);
+    try
+      Fm[FlNm] := Vl;
+    except
+      Fm.Free;
+      DoSetFieldError('Вставить значения', i+1, Vl);
+    end;
+  end;
+
+  if ObjName <> '' then
+  begin
+    Self[ObjName] := Fm.RecId;
+  end;
+   if QueryName <> '' then
+      begin
+        Q := Self.Queries[QueryName];
+        Q.Refresh;
+        if Q.Editable then Q.GotoRecord(Fm.RecId);
+      end;
+   try
+      Fm.Post;
+      Result := True;
+    except
+      Fm.Free;
+      DoError('Добавление записи в форму', 0, 'Не удалось сохранить запись');
+    end;
+
+end;
+
+

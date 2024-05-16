@@ -71,7 +71,7 @@ object Form1304: TdxForm
       object dxQueryGrid1: TdxQueryGrid
         Left = 4
         Height = 132
-        Top = 316
+        Top = 368
         Width = 408
         AutoAdvance = aaNone
         Color = clWindow
@@ -468,13 +468,13 @@ object Form1304: TdxForm
         Width = 100
         Caption = 'Сохранить'
         TabOrder = 16
-        ActionOnClick = '<actions><action type="5" /></actions>'
+        ActionOnClick = '<actions><action type="5" /><action type="9" id="A971EF36-34CB-4A2C-9007-3A2D140BEDBC" bn="dxButton4" /></actions>'
       end
       object dxGrid3: TdxGrid
         Left = -4
-        Height = 358
-        Top = 148
-        Width = 432
+        Height = 184
+        Top = 152
+        Width = 412
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>

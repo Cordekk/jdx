@@ -2,9 +2,10 @@ procedure CreateSamples(Sender: TObject);
 var
   Sm: TdxForm;
    sp: TdxQueryGrid;
-  ii, n, ID, nn: Integer;
+  ii, n, ID, nn, SamplePackI: Integer;
+  SamplePack:TStrings;
 begin
-   Sm := TdxForm.Create('Образцы'); //создае форму образцы
+   Sm := TdxForm.Create('Образцы'); //создаем форму образцы
    ID := Self.RecId; //присваиваем идентификатор текущей пробы
    n := Self.AsI['Количество_образцов'];  //количество образцов планируемое
    ii := Self.AsI['I']; // это количество уже принятых образцов
@@ -13,6 +14,10 @@ begin
    sp.refresh; //обновляем запрос (План_образцов) по плану испытаний из заявки с консервацией, видом упаковки и номером образца, сортировка должна быть по возрастанию номеров образцов
    if sp.recordcount > n Then n:= sp.recordcount;  //если в запросе больше планируемых образцов, то увеличиваем количество образцов
    sp.MoveFirst;
+   SamplePack := TstringList.Create;
+      SplitStr(StringReplace(Self['Вид упаковки'],'; ',';',[rfReplaceAll,rfIgnoreCase]) ,';',SamplePack);
+     if SamplePack.Count > n Then n:= SamplePack.Count;  //если в описании вида упаковки больше упаковок, чем планируемых образцов, то увеличиваем количество планируемых образцов
+      SamplePackI:=0;
      // Создаем новые записи в цикле.
           while ii < n do
            begin
@@ -32,10 +37,17 @@ begin
               begin
                 Sm['Номер_образца'] := nn;
                 end;
-            if sp['Вид упаковки'] <>null Then Sm['Вид упаковки'] :=sp['Вид упаковки'] else Sm['Вид упаковки'] := Self['Вид упаковки'] ; //если упаковка в плане нне заполнена, то берем из упаковки пробы
+             if sp['Вид упаковки'] <> null Then  // если в плане есть упаковка, то берем из плана
+                  begin
+                    if Pos(';', sp['Вид упаковки'])>0 then Sm['Вид упаковки'] := Copy(sp['Вид упаковки'], 1, Pos(';', sp['Вид упаковки']) - 1) //в плане может быть два наименования упаковки, разделенные '; '
+                    else Sm['Вид упаковки'] := sp['Вид упаковки'];
+                   end
+                   else Sm['Вид упаковки'] := SamplePack[SamplePackI]; //если упаковка в плане не заполнена, то берем из упаковки пробы
             Sm['Консервация'] :=sp['Консервация'];  //консервацию просто присваиваем по текстовому значению
             sp.MoveNext;
-            if Sp.EOF then sp.MoveFirst;
+            if Sp.EOF then Sp.MoveFirst;
+            SamplePackI:=SamplePackI+1;
+            if SamplePackI=SamplePack.Count then SamplePackI:=0;
             Sm.Post;
             Sm.Close;
            end;

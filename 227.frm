@@ -1,8 +1,8 @@
 object Form227: TdxForm
   Left = 10
-  Height = 575
+  Height = 860
   Top = 10
-  Width = 862
+  Width = 1139
   Id = 227
   PId = 0
   FormCaption = 'Нормативный документ'
@@ -99,9 +99,9 @@ object Form227: TdxForm
   end
   object dxQueryGrid1: TdxQueryGrid
     Left = 20
-    Height = 316
+    Height = 596
     Top = 232
-    Width = 388
+    Width = 632
     AutoAdvance = aaNone
     Color = clWindow
     Columns = <>
@@ -155,10 +155,10 @@ object Form227: TdxForm
     Editable = True
   end
   object dxGrid1: TdxGrid
-    Left = 422
-    Height = 300
-    Top = 244
-    Width = 392
+    Left = 684
+    Height = 100
+    Top = 432
+    Width = 424
     AutoAdvance = aaNone
     Color = clWindow
     Columns = <>
@@ -227,6 +227,61 @@ object Form227: TdxForm
     HideButton = False
     UpdateTree = False
   end
+  object dxQueryGrid2: TdxQueryGrid
+    Left = 676
+    Height = 312
+    Top = 232
+    Width = 456
+    AutoAdvance = aaNone
+    Color = clWindow
+    Columns = <>
+    DefaultRowHeight = 20
+    DoubleBuffered = True
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+    ParentDoubleBuffered = False
+    ShowHint = True
+    TabOrder = 7
+    SelectedColor = clHighlight
+    GridLineStyle = psSolid
+    SelectedTextColor = clHighlightText
+    InactiveSelectedColor = clSilver
+    InactiveSelectedTextColor = clBlack
+    ShowButtons = True
+    VisibleButtons = [gbnAppend, gbnEdit, gbnRefresh, gbnGoto]
+    VisibleCaptions = []
+    FlatButtons = True
+    ButtonsColor = clBtnFace
+    ButtonSize = 25
+    ButtonFont.Height = -13
+    ButtonFont.Name = 'Verdana'
+    AlignmentButtons = taLeftJustify
+    HideButtonsWhenLostFocus = False
+    WordWrap = False
+    AllowChangeSort = False
+    Id = 3005
+    ManualRefresh = False
+  end
+  object dxLabel4: TdxLabel
+    Left = 852
+    Height = 16
+    Top = 212
+    Width = 60
+    Caption = 'шаблоны'
+    ParentColor = False
+  end
+  object dxRecordId1: TdxRecordId
+    Left = 39
+    Height = 24
+    Top = 841
+    Width = 100
+    ReadOnly = True
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 9
+    FieldName = 'ID'
+    StopTab = False
+    Id = 263119
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 100
@@ -258,6 +313,12 @@ object Form227: TdxForm
         Title.Caption = ' '
         Width = 200
         FieldName = 'f262970l'
+      end    
+      item
+        Tag = 263119
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263119'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

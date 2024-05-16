@@ -5,7 +5,7 @@ object Form529: TdxForm
   Width = 350
   Id = 529
   PId = 0
-  FormCaption = 'Дополнение заявки'
+  FormCaption = 'Дополнительные документы'
   FormGroup = 'Справочники'
   Font.Height = -13
   Font.Name = 'Verdana'
@@ -54,14 +54,14 @@ object Form529: TdxForm
       item
         Tag = 8608
         Title.Caption = ' '
-        Width = 100
+        Width = 580
         FieldName = 'f8608'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
     Font.Height = -13
     Font.Name = 'Verdana'
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
     ParentDoubleBuffered = False
     ReadOnly = True
     ShowHint = True

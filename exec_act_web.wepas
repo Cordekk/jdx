@@ -1,0 +1,67 @@
+{@module
+Author=Admin, YurAnt, cordek
+Version=1.1
+Description=добавляет новую функцию и действие EX_EXEC - запускает приложение или открывает файл/ссылку в сопоставленном приложении. Поддерживает указание параметров запускаемого приложения.
+с доработками YurAnt для DX от 12.11.2017 г.:
+Веб-версия от cordek
+@}
+
+{@function
+Name=EX_EXEC
+@}
+function EX_EXEC(const FileName, Params: Variant): String;
+begin
+  Result := '';
+  if (FileName = Null) or (Params = Null) then Exit;
+  ShellExecute('open', '"' + FileName + '"', Params, ExtractFilePath(FileName), 5);
+end;
+
+{@function
+Name=EX_EXEC_HIDE
+@}
+function EX_EXEC_HIDE(const FileName, Params: Variant): String;
+begin
+  Result := '';
+  if (FileName = Null) or (Params = Null) then Exit;
+  ShellExecute('open', '"' + FileName + '"', Params, ExtractFilePath(FileName), 0);
+end;
+
+
+{@action
+ID=24D63534-E57E-4B4F-AA91-4F05B2313B7D
+@}
+
+procedure EXEC_ACT(const
+FileNameRun:string;
+ExprRun, Params:string;
+ExprParams:variant;
+HideRun:integer);
+
+var FnEx,ParsEx:string;
+HR:integer;
+begin
+FnEx:=VarToStr(Session.EvalExpr(ExprRun,Self));
+ParsEx:=VarToStr(Session.EvalExpr(ExprParams,Self));
+if (FileNameRun = '') and
+    (FnEx = '') and
+    (Params = '') and
+    (ParsEx = '') then
+  Exit;
+if ((FileNameRun <> '') and (FnEx <> '')) then
+  begin
+    Self.MsgBox('Запустить приложение/файл',
+    'Для запуска необходимо ИЛИ выбрать "Приложение/файл" ИЛИ указать в выражении.')
+    Exit;
+  end;
+if ((Params <> '') and (ParsEx <> '')) then
+  begin
+   Self.MsgBox('Запустить приложение/файл',
+    'Установку параметров запуска необходимо ИЛИ указать в поле "Параметры строкой":  ИЛИ указать в выражении.')
+    Exit;
+  end;
+if HideRun=1 then HR:=0 else HR:=5;
+ ShellExecute('open', '"' + FileNameRun+FnEx + '"',
+ Params+ParsEx,
+ ExtractFilePath(FileNameRun+FnEx), HR);
+end;
+

@@ -36,7 +36,7 @@ object Form6: TdxForm
     TabOrder = 0
     Id = 19
     FieldName = 'Название'
-    FieldSize = 150
+    FieldSize = 200
     Required = True
     Editable = False
   end
@@ -58,7 +58,7 @@ object Form6: TdxForm
     TabOrder = 1
     Id = 20
     FieldName = 'Юр.Адрес'
-    FieldSize = 150
+    FieldSize = 400
     Required = False
     Editable = False
   end
@@ -88,7 +88,7 @@ object Form6: TdxForm
     TabOrder = 5
     Id = 111
     FieldName = 'Наименование_полное'
-    FieldSize = 150
+    FieldSize = 400
     Required = False
     Editable = False
   end
@@ -110,7 +110,7 @@ object Form6: TdxForm
     TabOrder = 6
     Id = 112
     FieldName = 'Наименование_сокращенное'
-    FieldSize = 150
+    FieldSize = 400
     Required = False
     Editable = False
   end
@@ -132,7 +132,7 @@ object Form6: TdxForm
     TabOrder = 7
     Id = 113
     FieldName = 'Почт.Адрес'
-    FieldSize = 150
+    FieldSize = 400
     Required = False
     Editable = False
   end
@@ -245,8 +245,8 @@ object Form6: TdxForm
     Height = 408
     Top = 460
     Width = 976
-    ActivePage = dxTabSheet6
-    TabIndex = 1
+    ActivePage = dxTabSheet1
+    TabIndex = 0
     TabOrder = 10
     object dxTabSheet1: TdxTabSheet
       Caption = 'Реквизиты'
@@ -269,7 +269,7 @@ object Form6: TdxForm
         TabOrder = 0
         Id = 145
         FieldName = 'Основание для договора'
-        FieldSize = 150
+        FieldSize = 200
         Required = False
         Expression = '//[Должность_руководителя] [Руководитель]'#13#10'''Устава'''
         Editable = True
@@ -338,7 +338,7 @@ object Form6: TdxForm
         TabOrder = 2
         Id = 146
         FieldName = 'Банковские реквизиты'
-        FieldSize = 300
+        FieldSize = 2000
         Required = False
         SourceTId = 0
         SourceFId = 0
@@ -378,9 +378,59 @@ object Form6: TdxForm
         TabOrder = 4
         Id = 1916
         FieldName = 'Должность_руководителя'
-        FieldSize = 50
+        FieldSize = 300
         Required = False
         Editable = False
+      end
+      object dxMemo3: TdxMemo
+        Left = 96
+        Height = 44
+        Top = 264
+        Width = 244
+        ScrollBars = ssBoth
+        TabOrder = 5
+        Id = 263082
+        FieldName = 'e-mail'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Editable = False
+        UpdateTree = False
+      end
+      object dxLabel26: TdxLabel
+        Left = 16
+        Height = 20
+        Top = 220
+        Width = 75
+        Caption = 'Телефон'
+        ParentColor = False
+      end
+      object dxMemo2: TdxMemo
+        Left = 96
+        Height = 36
+        Top = 216
+        Width = 244
+        ScrollBars = ssBoth
+        TabOrder = 6
+        Id = 263081
+        FieldName = 'Телефон'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Editable = False
+        UpdateTree = False
+      end
+      object dxLabel27: TdxLabel
+        Left = 20
+        Height = 20
+        Top = 264
+        Width = 55
+        Caption = 'e-mail'
+        ParentColor = False
       end
     end
     object dxTabSheet6: TdxTabSheet
@@ -505,7 +555,45 @@ object Form6: TdxForm
         Width = 60
         Caption = '++'
         TabOrder = 5
-        ActionOnClick = '<actions><action type="9" id="715F1733-6C6D-4CCF-BA1E-A547EA6D87E1" tbl="Сотрудники клиента" values="field;expr|Контактное_лицо;[Контактное_лицо]|Должность;[Должность]" action="Сохранить запись" ignoreaccess="1" /></actions>'
+        ActionOnClick = '<actions><if cond="[Контактное_лицо]&lt;&gt;null"><action type="9" id="715F1733-6C6D-4CCF-BA1E-A547EA6D87E1" tbl="Сотрудники клиента" values="field;expr|Контактное_лицо;[Контактное_лицо]|Должность;[Должность]" action="Сохранить запись" ignoreaccess="1" /></if></actions>'
+      end
+    end
+    object dxTabSheet7: TdxTabSheet
+      Caption = 'Места отбора'
+      StopTab = False
+      object dxQueryGrid11: TdxQueryGrid
+        Left = 4
+        Height = 321
+        Top = 39
+        Width = 940
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 0
+        SelectedColor = clHighlight
+        GridLineStyle = psSolid
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = True
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -17
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 3006
+        ManualRefresh = False
       end
     end
     object dxTabSheet2: TdxTabSheet
@@ -1110,6 +1198,7 @@ object Form6: TdxForm
     SourceTId = 0
     SourceFId = 0
     Delimiter = ', '
+    Expression = '''Телефон:'' + NZ([Телефон],'''')+''; e-mail:''+NZ([e-mail],'''')+'';'''
     Editable = False
     UpdateTree = False
   end
@@ -1308,6 +1397,18 @@ object Form6: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262365l'
+      end    
+      item
+        Tag = 263081
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263081'
+      end    
+      item
+        Tag = 263082
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263082'
       end>
     DefaultRowHeight = 22
     DoubleBuffered = True

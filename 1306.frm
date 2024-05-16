@@ -55,7 +55,7 @@ object Form1306: TdxForm
     Left = 172
     Height = 24
     Top = 292
-    Width = 264
+    Width = 388
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1

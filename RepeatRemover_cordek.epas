@@ -1,0 +1,45 @@
+{@module
+author=RetCat
+version=1.1
+description=Удаление из строки повторяющихся элементов текста
+@}
+{@function
+OrigName=RepeatRemr
+Name= RepeatRemr
+Args=ss
+Result=s
+Group=Текст
+Description=Эта функция удаляет повторяющиеся элементы текста.<br><br>
+<b>Первый аргумент</b> - Текст, элементы текста разделены разделителем<br><br>
+<b>Второй аргумент</b> - Разделитель, например «;»<br><br>
+@}
+
+function RepeatRemr(MyText, Razd: string): string;
+var
+ MTresult, S, S1: String;
+ N: integer;
+begin
+  MTresult:='';
+  MyText:=StringReplace(MyText,Razd+' ',Razd,[rfReplaceAll]); //удаляем пробел после разделителя
+   while MyText<>'' do
+    begin
+      N:=Pos(Razd,MyText);  //находим позицию разделителя
+      if N<>0 then
+        begin               //если разделитель найден
+          S:=Copy(MyText,0,N) //копируем фрагмент текста с разделителем
+          S1:=Copy(MyText,0,N-length(Razd))//копируем фрагмент текста без разделителя // если длина разделителя больше 1 символа
+          MyText:=StringReplace(MyText,S,'',[rfReplaceAll]); //удаляем все повторы с разделителем
+          MyText:=StringReplace(MyText,S1,'',[rfReplaceAll]); //удаляем повтор в конце без разделителя
+        end
+        else
+          begin  //последний элемент без разделителя
+            S:=MyText;
+            MyText:='';
+          end;
+      MTresult:=MTresult+Trim(S); //новый текст без повторов // убрал пробел
+    end;
+    if copy(MTresult,length(MTresult)-length(Razd),length(Razd))=Razd then  // если длина разделителя больше 1 символа
+      MTresult:=copy(MTresult,0,length(MTresult)-length(Razd));  // если длина разделителя больше 1 символа
+   result :=Trim(MTresult);
+end;
+

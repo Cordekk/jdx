@@ -10,8 +10,10 @@ object Form26: TdxForm
   Font.Height = -17
   Font.Name = 'Verdana'
   CalcFields.Strings = (
-    'Включая смежные пробы=Block(Setfield(''Смежные пробы'',1),'#13#10'QUERYUPDATE(''Смежные исследования'')'#13#10',MERGE(''Смежные исследования'', ''Шифр_образца'', ''; ''))'
-    'Включая смежные показатели=Block(Setfield(''Смежные пробы'',0),'#13#10'QUERYUPDATE(''Смежные исследования'')'#13#10','''')'
+    'Включая смежные пробы=Block(Setfield(''Смежные пробы'',1),'#13#10'QUERYUPDATE(''Смежные исследования''),'#13#10'REPEATREMR(MERGE(''Смежные исследования'', ''Шифр_образца'', ''; ''),''; '')'#13#10')'
+    'Включая смежные показатели=Block(Setfield(''Смежные пробы'',0),'#13#10'QUERYUPDATE(''Смежные исследования''),'#13#10'REPEATREMR(MERGE(''Смежные исследования'', ''Показатель'', ''; ''),''; '')'#13#10')'
+    'Включить в один шаблон=Block(Setfield(''Один шаблон'',1),'#13#10'QUERYUPDATE(''Смежные исследования''),'#13#10'REPEATREMR(MERGE(''Смежные исследования'', ''Методика'', ''; ''), ''; '')'#13#10')'
+    'NE=RECNO(''Оборудование в протоколе1'')'
   )
   AutoOpen = True
   ViewType = vtGridOnly
@@ -32,7 +34,7 @@ object Form26: TdxForm
   Tree = Tree.Owner
   Index = 15
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="F5587D26-710A-4F6E-AF8B-ACAF9034982F" allfields="0" logfields="Field" users="User" /><action disabled="1" type="9" id="0D75186F-C6BB-4B69-BCF9-092FD2C316A3" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" fields="field|Значение|Положительное|Ед.изм|U|Постинфекционное|Нет вакциональных антител" queries="query" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''Администратор'' |  ROLE = ''''" grid="cmp;ve_prop|dxLookupComboBox10;Редактирование|dxLookupComboBox5;Редактирование|dxLookupComboBox8;Редактирование|dxCalcEdit3;Редактирование|dxLookupComboBox13;Редактирование|dxCalcEdit1;Редактирование|dxLookupComboBox12;Редактирование|dxTabSheet5;Видимость|dxTabSheet4;Видимость" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''Администратор'' |  ROLE = '''' | ROLE = ''Приемка''" grid="cmp;ve_prop|dxCheckBox1;Редактирование|dxCheckBox3;Редактирование|dxCheckBox2;Редактирование|dxLookupComboBox9;Редактирование|dxEdit5;Редактирование" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Исполнитель|user]=user &amp; [Контроль]=0" grid="cmp;ve_prop|dxEdit3;Редактирование|dxLookupComboBox7;Редактирование|dxEdit4;Редактирование|dxCalcEdit5;Редактирование|dxCheckBox1;Редактирование|dxLookupComboBox16;Редактирование|dxMemo2;Редактирование|dxButton2;Доступность|dxEdit10;Редактирование" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition=" IIF([Контроль]=0  &amp;[Исполнитель|user]=user,1,0)&gt;0  /* если текущий пользователь исполнитель и исследованеи не закрыто */'#13#10'| IIF([Дата завершения]&lt;&gt;null &amp;[Контроль]=0  &amp; [Исполнитель|Подпись исследований]=0 &amp;  DBGET(''Сотрудники'', ''Подпись исследований'', ''[!user]=user'')=1,1,0)&gt;0'#13#10'     /* и если исследование не закрыто, дата завершения стоит и исполнитель не может подписать, а текущий пользователь может подписать  */" grid="cmp;ve_prop|dxButton2;Доступность" stateevents="1" /><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton1" fields="fl|Оборудование" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="F5587D26-710A-4F6E-AF8B-ACAF9034982F" allfields="0" logfields="Field|Выбранное оборудование|Дата завершения|Дата изменения|Дата поступления|Дата принятия|Дополнения|Доработка|Анализная карта|Значение|U|X|Archiv|Исполнитель|Контроль|Нормативный документ|Норматив|Принял исполнитель|Сотрудник" users="User" /><action disabled="1" type="9" id="0D75186F-C6BB-4B69-BCF9-092FD2C316A3" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" fields="field|Значение|Положительное|Ед.изм|U|Постинфекционное|Нет вакциональных антител" queries="query" /><comment text="НАстройки видимости зависят от настроек ролей"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''Администратор'' |  ROLE = ''''" grid="cmp;ve_prop|dxLookupComboBox10;Редактирование|dxLookupComboBox5;Редактирование|dxLookupComboBox8;Редактирование|dxCalcEdit3;Редактирование|dxLookupComboBox13;Редактирование|dxCalcEdit1;Редактирование|dxLookupComboBox12;Редактирование|dxTabSheet5;Видимость|dxTabSheet4;Видимость" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''Администратор'' |  ROLE = '''' | ROLE = ''Приемка''" grid="cmp;ve_prop|dxCheckBox1;Редактирование|dxCheckBox3;Редактирование|dxCheckBox2;Редактирование|dxLookupComboBox9;Редактирование|dxEdit5;Редактирование" stateevents="1" /><comment text="Дальше настройки видимости зависят от прав пользователя (форма сотрудники)"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Исполнитель|user]=user &amp; [Контроль]=0'#13#10'&amp; IIF([Методика из ОА|Приемка обязательна]=1,[Принял исполнитель]=1,1=1)  //если приемка обязательна, надо сначала принять" grid="cmp;ve_prop|dxEdit3;Редактирование|dxLookupComboBox7;Редактирование|dxEdit4;Редактирование|dxCalcEdit5;Редактирование|dxCheckBox1;Редактирование|dxLookupComboBox16;Редактирование|dxMemo2;Редактирование|dxEdit10;Редактирование" stateevents="1" /><comment text="дает возможность подписать, только тем, кто имеет право"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition=" IIF([Контроль]=0  &amp;[Исполнитель|user]=user,1,0)&gt;0  /* если текущий пользователь исполнитель и исследование не закрыто */'#13#10'| IIF([Дата завершения]&lt;&gt;null &amp;[Контроль]=0  &amp; [Исполнитель|Подпись исследований]=0 &amp;  DBGET(''Сотрудники'', ''Подпись исследований'', ''[!user]=user'')=1,1,0)&gt;0'#13#10'     /* и если исследование не закрыто, дата завершения стоит и исполнитель не может подписать, а текущий пользователь может подписать  */'#13#10'     &amp; IIF([Методика из ОА|Приемка обязательна]=1,[Принял исполнитель]=1,1=1)  //если приемка обязательна, надо сначала принять" grid="cmp;ve_prop|dxButton2;Доступность" stateevents="1" /><comment text="Добавляет оборудование в выбранное оборудование"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton1" fields="fl|Оборудование" /><comment text="если шаблон выбран, то выбор для печати не отображается"/><action disabled="1" type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" condition="[Методика из ОА|Шаблон печати]=null" grid="cmp;ve_prop|dxQueryGrid6;Видимость" stateevents="0" /></actions>'
   object dxLabel1: TdxLabel
     Left = 16
     Height = 20
@@ -171,10 +173,10 @@ object Form26: TdxForm
     UpdateTree = False
   end
   object dxEdit1: TdxEdit
-    Left = 693
+    Left = 780
     Height = 28
-    Top = 66
-    Width = 100
+    Top = 24
+    Width = 96
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
@@ -229,7 +231,7 @@ object Form26: TdxForm
     FieldName = 'Положительное'
     CheckedText = 'Да'
     UnCheckedText = 'Нет'
-    Expression = '//[Значение][X]'#13#10'IIF(TEXT("{CSTR("+[Нормативная формула]+")}")<>''0'',1,0)'
+    Expression = '//[Значение][X]'#13#10' IIF(newrec=1,0,  // в создаваемых исследованиях не надо ставить сразу положительное'#13#10'IIF(CNUM(TEXT("{CSTR("+[Нормативная формула]+")}"))>0,1,0)'#13#10')'
     Editable = True
     DefaultValue = '0'
   end
@@ -292,7 +294,7 @@ object Form26: TdxForm
     DestTable = 0
     PromptFillTable = False
     ClearTableBeforeFill = False
-    Expression = 'DBGET(''Норматив продукции'', ''Нормативный документ'', ''{[!Продукция]=[Образец|Проба|Продукция]|'#13#10'[!Группа продукции]=[Образец|Проба|Продукция|Группа продукции2]}&'#13#10'{[!Репродукция]=[Образец|Проба|Репродукция]|[!Репродукция]=""}&'#13#10'{[!Категория]=[Образец|Проба|Категория]|[!Категория]=""}'#13#10'&[!Показатель]=[Методика из ОА|Показатель]'#13#10'&[!Нормативный документ] in [Образец|Проба|Заявка клиента2|ЗаданиеID]'')'
+    Expression = '// [Дата изменения]'#13#10'IIF(newrec=1,[Нормативный документ],  // в создаваемых исследованиях не надо искать норматив'#13#10'DBGET(''Норматив продукции'', ''Нормативный документ'', ''{[!Продукция]=[Образец|Проба|Продукция]|'#13#10'[!Группа продукции]=[Образец|Проба|Продукция|Группа продукции2]}&'#13#10'{[!Репродукция]=[Образец|Проба|Репродукция]|[!Репродукция]=""}&'#13#10'{[!Категория]=[Образец|Проба|Категория]|[!Категория]=""}'#13#10'&[!Показатель]=[Методика из ОА|Показатель]'#13#10'&[!Нормативный документ] in [Образец|Проба|Заявка клиента2|ЗаданиеID]'')'#13#10')'
     Editable = False
     ListFields = <    
       item
@@ -414,7 +416,7 @@ object Form26: TdxForm
         FieldName = 'U'
         FieldSize = 50
         Required = False
-        Expression = '// [X] - это не округленное значение'#13#10'Block('#13#10'setvar(''U'',TEXT("{CSTR("+[Формула точности]+")}")),'#13#10'setvar(''Значцифры'', 2),'#13#10'setvar(''вид_округл'',CASEOF([Методика из ОА|Округление],''До целых=0;1 знак=1;2 знака=2;3 знака=3;4 знака=4;5 знаков=5'')),'#13#10'setvar(''округл'','#13#10' IIF([Методика из ОА|Округление]=''2-е значащие цифры (по умолчанию)'','#13#10'   getvar(''Значцифры'')+TRUNC(LN(CNUM(getvar(''U'')))/2.30258509299+1),'#13#10'   getvar(''вид_округл''))),'#13#10'ROUNDTO(CNUM(getvar(''U'')),getvar(''округл''))'#13#10')'#13#10#13#10#13#10'/*'#13#10'setvar(''вид_округл'',CASEOF([Методика из ОА|Округление],'#13#10'''До целых=0;1 знак=1;2 знака=2;3 знака=3;4 знака=4;5 знаков=5;2-е значащие цифры (по умолчанию)='')) */'
+        Expression = '// [X] - это не округленное значение'#13#10'IIF([X]=0,0,'#13#10'Block('#13#10'setvar(''U'',TEXT("{CSTR("+[Формула точности]+")}")),'#13#10'setvar(''Значцифры'', 2),'#13#10'setvar(''вид_округл'',CASEOF([Методика из ОА|Округление],''До целых=0;1 знак=1;2 знака=2;3 знака=3;4 знака=4;5 знаков=5'')),'#13#10'setvar(''округл'','#13#10' IIF([Методика из ОА|Округление]=''2-е значащие цифры (по умолчанию)'','#13#10'   getvar(''Значцифры'')+TRUNC(LN(CNUM(getvar(''U'')))/2.30258509299+1),'#13#10'   getvar(''вид_округл''))),'#13#10'ROUNDTO(CNUM(getvar(''U'')),getvar(''округл''))'#13#10'))'#13#10#13#10#13#10'/*'#13#10'setvar(''вид_округл'',CASEOF([Методика из ОА|Округление],'#13#10'''До целых=0;1 знак=1;2 знака=2;3 знака=3;4 знака=4;5 знаков=5;2-е значащие цифры (по умолчанию)='')) */'
         Editable = True
       end
       object dxEdit3: TdxMemo
@@ -459,7 +461,7 @@ object Form26: TdxForm
         Id = 262425
         FieldName = 'X'
         Precission = 6
-        Expression = 'IIF([X]>0,[X],CNUM(''0''+NZ(PREG_MATCH("\d+\,\d+|\d+",[Значение]+'';''),0)))'
+        Expression = 'IIF([X]>0,[X],'#13#10'IIF([Значение]=null,0,'#13#10'CNUM(''0''+NZ(PREG_MATCH("\d+\,\d+|\d+",[Значение]+'';''),0))'#13#10')'#13#10')'
         Required = False
         DefaultValue = '0'
         Editable = True
@@ -479,13 +481,13 @@ object Form26: TdxForm
         FieldName = 'Оборудование'
         SourceTId = 102
         SourceFId = 7260
-        Filter = '[Вид]=''Оборудование'''
+        Filter = '[Вид]=''Оборудование'''#13#10'&'#13#10'[ИД] notin MERGE(''Оборудование в протоколе1'', ''Идентификатор'', '';'')'#13#10'/*[Вид]=''Оборудование'''#13#10'&'#13#10'{[!Заводской (серийный) №] notin REPLACEALL(REPLACEALL([Выбранное оборудование],'' зав №'','';''),''; ''  ,'';'')'#13#10'& [!Наименование ТМЦ] notin REPLACEALL(REPLACEALL([Выбранное оборудование],'' зав №'','';''),''; ''  ,'';'')}'#13#10'|'#13#10'{{[!Заводской (серийный) №] = ''-'' | [!Заводской (серийный) №] =''''}'#13#10'& [!Наименование ТМЦ] notin REPLACEALL(REPLACEALL([Выбранное оборудование],'' зав №'','';''),''; ''  ,'';'')} */'
         Required = False
         SourceTable = 0
         DestTable = 0
         PromptFillTable = False
         ClearTableBeforeFill = False
-        Editable = False
+        Editable = True
         ListFields = <        
           item
             FieldId = 2560
@@ -512,6 +514,7 @@ object Form26: TdxForm
         SourceTId = 0
         SourceFId = 0
         Delimiter = ', '
+        Expression = 'IIF([Методика из ОА|Одинаковое оборудование в шаблоне]=1,'#13#10'DBMERGE(''Область деятельности'', ''Выбранное оборудование'', ''[!Адрес]=[Методика из ОА|Адрес]'#13#10'&[!Методика]=[Методика из ОА|Методика]'#13#10'&[!Шаблон печати]=[Методика из ОА|Шаблон печати]'')'#13#10',[Методика из ОА|Выбранное оборудование])'
         Editable = True
         UpdateTree = False
       end
@@ -530,7 +533,7 @@ object Form26: TdxForm
         Width = 36
         Caption = '+'
         TabOrder = 6
-        ActionOnClick = '<actions><action type="7" expression="IIF([Оборудование]=null,'''','#13#10'Block('#13#10'setfield('#13#10'''Выбранное оборудование'', NZ([Выбранное оборудование],'' '')+'#13#10'NZ(NZ([Оборудование|Наименование ТМЦ],'''')+'' зав №''+  NZ([Оборудование|Заводской (серийный) №],'''') + ''; '','''')'#13#10'),'#13#10'setfield(''Оборудование'',null)'#13#10')'#13#10')"/></actions>'
+        ActionOnClick = '<actions><action type="7" expression="IIF([Оборудование]=null,'''','#13#10'Block('#13#10'setfield('#13#10'''Выбранное оборудование'', NZ([Выбранное оборудование],'''')+'#13#10'NZ(NZ([Оборудование|Наименование ТМЦ],'''')+'' зав №''+  NZ([Оборудование|Заводской (серийный) №],'''') + ''; '','''')'#13#10'),'#13#10'setfield(''Оборудование'',null)'#13#10')'#13#10')"/></actions>'
       end
       object dxLookupComboBox7: TdxLookupComboBox
         Left = 100
@@ -618,7 +621,7 @@ object Form26: TdxForm
         Left = 4
         Height = 68
         Top = 228
-        Width = 316
+        Width = 324
         ScrollBars = ssBoth
         TabOrder = 8
         Id = 263044
@@ -633,9 +636,9 @@ object Form26: TdxForm
       end
       object dxQueryGrid7: TdxQueryGrid
         Left = 912
-        Height = 271
+        Height = 268
         Top = 28
-        Width = 372
+        Width = 384
         Anchors = [akRight, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
@@ -664,6 +667,52 @@ object Form26: TdxForm
         WordWrap = False
         AllowChangeSort = False
         Id = 3003
+        ManualRefresh = False
+      end
+    end
+    object dxTabSheet6: TdxTabSheet
+      Caption = 'Оборудование в протокол'
+      StopTab = False
+      object dxLabel33: TdxLabel
+        Left = 244
+        Height = 20
+        Top = 4
+        Width = 204
+        Caption = 'Таблица оборудования'
+        ParentColor = False
+      end
+      object dxQueryGrid10: TdxQueryGrid
+        Left = 32
+        Height = 232
+        Top = 44
+        Width = 928
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 0
+        SelectedColor = clHighlight
+        GridLineStyle = psSolid
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = False
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -17
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 2985
         ManualRefresh = False
       end
     end
@@ -1286,7 +1335,7 @@ object Form26: TdxForm
         SourceTId = 0
         SourceFId = 0
         Delimiter = ', '
-        Expression = '// [Дата изменения] /* при наличии нормативного документа устанавливается формаула для расчета положительных - правиало принятия решения простое */'#13#10'NZ(DBGET(''Норматив продукции'', ''Нормативная формула'', ''[!Показатель]=[Показатель]&'#13#10'[!Нормативный документ]=[Нормативный документ] &'#13#10'{[!Продукция]=[Образец|Проба|Продукция]|[!Группа продукции]=[Образец|Проба|Продукция|Группа продукции2]}&'#13#10'{[!Репродукция]=[Образец|Проба|Репродукция]|[!Репродукция]=""}&'#13#10'{[!Категория]=[Образец|Проба|Категория]|[!Категория]=""}''),''[''+''Положительное''+'']'')'#13#10'/*для того, чтобы при отсутствии номратива подставлялось само значение флажка*/'
+        Expression = '// [Дата изменения] /* при наличии нормативного документа устанавливается формаула для расчета положительных - правиало принятия решения простое */'#13#10'IIF(newrec=1,[Нормативная формула],  // в создаваемых исследованиях не надо искать норматив'#13#10'NZ(DBGET(''Норматив продукции'', ''Нормативная формула'', ''[!Показатель]=[Показатель]&'#13#10'[!Нормативный документ]=[Нормативный документ] &'#13#10'{[!Продукция]=[Образец|Проба|Продукция]|[!Группа продукции]=[Образец|Проба|Продукция|Группа продукции2]}&'#13#10'{[!Репродукция]=[Образец|Проба|Репродукция]|[!Репродукция]=""}&'#13#10'{[!Категория]=[Образец|Проба|Категория]|[!Категория]=""}''),''[''+''Положительное''+'']'')'#13#10'/*для того, чтобы при отсутствии номратива подставлялось само значение флажка*/'#13#10')'
         Editable = False
         UpdateTree = False
       end
@@ -1372,48 +1421,6 @@ object Form26: TdxForm
         Id = 2984
         ManualRefresh = True
       end
-      object dxLabel33: TdxLabel
-        Left = 428
-        Height = 20
-        Top = 8
-        Width = 204
-        Caption = 'Таблица оборудования'
-        ParentColor = False
-      end
-      object dxQueryGrid10: TdxQueryGrid
-        Left = 396
-        Height = 232
-        Top = 44
-        Width = 520
-        AutoAdvance = aaNone
-        Color = clWindow
-        Columns = <>
-        DefaultRowHeight = 20
-        DoubleBuffered = True
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
-        ParentDoubleBuffered = False
-        ShowHint = True
-        TabOrder = 1
-        SelectedColor = clHighlight
-        GridLineStyle = psSolid
-        SelectedTextColor = clHighlightText
-        InactiveSelectedColor = clSilver
-        InactiveSelectedTextColor = clBlack
-        ShowButtons = False
-        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
-        VisibleCaptions = []
-        FlatButtons = True
-        ButtonsColor = clBtnFace
-        ButtonSize = 25
-        ButtonFont.Height = -17
-        ButtonFont.Name = 'Verdana'
-        AlignmentButtons = taLeftJustify
-        HideButtonsWhenLostFocus = False
-        WordWrap = False
-        AllowChangeSort = False
-        Id = 2985
-        ManualRefresh = False
-      end
       object dxLabel18: TdxLabel
         Left = 20
         Height = 20
@@ -1426,9 +1433,9 @@ object Form26: TdxForm
         Left = 16
         Height = 23
         Top = 280
-        Width = 232
+        Width = 172
         Caption = 'Смежные пробы'
-        TabOrder = 2
+        TabOrder = 1
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 263031
@@ -1439,19 +1446,19 @@ object Form26: TdxForm
         DefaultValue = '0'
       end
       object dxButton4: TdxButton
-        Left = 944
+        Left = 536
         Height = 30
-        Top = 192
+        Top = 252
         Width = 260
         Caption = 'заполнить анализную карту'
-        TabOrder = 3
-        ActionOnClick = '<actions><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Анализная карта" values="field;expr|Исполнитель;[Исполнитель]" ignoreaccess="0" obj="Анализная карта" qry="" /><action type="9" id="35B8560B-A110-4BF9-B886-635E7BED9058" fm="Ход испытаний" qry="Оборудование в протоколе2" fields="fl;qfl;expr|Анализная карта;;[Анализная карта]|Номенклатура;Номенклатура;1|Оборудование;Идентификатор;1|Проверка оборудования;;1" msg="" /></actions>'
+        TabOrder = 2
+        ActionOnClick = '<actions><if cond="[Анализная карта]=null"><action type="9" id="53B8D7C6-1DBB-4135-A8C5-F95314559221" form="Анализная карта" values="field;expr|Исполнитель;[Исполнитель]" ignoreaccess="1" obj="Анализная карта" qry="Оборудование в протоколе1" /></if><action type="9" id="35B8560B-A110-4BF9-B886-635E7BED9058" fm="Ход испытаний" qry="Оборудование в протоколе2" fields="fl;qfl;expr|Исследование;;RECID(''Исследование'')|Анализная карта;;[Анализная карта]|Номенклатура;Номенклатура_ИД;1|Оборудование;ТМЦ_ИД;1|Проверка оборудования;;1|Проверено;;1" msg="" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Оборудование в протоколе1" keeppos="0" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Оборудование в протоколе2" keeppos="0" /></actions>'
       end
       object dxQueryGrid11: TdxQueryGrid
-        Left = 940
-        Height = 132
-        Top = 48
-        Width = 192
+        Left = 520
+        Height = 200
+        Top = 44
+        Width = 384
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -1460,7 +1467,7 @@ object Form26: TdxForm
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
         ParentDoubleBuffered = False
         ShowHint = True
-        TabOrder = 4
+        TabOrder = 3
         SelectedColor = clHighlight
         GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
@@ -1480,6 +1487,22 @@ object Form26: TdxForm
         AllowChangeSort = False
         Id = 2996
         ManualRefresh = False
+      end
+      object dxCheckBox10: TdxCheckBox
+        Left = 201
+        Height = 23
+        Top = 281
+        Width = 172
+        Caption = 'Один шаблон'
+        TabOrder = 4
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 263183
+        FieldName = 'Один шаблон'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
       end
     end
   end
@@ -1510,7 +1533,7 @@ object Form26: TdxForm
     Id = 8528
     FieldName = 'Методика из ОА'
     SourceTId = 519
-    SourceFId = 8523
+    SourceFId = 8508
     Filter = '[Лаборатория]=DBGET(''Подразделения сотрудника'', ''Подразделение|ИД'', ''[!user]=user'')'
     Required = False
     SourceTable = 0
@@ -1529,7 +1552,6 @@ object Form26: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
-    InsertedValues = '262702;262694'
   end
   object dxDateEdit1: TdxDateEdit
     Left = 192
@@ -1617,10 +1639,10 @@ object Form26: TdxForm
     Editable = False
   end
   object dxObjectField1: TdxObjectField
-    Left = 304
+    Left = 344
     Height = 28
     Top = 68
-    Width = 488
+    Width = 436
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 17
@@ -1630,9 +1652,9 @@ object Form26: TdxForm
     FieldId = 60
   end
   object dxObjectField2: TdxObjectField
-    Left = 934
+    Left = 1136
     Height = 28
-    Top = 32
+    Top = 0
     Width = 92
     CharCase = ecNormal
     MaxLength = 0
@@ -1642,39 +1664,14 @@ object Form26: TdxForm
     ObjId = 2613
     FieldId = 26077
   end
-  object dxCalcEdit4: TdxCalcEdit
-    Left = 936
-    Height = 28
-    Top = 0
-    Width = 48
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 19
-    HideButton = False
-    CalculatorLayout = clNormal
-    AsInteger = 0
-    ButtonWidth = 28
-    NumGlyphs = 1
-    Flat = True
-    Id = 131059
-    FieldName = 'Уникальность'
-    Precission = 0
-    Required = False
-    DefaultValue = '0'
-    CheckExpression = '//'#13#10'// IIF(DBUNIQUE(''Образец;Методика из ОА;Показатель'')=0,''Такое исследование уже добавлено'','''')'
-    Editable = False
-    NullToZero = True
-    GroupDigits = True
-    PadZeros = True
-  end
   object dxButton2: TdxButton
     Left = 592
     Height = 36
     Top = 744
     Width = 116
     Caption = 'Подписать'
-    TabOrder = 20
-    ActionOnClick = '<actions><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Контроль;DBGET(''Сотрудники'', ''Подпись исследований'', ''[!user]=user'')|Дата изменения;SRV_DATE|История;''Подписал ''+user+'' ''+  CSTR(SRV_DATE)+'' ''+ CSTR(SRV_TIME)+newline+ NZ([История],'''')|Доработка;0" ignoreaccess="1" saverec="0" /><action type="5" /></actions>'
+    TabOrder = 19
+    ActionOnClick = '<actions><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Контроль;DBGET(''Сотрудники'', ''Подпись исследований'', ''[!user]=user'')|Дата изменения;SRV_DATE|История;''Подписал ''+user+'' ''+  CSTR(SRV_DATE)+'' ''+ CSTR(SRV_TIME)+newline+ NZ([История],'''')|Доработка;0" ignoreaccess="1" saverec="0" /><action type="5" /><action type="3" form="Заявка клиента" filter="[Идентификатор]=[Образец|Проба|Заявка клиента2|Идентификатор]" table="" field="Статус" expression=""/></actions>'
   end
   object dxButton3: TdxButton
     Left = 724
@@ -1682,7 +1679,7 @@ object Form26: TdxForm
     Top = 744
     Width = 136
     Caption = 'На доработку'
-    TabOrder = 21
+    TabOrder = 20
     ActionOnClick = '<actions><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Доработка;1|Контроль;0|История;''Отправил на доработку ''+user+'' ''+ CSTR(SRV_DATE)+'' ''+ CSTR(SRV_TIME) + newline+ NZ([История],'''')" ignoreaccess="1" saverec="0" /><action type="5" /></actions>'
   end
   object dxObjectField3: TdxObjectField
@@ -1692,7 +1689,7 @@ object Form26: TdxForm
     Width = 156
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 22
+    TabOrder = 21
     Id = 263030
     FieldName = 'Группа показателя'
     ObjId = 103
@@ -1712,7 +1709,7 @@ object Form26: TdxForm
     SourceTId = 0
     SourceFId = 0
     Delimiter = ', '
-    Expression = '// [Дата изменения]     /* это аналог азпроса по базе по всем параметром, некоторые из них могут быть необязательными, например продукция, репродукция или категория */'#13#10#13#10'NZ(DBMERGE(''Норматив продукции'', ''Норматив'', ''{[!Продукция]=[Образец|Проба|Продукция]|'#13#10'[!Группа продукции]=[Образец|Проба|Продукция|Группа продукции2]}&'#13#10'{[!Репродукция]=[Образец|Проба|Репродукция]|[!Репродукция]=""}&'#13#10'{[!Категория]=[Образец|Проба|Категория]|[!Категория]=""}'#13#10'&[!Показатель]=[Методика из ОА|Показатель]'#13#10'&[!Нормативный документ] in [Образец|Проба|Заявка клиента2|ЗаданиеID]''),[Норматив]) /*для того, чтобы при отсутствии норматива подставлялось само значение номратива в исследовании - заранее заданное*/'
+    Expression = '// [Значение] [Дата изменения]     /* это аналог азпроса по базе по всем параметром, некоторые из них могут быть необязательными, например продукция, репродукция или категория */'#13#10'IIF(newrec=1,[Норматив],  // в создаваемых исследованиях не надо искать норматив'#13#10'NZ(DBMERGE(''Норматив продукции'', ''Норматив'', ''{[!Продукция]=[Образец|Проба|Продукция]|'#13#10'[!Группа продукции]=[Образец|Проба|Продукция|Группа продукции2]}&'#13#10'{[!Репродукция]=[Образец|Проба|Репродукция]|[!Репродукция]=""}&'#13#10'{[!Категория]=[Образец|Проба|Категория]|[!Категория]=""}'#13#10'&[!Показатель]=[Методика из ОА|Показатель]'#13#10'&[!Нормативный документ] in [Образец|Проба|Заявка клиента2|ЗаданиеID]''),[Норматив]) /*для того, чтобы при отсутствии норматива подставлялось само значение норматива в исследовании - заранее заданное*/'#13#10')'
     Editable = True
     UpdateTree = False
   end
@@ -1788,14 +1785,14 @@ object Form26: TdxForm
       1A3E1A1A1A3E1B1B1B3E1B1B1B3E1B1B1B3C5959598453535377000000000000
       00000000000000000000
     }
-    TabOrder = 23
-    ActionOnClick = '<actions><action type="2" template="" expression="GET(''Шаблоны4'', ''Файл'')" outfile="" fileaction="1" saverecord="1"/></actions>'
+    TabOrder = 22
+    ActionOnClick = '<actions><action type="5" /><action type="9" id="08951CB2-B27A-4BCF-B714-F0B209F0D7AF" formname="" form_exp="" id_exp="" file_open="" path_template="NZ([Методика из ОА|Шаблон печати|Файл],GET(''Шаблоны4'', ''Файл''))" path_doc="" fileaction="1" /></actions>'
   end
   object dxQueryGrid6: TdxQueryGrid
-    Left = 940
-    Height = 368
-    Top = 4
-    Width = 368
+    Left = 944
+    Height = 372
+    Top = 0
+    Width = 364
     Anchors = [akTop, akLeft, akRight, akBottom]
     AutoAdvance = aaNone
     Color = clWindow
@@ -1805,7 +1802,7 @@ object Form26: TdxForm
     Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
     ParentDoubleBuffered = False
     ShowHint = True
-    TabOrder = 24
+    TabOrder = 23
     SelectedColor = clHighlight
     GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
@@ -1832,7 +1829,7 @@ object Form26: TdxForm
     Top = 744
     Width = 186
     Caption = 'Доработка'
-    TabOrder = 25
+    TabOrder = 24
     ValueChecked = '1'
     ValueUnchecked = '0'
     Id = 130975
@@ -1848,7 +1845,7 @@ object Form26: TdxForm
     Top = 744
     Width = 330
     Caption = 'Контроль пройден (подписано)'
-    TabOrder = 26
+    TabOrder = 25
     ValueChecked = '1'
     ValueUnchecked = '0'
     Id = 130976
@@ -1858,6 +1855,14 @@ object Form26: TdxForm
     Expression = '//IIF([Доработка]=1, 0, 1)'
     Editable = False
     DefaultValue = '0'
+  end
+  object dxLabel37: TdxLabel
+    Left = 780
+    Height = 20
+    Top = 4
+    Width = 137
+    Caption = 'Идентификатор'
+    ParentColor = False
   end
   object Grid: TdxGrid
     Left = 0
@@ -1870,20 +1875,14 @@ object Form26: TdxForm
       item
         Tag = 98
         Title.Caption = ' '
-        Width = 100
+        Width = 242
         FieldName = 'f98l'
       end    
       item
         Tag = 103
         Title.Caption = ' '
-        Width = 100
+        Width = 155
         FieldName = 'f103l'
-      end    
-      item
-        Tag = 189
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f189l'
       end    
       item
         Tag = 199
@@ -1894,13 +1893,13 @@ object Form26: TdxForm
       item
         Tag = 452
         Title.Caption = ' '
-        Width = 100
+        Width = 116
         FieldName = 'f452'
       end    
       item
         Tag = 453
         Title.Caption = ' '
-        Width = 100
+        Width = 185
         FieldName = 'f453'
       end    
       item
@@ -1914,6 +1913,12 @@ object Form26: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f1847'
+      end    
+      item
+        Tag = 189
+        Title.Caption = ' '
+        Width = 159
+        FieldName = 'f189l'
       end    
       item
         Tag = 1848
@@ -2097,12 +2102,6 @@ object Form26: TdxForm
         FieldName = 'f130976'
       end    
       item
-        Tag = 131059
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f131059'
-      end    
-      item
         Tag = 131063
         Title.Caption = ' '
         Width = 100
@@ -2187,6 +2186,13 @@ object Form26: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f263044'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 263183
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263183'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

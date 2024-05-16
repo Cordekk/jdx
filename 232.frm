@@ -224,16 +224,31 @@ object Form232: TdxForm
     FieldName = 'Консервация'
     SourceTId = 6851
     SourceFId = 262620
-    Filter = '[Показатель|Методика] = [Показатель|Методика]'
+    Filter = '[Показатель|Методика] = [Показатель|Методика]'#13#10'| [Показатель]=null'
     Required = False
     SourceTable = 0
     DestTable = 0
     PromptFillTable = False
     ClearTableBeforeFill = False
     Editable = False
-    ListFields = <>
+    ListFields = <    
+      item
+        FieldId = 262622
+        Width = 100
+        Searchable = True
+      end    
+      item
+        FieldId = 262623
+        Width = 100
+        Searchable = True
+      end    
+      item
+        FieldId = 262619
+        Width = 100
+        Searchable = True
+      end>
     DropDownCount = 8
-    ListWidthExtra = 0
+    ListWidthExtra = 200
     HideList = False
     HideButton = False
     UpdateTree = False

@@ -2,7 +2,7 @@ object Form102: TdxForm
   Left = 10
   Height = 813
   Top = 10
-  Width = 1031
+  Width = 1058
   Id = 102
   PId = 0
   FormCaption = 'ТМЦ'
@@ -690,7 +690,7 @@ object Form102: TdxForm
         Flat = True
         Id = 7239
         FieldName = 'МинТемп'
-        Precission = 0
+        Precission = 1
         Required = False
         Editable = False
         NullToZero = False
@@ -713,7 +713,7 @@ object Form102: TdxForm
         Flat = True
         Id = 7240
         FieldName = 'МаксТемп'
-        Precission = 0
+        Precission = 1
         Required = False
         Editable = False
         NullToZero = False
@@ -736,7 +736,7 @@ object Form102: TdxForm
         Flat = True
         Id = 7241
         FieldName = 'МинДавление'
-        Precission = 0
+        Precission = 1
         Required = False
         Editable = False
         NullToZero = False
@@ -775,7 +775,7 @@ object Form102: TdxForm
         Flat = True
         Id = 7242
         FieldName = 'МаксДавление'
-        Precission = 0
+        Precission = 1
         Required = False
         Editable = False
         NullToZero = False
@@ -806,7 +806,7 @@ object Form102: TdxForm
         Flat = True
         Id = 7243
         FieldName = 'МинВлажн'
-        Precission = 0
+        Precission = 1
         Required = False
         Editable = False
         NullToZero = False
@@ -829,7 +829,7 @@ object Form102: TdxForm
         Flat = True
         Id = 7244
         FieldName = 'МаксВлажн'
-        Precission = 0
+        Precission = 1
         Required = False
         Editable = False
         NullToZero = False
@@ -852,7 +852,7 @@ object Form102: TdxForm
         Flat = True
         Id = 7245
         FieldName = 'НапряжениеМин'
-        Precission = 0
+        Precission = 1
         Required = False
         Editable = False
         NullToZero = False
@@ -875,7 +875,7 @@ object Form102: TdxForm
         Flat = True
         Id = 7246
         FieldName = 'ЧастотаМин'
-        Precission = 0
+        Precission = 1
         Required = False
         Editable = False
         NullToZero = False
@@ -898,7 +898,7 @@ object Form102: TdxForm
         Flat = True
         Id = 7247
         FieldName = 'Мощность'
-        Precission = 0
+        Precission = 2
         Required = False
         Editable = False
         NullToZero = False
@@ -945,7 +945,7 @@ object Form102: TdxForm
         Flat = True
         Id = 7248
         FieldName = 'НапряжениеМакс'
-        Precission = 0
+        Precission = 1
         Required = False
         Editable = False
         NullToZero = False
@@ -968,7 +968,7 @@ object Form102: TdxForm
         Flat = True
         Id = 7249
         FieldName = 'ЧастотаМакс'
-        Precission = 0
+        Precission = 1
         Required = False
         Editable = False
         NullToZero = False
@@ -1785,31 +1785,6 @@ object Form102: TdxForm
     Required = False
     Editable = False
   end
-  object dxCalcEdit2: TdxCalcEdit
-    Left = 928
-    Height = 24
-    Top = 4
-    Width = 100
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 13
-    HideButton = False
-    CalculatorLayout = clNormal
-    AsInteger = 0
-    ButtonWidth = 24
-    NumGlyphs = 1
-    Flat = True
-    Id = 7259
-    FieldName = 'Идентификатор'
-    Precission = 0
-    Expression = '// [Номер ТМЦ]'#13#10'RECID(''ТМЦ'')'
-    Required = False
-    DefaultValue = 'RECID(''ТМЦ'')'
-    Editable = False
-    NullToZero = True
-    GroupDigits = False
-    PadZeros = True
-  end
   object dxEdit12: TdxEdit
     Left = 188
     Height = 24
@@ -1817,7 +1792,7 @@ object Form102: TdxForm
     Width = 828
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 14
+    TabOrder = 13
     Id = 7260
     FieldName = 'Наименование ТМЦ'
     FieldSize = 400
@@ -1848,7 +1823,7 @@ object Form102: TdxForm
     Width = 100
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 16
+    TabOrder = 15
     HideButton = False
     CalculatorLayout = clNormal
     AsInteger = 0
@@ -1879,7 +1854,7 @@ object Form102: TdxForm
     Top = 100
     Width = 340
     ScrollBars = ssBoth
-    TabOrder = 17
+    TabOrder = 16
     Id = 262280
     FieldName = 'Номенклатура поставщика'
     FieldSize = 0
@@ -1896,7 +1871,7 @@ object Form102: TdxForm
     Top = 268
     Width = 716
     ScrollBars = ssBoth
-    TabOrder = 15
+    TabOrder = 14
     Id = 7282
     FieldName = 'Право собственности'
     FieldSize = 50
@@ -1927,7 +1902,7 @@ object Form102: TdxForm
     Width = 160
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 18
+    TabOrder = 17
     HideButton = False
     CalculatorLayout = clNormal
     AsInteger = 0
@@ -1951,7 +1926,7 @@ object Form102: TdxForm
     Width = 148
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 19
+    TabOrder = 18
     Id = 262652
     FieldName = 'Номер ИЦ'
     FieldSize = 20
@@ -1981,7 +1956,7 @@ object Form102: TdxForm
     Width = 112
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 20
+    TabOrder = 19
     HideButton = False
     CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
     OKCaption = 'OK'
@@ -2011,7 +1986,7 @@ object Form102: TdxForm
     Width = 72
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 21
+    TabOrder = 20
     HideButton = False
     CalculatorLayout = clNormal
     AsInteger = 0
@@ -2027,6 +2002,21 @@ object Form102: TdxForm
     NullToZero = False
     GroupDigits = False
     PadZeros = False
+  end
+  object dxEdit18: TdxEdit
+    Left = 972
+    Height = 24
+    Top = 8
+    Width = 80
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 21
+    Id = 263202
+    FieldName = 'ИД'
+    FieldSize = 50
+    Required = False
+    Expression = '// [Номер ТМЦ]'#13#10'RECID(''ТМЦ'')'
+    Editable = False
   end
   object Grid: TdxGrid
     Left = 0
@@ -2319,12 +2309,6 @@ object Form102: TdxForm
         FieldName = 'f7249'
       end    
       item
-        Tag = 7259
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f7259'
-      end    
-      item
         Tag = 7260
         Title.Caption = ' '
         Width = 100
@@ -2424,6 +2408,12 @@ object Form102: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262707'
+      end    
+      item
+        Tag = 263202
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263202'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

@@ -1,6 +1,6 @@
 object Form119: TdxForm
   Left = 10
-  Height = 653
+  Height = 819
   Top = 10
   Width = 665
   Id = 119
@@ -427,6 +427,38 @@ object Form119: TdxForm
     Editable = False
     DefaultValue = '0'
   end
+  object dxCheckBox9: TdxCheckBox
+    Left = 32
+    Height = 23
+    Top = 667
+    Width = 284
+    Caption = 'Редактирует сотрудник-автор'
+    TabOrder = 19
+    ValueChecked = '1'
+    ValueUnchecked = '0'
+    Id = 263184
+    FieldName = 'Редактирует сотрудник'
+    CheckedText = 'Да'
+    UnCheckedText = 'Нет'
+    Editable = False
+    DefaultValue = '0'
+  end
+  object dxCheckBox10: TdxCheckBox
+    Left = 32
+    Height = 23
+    Top = 712
+    Width = 284
+    Caption = 'Редактирует ответственный сотрудник'
+    TabOrder = 20
+    ValueChecked = '1'
+    ValueUnchecked = '0'
+    Id = 263185
+    FieldName = 'Редактирует ответственный'
+    CheckedText = 'Да'
+    UnCheckedText = 'Нет'
+    Editable = False
+    DefaultValue = '0'
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 100
@@ -565,6 +597,20 @@ object Form119: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262486'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 263184
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263184'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 263185
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263185'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

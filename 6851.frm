@@ -141,9 +141,8 @@ object Form20: TdxForm
     FieldName = 'Номер_образца'
     Precission = 0
     Required = False
-    DefaultValue = '1'
     Editable = False
-    NullToZero = True
+    NullToZero = False
     GroupDigits = True
     PadZeros = True
   end
@@ -173,9 +172,8 @@ object Form20: TdxForm
     FieldName = 'Объем_пробы'
     Precission = 2
     Required = False
-    DefaultValue = '0'
     Editable = False
-    NullToZero = True
+    NullToZero = False
     GroupDigits = True
     PadZeros = True
   end

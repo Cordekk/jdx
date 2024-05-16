@@ -2,7 +2,7 @@ object Form25: TdxForm
   Left = 10
   Height = 648
   Top = 10
-  Width = 608
+  Width = 1077
   Id = 25
   PId = 0
   FormCaption = 'Подразделения'
@@ -228,6 +228,90 @@ object Form25: TdxForm
     Caption = 'Корневая организация '
     ParentColor = False
     Expression = 'Block('#13#10'Setvar(''org'','#13#10'NZ([Подразделение|Подразделение|Подразделение|Подразделение],'#13#10'NZ([Подразделение|Подразделение|Подразделение],'#13#10'NZ([Подразделение|Подразделение],'#13#10'NZ([Подразделение], RECID(''Подразделения''))'#13#10')'#13#10')'#13#10')'#13#10'),'#13#10'''Головная организация '' + newline + DBGETBYID(''Подразделения'', ''Название_подразделения'', getvar(''org''))'#13#10')'
+  end
+  object dxQueryGrid2: TdxQueryGrid
+    Left = 632
+    Height = 244
+    Top = 388
+    Width = 427
+    AutoAdvance = aaNone
+    Color = clWindow
+    Columns = <>
+    DefaultRowHeight = 20
+    DoubleBuffered = True
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+    ParentDoubleBuffered = False
+    ShowHint = True
+    TabOrder = 7
+    SelectedColor = clHighlight
+    GridLineStyle = psSolid
+    SelectedTextColor = clHighlightText
+    InactiveSelectedColor = clSilver
+    InactiveSelectedTextColor = clBlack
+    ShowButtons = False
+    VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
+    VisibleCaptions = []
+    FlatButtons = True
+    ButtonsColor = clBtnFace
+    ButtonSize = 25
+    ButtonFont.Height = -17
+    ButtonFont.Name = 'Verdana'
+    AlignmentButtons = taLeftJustify
+    HideButtonsWhenLostFocus = False
+    WordWrap = False
+    AllowChangeSort = False
+    Id = 3020
+    ManualRefresh = False
+  end
+  object dxLabel7: TdxLabel
+    Left = 643
+    Height = 20
+    Top = 361
+    Width = 105
+    Caption = 'Сотрудники'
+    ParentColor = False
+  end
+  object dxLabel8: TdxLabel
+    Left = 721
+    Height = 20
+    Top = 38
+    Width = 102
+    Caption = 'Помещения'
+    ParentColor = False
+  end
+  object dxQueryGrid3: TdxQueryGrid
+    Left = 684
+    Height = 273
+    Top = 83
+    Width = 374
+    AutoAdvance = aaNone
+    Color = clWindow
+    Columns = <>
+    DefaultRowHeight = 20
+    DoubleBuffered = True
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+    ParentDoubleBuffered = False
+    ShowHint = True
+    TabOrder = 8
+    SelectedColor = clHighlight
+    GridLineStyle = psSolid
+    SelectedTextColor = clHighlightText
+    InactiveSelectedColor = clSilver
+    InactiveSelectedTextColor = clBlack
+    ShowButtons = False
+    VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
+    VisibleCaptions = []
+    FlatButtons = True
+    ButtonsColor = clBtnFace
+    ButtonSize = 25
+    ButtonFont.Height = -17
+    ButtonFont.Name = 'Verdana'
+    AlignmentButtons = taLeftJustify
+    HideButtonsWhenLostFocus = False
+    WordWrap = False
+    AllowChangeSort = False
+    Id = 3021
+    ManualRefresh = False
   end
   object Grid: TdxGrid
     Left = 0
