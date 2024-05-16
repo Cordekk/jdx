@@ -647,11 +647,11 @@ name=Записать в регистр остатков
 group=Регистры
 ui=<ui>
   <form name="reg" caption="Регистр остатков" required="1"/>
-  <childform name="table" caption="Таблица" required="1"/>
+  <childform name="table" caption="Таблица" required="0"/>
   <grid name="fields" caption="Сопоставление полей">
     <field name="regfield" caption="Поле регистра" source="reg" required="1"
       filter="object;number"/>
-    <field name="formfield" caption="Поле формы" filter="object"/>
+    <field name="formfield" caption="Поле формы" filter="object;number"/>
     <field name="tblfield" caption="или Поле таблицы" source="table" filter="object;number"/>
     <list name="operation" caption="Операция" items="=;+;-" width="70" required="1"/>
   </grid>

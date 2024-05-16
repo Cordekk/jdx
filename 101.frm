@@ -523,27 +523,6 @@ object Form101: TdxForm
     Editable = True
     DefaultValue = '0'
   end
-  object dxObjectField3: TdxObjectField
-    Left = 404
-    Height = 24
-    Top = 84
-    Width = 264
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 20
-    Id = 131041
-    FieldName = 'Норматив'
-    ObjId = 1859
-    FieldId = 1849
-  end
-  object dxLabel13: TdxLabel
-    Left = 408
-    Height = 16
-    Top = 56
-    Width = 65
-    Caption = 'Норматив'
-    ParentColor = False
-  end
   object dxLabel14: TdxLabel
     Left = 336
     Height = 16
@@ -559,7 +538,7 @@ object Form101: TdxForm
     Width = 556
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 21
+    TabOrder = 20
     Id = 131121
     FieldName = 'Результат_текст'
     FieldSize = 400
@@ -572,6 +551,14 @@ object Form101: TdxForm
     Top = 260
     Width = 68
     Caption = 'Результат'
+    ParentColor = False
+  end
+  object dxLabel13: TdxLabel
+    Left = 404
+    Height = 16
+    Top = 80
+    Width = 65
+    Caption = 'Норматив'
     ParentColor = False
   end
   object Grid: TdxGrid
@@ -705,12 +692,6 @@ object Form101: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f131040'
-      end    
-      item
-        Tag = 131041
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f131041'
       end    
       item
         Tag = 131121

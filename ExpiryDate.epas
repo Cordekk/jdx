@@ -1,0 +1,39 @@
+{@module
+author=Runenkov
+version=1.0
+description=Ограничение работы базы по дате.
+@}
+
+{@action
+id=0611E8A5-9427-4FE8-A6D0-781BEADA74CA
+target=main
+origname=ExpiryDate
+name=Ограничение по дате
+group=Лицензирование
+ui=
+<ui>
+  <expr name="EXP" caption="Дата окончания лицензии"/>
+<ui>
+description=Запрещает запуск базы после истечения даты, указанной в настройках
+действия для всех пользователей, кроме разработчиков. <br><br>
+Дату вводить без кавычек.<br><br>
+Можно также прописать формулу даты в зависимости от данных в базе,
+например, максимальное значение даты в какой-либо форме
+@}
+
+procedure ExpiryDate(EXP: String);
+var EXPD: TDateTime;
+    s: Boolean;
+    i: LongInt;
+begin
+  if GetCurrentRole = '' then exit;    // разработчиков не касается  :)
+  s := TryStrToDate(EXP, EXPD);
+  if s = false then exit;              // выход, если не получилось правильная дата
+  if EXPD < Date then
+    begin
+      i := MessageDlg('Срок действия лицензии', 'Срок действия этой базы данных истек '+
+      EXP+Chr(9)+'Обратитесь к разработчику', mtWarning, [mbOk]);
+      Application.MainForm.Hide;       // чтобы окно программы не "пыхало" на экране
+      Application.Terminate;           // закрываемся...
+    end;
+end;

@@ -394,6 +394,7 @@ object Form3490: TdxForm
     TabOrder = 1
     object dxTabSheet1: TdxTabSheet
       Caption = 'Событие'
+      StopTab = False
       object dxEdit1: TdxEdit
         Left = 152
         Height = 24
@@ -655,6 +656,7 @@ object Form3490: TdxForm
     end
     object dxTabSheet2: TdxTabSheet
       Caption = 'Изменённые поля'
+      StopTab = False
       object dxGrid1: TdxGrid
         Left = 12
         Height = 196
@@ -825,6 +827,7 @@ object Form3490: TdxForm
     Width = 388
     Caption = 'Событие'
     TabOrder = 4
+    StopTab = False
     object dxDateEdit1: TdxDateEdit
       Left = 192
       Height = 24

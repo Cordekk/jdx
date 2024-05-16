@@ -1,0 +1,19 @@
+{@module
+Author=Cordek
+Version=1.0
+Description=Переход по ссылке для веб версии.
+@}
+
+
+  {@action
+Id=B408C9BC-DFF7-4DE2-9661-149CDA1E4C90
+  @}
+procedure GotoUrlButton(const ExprRun: String);
+ var
+S:string;
+begin
+S:=VarToStr(Session.EvalExpr(ExprRun,Self));
+if (S = '')  then  Exit;
+   Self.GotoUrl(S, False);
+end;
+

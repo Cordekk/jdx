@@ -27,7 +27,7 @@ object Form112: TdxForm
   Tree = Tree.Owner
   Index = 9
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Сотрудник|user] = USER" grid="cmp;ve_prop|dxLookupComboBox4;Редактирование|dxLookupComboBox2;Редактирование|dxLookupComboBox3;Редактирование|dxEdit1;Редактирование|dxMemo3;Редактирование|dxMemo5;Редактирование|dxLookupComboBox1;Редактирование" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Утверждающий|user]= user & [Согласовано] = 1" grid="cmp;ve_prop|dxButton10;Доступность|dxMemo4;Доступность|dxCheckBox2;Доступность" stateevents="0" /><action type="9" id="86F3AAEF-2807-46C4-8344-8E2521947747" allfields="1" logfields="Field" users="User" /><action disabled="1" type="9" id="65D407B7-2CFE-4F4D-9BE4-800461F09FE4" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" numerator="Номер" allow_edit_number="1" dependfields="DependField|Нумератор" /></actions>'
+  ActionOnCreate = '<actions><action disabled="1" type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" condition="[Сотрудник|user] = USER &amp; NZ([Вид документа|Редактирует сотрудник],1)=1 | NewRec()=1 // | ROLE=''''" grid="cmp;ve_prop|dxLookupComboBox4;Редактирование|dxLookupComboBox2;Редактирование|dxLookupComboBox3;Редактирование|dxEdit1;Редактирование|dxMemo3;Редактирование|dxMemo5;Редактирование|dxLookupComboBox1;Редактирование" stateevents="1" /><action disabled="1" type="9" id="65D407B7-2CFE-4F4D-9BE4-800461F09FE4" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" numerator="Номер" allow_edit_number="1" dependfields="DependField|Нумератор" /><comment text="Для утверждения документа"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Утверждающий|user]= user &amp; [Согласовано] = 1" grid="cmp;ve_prop|dxButton10;Доступность|dxMemo4;Доступность|dxCheckBox2;Доступность" stateevents="0" /><comment text="Логирование изменений"/><action type="9" id="86F3AAEF-2807-46C4-8344-8E2521947747" allfields="1" logfields="Field" users="User" /><comment text="Для опредления доступа к редактированию"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="IIF(NZ([Вид документа|Редактирует сотрудник],1)=1, [Сотрудник|user]=USER, 1=0) |'#13#10'IIF(NZ([Вид документа|Редактирует ответственный],1)=1, [Ответственный|user] = USER, 1=0)'#13#10'| NewRec()=1 // | ROLE=''''" grid="cmp;ve_prop|dxLookupComboBox4;Редактирование|dxLookupComboBox2;Редактирование|dxLookupComboBox3;Редактирование|dxEdit1;Редактирование|dxMemo3;Редактирование|dxMemo5;Редактирование|dxLookupComboBox1;Редактирование" stateevents="1" /></actions>'
   object dxButton13: TdxButton
     Left = 788
     Height = 30
@@ -65,7 +65,7 @@ object Form112: TdxForm
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
-    HideButton = False
+    HideButton = True
     CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
     OKCaption = 'OK'
     CancelCaption = 'Cancel'
@@ -90,14 +90,14 @@ object Form112: TdxForm
     ParentColor = False
   end
   object dxTimeEdit1: TdxTimeEdit
-    Left = 272
+    Left = 248
     Height = 24
     Top = 40
     Width = 80
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
-    HideButton = False
+    HideButton = True
     Id = 1886
     FieldName = 'Время'
     CurTime = True
@@ -149,7 +149,7 @@ object Form112: TdxForm
     PromptFillTable = False
     ClearTableBeforeFill = False
     Expression = '// [Счетчик]'#13#10'OBJID("Сотрудники", "user", USER)'
-    Editable = False
+    Editable = True
     ListFields = <>
     DropDownCount = 8
     ListWidthExtra = 0
@@ -162,12 +162,13 @@ object Form112: TdxForm
     Height = 424
     Top = 398
     Width = 912
-    ActivePage = dxTabSheet7
+    ActivePage = dxTabSheet9
     Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 8
+    TabIndex = 0
     TabOrder = 5
     object dxTabSheet9: TdxTabSheet
       Caption = 'Описание'
+      StopTab = False
       object dxMemo5: TdxMemo
         Left = 16
         Height = 376
@@ -188,6 +189,7 @@ object Form112: TdxForm
     end
     object dxTabSheet3: TdxTabSheet
       Caption = 'Назначение задач'
+      StopTab = False
       object dxGrid1: TdxGrid
         Left = 8
         Height = 202
@@ -357,8 +359,8 @@ object Form112: TdxForm
         Left = 16
         Height = 16
         Top = 132
-        Width = 245
-        Caption = 'Комиссия или группа исполнителей'
+        Width = 259
+        Caption = 'Группа исполнителей (шаблон задач)'
         ParentColor = False
       end
       object dxLookupComboBox11: TdxLookupComboBox
@@ -370,7 +372,7 @@ object Form112: TdxForm
         MaxLength = 0
         TabOrder = 6
         Id = 8420
-        FieldName = 'Комиссия'
+        FieldName = 'Шаблон'
         SourceTId = 517
         SourceFId = 8416
         Required = False
@@ -439,6 +441,7 @@ object Form112: TdxForm
     end
     object dxTabSheet2: TdxTabSheet
       Caption = 'Задачи   '
+      StopTab = False
       object dxQueryGrid1: TdxQueryGrid
         Left = 4
         Height = 360
@@ -517,6 +520,7 @@ object Form112: TdxForm
     end
     object dxTabSheet4: TdxTabSheet
       Caption = 'Подписи'
+      StopTab = False
       object dxQueryGrid2: TdxQueryGrid
         Left = 4
         Height = 152
@@ -694,6 +698,7 @@ object Form112: TdxForm
     end
     object dxTabSheet1: TdxTabSheet
       Caption = 'Риски и комментарий'
+      StopTab = False
       object dxMemo2: TdxMemo
         Left = 12
         Height = 132
@@ -739,8 +744,8 @@ object Form112: TdxForm
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
-        ShowButtons = False
-        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnDuplicate, gbnShopping, gbnMoveUp, gbnMoveDown]
+        ShowButtons = True
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnDuplicate, gbnMoveUp, gbnMoveDown]
         VisibleCaptions = []
         FlatButtons = True
         ButtonsColor = clBtnFace
@@ -773,6 +778,7 @@ object Form112: TdxForm
     end
     object dxTabSheet5: TdxTabSheet
       Caption = 'Связи и статус'
+      StopTab = False
       object dxQueryGrid4: TdxQueryGrid
         Left = 20
         Height = 192
@@ -1077,7 +1083,7 @@ object Form112: TdxForm
         Id = 8615
         FieldName = 'Архив'
         SourceTId = 530
-        SourceFId = 8614
+        SourceFId = 8613
         Required = False
         SourceTable = 0
         DestTable = 0
@@ -1094,6 +1100,7 @@ object Form112: TdxForm
     end
     object dxTabSheet8: TdxTabSheet
       Caption = 'ФАЙЛЫ (!!)'
+      StopTab = False
       object dxButton2: TdxButton
         Left = 36
         Height = 22
@@ -1150,6 +1157,7 @@ object Form112: TdxForm
     end
     object dxTabSheet6: TdxTabSheet
       Caption = 'Копии'
+      StopTab = False
       object dxQueryGrid5: TdxQueryGrid
         Left = 8
         Height = 368
@@ -1188,6 +1196,7 @@ object Form112: TdxForm
     end
     object dxTabSheet7: TdxTabSheet
       Caption = 'Изменения'
+      StopTab = False
       object dxQueryGrid7: TdxQueryGrid
         Left = 8
         Height = 380
@@ -1467,7 +1476,7 @@ object Form112: TdxForm
     MaxLength = 0
     TabOrder = 11
     Id = 1964
-    FieldName = 'Адресат'
+    FieldName = 'Ответственный'
     SourceTId = 24
     SourceFId = 87
     Required = False
@@ -1931,7 +1940,7 @@ object Form112: TdxForm
     Fields = <    
       item
         FieldId = 1948
-        FieldSource = tfsForm
+        FieldSource = tfsObject
       end>
     ExpandLevels = 0
   end

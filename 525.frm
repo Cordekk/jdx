@@ -19,7 +19,7 @@ object Form525: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 79
+  Index = 78
   SoftCheck = False
   object dxDateEdit1: TdxDateEdit
     Left = 88
@@ -101,7 +101,7 @@ object Form525: TdxForm
     Width = 176
     Caption = 'Импорт Исследований'
     TabOrder = 3
-    ActionOnClick = '<actions><action type="9" id="DAB4A991-055D-466F-A13B-A462C2BE964E" initfolder="" filename="" charset="UTF-8" skipfirstrow="1" form="Исследование" fields="formfield;update|№пп;0|Проба;1|Номер_образца;1|Показатель;1|Лаборатория;0|Исполнитель;0|Значение;0|Норматив;0|Неопределенность;0|Методы испытаний;0|Дата изменения;0|Положительное;0|Постинфекционное;0|Нет вакциональных антител;0|Дата поступления;0" values="field;expr|Archiv;0" /></actions>'
+    ActionOnClick = '<actions><action type="9" id="DAB4A991-055D-466F-A13B-A462C2BE964E" initfolder="" filename="" charset="UTF-8" skipfirstrow="1" form="Исследование" fields="formfield;update|№пп;0|Проба;1|Номер_образца;1|Показатель;1|Лаборатория;0|Исполнитель;0|Значение;0|Норматив;0|U;0|Методы испытаний;0|Дата изменения;0|Положительное;0|Постинфекционное;0|Нет вакциональных антител;0|Дата поступления;0" values="field;expr|Archiv;0" /></actions>'
   end
   object dxButton5: TdxButton
     Left = 12
@@ -204,7 +204,7 @@ object Form525: TdxForm
     Width = 176
     Caption = 'Импорт Незавершенных'
     TabOrder = 10
-    ActionOnClick = '<actions><action type="9" id="DAB4A991-055D-466F-A13B-A462C2BE964E" initfolder="" filename="" charset="UTF-8" skipfirstrow="1" form="Исследование" fields="formfield;update|№пп;0|Проба;1|Номер_образца;1|Показатель;1|Лаборатория;0|Исполнитель;0|Значение;0|Норматив;0|Неопределенность;0|Методы испытаний;0|Положительное;0|Постинфекционное;0|Нет вакциональных антител;0|Дата поступления;0" values="field;expr|Archiv;0" /></actions>'
+    ActionOnClick = '<actions><action type="9" id="DAB4A991-055D-466F-A13B-A462C2BE964E" initfolder="" filename="" charset="UTF-8" skipfirstrow="1" form="Исследование" fields="formfield;update|№пп;0|Проба;1|Номер_образца;1|Показатель;1|Лаборатория;0|Исполнитель;0|Значение;0|Норматив;0|U;0|Методы испытаний;0|Положительное;0|Постинфекционное;0|Нет вакциональных антител;0|Дата поступления;0" values="field;expr|Archiv;0" /></actions>'
   end
   object dxQueryGrid4: TdxQueryGrid
     Left = 620
@@ -298,6 +298,15 @@ object Form525: TdxForm
     Caption = 'Пересчитать'
     TabOrder = 15
     ActionOnClick = '<actions><action type="3" form="Исследование" filter="[Образец]= null" table="" field="Образец" expression=""/></actions>'
+  end
+  object dxButton7: TdxButton
+    Left = 20
+    Height = 30
+    Top = 136
+    Width = 176
+    Caption = 'Импорт продукции'
+    TabOrder = 16
+    ActionOnClick = '<actions><action type="9" id="DAB4A991-055D-466F-A13B-A462C2BE964E" initfolder="" filename="" charset="UTF-8" skipfirstrow="1" form="Продукция" fields="formfield;update|Название;1|Группа продукции2;0" values="field;expr" /></actions>'
   end
   object Grid: TdxGrid
     Left = 0

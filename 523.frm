@@ -6,7 +6,7 @@ object Form523: TdxForm
   Id = 523
   PId = 0
   FormCaption = 'Отчет ОИ'
-  FormGroup = 'Приемка'
+  FormGroup = 'Общие'
   Font.Height = -13
   Font.Name = 'Verdana'
   AutoOpen = True
@@ -19,7 +19,7 @@ object Form523: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 77
+  Index = 76
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 12
@@ -61,6 +61,7 @@ object Form523: TdxForm
     TabOrder = 1
     object dxTabSheet7: TdxTabSheet
       Caption = 'Отбор проб'
+      StopTab = False
       object dxQueryGrid10: TdxQueryGrid
         Left = 8
         Height = 666
@@ -114,6 +115,7 @@ object Form523: TdxForm
     end
     object dxTabSheet1: TdxTabSheet
       Caption = 'Пробы'
+      StopTab = False
       object dxQueryGrid1: TdxQueryGrid
         Left = 0
         Height = 682
@@ -155,7 +157,7 @@ object Form523: TdxForm
         Width = 172
         Caption = 'Пересчитать пробы'
         TabOrder = 2
-        ActionOnClick = '<actions><action type="3" form="Пробы" filter="[!Дата_поступления]&gt;[Дата_начала]&[!Дата_поступления]&lt;[Дата_конца]&[?!Заявка клиента2|Направление2]=[Направление]" table="" field="Количество положительных" expression=""/></actions>'
+        ActionOnClick = '<actions><action type="3" form="Пробы" filter="[!Дата_поступления]&gt;[Дата_начала]&amp;[!Дата_поступления]&lt;[Дата_конца]&amp;[?!Заявка клиента2|Направление2]=[Направление]" table="" field="Количество положительных" expression=""/></actions>'
       end
       object dxQueryGrid4: TdxQueryGrid
         Left = 488
@@ -253,6 +255,7 @@ object Form523: TdxForm
     end
     object dxTabSheet3: TdxTabSheet
       Caption = 'Исследования'
+      StopTab = False
       object dxQueryGrid3: TdxQueryGrid
         Left = 0
         Height = 578
@@ -348,6 +351,7 @@ object Form523: TdxForm
     end
     object dxTabSheet4: TdxTabSheet
       Caption = 'для Зерна'
+      StopTab = False
       object dxQueryGrid5: TdxQueryGrid
         Left = 4
         Height = 674
@@ -393,6 +397,7 @@ object Form523: TdxForm
     end
     object dxTabSheet9: TdxTabSheet
       Caption = 'Сводная по исследованиям и образцам'
+      StopTab = False
       object dxButton2: TdxButton
         Left = 972
         Height = 30
@@ -993,11 +998,12 @@ object Form523: TdxForm
         Width = 160
         Caption = 'пересчитать ГЗ'
         TabOrder = 21
-        ActionOnClick = '<actions><action type="3" form="Заявка клиента" filter="[Дата]&gt;=[Дата_начала] &  [Дата]&lt;=[Дата_конца]" table="" field="Госзадание" expression=""/></actions>'
+        ActionOnClick = '<actions><action type="3" form="Заявка клиента" filter="[Дата]&gt;=[Дата_начала] &amp;  [Дата]&lt;=[Дата_конца]" table="" field="Госзадание" expression=""/></actions>'
       end
     end
     object dxTabSheet5: TdxTabSheet
       Caption = 'По сотрудникам'
+      StopTab = False
       object dxLookupComboBox3: TdxLookupComboBox
         Left = 136
         Height = 24
@@ -1081,6 +1087,7 @@ object Form523: TdxForm
     end
     object dxTabSheet6: TdxTabSheet
       Caption = 'По положительным'
+      StopTab = False
       object dxQueryGrid9: TdxQueryGrid
         Left = 0
         Height = 686
@@ -1126,6 +1133,7 @@ object Form523: TdxForm
     end
     object dxTabSheet10: TdxTabSheet
       Caption = 'Карантинные объекты'
+      StopTab = False
       object dxQueryGrid18: TdxQueryGrid
         Left = 4
         Height = 654
@@ -1221,6 +1229,7 @@ object Form523: TdxForm
     end
     object dxTabSheet8: TdxTabSheet
       Caption = 'По инспекторам'
+      StopTab = False
       object dxQueryGrid11: TdxQueryGrid
         Left = 16
         Height = 674
@@ -1266,6 +1275,7 @@ object Form523: TdxForm
     end
     object dxTabSheet2: TdxTabSheet
       Caption = 'Образцы'
+      StopTab = False
       object dxQueryGrid2: TdxQueryGrid
         Left = 0
         Height = 694
@@ -1311,6 +1321,7 @@ object Form523: TdxForm
     end
     object dxTabSheet11: TdxTabSheet
       Caption = 'Почва'
+      StopTab = False
     end
   end
   object dxDateEdit1: TdxDateEdit

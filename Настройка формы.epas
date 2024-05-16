@@ -1,0 +1,73 @@
+{@module
+author=Develop-Soft [ https://forum.develop-soft.ru ]
+version=1.0
+description=Кастомизация интерфейса
+Действия:
+1. Расширенная настройка формы.
+
+Изменения:
+v 1.0 от 19.08.2019 - выход первой версии
+...
+@}
+
+{@action
+Id=3231511F-3754-440C-9367-F0D142FA6202
+Target=form
+OrigName=SettingsForm
+Name=Расширенная настройка формы.
+Group=Кастомизация интерфейса
+UI=
+<ui>
+  <number name="FormWidth" caption="Ширина окна" defaultvalue="0" required="1"/>
+  <number name="FormHeight" caption="Высота окна" defaultvalue="0" required="1"/>
+  <list name="FormBorderStyle" caption="Стиль модального окна"
+    Items="bsNone;bsSingle;bsSizeable;bsDialog;bsToolwindow;bsSizeToolWin">
+  <list name="FormWindowsState" caption="Состояние модального окна"
+    Items="wsNormal;wsMinimized;wsMaximized">
+</ui>
+Description=Действие позволяет выполнить кастомные настройки текущей формы.<br>
+<b>"Ширина\Высота окна":</b> Размеры окна. (значение 0- Размер из дизайнера)<br>
+<b>"Стиль модального окна":</b><br>
+<code>bsNone</code> - окно без рамки и заголовка.<br>
+<code>bsSingle</code> - окно без возможности изменить размер.<br>
+<code>bsSizeable</code> - окно с настраиваемым размером.<br>
+<code>bsDialog</code> - диалоговое окно без возможности сворачивания/разворачивания, с фиксированным размером.<br>
+<code>bsToolWindow</code> - инструментальное окно с уменьшенным заголовком и фиксированным размером.<br>
+<code>bsSizeToolWin</code> - инструментальное окно с уменьшенным заголовком и регулируемым размером.<br>
+<b>"Состояние модального окна":</b><br>
+<code>wsNormal</code> - Стандартное окно.<br>
+<code>wsMinimized</code> - Свернуто.<br>
+<code>wsMaximized</code> - Развернуто на весь экран.<br>
+@}
+
+procedure SettingsForm(FormWidth,FormHeight:integer;FormBorderStyle,FormWindowsState:string);
+begin
+if Self.EditWindow<>nil then
+with Self.EditWindow do
+  begin
+    if FormWidth>0 then
+      Width:=FormWidth;
+
+    if FormHeight>0 then
+      Height:=FormHeight;
+
+    case FormBorderStyle of
+     'bsNone' : BorderStyle := bsNone;
+     'bsSingle' : BorderStyle := bsSingle;
+     'bsSizeable' : BorderStyle := bsSizeable;
+     'bsDialog' : BorderStyle := bsDialog;
+     'bsToolwindow' : BorderStyle :=  bsToolwindow;
+     'bsSizeToolWin' : BorderStyle := bsSizeToolWin;
+    end;
+
+    case FormWindowsState of
+     'wsNormal' : WindowState := wsNormal;
+     'wsMinimized' : WindowState := wsMinimized;
+     'wsMaximized' : WindowState := wsMaximized;
+    end;
+
+  end;
+end;
+
+
+

@@ -1,12 +1,12 @@
 object Form27: TdxForm
   Left = 10
-  Height = 273
+  Height = 311
   Top = 10
   Width = 600
   Id = 27
   PId = 0
   FormCaption = 'Показатели'
-  FormGroup = 'Лаборатория'
+  FormGroup = 'Справочники'
   Font.Height = -17
   Font.Name = 'Verdana'
   AutoOpen = True
@@ -31,7 +31,7 @@ object Form27: TdxForm
     TabOrder = 0
     Id = 100
     FieldName = 'Показатель'
-    FieldSize = 150
+    FieldSize = 200
     Required = False
     Editable = False
   end
@@ -103,6 +103,33 @@ object Form27: TdxForm
     Required = False
     Editable = False
   end
+  object dxEdit4: TdxEdit
+    Left = 12
+    Height = 28
+    Top = 216
+    Width = 576
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 3
+    Id = 262704
+    FieldName = 'Альтернативное название2'
+    FieldSize = 300
+    Required = False
+    Editable = False
+  end
+  object dxRecordId1: TdxRecordId
+    Left = 12
+    Height = 28
+    Top = 280
+    Width = 79
+    ReadOnly = True
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 4
+    FieldName = 'ID'
+    StopTab = False
+    Id = 263113
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 100
@@ -128,6 +155,18 @@ object Form27: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262476'
+      end    
+      item
+        Tag = 262704
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262704'
+      end    
+      item
+        Tag = 263113
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263113'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

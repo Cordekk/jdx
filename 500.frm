@@ -21,6 +21,7 @@ object Form500: TdxForm
   Tree = Tree.Owner
   Index = 71
   SoftCheck = False
+  ActionOnCreate = '<actions><action type="9" id="245D2473-2037-483E-8B16-2FA012CBA6DD" reg="Остаток ТМЦ" table="Исходные ТМЦ" fields="regfield;formfield;tblfield;operation|Номенклатура ТМЦ;;Номенклатура;=|ТМЦ;;ТМЦ;=|Сотрудник;Сотрудник 1;;=|Склад;Склад 1;;=|Подразделение;Подразделение1;;=|Остаток;;Количество;-|Стоимость;;Стоимость;-" check="Проведен" checkbalance="1" /><action type="9" id="245D2473-2037-483E-8B16-2FA012CBA6DD" reg="Остаток ТМЦ" table="Исходные ТМЦ" fields="regfield;formfield;tblfield;operation|Номенклатура ТМЦ;Номенклатура;;=|ТМЦ;ТМЦ;;=|Сотрудник;Сотрудник2;;=|Склад;Склад2;;=|Подразделение;Подразделение;;=|Остаток;Количество;;+|Стоимость;Стоимость;;+" check="Проведен" checkbalance="1" /></actions>'
   object dxCounter1: TdxCounter
     Left = 16
     Height = 24
@@ -134,9 +135,9 @@ object Form500: TdxForm
     ParentColor = False
   end
   object dxLookupComboBox4: TdxLookupComboBox
-    Left = 468
+    Left = 464
     Height = 24
-    Top = 344
+    Top = 340
     Width = 212
     CharCase = ecNormal
     MaxLength = 0
@@ -221,9 +222,9 @@ object Form500: TdxForm
     ParentColor = False
   end
   object dxCheckBox1: TdxCheckBox
-    Left = 512
+    Left = 732
     Height = 23
-    Top = 16
+    Top = 8
     Width = 90
     Caption = 'Проведен'
     TabOrder = 7
@@ -342,21 +343,21 @@ object Form500: TdxForm
     Font.Style = [fsBold]
     ParentColor = False
     ParentFont = False
-    Expression = 'IIF(COUNTIF(''Движение2'', ''[ТМЦ]=Null'')>0, ''Внесите информацию о ТМЦ в форму'', '''')'
+    Expression = 'IIF(COUNTIF(''Исходные ТМЦ'', ''[ТМЦ]=Null'')>0, ''Внесите информацию о ТМЦ в форму'', '''')'
   end
   object dxButton1: TdxButton
-    Left = 612
+    Left = 884
     Height = 30
-    Top = 48
+    Top = 44
     Width = 100
     Caption = 'Сохранить'
     TabOrder = 12
     ActionOnClick = '<actions><action type="5" /></actions>'
   end
   object dxButton2: TdxButton
-    Left = 612
+    Left = 884
     Height = 30
-    Top = 80
+    Top = 76
     Width = 100
     Caption = 'Провести'
     TabOrder = 13
@@ -455,8 +456,8 @@ object Form500: TdxForm
     TabOrder = 16
     Id = 8448
     FieldName = 'Ед. изм.'
-    ObjId = 0
-    FieldId = 0
+    ObjId = 8446
+    FieldId = 1826
   end
   object dxLabel13: TdxLabel
     Left = 24
@@ -558,7 +559,6 @@ object Form500: TdxForm
     SourceTId = 25
     SourceFId = 78
     Required = False
-    DefaultValue = '[Склад|Подразделение]'
     SourceTable = 0
     DestTable = 0
     PromptFillTable = False
@@ -653,7 +653,7 @@ object Form500: TdxForm
     Width = 188
     Caption = 'подбор остатков'
     TabOrder = 22
-    ActionOnClick = '<actions><action type="9" id="A12B9557-D44C-4B2A-8EA5-0D1010E9BE0A" form="Остаток ТМЦ" title="Выбор остатков ТМЦ" filter="[Сотрудник]=[Сотрудник 1]&[Склад]=[Склад 1]" tbl="Исходные ТМЦ" insval="formfield;tblfield|Номенклатура ТМЦ;Номенклатура|ТМЦ;ТМЦ" inpval="tblfield2|Количество" hidecmd="1" /></actions>'
+    ActionOnClick = '<actions><action type="9" id="A12B9557-D44C-4B2A-8EA5-0D1010E9BE0A" form="Остаток ТМЦ" title="Выбор остатков ТМЦ" filter="[Сотрудник]=[Сотрудник 1]&amp;[Склад]=[Склад 1]" tbl="Исходные ТМЦ" insval="formfield;tblfield|Номенклатура ТМЦ;Номенклатура|ТМЦ;ТМЦ" inpval="tblfield2|Количество" hidecmd="1" /></actions>'
   end
   object dxLabel22: TdxLabel
     Left = 517
@@ -751,9 +751,9 @@ object Form500: TdxForm
     Editable = True
   end
   object dxLabel26: TdxLabel
-    Left = 517
+    Left = 521
     Height = 16
-    Top = 432
+    Top = 436
     Width = 91
     Caption = 'Изготовитель'
     ParentColor = False
@@ -860,6 +860,39 @@ object Form500: TdxForm
     Top = 552
     Width = 135
     Caption = 'Инвентарный номер'
+    ParentColor = False
+  end
+  object dxLookupComboBox9: TdxLookupComboBox
+    Left = 700
+    Height = 24
+    Top = 76
+    Width = 172
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 32
+    Id = 262610
+    FieldName = 'Подразделение1'
+    SourceTId = 25
+    SourceFId = 78
+    Required = False
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Editable = False
+    ListFields = <>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = False
+    UpdateTree = False
+  end
+  object dxLabel25: TdxLabel
+    Left = 640
+    Height = 16
+    Top = 80
+    Width = 41
+    Caption = 'Отдел'
     ParentColor = False
   end
   object Grid: TdxGrid
@@ -1020,6 +1053,12 @@ object Form500: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262297'
+      end    
+      item
+        Tag = 262610
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262610l'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

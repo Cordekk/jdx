@@ -229,7 +229,7 @@ object Form82: TdxForm
     Width = 267
     Caption = 'Акты возвращены (пересчитать)'
     TabOrder = 6
-    ActionOnClick = '<actions><action type="5" /><action type="3" form="Выставленные счета" filter="[Дата Акта]&lt;ADDMONTH([Дата],-3)&[Акт_возвращен]=0" table="" field="Акт_возвращен" expression=""/></actions>'
+    ActionOnClick = '<actions><action type="5" /><action type="3" form="Выставленные счета" filter="[Дата Акта]&lt;ADDMONTH([Дата],-3)&amp;[Акт_возвращен]=0" table="" field="Акт_возвращен" expression=""/></actions>'
   end
   object Grid: TdxGrid
     Left = 0

@@ -1,7 +1,7 @@
 object Form11: TdxForm
-  Left = 7
+  Left = 10
   Height = 549
-  Top = 7
+  Top = 10
   Width = 649
   Id = 6843
   PId = 0
@@ -19,7 +19,7 @@ object Form11: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 97
+  Index = 96
   SoftCheck = False
   object dxPageControl1: TdxPageControl
     Left = 5
@@ -31,18 +31,23 @@ object Form11: TdxForm
     TabOrder = 0
     object dxTabSheet1: TdxTabSheet
       Caption = 'График поверки'
+      StopTab = False
     end
     object dxTabSheet2: TdxTabSheet
       Caption = 'Отчеты поверки'
+      StopTab = False
     end
     object dxTabSheet3: TdxTabSheet
       Caption = 'Аттестации'
+      StopTab = False
     end
     object dxTabSheet4: TdxTabSheet
       Caption = 'Отчеты аттестации'
+      StopTab = False
     end
     object dxTabSheet5: TdxTabSheet
       Caption = 'Закладка'
+      StopTab = False
     end
   end
   object Grid: TdxGrid

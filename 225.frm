@@ -24,7 +24,7 @@ object Form225: TdxForm
   Tree = Tree.Owner
   Index = 36
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="FAD4F5C7-2DD6-4DB8-978B-78F51D055019" reg="Движение ТМЦ" regobj="Поступление" formfields="formfield;regfield|Дата;Дата|Время;Время" table="Движение1" tablefields="tablefield;regfield2|Номенклатура;Номенклатура ТМЦ|ТМЦ;ТМЦ|Количество;Количество|Склад;Склад|Сотрудник;Сотрудник" obj="" objfields="objfield;regobjfield" objtable="" objtablefields="objtablefield;regfield3" calcreg="regfield4;expr|КЭФ;1|Баланс;getvar(''Движение1&00A6Количество'')" checkbox="Проведен" progress="Показывать только при сетевом подключении" /><action type="9" id="245D2473-2037-483E-8B16-2FA012CBA6DD" reg="Остаток ТМЦ" table="Движение1" fields="regfield;formfield;tblfield;operation|Номенклатура ТМЦ;;Номенклатура;=|ТМЦ;;ТМЦ;=|Склад;;Склад;=|Остаток;;Количество;+|Подразделение;;Подразделение;=|Сотрудник;;Сотрудник;=|Стоимость;;Стоимость;+" check="Проведен" checkbalance="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="user=[Сотрудник|user]" grid="cmp;ve_prop" stateevents="0" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="FAD4F5C7-2DD6-4DB8-978B-78F51D055019" reg="Движение ТМЦ" regobj="Поступление" formfields="formfield;regfield|Дата;Дата|Время;Время" table="Движение1" tablefields="tablefield;regfield2|Номенклатура;Номенклатура ТМЦ|ТМЦ;ТМЦ|Количество;Количество|Склад;Склад|Сотрудник;Сотрудник" obj="" objfields="objfield;regobjfield" objtable="" objtablefields="objtablefield;regfield3" calcreg="regfield4;expr|КЭФ;1|Баланс;getvar(''Движение1&amp;00A6Количество'')" checkbox="Проведен" progress="Показывать только при сетевом подключении" /><action type="9" id="245D2473-2037-483E-8B16-2FA012CBA6DD" reg="Остаток ТМЦ" table="Движение1" fields="regfield;formfield;tblfield;operation|Номенклатура ТМЦ;;Номенклатура;=|ТМЦ;;ТМЦ;=|Склад;;Склад;=|Остаток;;Количество;+|Подразделение;;Подразделение;=|Сотрудник;;Сотрудник;=|Стоимость;;Стоимость;+" check="Проведен" checkbalance="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="user=[Сотрудник|user]" grid="cmp;ve_prop" stateevents="0" /></actions>'
   object dxCounter1: TdxCounter
     Left = 20
     Height = 24
@@ -445,6 +445,7 @@ object Form225: TdxForm
     TabOrder = 16
     object dxTabSheet1: TdxTabSheet
       Caption = 'Товары'
+      StopTab = False
       object dxGrid1: TdxGrid
         Left = 4
         Height = 258
@@ -482,9 +483,11 @@ object Form225: TdxForm
     end
     object dxTabSheet2: TdxTabSheet
       Caption = 'Услуги'
+      StopTab = False
     end
     object dxTabSheet3: TdxTabSheet
       Caption = 'Файлы'
+      StopTab = False
       object dxQueryGrid1: TdxQueryGrid
         Left = 8
         Height = 210

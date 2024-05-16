@@ -2,7 +2,7 @@ object Form24: TdxForm
   Left = 10
   Height = 767
   Top = 10
-  Width = 1010
+  Width = 1078
   Id = 24
   PId = 0
   FormCaption = 'Сотрудники'
@@ -81,6 +81,7 @@ object Form24: TdxForm
     FieldName = 'Подразделение'
     SourceTId = 25
     SourceFId = 77
+    Filter = ' [ИД] in IIF(Role='''',REPLACEALL(DBMERGE(''Подразделения'', ''ИД'', ''''),''; '','';''),'''')'#13#10' |'#13#10'[ИД] in DBGET(''Сотрудники'', ''Подразделения'', ''[!user]=user'')'
     Required = False
     SourceTable = 0
     DestTable = 0
@@ -119,8 +120,8 @@ object Form24: TdxForm
     FieldName = 'user'
     FieldSize = 150
     Required = True
-    Expression = '//[ИД]'#13#10'0'
     Editable = True
+    DefaultValue = '0'
   end
   object dxEdit3: TdxEdit
     Left = 180
@@ -187,9 +188,9 @@ object Form24: TdxForm
   end
   object dxMemo1: TdxMemo
     Left = 612
-    Height = 120
+    Height = 168
     Top = 12
-    Width = 384
+    Width = 388
     ScrollBars = ssBoth
     TabOrder = 7
     Id = 201
@@ -199,14 +200,14 @@ object Form24: TdxForm
     SourceTId = 0
     SourceFId = 0
     Delimiter = ', '
-    Expression = 'MERGE(''Функционал'', ''Описание'', ''; '')'
-    Editable = False
+    Expression = 'IIF(COUNT(''Функционал'')=0,OLDVALUE(''Функционал''), MERGE(''Функционал'', ''Описание'', ''; ''))'
+    Editable = True
     UpdateTree = False
   end
   object dxEdit7: TdxEdit
-    Left = 544
+    Left = 1016
     Height = 28
-    Top = 4
+    Top = 12
     Width = 64
     CharCase = ecNormal
     MaxLength = 0
@@ -257,61 +258,13 @@ object Form24: TdxForm
     Required = False
     Editable = False
   end
-  object dxCheckBox1: TdxCheckBox
-    Left = 344
-    Height = 23
-    Top = 264
-    Width = 130
-    Caption = 'Отбор проб'
-    TabOrder = 10
-    ValueChecked = '1'
-    ValueUnchecked = '0'
-    Id = 1898
-    FieldName = 'Отбор проб'
-    CheckedText = 'Да'
-    UnCheckedText = 'Нет'
-    Editable = False
-    DefaultValue = '0'
-  end
-  object dxCheckBox2: TdxCheckBox
-    Left = 484
-    Height = 23
-    Top = 264
-    Width = 114
-    Caption = 'Приемка'
-    TabOrder = 11
-    ValueChecked = '1'
-    ValueUnchecked = '0'
-    Id = 1899
-    FieldName = 'Приемка'
-    CheckedText = 'Да'
-    UnCheckedText = 'Нет'
-    Editable = False
-    DefaultValue = '0'
-  end
-  object dxCheckBox3: TdxCheckBox
-    Left = 616
-    Height = 23
-    Top = 264
-    Width = 154
-    Caption = 'Исследования'
-    TabOrder = 12
-    ValueChecked = '1'
-    ValueUnchecked = '0'
-    Id = 2407
-    FieldName = 'Проведение исследований'
-    CheckedText = 'Да'
-    UnCheckedText = 'Нет'
-    Editable = False
-    DefaultValue = '0'
-  end
   object dxCheckBox4: TdxCheckBox
-    Left = 344
-    Height = 23
-    Top = 296
-    Width = 118
-    Caption = 'Акты'
-    TabOrder = 13
+    Left = 768
+    Height = 27
+    Top = 264
+    Width = 274
+    Caption = 'выполненных работ'
+    TabOrder = 10
     ValueChecked = '1'
     ValueUnchecked = '0'
     Id = 2664
@@ -321,32 +274,17 @@ object Form24: TdxForm
     Editable = False
     DefaultValue = '0'
   end
-  object dxCheckBox5: TdxCheckBox
-    Left = 768
-    Height = 23
-    Top = 264
-    Width = 238
-    Caption = 'Подпись исследований'
-    TabOrder = 14
-    ValueChecked = '1'
-    ValueUnchecked = '0'
-    Id = 2665
-    FieldName = 'Подпись исследований'
-    CheckedText = 'Да'
-    UnCheckedText = 'Нет'
-    Editable = False
-    DefaultValue = '0'
-  end
   object dxPageControl1: TdxPageControl
     Left = 12
     Height = 356
     Top = 352
-    Width = 988
+    Width = 1056
     ActivePage = dxTabSheet5
     TabIndex = 0
-    TabOrder = 15
+    TabOrder = 11
     object dxTabSheet5: TdxTabSheet
       Caption = 'Основные документы'
+      StopTab = False
       object dxEdit6: TdxEdit
         Left = 208
         Height = 28
@@ -557,6 +495,7 @@ object Form24: TdxForm
     end
     object dxTabSheet4: TdxTabSheet
       Caption = 'Образование'
+      StopTab = False
       object dxQueryGrid4: TdxQueryGrid
         Left = 8
         Height = 288
@@ -594,6 +533,7 @@ object Form24: TdxForm
     end
     object dxTabSheet3: TdxTabSheet
       Caption = 'Опыт работы'
+      StopTab = False
       object dxQueryGrid3: TdxQueryGrid
         Left = 8
         Height = 244
@@ -706,6 +646,7 @@ object Form24: TdxForm
     end
     object dxTabSheet2: TdxTabSheet
       Caption = 'Аттестация НД'
+      StopTab = False
       object dxQueryGrid2: TdxQueryGrid
         Left = 4
         Height = 296
@@ -743,6 +684,7 @@ object Form24: TdxForm
     end
     object dxTabSheet1: TdxTabSheet
       Caption = 'Допуск'
+      StopTab = False
       object dxLabel8: TdxLabel
         Left = 204
         Height = 20
@@ -788,6 +730,7 @@ object Form24: TdxForm
     end
     object dxTabSheet6: TdxTabSheet
       Caption = 'Функционал'
+      StopTab = False
       object dxQueryGrid5: TdxQueryGrid
         Left = 12
         Height = 282
@@ -823,8 +766,177 @@ object Form24: TdxForm
         ManualRefresh = False
       end
     end
+    object dxTabSheet8: TdxTabSheet
+      Caption = 'Доступ'
+      StopTab = False
+      object dxMemo3: TdxMemo
+        Left = 260
+        Height = 28
+        Top = 272
+        Width = 200
+        ScrollBars = ssBoth
+        TabOrder = 8
+        Id = 262975
+        FieldName = 'Направления'
+        FieldSize = 300
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Editable = False
+        UpdateTree = False
+      end
+      object dxMemo2: TdxMemo
+        Left = 80
+        Height = 48
+        Top = 263
+        Width = 408
+        ScrollBars = ssBoth
+        TabOrder = 1
+        Id = 262785
+        FieldName = 'Подразделения'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Expression = '//'#13#10'NZ(CSTR([Подразделение|ИД])+'';'','''')+NZ(MERGE(''Подразделения сотрудника'', ''ИД'', '';''),'''')'
+        Editable = False
+        UpdateTree = False
+      end
+      object dxGrid1: TdxGrid
+        Left = 16
+        Height = 294
+        Top = 16
+        Width = 472
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 0
+        SelectedColor = clHighlight
+        GridLineStyle = psSolid
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = True
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnDuplicate, gbnShopping]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -17
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 6860
+      end
+      object dxCheckBox1: TdxCheckBox
+        Left = 508
+        Height = 23
+        Top = 24
+        Width = 130
+        Caption = 'Отбор проб'
+        TabOrder = 2
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 1898
+        FieldName = 'Отбор проб'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox2: TdxCheckBox
+        Left = 508
+        Height = 23
+        Top = 52
+        Width = 114
+        Caption = 'Приемка'
+        TabOrder = 3
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 1899
+        FieldName = 'Приемка'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox3: TdxCheckBox
+        Left = 508
+        Height = 23
+        Top = 104
+        Width = 154
+        Caption = 'Исследования'
+        TabOrder = 4
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 2407
+        FieldName = 'Исследования'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox5: TdxCheckBox
+        Left = 508
+        Height = 23
+        Top = 132
+        Width = 238
+        Caption = 'Подпись исследований'
+        TabOrder = 5
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 2665
+        FieldName = 'Подпись исследований'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox8: TdxCheckBox
+        Left = 508
+        Height = 23
+        Top = 164
+        Width = 222
+        Caption = 'Подпись протокола'
+        TabOrder = 6
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 262317
+        FieldName = 'Подпись протокола'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox9: TdxCheckBox
+        Left = 508
+        Height = 23
+        Top = 80
+        Width = 304
+        Caption = 'Назначение исследований'
+        TabOrder = 9
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 263080
+        FieldName = 'Назначение исследований'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+    end
     object dxTabSheet7: TdxTabSheet
       Caption = 'Файлы'
+      StopTab = False
       object dxCheckBox7: TdxCheckBox
         Left = 596
         Height = 23
@@ -846,7 +958,7 @@ object Form24: TdxForm
         Left = 684
         Height = 28
         Top = 288
-        Width = 280
+        Width = 348
         Anchors = [akTop, akLeft, akRight, akBottom]
         CharCase = ecNormal
         MaxLength = 0
@@ -854,7 +966,7 @@ object Form24: TdxForm
         Id = 8617
         FieldName = 'Архив'
         SourceTId = 530
-        SourceFId = 8614
+        SourceFId = 8613
         Required = False
         SourceTable = 0
         DestTable = 0
@@ -949,57 +1061,19 @@ object Form24: TdxForm
       end
     end
   end
-  object dxEdit12: TdxEdit
-    Left = 688
-    Height = 28
-    Top = 164
-    Width = 296
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 16
-    Id = 7340
-    FieldName = 'Веста'
-    FieldSize = 30
-    Required = False
-    Editable = False
-  end
-  object dxLabel16: TdxLabel
-    Left = 604
-    Height = 20
-    Top = 168
-    Width = 49
-    Caption = 'Веста'
-    ParentColor = False
-  end
   object dxEdit14: TdxEdit
-    Left = 424
+    Left = 516
     Height = 28
-    Top = 296
-    Width = 300
+    Top = 292
+    Width = 408
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 17
+    TabOrder = 12
     Id = 8591
     FieldName = 'Дата и номер приказа'
     FieldSize = 50
     Required = False
     Editable = False
-  end
-  object dxCheckBox8: TdxCheckBox
-    Left = 768
-    Height = 23
-    Top = 292
-    Width = 222
-    Caption = 'Подпись протокола'
-    TabOrder = 18
-    ValueChecked = '1'
-    ValueUnchecked = '0'
-    Id = 262317
-    FieldName = 'Подпись протокола'
-    CheckedText = 'Да'
-    UnCheckedText = 'Нет'
-    Editable = False
-    DefaultValue = '0'
   end
   object dxLabel20: TdxLabel
     Left = 312
@@ -1016,7 +1090,7 @@ object Form24: TdxForm
     Width = 592
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 19
+    TabOrder = 13
     Id = 262463
     FieldName = 'Адрес'
     SourceTId = 294
@@ -1034,6 +1108,14 @@ object Form24: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+  end
+  object dxLabel21: TdxLabel
+    Left = 500
+    Height = 20
+    Top = 268
+    Width = 255
+    Caption = 'Приказ на подписание актов'
+    ParentColor = False
   end
   object Grid: TdxGrid
     Left = 0
@@ -1188,12 +1270,6 @@ object Form24: TdxForm
         FieldName = 'f7284'
       end    
       item
-        Tag = 7340
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f7340'
-      end    
-      item
         Tag = 8463
         Title.Caption = ' '
         Width = 100
@@ -1242,6 +1318,25 @@ object Form24: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262463l'
+      end    
+      item
+        Tag = 262785
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262785'
+      end    
+      item
+        Tag = 262975
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262975'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 263080
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263080'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

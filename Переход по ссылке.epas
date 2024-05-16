@@ -1,0 +1,27 @@
+{@module
+Author=Cordek
+Version=1.0
+Description=Переход по ссылке для кнопки в настольной и веб версии. Для работы веб-версии загрузите отдельный модуль
+@}
+
+{@action
+ID=B408C9BC-DFF7-4DE2-9661-149CDA1E4C90
+OrigName=GotoUrlButton
+Name=Переход по ссылке
+Group=DX_plus+
+UI=<ui>
+    <expr name="_expr_run" caption="Выражение дающее ссылку"/>
+
+</ui>
+Description=Действие кнопки переходит по указанной в выражении ссылке.
+@}
+
+procedure GotoUrlButton(const ExprRun:string);
+
+var
+S:string;
+begin
+S:=VarToStr(EvalExpr(ExprRun,Self));
+if (S = '')  then  Exit;
+  ShellExecute('open', '"' + S + '"', '', ExtractFilePath(S), 5);
+end;

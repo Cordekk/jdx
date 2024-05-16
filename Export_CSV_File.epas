@@ -1,0 +1,1226 @@
+{@module
+author=KirovEVG
+version=1.0
+description=Экспорт данных в CSV.
+@}
+
+{@action
+id=746C4E00-773A-465E-82BE-3D6BAFC0CC80
+target=button
+origname=export_CSV_file
+name=Экспорт данных в CSV
+group=Экспорт данных
+ui=
+<ui>
+  <number name="Width" caption="Минимальная ширина окна" defaultvalue="900" required="1"/>
+  <number name="Height" caption="Минимальная высота окна" defaultvalue="600" required="1"/>
+  <checkbox name="reBound" caption="Запоминать размеры" defaultvalue="1"/>
+  <text name="Profile" caption="Имя профиля, по умолчанию"/>
+  <checkbox name="setCurDir" caption="Хранить настройки в рабочем каталоге DX" defaultvalue="0"/>
+</ui>
+description=Экспорт данных в файл CSV, в котором данные отделены символом разделителем.<br>
+<b>"Минимальная ширина\высота окна":</b> Минимальные размеры окна для экспорта.<br>
+<b>"Запоминать размеры":</b> При сохранении профиля программа по умолчанию сохраняет размеры окна и в зависимости от этого флага, она будет устанавливать эти параметры из сохраненных данных.<br>
+<b>"Имя профиля, по умолчанию":</b> Если профиль с указаным именем существует, то он будет активирован.
+Если такого профиля нет, то он будет создан. Если поле оставить пустым, то будет запускаться с "пустым" профилем.<br>
+<b>"Хранить настройки в рабочем каталоге DX":</b> Если установлено данное значение то каталог с настройками будет расположен в рабочем
+каталоге DX (Например:C:\Program Files\DataExpress...). Иначе программа хранит настройки в одном каталоге, с файлом базы данных.
+@}
+// Изображения глифов кнопок
+const checked='AAABAAEAICAAAAEAIACoEAAAFgAAACgAAAAgAAAAQAAAAAEAIAAAAAAAABAAAPY6AQD2OgEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAADMAAABYAAAAVQAAAFYAAABWAAAAVgAAAFYAAABWAAAAVgAAAFYAAABWAAAAVgAAAFYAAABVAAAAWAAAADMAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAACLAAAA/wAAAP4AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD+AAAA/wAAAIsAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAMwAAAP8AAAD9AAAA/QAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP0AAAD9AAAA/wAAADMAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAABVAAAA/wAAAP8AAACOAAAASwAAAFgAAABWAAAAVgAAAFgAAABWAAAAVQAAAFYAAABWAAAAVgAAAFgAAABLAAAAjgAAAP8AAAD/AAAAVQAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAFUAAAD/AAAA/wAAAFUAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAABUAAAA/wAAAP8AAABVAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAVgAAAP8AAAD/AAAAWAAAAAAAAAAHAAAABgAAAAAAAAA9AAAADwAAAAEAAAAFAAAAAwAAAAQAAAAHAAAAAAAAAFcAAAD/AAAA/wAAAFYAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAABWAAAA/wAAAP8AAABWAAAAAAAAAAgAAAAAAAAAWgAAAP8AAACiAAAAAAAAAAIAAAABAAAAAAAAAAQAAAAAAAAAVQAAAP8AAAD/AAAAVgAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAFYAAAD/AAAA/wAAAFYAAAAAAAAAAAAAAGEAAAD/AAAA+AAAAP8AAACkAAAAAAAAAAIAAAABAAAAAwAAAAAAAABVAAAA/wAAAP8AAABWAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAVgAAAP8AAAD/AAAAWAAAAAAAAAByAAAA/wAAAPsAAAD/AAAA+gAAAP8AAACnAAAAAQAAAAIAAAAFAAAAAAAAAFUAAAD/AAAA/wAAAFYAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAABWAAAA/wAAAP8AAABYAAAAAAAAAIcAAAD/AAAA+wAAAIgAAADcAAAA/wAAAP8AAACpAAAAAQAAAAQAAAAAAAAAVQAAAP8AAAD/AAAAVgAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAFYAAAD/AAAA/wAAAFYAAAAAAAAAAAAAAIgAAAB3AAAAAAAAADAAAADpAAAA/gAAAP8AAACpAAAABQAAAAAAAABWAAAA/wAAAP8AAABWAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAVgAAAP8AAAD/AAAAVgAAAAAAAAAGAAAAAQAAAAAAAAAFAAAAAAAAAC0AAADnAAAA/QAAAP8AAACjAAAAAAAAAFgAAAD/AAAA/wAAAFYAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAABWAAAA/wAAAP8AAABWAAAAAAAAAAQAAAACAAAAAgAAAAAAAAAEAAAAAAAAACoAAADoAAAA9QAAAEcAAAAAAAAAVwAAAP8AAAD/AAAAVgAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAFYAAAD/AAAA/wAAAFYAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAADUAAABBAAAAAAAAAAAAAABVAAAA/wAAAP8AAABWAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAVgAAAP8AAAD/AAAAWAAAAAAAAAAHAAAABAAAAAQAAAAEAAAABAAAAAMAAAAGAAAAAgAAAAEAAAAKAAAAAAAAAFgAAAD/AAAA/wAAAFYAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAABVAAAA/wAAAP8AAABVAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAVQAAAP8AAAD/AAAAVQAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAFUAAAD/AAAA/wAAAI4AAABLAAAAWAAAAFYAAABWAAAAVgAAAFYAAABWAAAAVgAAAFYAAABWAAAAWAAAAEsAAACOAAAA/wAAAP8AAABVAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAMwAAAP8AAAD9AAAA/QAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP0AAAD9AAAA/wAAADMAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAiwAAAP8AAAD+AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/gAAAP8AAACLAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAMwAAAFgAAABVAAAAVgAAAFYAAABWAAAAVgAAAFYAAABWAAAAVgAAAFYAAABWAAAAVgAAAFUAAABYAAAAMwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//////////////////////oAAF/0v/0v8QAAj/IAAE/0AAAv9AAAL/Qv9C/0JAQv9CiUL/QwRC/0IAQv9CAEL/QyBC/0IQQv9CKEL/QhTC/0IAQv9C/0L/QAAC/0AAAv8gAAT/EAAI/0v/0v+gAAX/////////////////////8=';
+const unchecked='AAABAAEAICAAAAEAIACoEAAAFgAAACgAAAAgAAAAQAAAAAEAIAAAAAAAABAAAPY6AQD2OgEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAADMAAABYAAAAVQAAAFYAAABWAAAAVgAAAFYAAABWAAAAVgAAAFYAAABWAAAAVgAAAFYAAABVAAAAWAAAADMAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAACLAAAA/wAAAP4AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD+AAAA/wAAAIsAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAMwAAAP8AAAD9AAAA/QAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP0AAAD9AAAA/wAAADMAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAABVAAAA/wAAAP8AAACOAAAASwAAAFgAAABWAAAAVgAAAFYAAABWAAAAVgAAAFYAAABWAAAAVgAAAFgAAABLAAAAjgAAAP8AAAD/AAAAVQAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAFUAAAD/AAAA/wAAAFUAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAABUAAAA/wAAAP8AAABVAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAVgAAAP8AAAD/AAAAWAAAAAAAAAAHAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAHAAAAAAAAAFcAAAD/AAAA/wAAAFYAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAABWAAAA/wAAAP8AAABWAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAVQAAAP8AAAD/AAAAVgAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAFYAAAD/AAAA/wAAAFYAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAABVAAAA/wAAAP8AAABWAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAVgAAAP8AAAD/AAAAVgAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAFUAAAD/AAAA/wAAAFYAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAABWAAAA/wAAAP8AAABWAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAVQAAAP8AAAD/AAAAVgAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAFYAAAD/AAAA/wAAAFYAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAABVAAAA/wAAAP8AAABWAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAVgAAAP8AAAD/AAAAVgAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAFUAAAD/AAAA/wAAAFYAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAABWAAAA/wAAAP8AAABWAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAVQAAAP8AAAD/AAAAVgAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAFYAAAD/AAAA/wAAAFYAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAABVAAAA/wAAAP8AAABWAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAVgAAAP8AAAD/AAAAWAAAAAAAAAAHAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAHAAAAAAAAAFgAAAD/AAAA/wAAAFYAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAABVAAAA/wAAAP8AAABVAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAVQAAAP8AAAD/AAAAVQAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAFUAAAD/AAAA/wAAAI4AAABLAAAAWAAAAFYAAABWAAAAVgAAAFYAAABWAAAAVgAAAFYAAABWAAAAWAAAAEsAAACOAAAA/wAAAP8AAABVAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAMwAAAP8AAAD9AAAA/QAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP0AAAD9AAAA/wAAADMAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAiwAAAP8AAAD+AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/gAAAP8AAACLAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAMwAAAFgAAABVAAAAVgAAAFYAAABWAAAAVgAAAFYAAABWAAAAVgAAAFYAAABWAAAAVgAAAFUAAABYAAAAMwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//////////////////////oAAF/0v/0v8QAAj/IAAE/0AAAv9AAAL/Qv9C/0IAQv9C/0L/Qv9C/0L/Qv9C/0L/Qv9C/0L/Qv9C/0L/Qv9C/0IAQv9C/0L/QAAC/0AAAv8gAAT/EAAI/0v/0v+gAAX/////////////////////8=';
+
+const imgAdd='AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABILAAASCwAAAAAAAAAAAAD///8A////AP///wAAAAAXAAAAJwAAADIAAABAAAAAQAAAAEAAAABAAAAAGgAAABr///8A////AP///wD///8A////AP///wD///8A////AAAAABU1n3D/NZ9w/zWfcP81n3D/NZ9w/wAAAA8HZEkEB2RJBgdkSQL///8A////AP///wD///8A////AP///wD///8ANZ9w/z3XqP8916j/Pdeo/zWfcP////8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////ADOhcv8Uy5X/FMqU/xTKlf8zonL/////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wAvpXX/GMyW/xfMl/8XzJf/L6V1/////wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AK6l4/xvOmf8bzpn/G82Z/yupef////8A////AP///wD///8AL7WGHf///wAmrXz/Jq18/yaufP8mrXz/J618/yauff8g0Jz/INCb/x/QnP8mrnz/J658/yetfP8mrXz/Jq18/yatfP////8AIrKA/y/Tov8j0Z7/I9Ke/yPRnv8k0Z7/I9Ke/yTRnv8k0p7/I9Ge/yTRnv8k0p7/I9Ke/zfUpf8isoD/////ABy3hP851ab/KNSg/yfUoP8n06H/KNOg/yjUoP8o06H/KNOg/yjTof8o06D/KNOg/yjTof8+1af/HLeE/////wAYu4j/9fn3/5H52f+R+dn/kfnZ//X59/8w2Kb/LNWj/y/Xpf/1+ff/kfnZ/5H52f+R+dn/9fn3/xi7iP////8AFL+L/xS/i/8UwIv/FL+M/xS/i/8Uv4v/N9qq/zDXpf8+3q7/FL+L/xS/i/8Uv4v/FL+M/xS/i/8Uv4v/////AP///wD///8A////AP///wD///8AEMOO/0Dfr/8z2aj/SOKz/xDCjv////8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AA7FkP9K47T/Ntmp/0/mt/8OxZD/////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wAOxZD/UOa3/znbq/9W6bv/DsWQ/////wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8ADsWQ//X59/+R+dn/9fn3/w7FkP////8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AA7FkP8OxZD/DsWQ/w7FkP8OxZD/////AP///wD///8A////AP///wD///8A4A8AAPADAAD4PwAA+D8AAPg/AAD4PQAAAAEAAAABAAAAAQAAAAEAAAABAAD4PwAA+D8AAPg/AAD4PwAA+D8AAA==';
+const imgDel='AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABILAAASCwAAAAAAAAAAAAAAAAAYAAAAHAAAABsNN5pkET+1/w03nGMAAAAWAAAAEAAAAA8AAAAXDTaZZRE/tf8NN5pkAAAAGwAAABoAAAAW////AP///wAQQ7xSEUC2/wNa6P8RQbf/EEO8Uv///wD///8AEEO8UhFBt/8DWuj/EUC3/xBDvFL///8A////ABBDvAAQQ7xSEEK5/wNa6P8ASM//A1ro/xFCuf8QQ7xSEEO8UhBBuf8DWuj/AEjP/wNa6P8DWuj/EEO8Uv///wAQQ7xSEES8/wNa6P8ASM//BFDU/wBIz/8DWuj/EES7/xBDvP8DWuj/AEjP/wRP1f8ASM//BE/U/xBDvP8QQ7xSEEa//wNa6P8ASM//BlPX/wZT1/8GUtf/AEjP/wNa6P8DWuj/AEjP/wZS1/8GU9f/BlLX/wBIz/8DWuj/D0a//xBDvFIOSML/CFba/whW2f8IVtn/CFbZ/whW2f8IVtr/CFba/whW2f8IVtn/CFba/wlW2f8IVtn/D0jC/xBDvFL///8AEEO8Ug5Lxv8LWdz/C1rc/wta3P8KWdz/Clrc/wpZ3P8KWdz/Clnc/wpZ3P8KWtz/DkvF/xBDvFL///8A////AP///wAQQ7xSDk3J/w1d3/8NXd//DF3f/wxd3/8MXd//DV3f/wxd3/8NXd//DU3K/xBDvFL///8A////AP///wD///8AClncUgxPzf8PYOH/DmDi/w9h4v8PYOL/D2Hi/w9h4v8PYeL/D2Hi/w1Pzf8KWdxS////AP///wD///8AClncUgxS0P8RZOT/EWTl/xFk5f8RZOX/EWTl/xFk5f8RZOT/EWTk/xFk5P8RZOX/DVLQ/wpZ3FL///8AClncUgxU1P8TaOf/E2jn/xNn5/8TZ+j/E2jn/xNn5/8TaOj/E2fn/xNo6P8TZ+f/E2jn/xNn5/8LVNT/ClncUgtW1/86iPD/FWrq/xVr6v8Vaur/FWrq/xVr6v+Uw/v/lMP7/xVq6v8Vaun/FWrq/xVr6v8Vaur/RZDy/wtW1/8KWdxSC1ja/1Oc9f8Wbez/F27s/xdt7P9kqff/C1ja/wtY2f9kqff/F23s/xdt7P8Wbez/U5z1/wtY2v8KWdxSClncAApZ3FIKWt3/U5z1/xhw7v9kqff/Clnc/wpZ3FIKWdxSClrc/2Sp9/8Yb+3/U5z1/wpa3P8KWdxSClncAP///wD///8AClncUgpb3v+Uw/v/Clve/wpZ3FL///8A////AApZ3FIKW97/lMP7/wpb3v8KWdxS////AP///wD///8A////AP///wAKWdxSClve/wpZ3FL///8A////AP///wD///8AClncUgpb3v8KWdxS////AP///wD///8AAAAAAMGDAACAAQAAAAAAAAAAAAAAAAAAgAEAAMADAADAAwAAgAEAAAAAAAAAAAAAAAAAAIABAADBgwAA48cAAA==';
+const imgUp='AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABILAAASCwAAAAAAAAAAAAD///8A////AAAAABEAAAAcAAAALgAAAC4AAAAuAAAALgAAAC4AAAAuAAAALgAAABYAAAAP////AP///wD///8ANKBxADSgcQA0oHEANKBxADSgcf80oHH/NKBx/zSgcf80oHH/NKBx/zSgcf80oHEANKBxADSgcQA0oHEA////ADKicgAyoXIAMqJzADOicgAyoXL/Pdeo/z3XqP8916j/Pdeo/z3XqP8yoXP/MqJyADKhcgAzonIAMqJzAP///wAwo3QAMKN0ADGkdAAxpHQAMKR0/xDBkP8QwJD/EMGQ/xDBkP8QwZD/MKR0/zCkdAAwo3QAMaR0ADGkdAD///8ALqd2AC6ndgAupnYALaZ2AC6ndv8Pw5L/Dc6a/w3Omf8Nzpn/D8OS/y6ndv8upnYALqZ2AC6ndgAup3YA////ACuqeAArqnkAK6l5ACuqeQArqXn/D8eV/w3QnP8N0Jv/DdGc/w/Ilf8rqXj/K6l4ACupeAArqXgAK6l4AP///wAorHoAKKx7ACisegAorHoAKK17/w/Nmv8O057/DdOe/w3Tnv8PzJr/KKx7/yisewAorXsAKKx7ACitewD///8AJbB9ACSwfgAlsH4AJK99ACSwff8N0p7/Dtah/w7Vof8O1aH/DtKf/yWwfv8lsH0AJLB+ACWwfgAksH0A////ACKzgP8hs4D/IrOA/yKzgP8hs4D/D9ij/w7Yo/8O16T/Dtij/w7Xo/8is4D/IrOA/yKzgP8hs4D/IbOA/////wAPxo84HreD/zDis/8s4bH/LOGx/w7bpv8P2qb/Dtqm/w/apv8P2qb/K+Gx/yzhsf8w4rP/HreD/w/Gjzj///8AD8aPAA/GjzgbuYX/O+e5/w7dqP8P3Kj/D92p/w/dqf8P3an/D9yp/w/dqf8757n/G7mF/w/GjzgPxo8A////AA/GjwAPxo8AD8aPOBi9iP9V7cT/D+Cr/w/fq/8P4Kv/D9+r/w/gq/9V7cT/GL2I/w/GjzgPxo8AD8aPAP///wAPxo8AD8aPAA/GjwAPxo84FcCK/3j10f8P4q3/D+Kt/xDhrf949dH/FcCK/w/GjzgPxo8AD8aPAA/GjwD///8AD8aPAA/GjwAPxo8AD8aPAA/GjzgSwoz/hffV/w/jr/+F99X/E8KM/w/GjzgPxo8AD8aPAA/GjwAPxo8A////AP///wD///8A////AP///wD///8AD8aPOBHEjv//////EcSO/w/Gjzj///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wAPxo84D8aP/w/Gjzj///8A////AP///wD///8A////AP///wD///8AwAcAAPAfAADwHwAA8B8AAPAfAADwHwAA8B8AAPAfAAAAAQAAAAEAAIADAADABwAA4A8AAPAfAAD4PwAA/H8AAA==';
+const imgDown='AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABILAAASCwAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wAAAAANAAAAEAAAABYAAAAQ////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAABkAAAAiHF5CYTOhcv9DcleEAAAAMwAAACwAAAAiAAAAGf///wD///8A////AP///wD///8A////AP///wD///8AMaNzODGjdP8XzJf/MaNz/zGjczj///8A////AP///wD///8A////AP///wD///8A////AP///wAxo3MAMaNzOC6ldf8Xzpn/E7uN/xfOmP8upnX/MaNzODGjcwD///8A////AP///wD///8A////AP///wD///8AMaNzOCyoeP8Xz5v/Er2O/w3Nl/8SvY7/F8+b/yyoeP8xo3M4////AP///wD///8A////AP///wAxo3MAMaNzOCmre/8X0pz/EsCQ/w3Qmf8Nz5n/DdCZ/xLAkP8X0Z3/Kat7/zGjczgxo3MAMaNzAP///wD///8AMaNzOCWufP8Y05//EcaU/w7SnP8O0pz/DdKc/w7SnP8N0p3/EcaU/xfTn/8mrnz/MaNzODGjcwD///8A////ACOxf/9X6cD/V+nA//////8p3az/DdWf/w3Vn/8O1Z//Kdyq//////9X6cD/V+nA/yOwgP8xo3M4////AP///wAgtIL/H7SB/x+0gv8gtIL/MOGw/w7Yov8O2KL/Dtei/y7fsP8ftIL/H7SC/x+0gv8ftIL/H7SB/////wD///8AHLeEABy3hAAct4QAHbeE/zfktf8O2qX/Dtql/w/apf8247T/HLeE/xy3hQAct4UAHLeEAB23hAD///8A////ABm6hgAZuocAGbqHABm6h/8857n/Dt2o/w7dqP8P3aj/O+e5/xm6hv8ZuocAGbqHABm6hwAZuocA////AP///wAWvYoAFr2JABe9iQAWvYn/Q+m9/w/gqv8P36r/D+Cq/0Hqvf8XvYn/Fr2JABa8iQAWvYkAF72JAP///wD///8AFL+MABPAiwAUv4sAE8CM/0nswP8P4q7/D+Kt/xDirf9H7MD/FMCL/xS/jAAUwIsAE7+MABTAiwD///8A////ABHBjQASwo0AEcKNABLCjf9N7sP/EOSw/xDksP8Q5LD/TO7D/xHCjf8Rwo0AEsKOABHCjQARwo4A////AP///wAPw48AEMOPABDEjwAPxI7//////5H52f+R+dn/kfnZ//////8Qw4//D8OPAA/EjwAQxI8AD8OOAP///wD///8ADsWQAA7FkAAOxZAADsWQ/w7FkP8OxZD/DsWQ/w7FkP8OxZD/DsWQ/w7FkAAOxZAADsWQAA7FkAD///8A/D8AAPAHAAD4PwAA8B8AAOAPAADABwAAgAMAAIABAACAAQAA8B8AAPAfAADwHwAA8B8AAPAfAADwHwAA8B8AAA==';
+const imgOk='AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABILAAASCwAAAAAAAAAAAAD///8A////AP///wD///8AAAAAGwAAACIMOSowCzcpKQAAABYAAAAQ////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAABkNPy9PH5hx9BdzVm4AAAA1AAAAMwAAACwAAAAiAAAAGf///wD///8A////AP///wD///8A////AP///wAfl3AdH5pz7CzMoP4gpHvzH5lxVv///wD///8A////AP///wD///8A////AP///wD///8A////AP///wAfl3AYH5pz6SjLnv0g0qb/KNCk/x+adO8fl3Ab////AP///wD///8A////AP///wD///8A////AP///wAfl3AUH5pz5ibQpPsg0qb//////x/Rpv8kvZP8H5t0yB+XcAH///8A////AP///wD///8A////AP///wAfl3AQH5tz4iTPo/kg0qb/Ltqw/ymqg/8u2rD/IdKn/yCpgPMfmnN0////AP///wD///8A////AP///wAfl3AMH5py5CLPo/Yf0ab/QuG7/yGme+8pqYKdIKV68S7asP8iz6T/H5128R+ZcSr///8A////AP///wD///8AMqWC/y7asP8h0KX/fPLW/ySugPAkrYA6////ACKrfVggp3vxLtqw/yDEmf4gn3bcIJpzBv///wD///8A////ADKlgjgypYL/jfjg/yuziPUmtoZD////AP///wD///8AIax+TCCofPAfy5//ILSK9CGjeZH///8A////AP///wD///8AMqWCODKlgv8mtoc5////AP///wD///8A////AP///wAiq31DIqx/8B/InP8hqX/xIaJ5P////wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////ACSsfjkkrYDvIMGV/ySqfugipHkP////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AJa2AMSWwgu0itYn7JKp+rv///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wAmrX8pJq+C6yWsf/8kqX1Y////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////ACaugCImr4LqJax/9f///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AJq+BHCavguP///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wAmroEW8D8AAPAHAADwfwAA4D8AAMAfAACAHwAAAA8AAAIHAAAHBwAAj4MAAP/BAAD/4QAA//AAAP/4AAD//AAA//4AAA==';
+const imgSave='AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABILAAASCwAAAAAAAAAAAAAdGxqxIB8e/wBtyv8Abcr/AG3K/wBtyv8Abcr/AG3K/wBtyv8Abcr/AG3K/wBtyv8Abcr/AG3K/yIhIP8cGxqxIiIf/zQyMP8DgO7/A4Du/wOA7v8DgO7/A4Du/wOA7v8DgO7/A4Du/wOA7v8DgO7/A4Du/wOA7v80MjD/IiIg/yQjIf8mIyL/A4Du/wOA7v8DgO7/A4Du/wOA7v8DgO7/A4Du/wOA7v8DgO7/A4Du/wOA7v8DgO7/JSQi/yQjIf8nJiT/KCcl//zp0//86dT//OnU//zp1P/76dT//OnU//vp1f/86dX/++rV//zp1f/86tX/++rV/ygnJf8nJiT/KSgm/ysqKP/76dX//OnV//zp1f/86tX//OrW//zq1v/86dX//OrW//zq1v/86tb/++rW//zq1v8rKij/KSgm/ywqKP8vLSv/xdPb/8XT2//F09z/xdPb/8XT3P/F09v/xdPb/8XT3P/F09z/xdPb/8XT2//F09z/Ly0r/y0qKP8vLCz/MzAw//zr1//869f//OvX//zq1//769j/++vX//zr1//869f//OvX//zq2P/869f//OvY/zMwMP8vLSv/MjAt/zY0M//F1N3/xdPd/8XU3f/F1Nz/xdTd/8XU3f/F1N3/xdTd/8XU3f/F1N3/xdTd/8XU3f83NTP/MTAu/zUyL/87Nzb/sKSY//zr2P/869j//OvY//zr2P/869j//OvY//zr2P/869j//OvY//zr2P+wpJf/Ozg2/zUyMP83NDP/Pjs6/z47Ov8/Ozr/Pjs6/z87Ov8/Ozr/Pjs6/z47Ov8/Ozr/Pzs6/z87Ov8/Ozr/Pzs6/z47Ov83NDP/ODY0/0I/Pf9VUlH/TkxL/zs5OP87OTj/Ozo4/zs5OP87OTj/Ozk4/zs5OP87OTj/Ojk3/zk2Nf9CPz3/ODY0/zs3N/9GQkH/TkxL/0A8Ov9APDr/6urO/+rqzf/o6M3/6OjJ/+jow//o6MP/8PDX/+jow/81MjH/RkJA/zs3Nv88Ojj/SUVD/1FOTP9APDr/SUZE//Dw1P/w8NT/7+/T/+zsz//o6Mz/6OjI/0xJR//o6MP/Ly0s/0lGRP88Ojf/Pjo5/0xJRv9SUE7/QDw6/0xIR//y8tv/8vLd//Ly2//x8db/7u7T/+rqy/9MSUf/6OjD/ykoJ/9MSUb/Pjs6/z87Ov9ubGv/Ozk4/0A8Ov9ubGv/9vbp//j46//4+Or/9vbo//X15P/09OH/TElH//Dw2f8kIyL/Pzs6/09KScdRTErHQDw6/0M/Pv9APDr/UUxK/7Ozp/+zs6f/s7On/7Ozp/+zs6f/s7On/7Ozp/+zs6f/IB8e/1FMSsdRTEosAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==';
+const imgSel='AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABMLAAATCwAAAAAAAAAAAAD///8AAAAAHAAAAC4AAAAuAAAALgAAAC4AAAAuAAAALgAAAC4AAAAuAAAALgAAAC4AAAAuAAAALgAAABz///8A////AP///wDiuJn/4rmY/+K4mf/iuZn/4riZ/+K4mP/iuJj/4rmY/+K4mP/iuZn/4rmY/+K4mP////8A////AP///wD///8A47ub//jgvv/44L7/+OC+//jhvv/44b7/+OC+//jgvv/44b7/+OC///jhvv/jupr/////AP///wD///8A////AOS9nP/44b//89ay//PWsv/z1rL/89ay//PWsv/z1rL/89ay//PWsv/44b//5L2d/////wD///8A////AP///wDmwJ//+OLB/9m+nf/Zvp7/2sGi/9rBov/bwaL/2sGi/9m/n//Zvp3/+OHA/+bAn/////8A////AP///wD///8A58Oi//jjwv/23br/+OPD//jjwv/548P/+OPC//njwv/548P/9t26//njwv/ow6L/qaeoAZaWlQD///8A////AOrGpP/45MT/3MKk/9zEpv/cxKb/3MWm/9zEpv/cxab/3MSm/9zDpP/45MX/6cak/////wD///8A////AP///wDsyqj/+OXG//nkxv/55cX/+eTG//jkxv/348X/9+PG//XixP/04MP/9ODD/+zKp/////8A////AP///wD///8A7s2r//jmx//fyKr/3siq/9/Iq//fx6v/28Om/9rCpP/awaT/2sKl//nlyP/tzav/////AP///wD///8A////APDQrf/55sn/+ObJ//nmyf/55sn/9+XJ//DZvf/pz7P/6M6y/+fNsv/lzLH/79Ct/////wD///8A////AP///wDx07H/+efL/+LMsP/iy6//4cyv/+HKr//XvqH/1bqc/9S5nf/UuZ3/4sWr/+7OrP////8A////AP///wD///8A89e0//nnzP/458z/+ejM//nozP/35cr/58+1//337v/99+7/+u/g//ThycXv0K7/9+/wAvbt7gH///8A////APTZtf/56M3/5M+0/+TPtP/kz7T/486z/93Gqf/99+7/++/d//nozczx07H/79CuOMfHygDl5eUA////AP///wD227j/+enP//npzv/56M7/+OjO//blzP/u2r//++/d//nozt702bX/79CuOPHUsQDh3t0A8PH0AP///wD///8A9926//npz//56c//+enP//npz//35s3/7di9//nozv/33bj/79CuOPPYtQDy1rMA8fDwAPr7+gD///8A////APjfu//437v/+N+7//jfu//437v/+N+7//jfu//437v/79CuOPfcuQD12rYA89i1APr4+QD9/v0AgAEAAMADAADAAwAAwAMAAMADAADAAQAAwAMAAMADAADAAwAAwAMAAMADAADAAAAAwAMAAMAHAADADwAAwB8AAA==';
+const imgClear='AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAD///8A////ACwsDGUqKguHKioLhyoqC4cqKguHKioLhyoqC4cqKguHKioLhyoqC4cqKguHLCwMZS0tDQD///8A////AP///wA4OBeC///////////////////+//7+/f/+/vz//f37//39+v/8/Pj//v75/zg4F4I4OBcA////AP///wD///8ASUkme////////////v7+//39/P/9/fv//Pz5//v7+P/6+vb/+Pj0//v79v9JSSZ7SUkmAP///wD///8A////AFRUL3f//////v7+//39/P/9/fv//Pz5//v7+P/6+vb/+Pj0//f38v/7+/X/VFQvd1RULwD///8A////AP///wBYWDN2///+//39/P/9/fv//Pz5//v7+P/6+vb/+Pj0//f38v/29vD/+vrz/1hYM3ZYWDMA////AP///wD///8AXFw3dP7+/f/9/fv//Pz5//v7+P/6+vb/+Pj0//f38v/29vD/9fXu//r68v9cXDd0XFw3AP///wD///8A////AGFhOnL+/vz//Pz5//v7+P/6+vb/+Pj0//f38v/29vD/9fXu//T07P/5+e//YWE6cmFhOgD///8A////AP///wBlZT5x/f37//v7+P/6+vb/+Pj0//f38v/29vD/9fXu//T07P/x8ef/9/fq/2VlPnFlZT4A////AP///wD///8AaWlCb/39+v/6+vb/+Pj0//f38v/29vD/9fXu//T07P/x8ef/7Ozf//T05f9paUJvaWlCAP///wD///8A////AG1tRW38/Pj/+Pj0//f38v/29vD/9fXu//T07P/x8ef/7Ozf/+jo2f/z8+L/bW1FbW1tRQD///8A////AP///wBxcUhs/Pz3//f38v/29vD/9fXu//T07P/x8ef/7Ozf/+jo2f/m5tX/8vLh/3BwRzZFRXAA////AP///wD///8AdHRMa/v79v8aGpn/wMDa//T07P8aGpn/GhqZ/xoamf8aGpn/GhqZ/xoamf8aGpn/HR2dwP///wD///8A////AHd3Tmn6+vT/QUG0/ygorP/x8ef/KCis/15e9/9eXvf/Xl73/15e9/9eXvf/Xl73/ygorP////8A////AP///wB6elFo+vrz/zIyuf/Bwdr/7Ozf/zIyuf8yMrn/MjK5/zIyuf8yMrn/MjK5/zIyuf8xMbjA////AP///wD///8AfX1TZ/z89f/5+e//9vbq//T05f/z8+L/8vLh//Ly4f/y8uH/8vLh//n56P9YWIc0WFiGAP///wD///8A////AH9/VU1/f1Vmf39VZn9/VWZ/f1Vmf39VZn9/VWZ/f1Vmf39VZn9/VWZ/f1Vmf39VTX5+VAD///8AwAMAAMADAADAAwAAwAMAAMADAADAAwAAwAMAAMADAADAAwAAwAMAAMADAADAAQAAwAEAAMABAADAAwAAwAMAAA==';
+
+// Текстовые константы для быстрой замены(они участвуют в условиях)
+const emptyProfile='Новый профиль';
+//const emptyFile='Выберите файл';
+
+// константы номеров столбцов
+const rNum=0;
+const rFld=1;
+const rExpFlag=2;
+const rFilterFlag=3;
+const rFilterExpr=4;
+const RepValFlag=5;
+const RepValue=6;
+
+
+
+var
+	profileDir:string; // путь к папке профилей
+	runExport:boolean;
+	startProf,startFolder:string;  // Профиль для запуска по умолчанию
+	startW,startH:integer; // Размеры окна
+	reBound:boolean;// Флаг для запоминания размеров формы и загрузки их для каждого профиля
+	mainExportFm:TWindow; // Основная форма
+	scrollBox:tScrollBox; // основной контейнер для элементов
+	split:tSplitter; // Растягивание окна отладки/подсказки
+	helpMemo:tMemo;     // Окно подсказки
+	profileBox,formBox,fieldBox:tComboBox; // комбобоксы
+	btnAddRow,btnDelRow,btnExport,btnSave,btnDelProf,
+	btnSavePath,btnPreview,btnMoveUp,btnMoveDown:tBitBtn;// кнопки
+	edtTop,savePath,edtMask:tEdit; // Текстовые поля
+	lblMask,lblFile,lblFirstRow,lblDelim,lblExample,lblForm,lblNameRow,lblLocate:tLabel;// надписи
+	checkBoxTop:tCheckbox;// Чекбокс фильтра
+	gridFilter,gridExample:TKGrid; // Таблица фильтра и примера
+	chIcon,unChIcon:tIcon; // Иконки чекбокса
+	SQLq:TdxSQLQuery; // Поисковый запрос
+
+procedure loadImg();
+begin
+  chIcon:=tIcon.create();
+  unChIcon:=tIcon.create();
+
+  chIcon.loadFromStringBase64(checked);
+  unChIcon.loadFromStringBase64(unChecked);
+  btnAddRow.loadGlyphFromStringBase64(imgAdd);
+  btnDelRow.loadGlyphFromStringBase64(imgDel);
+  btnMoveUp.loadGlyphFromStringBase64(imgUp);
+  btnMoveDown.loadGlyphFromStringBase64(imgDown);
+  btnExport.loadGlyphFromStringBase64(imgok);
+  btnDelProf.loadGlyphFromStringBase64(imgDel);
+  btnSave.loadGlyphFromStringBase64(imgSave);
+  btnSavePath.loadGlyphFromStringBase64(imgSel);
+
+end;
+
+// Обновление списка полей формы в комбобоксе
+procedure updateFieldBox();
+var
+  i:integer;
+  fm:tdxForm;
+begin
+  fieldBox.items.clear;
+  //fieldBox.items.add(exprOnly+':NoType');
+  fieldBox.items.add('');
+
+  if(formbox.text='')then
+  begin
+    for i:=1 to gridFilter.rowcount-1 do
+    begin
+      gridFilter.cells[rFld,i]:='';
+    end;
+    exit;
+  end;
+
+  Fm := TdxForm(formBox.items.Objects[formBox.ItemIndex]);
+  for i := 0 to Fm.ComponentCount - 1 do
+  begin
+    if (Pos(LowerCase(Fm.Components[i].ClassName), 'tdxedit tdxcalcedit tdxdateedit tdxtimeedit ' +
+        'tdxcombobox tdxmemo tdxfile tdxcheckbox tdxlookupcombobox') > 0) then
+    begin
+      fieldBox.items.Values[GetComponentFieldName(Fm.Components[i])]:=Fm.Components[i].ClassName ;
+    end;
+  end;
+
+  for i:=1 to gridFilter.rowcount-1 do
+  begin
+    if(fieldBox.items.indexOfName(gridFilter.cells[rFld,i])<0)and(gridFilter.cells[rFld,i]<>'')then
+    begin
+      gridFilter.cells[rFld,i]:='';
+
+    end;
+  end;
+  fm.free;
+end;
+
+// Сохранение профиля в файлы
+function saveSat(profileName:string):boolean;
+var
+  col,row:integer;
+  saveIni:TIniFile;
+  saveTab:tCsvData;
+  fName:string;
+begin
+  result:=true;
+  if profileName=emptyProfile then exit;
+  try
+    fName:=profileDir+profileName;
+
+    saveIni:=TIniFile.create(fName+'.ini',[]);
+    saveIni.CacheUpdates:=true;
+    saveIni.writeString('Set','startFolder',startFolder);
+    saveIni.writeString('Set','savePath',savePath.text);
+    saveIni.writeString('Set','edtMask',edtMask.text);
+    saveIni.writeString('Set','edtTop',edtTop.text);
+	saveIni.writeBool('Set','checkBoxTop',checkBoxTop.checked);
+    ///saveIni.writeString('Set','edtNameRow',edtNameRow.text);
+    //saveIni.writeString('Set','edtDelim',edtDelim.text);
+    //saveIni.writeBool('Set','checkBoxHide',checkBoxHide.checked);
+    saveIni.writeString('Set','formBox','"'+formBox.text+'"');
+    saveIni.writeInteger('Set','width',mainExportFm.width);
+    saveIni.writeInteger('Set','height',mainExportFm.height);
+    saveIni.writeInteger('Set','splitTop',split.top);
+    saveIni.UpdateFile;
+
+    saveTab:=tCsvData.create();
+    saveTab.rowCount:=gridFilter.rowcount;
+    saveTab.colCount:=gridFilter.ColCount;
+    for row:=gridFilter.fixedRows to gridFilter.rowcount-1 do
+    begin
+      for col:=rFld to gridFilter.ColCount-1 do
+      begin
+        //if(col=rErr)then break;
+        saveTab.cells[col,row]:= gridFilter.cells[col,row];
+      end;
+    end;
+    saveTab.saveToFile(fName+'.csv',true);
+  except
+    result:=false;
+  finally
+    saveIni.free;
+    saveTab.free;
+  end;
+end;
+
+// Нумерация в таблице
+procedure updateNumbersRow();
+var
+  i:integer;
+begin
+  for i:=1 to gridFilter.rowCount-1 do
+    gridFilter.cells[rNum,i]:=intToStr(i);
+end;
+
+// Чтение и загрузка профиля из файла
+function readSat(profileName:string):boolean;
+var
+  col,row:integer;
+  saveIni:TIniFile;
+  saveTab:tCsvData;
+  fName:string;
+begin
+  if runExport then exit;
+  result:=true;
+
+  fName:=profileDir+profileName;
+  try
+    saveIni:=TIniFile.create(fName+'.ini',[]);
+    saveIni.CacheUpdates:=true;
+    saveIni.StripQuotes:=true;
+
+    if reBound then
+    begin
+      mainExportFm.width:=saveIni.readInteger('Set','width',startW);
+      mainExportFm.height:=saveIni.readInteger('Set','height',startH);
+      helpMemo.height:=saveIni.readInteger('Set','splitTop',40);
+    end;
+
+    startFolder:=saveIni.readString('Set','startFolder',extractFileDir(GetCurrentDatabase()));
+    savePath.text:=saveIni.readString('Set','savePath','');
+    edtMask.text:=saveIni.readString('Set','edtMask','');
+	edtTop.text:=saveIni.readString('Set','edtTop','');
+	checkBoxTop.checked:=saveIni.readBool('Set','checkBoxTop',false);
+    //edtFirstRow.text:=saveIni.readString('Set','edtFirstRow','0');
+    //edtNameRow.text:=saveIni.readString('Set','edtNameRow','0');
+    //edtDelim.text:=saveIni.readString('Set','edtDelim',';');
+    //radioANSI.checked:=saveIni.readBool('Set','radioANSI',false);
+    //radioUtf8.checked:=not radioANSI.checked;
+    //checkBoxHide.checked:=saveIni.readBool('Set','checkBoxHide',false);
+    formBox.text:=saveIni.readString('Set','formBox','');
+    saveIni.UpdateFile;
+  except
+    result:=false;
+    exit;
+  finally
+    saveIni.free;
+  end;
+
+  gridFilter.RowCount:=1;
+  gridFilter.RowCount:=2;
+  gridFilter.fixedRows:=1;
+  gridFilter.fixedCols:=1;
+
+  if not(fileExists(fName+'.csv'))then
+  begin
+    result:=false;
+    exit;
+  end;
+
+  try
+    saveTab:=tCsvData.create();
+    if(fileExists(fName+'.csv'))then
+    begin
+      saveTab.loadFromFile(fName+'.csv',true);
+      gridFilter.rowCount:=saveTab.rowcount;
+      for row:=gridFilter.fixedRows to saveTab.rowcount-1 do
+      begin
+        for col:=rFld to saveTab.colcount-1 do
+        begin
+          gridFilter.cells[col,row]:=saveTab.cells[col,row];
+        end;
+      end;
+    end;
+  except
+    result:=false;
+  finally
+    saveTab.free;
+  end;
+  updateFieldBox();
+  updateNumbersRow();
+end;
+
+// Установка значений по умолчанию
+procedure setDefault();
+begin
+  gridFilter.RowCount:=1;
+  gridFilter.RowCount:=2;
+  gridFilter.fixedRows:=1;
+  if(profileBox.Text=emptyProfile)then
+  begin
+    mainExportFm.width:=startW;
+    mainExportFm.height:=startH;
+    helpMemo.height:=40;
+
+    startFolder:=extractFileDir(GetCurrentDatabase());
+    savePath.text:='C:\';
+    //edtFirstRow.text:='0';
+    //edtNameRow.text:='0';
+    edtMask.text:='Export_';
+    checkBoxTop.checked:=false;
+	edtTop.text:='';
+    gridFilter.RowCount:=1;
+    gridFilter.RowCount:=2;
+    gridFilter.fixedRows:=1;
+    gridFilter.fixedCols:=1;
+    //gridFilter.cells[rCheck,1]:='0';
+    fieldBox.items.clear();
+    formBox.text:='';
+  end;
+  updateNumbersRow();
+end;
+
+// Обновление профилей, поиск их в папке настроек
+procedure updateProfileBox(itemSel:string);
+var
+  files:tStringList;
+  i:integer;
+begin
+  profileBox.Items.clear;
+  profileBox.items.Add(emptyProfile);
+  files:=tStringList.create();
+  findAllFiles(files,profileDir,'*.ini',false,faAnyFile);
+  for i:=0 to files.count-1 do
+  begin
+    profileBox.items.add(extractFileNameOnly(files[i]));
+  end;
+  files.free;
+  profileBox.text:=itemSel;
+
+end;
+
+procedure profileBox_Select(Sender: TObject);
+begin
+  if(profileBox.text=emptyProfile)then
+  begin
+    setDefault();
+    exit;
+  end;
+  readSat(profileBox.text);
+  updateFieldBox();
+  updateNumbersRow();
+end;
+
+procedure profileBox_DropDown(Sender: TObject);
+begin
+  updateprofileBox(profileBox.text);
+  updateNumbersRow;
+end;
+
+procedure btnSave_Click(Sender: TObject);
+var
+  pName:string;
+begin
+  if(profileBox.text=emptyProfile)then
+  begin
+    MessageDlg('Внимание','Введите другое имя профиля',mtError,[mbOK]);
+    profileBox.setFocus();
+    exit;
+  end;
+
+  if(saveSat(profileBox.text))then
+  begin
+    pName:=profileBox.text;
+    updateProfileBox(pName);
+    MsgBox('Внимание','Профиль сохранен');
+  end
+  else
+  begin
+    MsgBox('Ошибка','Профиль не сохранен');
+  end;
+end;
+
+procedure btnDelProf_Click(Sender: TObject);
+var
+  fl1,fl2:string;
+  fl1d,fl2d:boolean;
+begin
+  if runExport then exit;
+  if(messageDlg('Удаление профиля','Вы хотите удалить профиль: '+profileBox.text+' ?',
+    mtConfirmation,[mbYes,mbCancel])=mrCancel)then
+  begin
+    exit;
+  end;
+
+  fl1:=extractFileDir(getCurrentDataBase())+'\importProfiles\'+profileBox.text+'.ini';
+  fl2:=extractFileDir(getCurrentDataBase())+'\importProfiles\'+profileBox.text+'.csv';
+
+   if(FileExists(fl1)) then
+    fl1d:=deleteFile(fl1);
+
+  if(FileExists(fl2)) then
+    fl2d:=deleteFile(fl2);
+
+  updateProfileBox(emptyProfile);
+  setDefault();
+end;
+
+procedure btnSavePath_Click(Sender: TObject);
+var sd: TSelectDirectoryDialog;
+begin
+if runExport then exit;
+sd := TSelectDirectoryDialog.Create(nil);
+with sd do
+  begin
+    Title := 'Экспорт данных в CSV';
+    initialDir:=startFolder;
+    //FileName := edtMask.text;
+    //Filter := 'Текстовые файлы csv,txt |*.csv;*.txt|Все файлы|*.*';
+    //DefaultExt := 'dir';
+    if Execute then
+    begin
+		savePath.text:=sd.FileName+'\';
+    end;
+    Free;
+  end;
+
+end;
+
+procedure gridFilter_SelectCell(Sender: TObject; Col,
+Row: Integer;  var CanSelect: Boolean);
+begin
+  if runExport then exit;
+  if ((Col = rFld) AND (Row > 0)) then
+  begin
+    //Показываем СomboBox
+
+    fieldBox.Visible := True;
+    fieldBox.SetFocus;
+  end
+  else
+    fieldBox.Visible := False;
+  CanSelect := True;
+end;
+
+procedure setPosFldBox();
+var
+  rCell:tRect;
+begin
+  if ((gridFilter.col = rFld) AND (gridFilter.row > 0)) then
+  begin
+    fieldBox.ItemIndex :=fieldBox.items.indexOfName(gridFilter.cells[rFld,gridFilter.row]);
+    {Размер и расположение combobox подгоняем под ячейку}
+    RCell:=gridFilter.selectionRect;
+    fieldBox.Left := RCell.left;
+    fieldBox.Width := RCell.right-RCell.left;
+    fieldBox.Top := RCell.top;
+    fieldBox.Height := RCell.bottom-RCell.top;
+  end;
+end;
+
+procedure gridFilter_MouseClickCell(Sender: TObject; ACol, ARow: Integer);
+begin
+  if runExport then exit;
+
+  if (aCol=rExpFlag) AND (aRow>0) then // Управление чекбоксом в таблице столбец Экспортировать
+  begin
+      if(TKGrid(sender).Cells[ACol, ARow]='')or(TKGrid(sender).Cells[ACol, ARow]='0') then
+        TKGrid(sender).Cells[ACol, ARow]:= '1'
+    else
+      TKGrid(sender).Cells[ACol, ARow]:='0';
+  end;
+
+  if (aCol=rFilterFlag) AND (aRow>0) then // Управление чекбоксом в таблице столбец Отбирать
+  begin
+      if(TKGrid(sender).Cells[ACol, ARow]='')or(TKGrid(sender).Cells[ACol, ARow]='0') then
+        TKGrid(sender).Cells[ACol, ARow]:= '1'
+      else
+        TKGrid(sender).Cells[ACol, ARow]:='0';
+  end;
+
+  if (aCol=RepValFlag) AND (aRow>0) then // Управление чекбоксом в таблице столбец Изменить поле
+  begin
+      if(TKGrid(sender).Cells[ACol, ARow]='')or(TKGrid(sender).Cells[ACol, ARow]='0') then
+        TKGrid(sender).Cells[ACol, ARow]:= '1'
+      else
+        TKGrid(sender).Cells[ACol, ARow]:='0';
+  end;
+
+  if ((aCol = rFld) AND (aRow > 0)) then
+  begin
+    setPosFldBox();
+    //Показываем СomboBox
+    fieldBox.Visible := True;
+    fieldBox.SetFocus;
+  end
+  else
+       fieldBox.Visible := False;
+
+
+end;
+
+procedure gridFilter_MouseDblClickCell(Sender: TObject; ACol, ARow: Integer);
+var
+  expr:string;
+begin
+  if runExport then exit;
+  if ((aCol = rFilterExpr) AND(aRow > 0)) then   // Отобразить редактор выражений для параметр фильтра
+  begin
+    expr:=TKGrid(sender).Cells[ACol, ARow];
+    TKGrid(sender).Cells[ACol, ARow]:=InputBox('Ввод параметра фильтра', 'Поле равно:', TKGrid(sender).Cells[ACol, ARow]);
+	//ShowExprEditor(expr,trim(formbox.text));
+
+  end;
+  if ((aCol = RepValue) AND(aRow > 0)) then   // Отобразить редактор выражений для параметр фильтра
+  begin
+    expr:=TKGrid(sender).Cells[ACol, ARow];
+    TKGrid(sender).Cells[ACol, ARow]:=ShowExprEditor(expr,''{formbox.text});
+    //InputBox('Новое значение изменяемого поля', '''Абсолютное значение'' или SQL-функция:CURRENT_DATE;CURRENT_TIME;', TKGrid(sender).Cells[ACol, ARow]);
+  end;
+  updateNumbersRow();
+end;
+
+procedure gridFilter_MouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+begin
+  fieldBox.Visible := False;
+end;
+
+procedure gridFilter_SelectionChanged(Sender: TObject);
+begin
+  if runExport then exit;
+  if not (gridFilter.row>0)then exit;
+
+  if ((gridFilter.col = rFld) AND (gridFilter.row > 0)) then
+  begin
+    setPosFldBox();
+  end;
+  updateNumbersRow();
+
+end;
+
+procedure fieldBox_Exit(Sender: TObject);
+begin
+  fieldBox.Hide();
+end;
+
+procedure fieldBox_Change(Sender: TObject);
+begin
+  gridFilter.cells[rFld, gridFilter.Row] := fieldBox.Items.Names[fieldBox.ItemIndex];
+  gridFilter.Refresh;
+
+end;
+
+procedure fieldBox_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  if(Key=13) then
+  begin
+    fieldBox.Visible := False;
+    gridFilter.setFocus;
+  end;
+end;
+
+procedure formBox_Change(Sender: TObject);
+begin
+  updateFieldBox();
+end;
+
+procedure btnAddRow_Click(Sender: TObject);
+begin
+  if runExport then exit;
+  gridFilter.rowCount:=gridFilter.rowCount+1;
+  //gridFilter.cells[rCheck,gridFilter.rowCount-1]:='0';
+  updateNumbersRow();
+end;
+
+procedure btnMoveUp_Click(Sender: TObject);
+var
+  i,mRow:integer;
+  temp:string;
+begin
+  if runExport then exit;
+  if gridFilter.row=gridFilter.fixedRows then exit;
+
+  mRow:=strToInt(gridFilter.cells[rNum,gridFilter.row]);
+
+  for i:=0 to gridFilter.colcount-1 do
+  begin
+    temp:=gridFilter.cells[i,gridFilter.row];
+    gridFilter.cells[i,gridFilter.row]:=gridFilter.cells[i,gridFilter.row-1];
+    gridFilter.cells[i,gridFilter.row-1]:=temp;
+  end;
+
+  {for i:=1 to gridFilter.rowCount-1 do
+  begin
+    gridFilter.cells[rExpr,i]:=trimExpr(gridFilter.cells[rExpr,i]);
+
+    gridFilter.cells[rExpr,i]:=stringReplace(gridFilter.cells[rExpr,i],
+      'VAL('+intToStr(mRow)+')',
+      'VAL('+intToStr(mRow-1)+'<~>)',[rfReplaceAll,rfIgnoreCase]);
+
+    gridFilter.cells[rExpr,i]:=stringReplace(gridFilter.cells[rExpr,i],
+      'VAL('+intToStr(mRow-1)+')',
+      'VAL('+intToStr(mRow)+')',[rfReplaceAll,rfIgnoreCase]);
+
+    gridFilter.cells[rExpr,i]:=stringReplace(gridFilter.cells[rExpr,i],'<~>)',')',[rfReplaceAll]);
+  end;}
+
+  gridFilter.row:=gridFilter.row-1;
+  updateNumbersRow();
+end;
+
+procedure btnMoveDown_Click(Sender: TObject);
+var
+  i,mRow:integer;
+  temp:string;
+begin
+  if runExport then exit;
+  if gridFilter.row=gridFilter.rowCount-1 then exit;
+  mRow:=strToInt(gridFilter.cells[rNum,gridFilter.row]);
+
+  for i:=0 to gridFilter.colcount-1 do
+  begin
+    temp:=gridFilter.cells[i,gridFilter.row];
+    gridFilter.cells[i,gridFilter.row]:=gridFilter.cells[i,gridFilter.row+1];
+    gridFilter.cells[i,gridFilter.row+1]:=temp;
+  end;
+
+
+  {for i:=1 to gridFilter.rowCount-1 do
+  begin
+    gridFilter.cells[rExpr,i]:=trimExpr(gridFilter.cells[rExpr,i]);
+
+    gridFilter.cells[rExpr,i]:=stringReplace(gridFilter.cells[rExpr,i],
+      'VAL('+intToStr(mRow)+')',
+      'VAL('+intToStr(mRow+1)+'<~>)',[rfReplaceAll,rfIgnoreCase]);
+
+    gridFilter.cells[rExpr,i]:=stringReplace(gridFilter.cells[rExpr,i],
+      'VAL('+intToStr(mRow+1)+')',
+      'VAL('+intToStr(mRow)+')',[rfReplaceAll,rfIgnoreCase]);
+
+    gridFilter.cells[rExpr,i]:=stringReplace(gridFilter.cells[rExpr,i],'<~>)',')',[rfReplaceAll]);
+  end;}
+
+  gridFilter.row:=gridFilter.row+1;
+  updateNumbersRow();
+end;
+
+procedure btnDelRow_Click(Sender: TObject);
+begin
+  if runExport then exit;
+  if(gridFilter.rowcount>2)then
+  begin
+    fieldBox.Visible := False;
+    gridFilter.SetFocus;
+    gridFilter.DeleteRow(gridFilter.row);
+  end
+  else if(gridFilter.rowcount=2) then
+  begin
+    gridFilter.RowCount:=1;
+    gridFilter.RowCount:=2;
+    gridFilter.fixedRows:=1;
+    gridFilter.fixedCols:=1;
+  end;
+
+  updateNumbersRow();
+
+end;
+
+function sqlString(gridFL:TKGrid; FormName:string; Top:TCheckBoxState; TopQuantity:string):string;
+var strSelect, strFrom, strWehere:string; I:integer;
+begin
+	// Обнуляем переменные
+	result:='';
+	strFrom:='FROM ';
+	strSelect:='SELECT ';
+	strWehere:='WHERE ';
+
+	strFrom:=strFrom+'['+FormName+']'+' ';
+
+	if Top=cbChecked then strSelect:= strSelect +'FIRST '+TopQuantity+' ';
+
+	strSelect:=strSelect+' ID AS ID, '
+	for I:=1 to gridFL.RowCount-1 do
+		if (gridFilter.cells[2,I]='1') or (gridFilter.cells[5,I]='1') then
+		begin
+		strSelect:=strSelect+'['+gridFL.cells[1,I]+'] as COL'+intToStr(I)+', '; //Плюс номер строки
+		end;
+	Delete(strSelect,Length(strSelect)-1,1);
+
+	for I:=1 to gridFL.RowCount-1 do
+		begin
+		If gridFL.cells[3,I]='1' then
+		strWehere:=strWehere+'['+gridFL.cells[1,I]+'] '+gridFL.cells[4,I] +' AND ';
+		end;
+	Delete(strWehere,Length(strWehere)-4,4);
+	result:=(strSelect+strFrom+strWehere);
+	//debug(result);
+end;
+
+procedure btnPreview_Click(Sender: TObject);
+var I,J,H:integer; ChangeFields,ExportedFields: array of integer; COL,STR:string;
+begin
+runExport:=true;
+	SetLength(ChangeFields,gridFilter.RowCount); // Список столбцов для изменения
+	SetLength(ExportedFields,gridFilter.RowCount); // Список столбцов экспорта
+	// Отбор списка столбцов для изменения
+	I:=0;
+	For H:=1 to gridFilter.RowCount-1 do
+		if gridFilter.cells[5,h]='1' then
+		begin
+		ChangeFields[I]:=h;
+		inc(I);
+		end;
+		SetLength(ChangeFields,I);
+	// Отбор списка столбцов для экспорта
+	I:=0;
+	For H:=1 to gridFilter.RowCount-1 do
+		if gridFilter.cells[2,h]='1' then
+		begin
+		ExportedFields[I]:=h;
+	//debug(ExportedFields[I]);
+		inc(I);
+
+		end;
+		SetLength(ExportedFields,I);
+
+
+	// Запрос данных
+	try
+	  begin
+		SQLq:=SQLSelect(sqlString(gridFilter,formBox.Text,checkBoxTop.State,edtTop.text));
+	  end;
+	except
+	  begin
+		MessageDlg('Ошибка!', 'Проверьте параметры фильтров и повторите попытку!',mtError ,[mbOK]);
+		runExport:=false;
+		exit;
+	  end;
+   end;
+   // Вычислить изменяемые поля
+	SQLq.MoveFirst;
+	While not SQLq.EOF do
+	begin
+	H:=0;
+    SQLq.Edit;
+		While H<Length(ChangeFields) do
+		begin
+			COL:='COL'+vartostr(ChangeFields[H]);
+			STR:=vartostr(EvalExpr(gridFilter.cells[6,ChangeFields[H]],nil))
+			SQLq[COL]:=STR;
+			inc(H);
+			//debug(SQLq[COL]);
+      SQLq.Post;
+		end;
+		application.ProcessMessages();
+	SQLq.MoveNext;
+	end;
+
+	gridExample.ColCount:=Length(ExportedFields); // количество стобцов для экспорта
+	gridExample.RowCount:=SQLq.RecordCount; // Строк в запросе
+
+	// Вывод в таблицу отобранные для экспорта
+	SQLq.MoveFirst;
+	for I:=1 to SQLq.RecordCount do
+		begin
+			for J:=0 to Length(ExportedFields)-1  do
+			begin
+			COL:='COL'+inttostr(ExportedFields[J]);
+			gridExample.cells[J,I]:=SQLq.AsS[COL];
+			application.ProcessMessages();
+			end;
+		SQLq.MoveNext;
+		end;
+
+	// Заголовки таблицы
+	H:=0;
+	for I:=1 to gridFilter.RowCount do
+		if gridFilter.cells[2,I]='1' then
+			begin
+				gridExample.cells[H,0]:=gridFilter.cells[1,I];
+				inc(H);
+			end;
+
+lblExample.caption:='Пример экспорта, Найдено '+vartostr(SQLq.RecordCount)+' строк';
+runExport:=false;
+end;
+
+procedure btnExport_Click(Sender: TObject);
+var saveTab:tCsvData; fName:string; i,J:integer;
+begin
+	btnPreview_Click(nil);
+
+	if MessageDlg('Подтвердить изменения', 'Внести изменения полей в основную базу?',mtInformation ,[mbYes, mbNo])=6 then SQLq.ApplyUpdates;
+
+	SQLq.Free;
+	if savePath.text<>'' then fName:=savePath.text else fName:=GetTempDir;
+	fName:=fName+edtMask.text+vartostr(EvalExpr('TIMESTAMP(DATE,TIME)',nil));
+
+	saveTab:=tCsvData.create();
+    saveTab.rowCount:=gridExample.Rowcount;
+    saveTab.colCount:=gridExample.ColCount;
+
+	for I:=0 to gridExample.rowcount-1 do
+	begin
+		for J:=0 to gridExample.ColCount-1  do
+		begin
+			saveTab[J,I]:=gridExample.cells[J,I];
+			application.ProcessMessages();
+		end;
+	end;
+	saveTab.saveToFile(fName+'.csv',true);
+	MsgBox('','Успешно...');
+	saveTab.free;
+
+end;
+
+// Отрисовка таблицы
+procedure gridFilter_DrawCell(Sender: TObject; ACol, ARow: Integer; R: TRect; State: TKGridDrawState);
+var
+  ts:tTextstyleRec;
+begin
+  try
+    ts.EndEllipsis:=true;
+    ts.clipping:=true;
+    ts.WordBreak:=false;
+    ts.Layout:=1;    // 0 = по верхнему краю, 1 = по центру, 2 = по нижнему краю.
+
+	gridFilter.Canvas.Brush.Color:=gridFilter.Colors.CellBkGnd;
+    gridFilter.Canvas.FillRect(R);
+
+    if(kgdFixed in state) then
+    begin
+      gridFilter.Canvas.Brush.Color:=gridFilter.Colors.FixedCellBkGnd;
+      gridFilter.Canvas.Pen.Color:=gridFilter.Colors.FixedCellLines;
+      gridFilter.Canvas.Pen.width:=1;
+
+      gridFilter.Canvas.FillRect(R);
+      gridFilter.Canvas.Rectangle(R.Left+1, R.Top+1,R.Right-1, R.Bottom-1);
+      ts.Alignment:=2; // 0 = по левому краю, 1 = по правому краю, 2 = по центру.
+    end;
+
+
+    if (aCol=rExpFlag)and(aRow>0)then
+    begin
+      ts.Alignment:=0; // 0 = по левому краю, 1 = по правому краю, 2 = по центру.
+      ts.Layout:=0;    // 0 = по верхнему краю, 1 = по центру, 2 = по нижнему краю.
+    end;
+
+    if (aCol=rNum)and(aRow=gridFilter.row)then
+    begin
+      gridFilter.Canvas.Font.Style:=[fsBold];
+      gridFilter.Canvas.Font.Color:=clBlue;
+    end
+    else
+    begin
+      gridFilter.Canvas.Font.Style:=[];
+      gridFilter.Canvas.Font.Color:=clBlack;
+    end;
+
+    if((aCol=rExpFlag) or (aCol=rFilterFlag) or (aCol=RepValFlag))and(aRow>0) {and not (gridFilter.cells[rFld,aRow]='')} then
+    begin
+      if(gridFilter.Cells[ACol, ARow]='1')then
+        gridFilter.Canvas.draw(r.left + (r.right - r.left - chIcon.Width) div 2,
+          r.Top + (r.Bottom - r.Top - chIcon.Height) div 2,chIcon)
+      else if(gridFilter.Cells[ACol, ARow]='0') or (gridFilter.Cells[ACol, ARow]='')  then
+        gridFilter.Canvas.draw(r.left + (r.right - r.left - unChIcon.Width) div 2,
+          r.Top + (r.Bottom - r.Top - unChIcon.Height) div 2,unChIcon)
+      else
+        gridFilter.Canvas.TextRect(R,R.Left, R.Top, gridFilter.Cells[ACol, ARow],ts);
+    end
+    else if (aCol<>rExpFlag) or (aCol<>rFilterFlag) or (aCol<>RepValFlag) or (aRow=0)then
+    begin
+        gridFilter.Canvas.TextRect(R,R.Left, R.Top, gridFilter.Cells[ACol, ARow],ts);
+    end;
+  except
+  end;
+end;
+
+
+
+procedure setActions();
+begin
+  profileBox.OnSelect:=@profileBox_Select;
+  profileBox.onDropDown:=@profileBox_DropDown;
+
+  btnSave.OnClick:=@btnSave_Click;
+
+  btnDelProf.OnClick:=@btnDelProf_Click;
+
+  btnSavePath.OnClick:=@btnSavePath_Click;
+
+  gridFilter.OnSelectCell:=@gridFilter_SelectCell;
+  gridFilter.OnMouseClickCell:=@gridFilter_MouseClickCell;
+  gridFilter.OnMouseDblClickCell:=@gridFilter_MouseDblClickCell;
+  gridFilter.OnMouseWheel:=@gridFilter_MouseWheel;
+  gridFilter.onSelectionChanged:=@gridFilter_SelectionChanged;
+
+  fieldBox.OnExit:=@fieldBox_Exit;
+  fieldBox.OnChange:=@fieldBox_Change;
+  fieldBox.OnKeyDown:=@fieldBox_KeyDown;
+
+  formBox.OnChange:=@formBox_Change;
+
+  btnAddRow.OnClick:=@btnAddRow_Click;
+  btnMoveUp.OnClick:=@btnMoveUp_Click;
+  btnMoveDown.OnClick:=@btnMoveDown_Click;
+  btnDelRow.OnClick:=@btnDelRow_Click;
+   btnExport.OnClick:=@btnExport_Click;
+   btnPreview.OnClick:=@btnPreview_Click;
+  gridFilter.OnDrawCell:=@gridFilter_DrawCell;
+
+end;
+
+// Настройка компонентов
+procedure reBoundComponent();
+begin
+	mainExportFm.Position := poOwnerFormCenter;
+	mainExportFm.Caption:='Экспорт данных';
+	mainExportFm.ShowInTaskBar:=stAlways;
+	mainExportFm.Width := startW;
+	mainExportFm.Height := startH;
+	mainExportFm.Constraints.MinWidth:=startW;
+	mainExportFm.Constraints.MinHeight:=startH;
+
+	split.Align:= alTop;
+	split.ResizeStyle:=rsPattern;
+	split.minSize:=25;
+	split.AutoSnap:=true;
+
+	helpMemo.Align :=alTop;
+	helpMemo.height:=45;
+
+	scrollBox.width:=startW;
+	scrollBox.Align:=alClient;
+
+	profileBox.left:=10;
+	profileBox.width:=300;
+	profileBox.top:=5;
+	profileBox.autoSelect:=false;
+	profileBox.itemIndex:=0;
+
+	btnSave.left:=profileBox.left+profileBox.width+10;
+	btnSave.height:=25;
+	btnSave.width:=140;
+	btnSave.top:=(profileBox.top+profileBox.height/2)-btnSave.height/2;
+
+	btnDelProf.left:=btnSave.left+btnSave.width+10;
+	btnDelProf.height:=25;
+	btnDelProf.width:=70;
+	btnDelProf.top:=btnSave.top;
+
+	edtMask.top:=profileBox.top+profileBox.height+5;
+	edtMask.width:=profileBox.width;
+	edtMask.left:=10;
+
+	lblMask.left:=edtMask.left+edtMask.width+10;
+	lblMask.autoSize:=true;
+	lblMask.top:=(edtMask.top+edtMask.height/2)-lblMask.height/2;
+	lblMask.Show();
+
+	savePath.top:=edtMask.top+edtMask.height+5;
+	savePath.width:=profileBox.width;
+	savePath.left:=10;
+	//savePath.Show();
+
+	btnSavePath.left:=savePath.left+savePath.width+10;
+	btnSavePath.height:=25;
+	btnSavePath.width:=140;
+	btnSavePath.top:=(savePath.top+savePath.height/2)-savePath.height/2;
+	btnSavePath.Show();
+
+	formBox.left:=10;
+	formBox.width:=300;
+	formBox.top:=savePath.top+savePath.height+10;
+	formBox.Style:=csOwnerDrawFixed;
+	getForms(formBox.items);
+
+	lblForm.left:=formBox.left+formBox.width+10;
+	lblForm.autoSize:=true;
+	lblForm.top:=(formBox.top+formBox.height/2)-lblForm.height/2;
+
+	edtTop.left:=10;
+	edtTop.width:=50;
+	edtTop.top:=formBox.top+formBox.height+15;
+	edtTop.autoSize:=true;
+
+	checkBoxTop.left:=edtTop.left+edtTop.width+5;
+	checkBoxTop.top:=formBox.top+formBox.height+17;
+	checkBoxTop.autoSize:=true;
+
+	btnAddRow.width:=80;
+	btnAddRow.height:=22;
+	btnAddRow.left:=10;
+	btnAddRow.top:=checkBoxTop.top+checkBoxTop.height+10;
+
+	btnMoveUp.width:=60;
+	btnMoveUp.height:=22;
+	btnMoveUp.left:=btnAddRow.left+btnAddRow.width+5;
+	btnMoveUp.top:=checkBoxTop.top+checkBoxTop.height+10;
+
+	btnMoveDown.width:=60;
+	btnMoveDown.height:=22;
+	btnMoveDown.left:=btnMoveUp.left+btnMoveUp.width+5;
+	btnMoveDown.top:=checkBoxTop.top+checkBoxTop.height+10;
+
+	btnDelRow.width:=80;
+	btnDelRow.height:=25;
+	btnDelRow.left:=btnMoveDown.left+btnMoveDown.width+5;
+	btnDelRow.top:=checkBoxTop.top+checkBoxTop.height+10;
+
+	btnExport.width:=150;
+	btnExport.height:=35;
+	btnExport.left:=scrollBox.Width-btnExport.width-10;
+	btnExport.Anchors:=[akRight,akTop];
+	btnExport.top:=formBox.top+formBox.height; //+10;
+
+	btnPreview.width:=120;
+	btnPreview.height:=30;
+	btnPreview.left:=scrollBox.Width-btnExport.width-btnPreview.width-20;
+	btnPreview.Anchors:=[akRight,akTop];
+	btnPreview.top:=formBox.top+formBox.height; //+10;
+
+
+	gridFilter.DefaultRowHeight := profileBox.Height; //Высота строки по умолчанию
+	gridFilter.left:=5;
+	gridFilter.top:=btnAddRow.top+btnAddRow.height+3;
+	gridFilter.width:=scrollBox.width-5;
+	gridFilter.height:=200;
+
+	//gridFilter.align:=alClient;
+	gridFilter.Anchors:=[akLeft,akRight,{akBottom,}akTop];
+
+	gridFilter.FixedRows:=1;
+	gridFilter.FixedCols:=1;
+	gridFilter.RowCount:=3;
+	gridFilter.ColCount:=7;
+	gridFilter.cells[rNum,0]:='№';
+	gridFilter.cells[rFld,0]:='Поле формы';
+	gridFilter.cells[rExpFlag,0]:='Экспортировать';
+	gridFilter.cells[rFilterFlag,0]:='Отбирать = ';
+	gridFilter.cells[rFilterExpr,0]:='Выражение';
+	gridFilter.cells[RepValFlag,0]:='Изменить поле';
+	gridFilter.cells[RepValue,0]:='Новое значение';
+
+	gridFilter.ColWidths[rNum]:=20;
+	gridFilter.ColWidths[rFld]:=250;
+	gridFilter.ColWidths[rExpFlag]:=100;
+	gridFilter.ColWidths[rFilterFlag]:=100;
+	gridFilter.ColWidths[rFilterExpr]:=150;
+	gridFilter.ColWidths[RepValFlag]:=100;
+	gridFilter.ColWidths[RepValue]:=250;
+
+	gridFilter.flat:=true;
+	gridFilter.colors.cellLines:=clBlack;
+	gridFilter.Options := gridFilter.Options + [goIndicateSelection,
+	goDrawFocusSelected,goColSizing,goAlignLastCol];//goRowMoving,
+	gridFilter.DisabledDrawStyle:=ddBright;
+	gridFilter.Show();
+
+	fieldBox.Style:=csOwnerDrawFixed;
+	fieldBox.Visible := False;
+	fieldBox.items.add('');
+
+	lblExample.left:=scrollBox.width/2-60;
+	lblExample.autoSize:=true;
+	lblExample.top:=gridFilter.top+gridFilter.height+5;
+	lblExample.Show();
+
+	gridExample.FixedRows:=1;
+	gridExample.FixedCols:=0;
+	gridExample.left:=5;
+	gridExample.top:=lblExample.top+20;
+	gridExample.width:=scrollBox.width-5;
+	gridExample.DefaultRowHeight:= profileBox.Height; //Высота строки по умолчанию
+	gridExample.DefaultColWidth:=scrollBox.width/5;
+	gridExample.align:=alBottom;
+	gridExample.Anchors:=[akLeft,akRight,akBottom,akTop];
+	gridExample.RowCount:=6;
+	gridExample.ColCount:=6;
+	gridExample.flat:=true;
+	gridExample.colors.cellLines:=clBlack;
+	gridExample.Show();
+end;
+
+// Создание главной формы окна экспорта
+procedure createExForm();
+begin
+  mainExportFm := TWindow.Create();
+  mainExportFm.width:=startW;
+  mainExportFm.height:=startH;
+
+  helpMemo:=tMemo.Create(mainExportFm);
+  helpMemo.text:='Справка';
+  helpMemo.Parent := mainExportFm;
+  helpMemo.Show();
+  helpMemo.readOnly:=true;
+  helpMemo.Brush.Color := $C0C0C0; // old  clYellow
+  helpMemo.scrollBars:=ssVertical;
+
+  split:=tSplitter.create(mainExportFm);
+  split.Parent := mainExportFm;
+  split.Show;
+
+  scrollBox:=tScrollBox.create(mainExportFm); // Контейнер с параметрами
+  scrollBox.Parent := mainExportFm;
+
+  profileBox:=tComboBox.Create(scrollBox); // Список выбора профиля
+  profileBox.items.Add(emptyProfile);
+  profileBox.Parent := scrollBox;
+  profileBox.Show();
+
+  btnSave:=tBitBtn.Create(scrollBox);
+  btnSave.caption:='Сохранить профиль';
+  btnSave.Parent := scrollBox;
+  btnSave.Show();
+
+  btnDelProf:=tBitBtn.Create(scrollBox);
+  btnDelProf.caption:='Удалить';
+  btnDelProf.Parent := scrollBox;
+  btnDelProf.Show();
+
+  edtMask:=tEdit.Create(scrollBox);
+  edtMask.textHint:='Exp* , data***';
+  edtMask.Parent := scrollBox;
+  edtMask.Show();
+
+  lblMask:=tLabel.Create(scrollBox);
+  lblMask.caption:='Префикс для экспортируемых файлов';
+  lblMask.Parent := scrollBox;
+  lblMask.Show();
+
+  savePath:=tEdit.Create(scrollBox);
+  savePath.textHint:='C:\\*';
+  savePath.Parent := scrollBox;
+  savePath.Show();
+
+  btnSavePath:=tBitBtn.Create(scrollBox);
+  btnSavePath.caption:='Папка для сохранения';
+  btnSavePath.Parent := scrollBox;
+  btnSavePath.Show();
+
+  formBox:=tComboBox.Create(scrollBox);
+  formBox.Parent := scrollBox;
+  formBox.Show();
+
+  lblForm:=tLabel.Create(scrollBox);
+  lblForm.caption:='Форма';
+  lblForm.Parent := scrollBox;
+  lblForm.Show();
+
+  edtTop:=tEdit.Create(scrollBox); // Число Выгрузить первые X записей после фильтрации
+  edtTop.textHint:='10000';
+  edtTop.Parent := scrollBox;
+  edtTop.Show();
+
+  checkBoxTop:=tCheckbox.Create(scrollBox);
+  checkBoxTop.caption:='Выгрузить первые X записей после фильтрации';
+  checkBoxTop.Parent := scrollBox;
+  checkBoxTop.Show();
+
+  btnAddRow:=tBitBtn.Create(scrollBox);
+  btnAddRow.caption:='Добавить';
+  btnAddRow.Parent := scrollBox;
+  btnAddRow.Show();
+
+  btnMoveUp:=tBitBtn.Create(scrollBox);
+  btnMoveUp.caption:='Вверх';
+  btnMoveUp.Parent := scrollBox;
+  btnMoveUp.Show();
+
+  btnMoveDown:=tBitBtn.Create(scrollBox);
+  btnMoveDown.caption:='Вниз';
+  btnMoveDown.Parent := scrollBox;
+  btnMoveDown.Show();
+
+  btnDelRow:=tBitBtn.Create(scrollBox);
+  btnDelRow.caption:='Удалить';
+  btnDelRow.Parent := scrollBox;
+  btnDelRow.Show();
+
+  btnExport:=tBitBtn.Create(scrollBox);
+  btnExport.caption:='Начать Экспортировать';
+  btnExport.Parent := scrollBox;
+  btnExport.Show();
+
+  btnPreview:=tBitBtn.Create(scrollBox);
+  btnPreview.caption:='Предпросмотр';
+  btnPreview.Parent := scrollBox;
+  btnPreview.Show();
+
+  gridFilter:=TKGrid.Create(scrollBox);
+  gridFilter.Parent := scrollBox;
+
+  lblExample:=tLabel.Create(scrollBox);
+  lblExample.caption:='Пример экспорта, ...';
+  lblExample.Parent := scrollBox;
+
+  fieldBox:=tComboBox.Create(gridFilter);
+  fieldBox.Parent := gridFilter;
+  fieldBox.items.nameValueSeparator:=':';
+  fieldBox.Show;
+
+  gridExample:=TKGrid.Create(scrollBox);
+  gridExample.Parent := scrollBox;
+
+  setActions();
+  loadImg();  // Загрузить глифы кнопок
+  reBoundComponent();
+
+    if(startProf<>'')then
+  begin
+    updateProfileBox(startProf);
+    if not(readSat(startProf))then
+    begin
+      saveSat(startProf);
+      updateProfileBox(startProf);
+    end;
+  end
+  else
+  begin
+    setDefault();
+    updateProfileBox(emptyProfile);
+  end;
+
+  mainExportFm.ShowModal;
+end;
+
+procedure export_CSV_file(_Width,_Height:integer;_reBound:boolean;Profile:string; _setCurDir:boolean);
+begin
+
+  if(_setCurDir)then
+    profileDir:=getCurrentDir()+'\exportProfiles\'
+  else
+    profileDir:=extractFileDir(getCurrentDataBase())+'\exportProfiles\';
+
+  if not(directoryExists(profileDir))then
+  begin
+    createDir(profileDir);
+    msgBox('Информация','Создана папка для настроек профилей, расширения Экспорт данных CSV : '+
+      profileDir);
+  end;
+
+  runExport:=false;
+  startW:=_Width;
+  startH:=_Height;
+  startProf:=Profile;
+  reBound:=_reBound;
+  createExForm(); // Создание главной формы окна экспорта
+end;

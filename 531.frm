@@ -19,7 +19,7 @@ object Form531: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 83
+  Index = 82
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 160
@@ -386,24 +386,6 @@ object Form531: TdxForm
     Width = 236
     Caption = 'Примечание (шифр или номер СО)'
     ParentColor = False
-  end
-  object dxLabel11: TdxLabel
-    Left = 432
-    Height = 16
-    Top = 88
-    Width = 65
-    Caption = 'dxLabel11'
-    ParentColor = False
-    Expression = 'OBJECTVISIBLE(''dxLookupComboBox1'', [!Вид контроля]=''Повторные испытания''| [!Вид контроля]=''Параллельные испытания'')'
-  end
-  object dxLabel12: TdxLabel
-    Left = 432
-    Height = 16
-    Top = 116
-    Width = 65
-    Caption = 'dxLabel12'
-    ParentColor = False
-    Expression = 'OBJECTVISIBLE(''dxLabel1'', [!Вид контроля]=''Повторные испытания''| [!Вид контроля]=''Параллельные испытания'')'
   end
   object dxLookupComboBox5: TdxLookupComboBox
     Left = 428

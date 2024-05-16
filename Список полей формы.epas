@@ -1,0 +1,79 @@
+{@module
+Author=Cordek
+Version=1.1
+Description=Действие для вывода списка полей формы в ComboBox
+Форма задается по имени
+@}
+
+
+{@action
+ID=84374B19-2B7F-46DF-BA15-5AD5A015DA80
+OrigName=GetFormFields
+Name=Вывод списка полей формы
+Group=Сервис
+UI=<ui>
+<form  name="cmp" caption="Выберите форму" />
+<component name="cbx1" caption="Или выберите список с названиями форм" filter="TdxComboBox"/>
+<component name="cbx2" caption="Компонент для вывода списка полей формы:"
+filter="TdxComboBox" required="1"/>
+</ui>
+Description=<b>Действие выводит список полей формы в компонент "список"</b>
+@}
+var
+cmpvar: string;
+
+
+function FormsList(formname: string):TStrings;
+var
+  Forms, FL: TStringList;
+  Fm : TdxForm;
+  j, i: Integer;
+  FieldName: string;
+begin
+  Forms := TStringList.Create; //создаём список всех форм
+  GetForms(Forms);//заполняем список
+ for j := 0 to Forms.Count - 1 do //листаем список в поисках чего-то
+ begin
+ //если в списке есть искомая форма
+ if cmpvar = Forms[j] then
+   begin
+	  Fm := TdxForm(Forms.Objects[j]);
+   // Fm := TdxForm.Create(cmpvar);
+	  FL := TStringList.Create;
+	  for i := 0 to Fm.ComponentCount - 1 do
+      begin
+       try
+      FieldName:=GetPropValue(Fm.Components[i], 'Caption');
+   except
+      FieldName:= GetComponentFieldName(Fm.Components[i]); // Возникает исключение, если в компоненте нет указанного published-свойства.
+   end;
+		  FL.Add(FieldName+' :: '+Fm.Components[i].Name);
+      end;
+    FL.Sort;
+    Result:=FL;
+   end;
+
+  end;
+end;
+
+
+procedure RefreshFormsList2(Sender:TObject);
+begin
+cmpvar:=TdxCombobox(Sender).Field.Asstring;
+end;
+
+
+procedure RefreshFormsList(Sender:TObject);
+begin
+TdxCombobox(Sender).Items := FormsList(cmpvar);
+end;
+
+procedure GetFormFields(cmp, cbx1, cbx2:string);
+var FL:TdxCombobox;
+begin
+if (cbx2='') then exit;
+if (cmp<>'') then cmpvar:=cmp;
+if (cbx1<>'') then TdxCombobox(Self.FindComponent(cbx1)).OnExit:= @RefreshFormsList2;
+FL:=TdxCombobox(Self.FindComponent(cbx2));
+FL.OnEnter := @RefreshFormsList;
+end;

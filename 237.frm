@@ -6,7 +6,7 @@ object Form237: TdxForm
   Id = 237
   PId = 0
   FormCaption = 'Контроль'
-  FormGroup = 'Приемка'
+  FormGroup = 'Общие'
   Font.Height = -13
   Font.Name = 'Verdana'
   AutoOpen = True
@@ -72,12 +72,13 @@ object Form237: TdxForm
     TabIndex = 0
     TabOrder = 1
     object dxTabSheet7: TdxTabSheet
-      Caption = 'Вне области на согласование'
+      Caption = 'Заявки на согласование'
+      StopTab = False
       object dxQueryGrid7: TdxQueryGrid
-        Left = 8
+        Left = 108
         Height = 492
         Top = 7
-        Width = 804
+        Width = 748
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -107,9 +108,28 @@ object Form237: TdxForm
         Id = 385
         ManualRefresh = False
       end
+      object dxButton1: TdxButton
+        Left = 8
+        Height = 32
+        Top = 36
+        Width = 100
+        Caption = 'Согласовать'
+        TabOrder = 1
+        ActionOnClick = '<actions><action type="7" expression="Block('#13#10'SETVAR(''S'',GET(''Заявки1385'', ''Идентификатор'')),'#13#10'EDITINGREC(''Заявка клиента'', CNUM(GETVAR(&quot;S&quot;)), ''Согласовано'',1)'#13#10', QUERYUPDATE(''Заявки1385'')'#13#10','''')"/></actions>'
+      end
+      object dxButton2: TdxButton
+        Left = 8
+        Height = 30
+        Top = 92
+        Width = 48
+        Caption = 'Все >'
+        TabOrder = 2
+        ActionOnClick = '<actions><action type="7" expression="Block('#13#10'SMART_SETFIELDVALUE(''Заявка клиента'', ''Согласовано'', 1, ''Заявки1385'')'#13#10', QUERYUPDATE(''Заявки1385'')'#13#10' ,'''')"/></actions>'
+      end
     end
     object dxTabSheet1: TdxTabSheet
       Caption = 'Не внесены заявки'
+      StopTab = False
       object dxQueryGrid1: TdxQueryGrid
         Left = 8
         Height = 492
@@ -147,6 +167,7 @@ object Form237: TdxForm
     end
     object dxTabSheet3: TdxTabSheet
       Caption = 'Результаты'
+      StopTab = False
       object dxQueryGrid3: TdxQueryGrid
         Left = 8
         Height = 492
@@ -184,6 +205,7 @@ object Form237: TdxForm
     end
     object dxTabSheet5: TdxTabSheet
       Caption = 'Не выставленные счета'
+      StopTab = False
       object dxQueryGrid6: TdxQueryGrid
         Left = 8
         Height = 508
@@ -221,6 +243,7 @@ object Form237: TdxForm
     end
     object dxTabSheet6: TdxTabSheet
       Caption = 'Не закрыт акт'
+      StopTab = False
       object dxQueryGrid5: TdxQueryGrid
         Left = 0
         Height = 520

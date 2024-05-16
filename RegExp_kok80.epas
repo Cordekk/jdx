@@ -1,0 +1,206 @@
+{@module
+Author=kok80
+Version=1.0
+Description=поиск по регулярным выражениям
+@}
+const eol=#13+#10;
+
+var matches: variant;
+    MatchesCount:integer;
+
+
+
+{@function
+OrigName=RegExp_MatchesCount
+Name=RegExp_MatchesCount
+Args=
+Result=n
+Group=RegExp
+Description=возвращает число совпадений после вызова preg_match_set
+@}
+function RegExp_MatchesCount:integer;
+begin
+  result:=MatchesCount;
+end;
+
+
+
+
+
+{@function
+OrigName=RegExp_Execute
+Name=RegExp_Execute
+Args=ss
+Result=n
+Group=RegExp
+Description=Поиск соответствующих шаблону вхождений в строке-оригинале. Возвращает количество найденных подстрок. Коллекцию найденных подстрок сохраняет во внутреннюю переменную.
+@}
+function RegExp_Execute(pattern, aIncomming: string):integer;
+var RegExp: Variant;
+begin
+  result:=0;
+  MatchesCount:=0;
+  matches:=unassigned;
+
+  try RegExp:=CreateOleObject('VBScript.RegExp'); except msgbox('Error','VBScript.RegExp не установлен'); exit; end;
+  try
+    RegExp.global:=true;
+    RegExp.Pattern:=pattern;
+    matches:=RegExp.Execute(aIncomming);
+    //debug(VarToStr(result));
+    MatchesCount:=matches.count;
+    result:=MatchesCount;
+  except
+    if length(aIncomming)> 1000 then aIncomming:=copy(aIncomming,1,1000)+'...';
+    msgbox('Ошибка','function RegExp_Execute('+eol+'pattern="'+pattern+'",'+eol+'aIncomming="'+aIncomming+'")');
+  finally
+    RegExp:=unassigned;
+  end;
+end;
+
+
+
+
+
+
+{@function
+OrigName=RegExp_get
+Name=RegExp_get
+Args=n
+Result=s
+Group=RegExp
+Description=Из коллекции найденных строк возвращает строку с номером MatchNum
+@}
+
+// возвращает совпадение с номером MatchNum
+function RegExp_get(MatchNum: integer):string;
+begin
+  result:=VarToStr(Matches.Item[MatchNum].value)
+end;
+
+
+
+
+
+{@function
+OrigName=RegExp_getSubstr
+Name=RegExp_getSubstr
+Args=nn
+Result=s
+Group=RegExp
+Description=Из коллекции найденных строк возвращает подстроку SubMatchNum строки MatchNum
+@}
+function RegExp_getSubstr(MatchNum,SubMatchNum: integer):string;
+begin
+  result:=VarToStr(Matches.Item[MatchNum].SubMatches[SubMatchNum]);
+end;
+
+
+
+
+procedure RegExp_EvalExpr(x:integer; expression:string);
+var NewExpression:string;
+begin
+  NewExpression:=StringReplace(expression,'%x',IntToStr(x),[rfReplaceAll]);
+  //debug(NewExpression);
+  EvalExpr(NewExpression,self);
+end;
+
+
+
+
+
+
+
+{@function
+OrigName=RegExp_loop
+Name=RegExp_loop
+Args=nns
+Result=v
+Group=RegExp
+Description=Выполняет выражение expression в цикле от x1 до x2. В expression можно указывать %x - заменяется на номер цикла.
+@}
+function RegExp_loop(x1,x2:integer; expression:string):variant;
+var x:integer;
+begin
+  if x2>=x1 then
+    for x:=x1 to x2 do RegExp_EvalExpr(x,expression)
+  else
+    for x:=x2 downto x1 do RegExp_EvalExpr(x,expression);
+end;
+
+
+
+{@function
+OrigName=RegExp_free
+Name=RegExp_free
+Args=
+Result=
+Group=RegExp
+Description=Очищает внутренние переменные после вызова RegExp_Execute
+@}
+procedure RegExp_free;
+begin
+  matches:=unassigned;
+  MatchesCount:=0;
+end;
+
+
+
+
+
+
+{@function
+OrigName=Preg_match
+Name=Preg_match
+Args=ss
+Result=s
+Group=RegExp
+Description=Поиск соответствующих шаблону вхождений в строке-оригинале. Возвращает первую найденную строку.
+<br>
+preg_match("\d+","В ноябре Вова заработал 30000 рублей")
+
+result=30000
+@}
+function Preg_match(pattern, aIncomming: string):string;
+var RegExp, matches2: Variant;
+begin
+  result:='';
+  try RegExp:=CreateOleObject('VBScript.RegExp'); except msgbox('Error','VBScript.RegExp не установлен'); exit; end;
+  try
+    RegExp.global:=true;
+    RegExp.Pattern:=pattern;
+    matches2:=RegExp.Execute(aIncomming);
+    if matches2.Count>0 then
+      result:=matches2.Item[0].value;
+  except
+    if length(aIncomming)> 1000 then aIncomming:=copy(aIncomming,1,1000)+'...';
+    msgbox('Ошибка','function Preg_match('+eol+'pattern="'+pattern+'",'+eol+'aIncomming="'+aIncomming+'")');
+  finally
+    RegExp:=unassigned;
+    matches2:=unassigned;
+  end;
+end;
+
+
+{@function
+OrigName=ButtonControl_click
+Name=ButtonControl_click
+Args=s
+Result=
+Group=RegExp
+Description=Поиск соответствующих шаблону вхождений в строке-оригинале. Возвращает первую найденную строку.
+<br>
+preg_match("\d+","В ноябре Вова заработал 30000 рублей")
+
+result=30000
+@}
+function ButtonControl_click(FieldName: string):string;
+var bc:TCustomButton;
+begin
+  bc:=TCustomButton(self.FindComponent(FieldName));
+  if bc<>nil then
+    bc.click;
+end;
+
+

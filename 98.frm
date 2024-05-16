@@ -49,8 +49,8 @@ object Form98: TdxForm
     Left = 28
     Height = 16
     Top = 12
-    Width = 208
-    Caption = 'Образец повторного контроля'
+    Width = 237
+    Caption = 'Образец для повторного контроля'
     ParentColor = False
   end
   object dxLabel2: TdxLabel
@@ -185,7 +185,7 @@ object Form98: TdxForm
     ParentColor = False
   end
   object dxCalcEdit3: TdxCalcEdit
-    Left = 52
+    Left = 236
     Height = 24
     Top = 404
     Width = 80
@@ -199,7 +199,7 @@ object Form98: TdxForm
     NumGlyphs = 1
     Flat = True
     Id = 1820
-    FieldName = 'Приписанное значение'
+    FieldName = 'Ca'
     Precission = 4
     Required = False
     DefaultValue = '0'
@@ -209,7 +209,7 @@ object Form98: TdxForm
     PadZeros = True
   end
   object dxCalcEdit4: TdxCalcEdit
-    Left = 184
+    Left = 524
     Height = 24
     Top = 404
     Width = 80
@@ -223,7 +223,7 @@ object Form98: TdxForm
     NumGlyphs = 1
     Flat = True
     Id = 1821
-    FieldName = 'Полученное значение'
+    FieldName = 'X1'
     Precission = 4
     Required = False
     DefaultValue = '0'
@@ -236,8 +236,8 @@ object Form98: TdxForm
     Left = 52
     Height = 16
     Top = 380
-    Width = 256
-    Caption = 'Приписанное и Полученное значения'
+    Width = 666
+    Caption = 'Приписанное и/или Полученное(ые) значения (для контроля точности, заполняем приписанное)'
     ParentColor = False
   end
   object dxCalcEdit5: TdxCalcEdit
@@ -257,7 +257,7 @@ object Form98: TdxForm
     Id = 1822
     FieldName = 'Отклонение'
     Precission = 4
-    Expression = 'ABC([Приписанное значение]-[Полученное значение])'
+    Expression = 'IIF([Ca]<>null,[Ca]-[X1],   /* если есть приписанное, то берем его и отнимаем значение [X1]*/'#13#10'ABC([X2]-[X1])) /* если приписанного нет, то используем абсолютную разницу двух результатов для контроля прецизионности*/'
     Required = False
     DefaultValue = '0'
     Editable = True
@@ -282,7 +282,7 @@ object Form98: TdxForm
     Id = 1823
     FieldName = 'Допустимое отклонение'
     Precission = 4
-    Expression = 'IIF([БСр]=1,([Приписанное значение]+[Полученное значение])/2, [Приписанное значение])*[КэфБ]+[КэфА]'
+    Expression = 'IIF([Ca]<>null,[Ca]*[КэфБ]+[КэфА],   /* если есть приписанное, то берем его */'#13#10'(([X2]+[X1])/2)*[КэфБ]+[КэфА]) /* если приписанного нет, то используем среднее значение из двух результатов */'
     Required = False
     DefaultValue = '0'
     Editable = True
@@ -490,9 +490,9 @@ object Form98: TdxForm
     Editable = True
   end
   object dxCalcEdit9: TdxCalcEdit
-    Left = 52
+    Left = 56
     Height = 24
-    Top = 500
+    Top = 488
     Width = 84
     CharCase = ecNormal
     MaxLength = 0
@@ -522,9 +522,9 @@ object Form98: TdxForm
     ParentColor = False
   end
   object dxCalcEdit10: TdxCalcEdit
-    Left = 188
+    Left = 184
     Height = 24
-    Top = 500
+    Top = 488
     Width = 72
     CharCase = ecNormal
     MaxLength = 0
@@ -545,22 +545,6 @@ object Form98: TdxForm
     GroupDigits = True
     PadZeros = True
   end
-  object dxCheckBox1: TdxCheckBox
-    Left = 296
-    Height = 23
-    Top = 500
-    Width = 186
-    Caption = 'Брать среднее'
-    TabOrder = 17
-    ValueChecked = '1'
-    ValueUnchecked = '0'
-    Id = 4529
-    FieldName = 'БСр'
-    CheckedText = 'Да'
-    UnCheckedText = 'Нет'
-    Editable = False
-    DefaultValue = '0'
-  end
   object dxLabel16: TdxLabel
     Left = 52
     Height = 16
@@ -580,11 +564,11 @@ object Form98: TdxForm
     Items.Strings = (
       'Повторяемость'
       'Воспроизводимость'
-      'Неопределенность'
+      'Точность'
     )
     MaxLength = 0
     Style = csDropDownList
-    TabOrder = 18
+    TabOrder = 17
     Id = 4530
     FieldName = 'Параметр оценки'
     SourceTId = 0
@@ -595,17 +579,17 @@ object Form98: TdxForm
     Editable = True
   end
   object dxLabel17: TdxLabel
-    Left = 60
+    Left = 56
     Height = 16
-    Top = 480
+    Top = 468
     Width = 80
     Caption = 'Постоянная'
     ParentColor = False
   end
   object dxLabel18: TdxLabel
-    Left = 188
+    Left = 184
     Height = 16
-    Top = 480
+    Top = 468
     Width = 94
     Caption = 'Коэффициент'
     ParentColor = False
@@ -625,7 +609,7 @@ object Form98: TdxForm
     Width = 336
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 19
+    TabOrder = 18
     Id = 8522
     FieldName = 'Методика'
     SourceTId = 519
@@ -647,6 +631,46 @@ object Form98: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+  end
+  object dxCalcEdit11: TdxCalcEdit
+    Left = 640
+    Height = 24
+    Top = 404
+    Width = 80
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 19
+    HideButton = False
+    CalculatorLayout = clNormal
+    AsInteger = 0
+    ButtonWidth = 24
+    NumGlyphs = 1
+    Flat = True
+    Id = 262748
+    FieldName = 'X2'
+    Precission = 4
+    Required = False
+    DefaultValue = '0'
+    Editable = False
+    NullToZero = True
+    GroupDigits = True
+    PadZeros = True
+  end
+  object dxLabel20: TdxLabel
+    Left = 52
+    Height = 16
+    Top = 408
+    Width = 176
+    Caption = 'Приписанное (ОК или АС)'
+    ParentColor = False
+  end
+  object dxLabel21: TdxLabel
+    Left = 376
+    Height = 16
+    Top = 408
+    Width = 139
+    Caption = 'Полученные Х1 и Х2'
+    ParentColor = False
   end
   object Grid: TdxGrid
     Left = 0
@@ -760,13 +784,6 @@ object Form98: TdxForm
         FieldName = 'f4528'
       end    
       item
-        ButtonStyle = cbsCheckboxColumn
-        Tag = 4529
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f4529'
-      end    
-      item
         Tag = 4530
         Title.Caption = ' '
         Width = 100
@@ -777,6 +794,12 @@ object Form98: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f8522l'
+      end    
+      item
+        Tag = 262748
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262748'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

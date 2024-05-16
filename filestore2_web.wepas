@@ -1,0 +1,89 @@
+{@module
+Author=cordek, develop-soft
+Version=1.0
+Description=Содержит действие для кнопки "Добавить файл в хранилище (FileStore2)", которые служат для организации
+системы группового или одиночного добавления и хранения файлов в базе данных.
+Является частью комплекса "Хранилище файлов 2.0".
+Для работы необходимо иметь форму FileStore2 с настроенными полями:
+'ID записи' - текстовое поле
+'Форма' - текстовое поле
+'Описание записи' - текстовое поле
+'Дата записи' - дата
+'Время записи'  - время
+'dxFile1' - компонент файл (хранение в базе)
+'dxFile2' - компонент файл (хранение в базе), здесь файл электронной подписи (опционально)
+'Подписано' - флажок
+['Имя файла'] - Имя файла
+Веб-версия пока не имеет диалога открытия файла локально для загрузки на сервер.
+@}
+
+{@action
+Id=0AABDA55-EC7B-453E-9ECF-BD99CEB2D42E
+@}
+
+ function File_Add (DscrField, FormCaption, IDcaption, File_path: Variant): Boolean;
+var
+Store_Fm, CurFm: TdxForm;
+i, formidd: Integer;
+RecDescript, Formcapt: String;
+FileComp, FileCompsig: TdxFile;
+FileNames: TStringList;
+// FDlg: TOpenDialog;
+
+begin
+  try
+  CurFm := Self;
+  Store_Fm := Session.CreateForm('FileStore2');
+  FileNames := TStringList.Create;
+    if File_path <> '' then FileNames.AddStrings(Session.EvalExpr(File_path, Self));
+	//	else                          // надо выяснить как открыть диалог в скрипте
+	//	begin
+	//	FDlg := TOpenDialog.Create (Self); // сюда добавить условие, если путь к файлу прописан в действии, то просто добавляем в список его, если нет, то открываем окно выбора файла
+	//	FDlg.Options := [ofAllowMultiSelect, ofFileMustExist];
+	//	FDlg.Title := 'Выберите файлы для загрузки в базу данных';
+	//	if not FDlg.Execute then exit;
+	//	end;
+//	FileNames.AddStrings(FDlg.Files);
+  RecDescript := VarToStr(Session.EvalExpr(DscrField, self));
+
+	begin
+		for i := 0 to FileNames.Count-1 do
+		begin
+			Store_Fm.OpenRecord(0);
+			Store_Fm.Append;
+			if not (Store_Fm.State in [dsInsert, dsEdit])  then Store_Fm.Edit;
+    if  (FormCaption = '') then Formcapt:=CurFm.FormCaption else Formcapt := VarToStr(Session.EvalExpr (FormCaption, self));
+    if   (IDcaption = '') then    formidd  := CurFm.RecId else formidd  := StrToInt(Session.EvalExpr(IDcaption, self));
+			Store_Fm['ID записи'] := formidd;// идентификатор записи формы, выбираем в действие, по умолчанию текущая запись формы
+			Store_Fm['Форма'] :=Formcapt; // название формы, выбираем в действии, по умолчанию теущая форма
+			if RecDescript <> '' then
+			Store_Fm['Описание записи'] := RecDescript;
+			Store_Fm['Дата записи'] := Date;
+			Store_Fm['Время записи'] := Time;
+			FileComp := TdxFile(Store_Fm.FindComponent('dxFile1'));
+			FileComp.LoadFromFile(FileNames[i]);  // вот здесь подгружаем файл по его пути из списка, значит выше в список добавляется запись пути файла из действия
+			if FileExists (FileNames[i]+'.sig') then // подгрузка файла электронной подписи (тот же файл с расширением sig) (FileNames[i]+'.sig')
+				begin
+				FileCompsig:= TdxFile(Store_Fm.FindComponent('dxFile2')); // здесь файл электронной подписи
+				FileCompsig.LoadFromFile(FileNames[i]+'.sig');
+				Store_Fm['Подписано']:=1;
+				end;
+			Store_Fm['Имя файла'] := FileComp.Description;
+			Store_Fm.Post;
+		  end;
+		if Assigned (FileNames) then
+			begin
+				FileNames.Free;
+				FileNames := nil;
+			end;
+    end;
+      Result := True;
+     except
+      Result := False;
+		end;
+end;
+
+
+// Добавить открытие файла по кнопке и из запроса,
+// добавить подсчет файлов и добавление в надпись или имя закладки, или имя кнопки.
+

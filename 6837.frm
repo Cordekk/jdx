@@ -19,7 +19,7 @@ object Form1: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 93
+  Index = 92
   SoftCheck = False
   object dxCounter1: TdxCounter
     Left = 16
@@ -330,7 +330,7 @@ object Form1: TdxForm
     Width = 188
     Caption = 'подбор остатков'
     TabOrder = 13
-    ActionOnClick = '<actions><action type="9" id="A12B9557-D44C-4B2A-8EA5-0D1010E9BE0A" form="Остаток ТМЦ" title="Выбор Остатков ТМЦ" filter="[Сотрудник]=[Сотрудник 1]&[Склад]=[Склад 1]" tbl="Движение2" insval="formfield;tblfield|Номенклатура ТМЦ;Номенклатура|ТМЦ;ТМЦ" inpval="tblfield2|Количество" hidecmd="1" /></actions>'
+    ActionOnClick = '<actions><action type="9" id="A12B9557-D44C-4B2A-8EA5-0D1010E9BE0A" form="Остаток ТМЦ" title="Выбор Остатков ТМЦ" filter="[Сотрудник]=[Сотрудник 1]&amp;[Склад]=[Склад 1]" tbl="Движение2" insval="formfield;tblfield|Номенклатура ТМЦ;Номенклатура|ТМЦ;ТМЦ" inpval="tblfield2|Количество" hidecmd="1" /></actions>'
   end
   object dxButton4: TdxButton
     Left = 380

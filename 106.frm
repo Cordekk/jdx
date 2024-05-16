@@ -44,7 +44,7 @@ object Form106: TdxForm
     MaxLength = 0
     TabOrder = 1
     Id = 1826
-    FieldName = 'Ед.изм2'
+    FieldName = 'Ед.изм'
     SourceTId = 8
     SourceFId = 30
     Required = False
@@ -115,6 +115,7 @@ object Form106: TdxForm
       'Реактив'
       'Материал'
       'СИЗ'
+      'Не материальные'
     )
     MaxLength = 0
     TabOrder = 3
@@ -160,7 +161,7 @@ object Form106: TdxForm
     SourceTId = 235
     SourceFId = 2558
     Filter = '[Вид]=[Вид]'
-    Required = False
+    Required = True
     SourceTable = 0
     DestTable = 0
     PromptFillTable = False
@@ -182,6 +183,24 @@ object Form106: TdxForm
     Color = clWindow
     Columns = <    
       item
+        Tag = 2436
+        Title.Caption = ' '
+        Width = 96
+        FieldName = 'f2436'
+      end    
+      item
+        Tag = 262310
+        Title.Caption = ' '
+        Width = 69
+        FieldName = 'f262310l'
+      end    
+      item
+        Tag = 2554
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f2554'
+      end    
+      item
         Tag = 1825
         Title.Caption = ' '
         Width = 100
@@ -198,30 +217,12 @@ object Form106: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f1828'
-      end    
-      item
-        Tag = 2436
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f2436'
-      end    
-      item
-        Tag = 2554
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f2554'
-      end    
-      item
-        Tag = 262310
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f262310l'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
     Font.Height = -13
     Font.Name = 'Verdana'
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgDisplayMemoText]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgDisplayMemoText]
     ParentDoubleBuffered = False
     ReadOnly = True
     ShowHint = True
@@ -256,7 +257,15 @@ object Form106: TdxForm
     ReadOnly = True
     RowSelect = True
     Options = [tvoAllowMultiselect, tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoRowSelect, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips]
-    Fields = <>
+    Fields = <    
+      item
+        FieldId = 2436
+        FieldSource = tfsForm
+      end    
+      item
+        FieldId = 262310
+        FieldSource = tfsForm
+      end>
     ExpandLevels = 0
   end
 end

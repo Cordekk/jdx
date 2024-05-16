@@ -1,8 +1,8 @@
 object Form233: TdxForm
   Left = 10
-  Height = 595
+  Height = 697
   Top = 10
-  Width = 824
+  Width = 1396
   Id = 233
   PId = 0
   FormCaption = 'Шаблон показателей'
@@ -14,7 +14,7 @@ object Form233: TdxForm
   ParentField = 0
   LevelCount = 5
   Grid = Grid.Owner
-  ShowScrollBars = False
+  ShowScrollBars = True
   ConfirmSaveRecord = False
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
@@ -24,7 +24,7 @@ object Form233: TdxForm
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 8
     Height = 24
-    Top = 164
+    Top = 208
     Width = 392
     CharCase = ecNormal
     MaxLength = 0
@@ -47,17 +47,17 @@ object Form233: TdxForm
     UpdateTree = False
   end
   object dxLabel1: TdxLabel
-    Left = 8
+    Left = 460
     Height = 16
-    Top = 196
+    Top = 184
     Width = 159
     Caption = 'Нормативный документ'
     ParentColor = False
   end
   object dxLookupComboBox2: TdxLookupComboBox
-    Left = 4
+    Left = 456
     Height = 24
-    Top = 220
+    Top = 208
     Width = 776
     CharCase = ecNormal
     MaxLength = 0
@@ -66,7 +66,7 @@ object Form233: TdxForm
     FieldName = 'Документ'
     SourceTId = 227
     SourceFId = 2528
-    Filter = '[Направление]=[Направление]'
+    Filter = '[?Направление]=[Направление]|[?Лаборатория]=[Лаборатория]'
     Required = False
     SourceTable = 232
     DestTable = 234
@@ -87,7 +87,7 @@ object Form233: TdxForm
   object dxLabel2: TdxLabel
     Left = 8
     Height = 16
-    Top = 140
+    Top = 184
     Width = 187
     Caption = 'Направление деятельности'
     ParentColor = False
@@ -95,7 +95,7 @@ object Form233: TdxForm
   object dxLookupComboBox3: TdxLookupComboBox
     Left = 8
     Height = 24
-    Top = 104
+    Top = 148
     Width = 776
     CharCase = ecNormal
     MaxLength = 0
@@ -126,7 +126,7 @@ object Form233: TdxForm
   object dxLabel3: TdxLabel
     Left = 8
     Height = 16
-    Top = 80
+    Top = 128
     Width = 74
     Caption = 'Продукция'
     ParentColor = False
@@ -134,7 +134,7 @@ object Form233: TdxForm
   object dxLookupComboBox4: TdxLookupComboBox
     Left = 8
     Height = 24
-    Top = 44
+    Top = 104
     Width = 776
     CharCase = ecNormal
     MaxLength = 0
@@ -157,17 +157,17 @@ object Form233: TdxForm
     UpdateTree = False
   end
   object dxLabel4: TdxLabel
-    Left = 24
+    Left = 12
     Height = 16
-    Top = 16
+    Top = 80
     Width = 125
     Caption = 'Группа продукции'
     ParentColor = False
   end
   object dxEdit1: TdxEdit
-    Left = 28
+    Left = 180
     Height = 24
-    Top = 532
+    Top = 12
     Width = 436
     CharCase = ecNormal
     MaxLength = 0
@@ -176,14 +176,14 @@ object Form233: TdxForm
     FieldName = 'Название шаблона'
     FieldSize = 50
     Required = False
-    Expression = 'NZ([Продукция|Название],[Группа продукции|Название])'
+    Expression = 'NZ([Название шаблона],NZ([Продукция|Название],[Группа продукции|Название]))'
     Editable = True
   end
   object dxGrid1: TdxGrid
     Left = 8
-    Height = 228
-    Top = 280
-    Width = 776
+    Height = 432
+    Top = 256
+    Width = 1380
     AutoAdvance = aaNone
     Color = clWindow
     Columns = <>
@@ -213,9 +213,9 @@ object Form233: TdxForm
     Id = 234
   end
   object dxEdit2: TdxEdit
-    Left = 680
+    Left = 1308
     Height = 24
-    Top = 568
+    Top = 8
     Width = 80
     CharCase = ecNormal
     MaxLength = 0
@@ -226,6 +226,54 @@ object Form233: TdxForm
     Required = False
     Expression = '// [Название шаблона]'#13#10'RECID(''Шаблон показателей'')'
     Editable = False
+  end
+  object dxLabel5: TdxLabel
+    Left = 32
+    Height = 16
+    Top = 16
+    Width = 128
+    Caption = 'Название шаблона'
+    ParentColor = False
+  end
+  object dxLookupComboBox5: TdxLookupComboBox
+    Left = 176
+    Height = 24
+    Top = 47
+    Width = 594
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 8
+    Id = 262976
+    FieldName = 'Лаборатория'
+    SourceTId = 25
+    SourceFId = 78
+    Filter = '// [ИД] in [Направление|Подразделения]'
+    Required = False
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Expression = '[Документ|Лаборатория]'
+    Editable = True
+    ListFields = <    
+      item
+        FieldId = 77
+        Width = 100
+        Searchable = True
+      end>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = False
+    UpdateTree = False
+  end
+  object dxLabel6: TdxLabel
+    Left = 40
+    Height = 16
+    Top = 45
+    Width = 89
+    Caption = 'Лаборатория'
+    ParentColor = False
   end
   object Grid: TdxGrid
     Left = 0
@@ -238,44 +286,50 @@ object Form233: TdxForm
       item
         Tag = 2544
         Title.Caption = ' '
-        Width = 100
+        Width = 167
         FieldName = 'f2544l'
+      end    
+      item
+        Tag = 2550
+        Title.Caption = ' '
+        Width = 315
+        FieldName = 'f2550'
       end    
       item
         Tag = 2545
         Title.Caption = ' '
-        Width = 100
+        Width = 176
         FieldName = 'f2545l'
       end    
       item
         Tag = 2548
         Title.Caption = ' '
-        Width = 100
+        Width = 157
         FieldName = 'f2548l'
       end    
       item
         Tag = 2549
         Title.Caption = ' '
-        Width = 100
+        Width = 173
         FieldName = 'f2549l'
       end    
       item
-        Tag = 2550
+        Tag = 262976
         Title.Caption = ' '
         Width = 100
-        FieldName = 'f2550'
+        FieldName = 'f262976l'
       end    
       item
         Tag = 2553
         Title.Caption = ' '
-        Width = 100
+        Width = 63
         FieldName = 'f2553'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
     Font.Height = -13
     Font.Name = 'Verdana'
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
     ParentDoubleBuffered = False
     ReadOnly = True
     ShowHint = True
@@ -310,7 +364,11 @@ object Form233: TdxForm
     ReadOnly = True
     RowSelect = True
     Options = [tvoAllowMultiselect, tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoRowSelect, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips]
-    Fields = <>
+    Fields = <    
+      item
+        FieldId = 2544
+        FieldSource = tfsForm
+      end>
     ExpandLevels = 0
   end
 end

@@ -1,0 +1,199 @@
+{@module
+Author=Cordek
+Version=1
+
+Description=некоторые изменения в модуле DX plus
+@}
+
+function VarIsInteger(V: Variant): Boolean;
+begin
+  Result := VarType(V) in [varByte, varWord, varLongWord, varSmallInt,
+    varShortInt, varInteger, varInt64];
+end;
+
+function VarIsNumber(V: Variant): Boolean;
+begin
+  Result := (VarType(V) in [varSingle, varDouble]) or VarIsInteger(V);
+end;
+
+procedure DoError(const Param: String; Row: Integer; const Msg: String);
+begin
+  if Row > 0 then
+    RaiseException(erCustomError, 'Ошибка в параметре "' +
+      Param + '" в строке ' + IntToStr(Row) + ': ' + Msg)
+  else
+    RaiseException(erCustomError, 'Ошибка в параметре "' +
+      Param + '": ' + Msg);
+end;
+
+procedure DoCalcError(const Param: String; Row: Integer);
+begin
+  if Row > 0 then
+    RaiseException(erCustomError, 'Ошибка вычисления выражения в параметре "' +
+      Param + '" в строке ' + IntToStr(Row) + ': ' + ExceptionParam)
+  else
+    RaiseException(erCustomError, 'Ошибка вычисления выражения в параметре "' +
+      Param + '": ' + ExceptionParam);
+end;
+
+procedure DoSetFieldError(const Param: String; Row: Integer; V: Variant);
+begin
+  DoError(Param, Row, 'Результат вычисления выражения несовместим с типом поля. ' +
+    'Результат выражения: ' + VarToStr(V));
+end;
+
+procedure ShowErrMsg(const ActionName, Msg: String);
+begin
+  MessageDlg('Ошибка', 'При выполнении действия [' + ActionName +
+    '] произошла ошибка!' + LineEnding + LineEnding + Msg,  mtError, [mbOk]);
+end;
+
+function TryEvalExpr(const Expr: String; Fm: TdxForm; const Param: String; Row: Integer): Variant;
+begin
+  try
+    Result := EvalExpr(Expr, Fm);
+  except
+    DoCalcError(Param, Row);
+  end;
+end;
+
+function EvalRecId(const Expr: String; Fm: TdxForm): Variant;
+begin
+  try
+    Result := EvalExpr(Expr, Fm);
+  except
+    DoCalcError('Найти запись по ID', 0);
+  end;
+
+  if (Result <> Null) and not (VarType(Result) in [varInteger, varDouble]) then
+    DoError('Найти запись по ID', 0, 'Некорректное вычисление идентификатора записи. ' +
+      'Идентификатор записи должен быть целым числом. Текущий результат выражения: ' +
+      VarToStr(Result));
+end;
+
+function IsEditQuery(Q: TdxQueryGrid): Boolean;
+begin
+  try
+    Q.RecId;
+    Result := True;
+  except
+    Result := False;
+  end;
+end;
+
+procedure RefreshQuery(Q: TdxQueryGrid; KeepPos: Boolean);
+var
+  RecId, RecNo: Integer;
+begin
+  if KeepPos then
+  begin
+    if IsEditQuery(Q) then RecId := Q.RecId
+    else RecNo := Q.RecNo;
+  end;
+  Q.Refresh;
+  if RecId > 0 then Q.GotoRecord(RecId)
+  else if RecNo > 0 then Q.MoveTo(RecNo);
+end;
+
+function Confirm(const Msg: String): Boolean;
+begin
+  Result := MessageDlg('Внимание', Msg, mtConfirmation, [mbYes, mbNo]) = mrYes;
+end;
+
+function SetFocusFirstControl(Any: TWinControl): Boolean;
+var
+  i: Integer;
+  C: TControl;
+  WC: TWinControl;
+begin
+  Result := False;
+  for i := 0 to Any.ControlCount - 1 do
+  begin
+    C := Any.Controls[i];
+    if C is TWinControl then
+    begin
+      WC := TWinControl(C);
+      if WC.TabOrder = 0 then
+      begin
+        if WC.ControlCount > 0 then Result := SetFocusFirstControl(WC)
+        else if WC.CanFocus then
+        begin
+          WC.SetFocus;
+          Result := True;
+          Break;
+        end;
+      end;
+    end;
+  end;
+end;
+
+{@action
+id=53B8D7C6-1DBB-4135-A8C5-F95314559221
+target=button
+origname=AddRecordToFormQuietly
+name=Добавить запись в форму (без подтверждения)
+group=DX PLUS/Форма
+ui=<ui>
+  <form name="form" caption="Форма" required="1"/>
+  <grid name="values" caption="Вставить значения">
+    <field name="field" caption="Поле" source="form"/>
+    <expr name="expr" caption="Выражение"/>
+  </grid>
+  <checkbox name="ignoreaccess" caption="Игнорировать права доступа"/>
+  <divider caption="Действие после сохранения"/>
+  <object name="obj" caption="Вставить в объект"/>
+  <query name="qry" caption="или Обновить запрос"/>
+
+  <ifgrid grid="values">
+    <if expr="!SameTypes(expr, field)"
+      msg="Результат выражения несовместим с полем &quot;`GetText(field)`&quot;: получено &quot;`GetTypeText(expr)`&quot;, ожидается &quot;`GetTypeText(field)`&quot;."
+      focus="expr"/>
+  </ifgrid>
+</ui>
+description=Добавление новой записи в указанную форму со вставкой данных в поля.
+(Например, данные для вставки можно брать из полей текущей формы.). Сохранение новой записи происходит без подтверждения
+После сохранения идентификатор записи можно вставить в объект текущей формы или обновить
+связанный с формой запрос с позиционированием на новой записи.
+@}
+function AddRecordToForm(const FormName: String; Values: TVariantArray2d;
+  IgnoreAccess: Boolean; const ObjName, QueryName: String): Boolean;
+var
+  i: Integer;
+  FlNm, Expr: String;
+  Vl: Variant;
+  Q: TdxQueryGrid;
+begin
+  Result := False;
+  with TdxForm.Create(FormName) do
+  try
+    if not IgnoreAccess and (CanAppend <> asOk) then
+    begin
+      MsgBox('Внимание', 'Недостаточно прав для добавления записи.');
+      Exit;
+    end;
+    OpenRecord(0);
+    Append;
+    for i := 0 to High(Values) do
+    begin
+      FlNm := Values[i][0];
+      Expr := Values[i][1];
+      Vl := TryEvalExpr(Expr, Self, 'Вставить значения', i+1);
+      try
+        Fields[FlNm] := Vl;
+      except
+        DoSetFieldError('Вставить значения', i+1, Vl);
+      end;
+    end;
+      Post;
+      if (ObjName <> '') and (Self.State in [dsInsert, dsEdit]) then Self[ObjName] := RecId;
+      if QueryName <> '' then
+      begin
+        Q := Self.Queries[QueryName];
+        Q.Refresh;
+        if Q.Editable then Q.GotoRecord(RecId);
+      end;
+      Result := True;
+  finally
+    Free;
+  end;
+end;

@@ -167,6 +167,7 @@ object Form105: TdxForm
     Width = 617
     Caption = 'Назначение'
     TabOrder = 5
+    StopTab = False
     object dxLookupComboBox3: TdxLookupComboBox
       Left = 121
       Height = 24

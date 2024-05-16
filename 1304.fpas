@@ -8,8 +8,10 @@ begin
    // Открываем форму и отмечаем галочку
    Fm := Self.Forms['Таблица']
    if Fm.RecordCount > 0 then
+   begin
    Fm.Edit;
    if Fm['О'] = 0 then Fm['О'] := 1 else Fm['О'] := 0;
+   end
 end;
 
  procedure OpenTable (Sender: TObject);
@@ -134,7 +136,7 @@ var
 
 procedure Form_Create;
 begin
-  dxButton1.OnClick := @CreateResearch;
+  // dxButton1.OnClick := @CreateResearch;
   //OldOnFieldChange := Self.OnFieldChange;
   //Self.OnFieldChange := @Proc1;
   dxButton4.onClick := @CreateTable;

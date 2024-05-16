@@ -2,7 +2,7 @@ object Form102: TdxForm
   Left = 10
   Height = 813
   Top = 10
-  Width = 1030
+  Width = 1058
   Id = 102
   PId = 0
   FormCaption = 'ТМЦ'
@@ -44,6 +44,7 @@ object Form102: TdxForm
       'Реактив'
       'Материал'
       'СИЗ'
+      'Не материальные'
     )
     MaxLength = 0
     TabOrder = 0
@@ -52,14 +53,14 @@ object Form102: TdxForm
     SourceTId = 0
     SourceFId = 0
     FieldSize = 50
-    Required = False
+    Required = True
     Expression = '[Номенклатура|Вид]'
     Editable = True
   end
   object dxLabel1: TdxLabel
     Left = 124
     Height = 16
-    Top = 16
+    Top = 12
     Width = 24
     Caption = 'Вид'
     ParentColor = False
@@ -110,26 +111,14 @@ object Form102: TdxForm
     Caption = 'Номенклатура'
     ParentColor = False
   end
-  object dxObjectField1: TdxObjectField
-    Left = 568
-    Height = 24
-    Top = 64
-    Width = 80
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 3
-    Id = 2500
-    FieldName = 'Ед.изм.'
-    ObjId = 2499
-    FieldId = 1826
-  end
   object dxLabel3: TdxLabel
-    Left = 572
+    Left = 556
     Height = 16
-    Top = 44
+    Top = 68
     Width = 50
     Caption = 'Ед. изм'
     ParentColor = False
+    Expression = '''Ед. изм: ''+NZ([Номенклатура|Ед.изм|Название],''нет!'')'
   end
   object dxLookupComboBox2: TdxLookupComboBox
     Left = 536
@@ -138,13 +127,13 @@ object Form102: TdxForm
     Width = 236
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 4
+    TabOrder = 3
     Id = 2555
     FieldName = 'Тип'
     SourceTId = 235
     SourceFId = 2558
     Filter = '[Вид]=[Вид]'
-    Required = False
+    Required = True
     SourceTable = 0
     DestTable = 0
     PromptFillTable = False
@@ -159,9 +148,9 @@ object Form102: TdxForm
     UpdateTree = False
   end
   object dxLabel5: TdxLabel
-    Left = 492
+    Left = 496
     Height = 16
-    Top = 16
+    Top = 12
     Width = 25
     Caption = 'Тип'
     ParentColor = False
@@ -173,7 +162,7 @@ object Form102: TdxForm
     Width = 320
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 5
+    TabOrder = 4
     Id = 2559
     FieldName = 'Модель, марка'
     FieldSize = 200
@@ -195,7 +184,7 @@ object Form102: TdxForm
     Width = 296
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 6
+    TabOrder = 5
     Id = 2560
     FieldName = 'Заводской (серийный) №'
     FieldSize = 50
@@ -217,7 +206,7 @@ object Form102: TdxForm
     Width = 316
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 7
+    TabOrder = 6
     Id = 2562
     FieldName = 'Страна изготовления'
     SourceTId = 31
@@ -244,7 +233,7 @@ object Form102: TdxForm
     ParentColor = False
   end
   object dxLabel10: TdxLabel
-    Left = 568
+    Left = 528
     Height = 16
     Top = 160
     Width = 91
@@ -252,13 +241,13 @@ object Form102: TdxForm
     ParentColor = False
   end
   object dxDateEdit1: TdxDateEdit
-    Left = 683
+    Left = 671
     Height = 24
     Top = 188
     Width = 112
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 8
+    TabOrder = 7
     HideButton = False
     CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
     OKCaption = 'OK'
@@ -282,12 +271,12 @@ object Form102: TdxForm
     ParentColor = False
   end
   object dxButton1: TdxButton
-    Left = 672
+    Left = 828
     Height = 26
-    Top = 62
+    Top = 6
     Width = 95
     Caption = 'Сохранить'
-    TabOrder = 9
+    TabOrder = 8
     ActionOnClick = '<actions><action type="5" /></actions>'
   end
   object dxLabel29: TdxLabel
@@ -305,7 +294,7 @@ object Form102: TdxForm
     Width = 100
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 10
+    TabOrder = 9
     HideButton = False
     CalculatorLayout = clNormal
     AsInteger = 0
@@ -327,11 +316,12 @@ object Form102: TdxForm
     Height = 460
     Top = 296
     Width = 1004
-    ActivePage = dxTabSheet8
-    TabIndex = 7
-    TabOrder = 11
+    ActivePage = dxTabSheet1
+    TabIndex = 0
+    TabOrder = 10
     object dxTabSheet1: TdxTabSheet
       Caption = 'Метрология'
+      StopTab = False
       object dxLabel14: TdxLabel
         Left = 0
         Height = 32
@@ -347,20 +337,6 @@ object Form102: TdxForm
         Width = 211
         Caption = 'Класс точности (погрешность)'
         ParentColor = False
-      end
-      object dxEdit6: TdxEdit
-        Left = 227
-        Height = 24
-        Top = 94
-        Width = 728
-        CharCase = ecNormal
-        MaxLength = 0
-        TabOrder = 1
-        Id = 2568
-        FieldName = 'Погрешность'
-        FieldSize = 100
-        Required = False
-        Editable = False
       end
       object dxLabel8: TdxLabel
         Left = 0
@@ -459,29 +435,17 @@ object Form102: TdxForm
         UpdateTree = False
       end
       object dxLabel32: TdxLabel
-        Left = 4
+        Left = 40
         Height = 16
         Top = 376
         Width = 138
         Caption = 'требуемая точность'
         ParentColor = False
-      end
-      object dxObjectField2: TdxObjectField
-        Left = 196
-        Height = 24
-        Top = 376
-        Width = 744
-        CharCase = ecNormal
-        MaxLength = 0
-        TabOrder = 6
-        Id = 2661
-        FieldName = 'Точность'
-        ObjId = 2657
-        FieldId = 2656
+        Expression = '''Требуемая точность: '' + NZ([Вид измерений|Требуемая точность],'''')'
       end
       object dxEdit5: TdxMemo
         Left = 199
-        Height = 72
+        Height = 56
         Top = 10
         Width = 760
         ScrollBars = ssBoth
@@ -505,7 +469,7 @@ object Form102: TdxForm
         TabOrder = 3
         Id = 2570
         FieldName = 'Используемое ПО'
-        FieldSize = 100
+        FieldSize = 0
         Required = False
         SourceTId = 0
         SourceFId = 0
@@ -527,10 +491,27 @@ object Form102: TdxForm
         Top = 220
         Width = 772
         ScrollBars = ssBoth
-        TabOrder = 7
+        TabOrder = 6
         Id = 262359
         FieldName = 'Сведения о паспорте'
-        FieldSize = 100
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Editable = False
+        UpdateTree = False
+      end
+      object dxEdit6: TdxMemo
+        Left = 227
+        Height = 48
+        Top = 74
+        Width = 728
+        ScrollBars = ssBoth
+        TabOrder = 1
+        Id = 2568
+        FieldName = 'Погрешность'
+        FieldSize = 0
         Required = False
         SourceTId = 0
         SourceFId = 0
@@ -541,6 +522,7 @@ object Form102: TdxForm
     end
     object dxTabSheet2: TdxTabSheet
       Caption = 'Назначение'
+      StopTab = False
       object dxLabel16: TdxLabel
         Left = 15
         Height = 16
@@ -588,13 +570,14 @@ object Form102: TdxForm
         SourceTId = 112
         SourceFId = 1894
         Delimiter = ', '
-        Filter = '[Вид документа|Вид документа]==''метод'''
+        Filter = '[Вид документа|Вид документа]==''метод'' | [Вид документа|Вид документа]==''ГОСТ''  |'#13#10'[Вид документа|Вид документа]==''НД'''
         Editable = False
         UpdateTree = False
       end
     end
     object dxTabSheet3: TdxTabSheet
       Caption = 'Размещение'
+      StopTab = False
       object dxLabel12: TdxLabel
         Left = 20
         Height = 16
@@ -629,15 +612,15 @@ object Form102: TdxForm
         Left = 12
         Height = 32
         Top = 72
-        Width = 89
-        Caption = 'Размещение '#13#10'(помещение)'
+        Width = 201
+        Caption = 'Размещение (помещение для'#13#10' установки или хранения)'
         ParentColor = False
       end
       object dxLookupComboBox5: TdxLookupComboBox
-        Left = 131
+        Left = 227
         Height = 24
-        Top = 76
-        Width = 396
+        Top = 72
+        Width = 328
         CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
@@ -684,9 +667,9 @@ object Form102: TdxForm
         UpdateTree = False
       end
       object dxLabel35: TdxLabel
-        Left = 384
+        Left = 376
         Height = 16
-        Top = 160
+        Top = 176
         Width = 176
         Caption = 'Параметры микроклимата'
         ParentColor = False
@@ -707,11 +690,10 @@ object Form102: TdxForm
         Flat = True
         Id = 7239
         FieldName = 'МинТемп'
-        Precission = 0
+        Precission = 1
         Required = False
-        DefaultValue = '0'
         Editable = False
-        NullToZero = True
+        NullToZero = False
         GroupDigits = True
         PadZeros = True
       end
@@ -731,11 +713,10 @@ object Form102: TdxForm
         Flat = True
         Id = 7240
         FieldName = 'МаксТемп'
-        Precission = 0
+        Precission = 1
         Required = False
-        DefaultValue = '0'
         Editable = False
-        NullToZero = True
+        NullToZero = False
         GroupDigits = True
         PadZeros = True
       end
@@ -755,11 +736,10 @@ object Form102: TdxForm
         Flat = True
         Id = 7241
         FieldName = 'МинДавление'
-        Precission = 0
+        Precission = 1
         Required = False
-        DefaultValue = '0'
         Editable = False
-        NullToZero = True
+        NullToZero = False
         GroupDigits = True
         PadZeros = True
       end
@@ -795,11 +775,10 @@ object Form102: TdxForm
         Flat = True
         Id = 7242
         FieldName = 'МаксДавление'
-        Precission = 0
+        Precission = 1
         Required = False
-        DefaultValue = '0'
         Editable = False
-        NullToZero = True
+        NullToZero = False
         GroupDigits = True
         PadZeros = True
       end
@@ -827,11 +806,10 @@ object Form102: TdxForm
         Flat = True
         Id = 7243
         FieldName = 'МинВлажн'
-        Precission = 0
+        Precission = 1
         Required = False
-        DefaultValue = '0'
         Editable = False
-        NullToZero = True
+        NullToZero = False
         GroupDigits = True
         PadZeros = True
       end
@@ -851,11 +829,10 @@ object Form102: TdxForm
         Flat = True
         Id = 7244
         FieldName = 'МаксВлажн'
-        Precission = 0
+        Precission = 1
         Required = False
-        DefaultValue = '0'
         Editable = False
-        NullToZero = True
+        NullToZero = False
         GroupDigits = True
         PadZeros = True
       end
@@ -875,11 +852,10 @@ object Form102: TdxForm
         Flat = True
         Id = 7245
         FieldName = 'НапряжениеМин'
-        Precission = 0
+        Precission = 1
         Required = False
-        DefaultValue = '0'
         Editable = False
-        NullToZero = True
+        NullToZero = False
         GroupDigits = True
         PadZeros = True
       end
@@ -899,11 +875,10 @@ object Form102: TdxForm
         Flat = True
         Id = 7246
         FieldName = 'ЧастотаМин'
-        Precission = 0
+        Precission = 1
         Required = False
-        DefaultValue = '0'
         Editable = False
-        NullToZero = True
+        NullToZero = False
         GroupDigits = True
         PadZeros = True
       end
@@ -923,11 +898,10 @@ object Form102: TdxForm
         Flat = True
         Id = 7247
         FieldName = 'Мощность'
-        Precission = 0
+        Precission = 2
         Required = False
-        DefaultValue = '0'
         Editable = False
-        NullToZero = True
+        NullToZero = False
         GroupDigits = True
         PadZeros = True
       end
@@ -971,11 +945,10 @@ object Form102: TdxForm
         Flat = True
         Id = 7248
         FieldName = 'НапряжениеМакс'
-        Precission = 0
+        Precission = 1
         Required = False
-        DefaultValue = '0'
         Editable = False
-        NullToZero = True
+        NullToZero = False
         GroupDigits = True
         PadZeros = True
       end
@@ -995,16 +968,15 @@ object Form102: TdxForm
         Flat = True
         Id = 7249
         FieldName = 'ЧастотаМакс'
-        Precission = 0
+        Precission = 1
         Required = False
-        DefaultValue = '0'
         Editable = False
-        NullToZero = True
+        NullToZero = False
         GroupDigits = True
         PadZeros = True
       end
       object dxLookupComboBox4: TdxLookupComboBox
-        Left = 200
+        Left = 224
         Height = 24
         Top = 40
         Width = 324
@@ -1035,7 +1007,7 @@ object Form102: TdxForm
         UpdateTree = False
       end
       object dxLabel42: TdxLabel
-        Left = 204
+        Left = 224
         Height = 16
         Top = 16
         Width = 104
@@ -1043,55 +1015,21 @@ object Form102: TdxForm
         ParentColor = False
       end
       object dxLabel34: TdxLabel
-        Left = 588
+        Left = 596
         Height = 16
-        Top = 8
-        Width = 41
-        Caption = 'Склад'
+        Top = 20
+        Width = 244
+        Caption = 'Склад (текущее местонахождение)'
         ParentColor = False
       end
-      object dxQueryGrid3: TdxQueryGrid
-        Left = 588
-        Height = 80
-        Top = 64
-        Width = 372
-        AutoAdvance = aaNone
-        Color = clWindow
-        Columns = <>
-        DefaultRowHeight = 20
-        DoubleBuffered = True
-        Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
-        ParentDoubleBuffered = False
-        ShowHint = True
-        TabOrder = 15
-        SelectedColor = clHighlight
-        GridLineStyle = psSolid
-        SelectedTextColor = clHighlightText
-        InactiveSelectedColor = clSilver
-        InactiveSelectedTextColor = clBlack
-        ShowButtons = False
-        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
-        VisibleCaptions = []
-        FlatButtons = True
-        ButtonsColor = clBtnFace
-        ButtonSize = 25
-        ButtonFont.Height = -13
-        ButtonFont.Name = 'Verdana'
-        AlignmentButtons = taLeftJustify
-        HideButtonsWhenLostFocus = False
-        WordWrap = False
-        AllowChangeSort = False
-        Id = 97
-        ManualRefresh = False
-      end
       object dxLookupComboBox10: TdxLookupComboBox
-        Left = 587
+        Left = 595
         Height = 24
-        Top = 32
-        Width = 372
+        Top = 40
+        Width = 364
         CharCase = ecNormal
         MaxLength = 0
-        TabOrder = 16
+        TabOrder = 15
         Id = 7333
         FieldName = 'Склад'
         SourceTId = 104
@@ -1101,7 +1039,7 @@ object Form102: TdxForm
         DestTable = 0
         PromptFillTable = False
         ClearTableBeforeFill = False
-        Expression = '// [Количество]'#13#10'MAXIF(''Запрос движения'', ''Склад№'', ''[Дата]=MAX("Запрос движения", "Дата")'')'
+        Expression = 'DBGET(''Остаток ТМЦ'', ''Склад'', ''[!ТМЦ]=[Идентификатор]'')'
         Editable = True
         ListFields = <>
         DropDownCount = 8
@@ -1111,37 +1049,51 @@ object Form102: TdxForm
         UpdateTree = False
       end
       object dxLabel49: TdxLabel
-        Left = 16
+        Left = 112
         Height = 16
-        Top = 120
-        Width = 173
-        Caption = 'Состояние оборудования'
+        Top = 124
+        Width = 77
+        Caption = 'Состояние '
         ParentColor = False
       end
-      object dxEdit16: TdxMemo
-        Left = 16
-        Height = 152
-        Top = 136
-        Width = 260
-        ScrollBars = ssBoth
-        TabOrder = 17
+      object dxEdit16: TdxComboBox
+        Left = 228
+        Height = 24
+        Top = 120
+        Width = 328
+        AutoComplete = True
+        AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+        ItemHeight = 16
+        Items.Strings = (
+          'В работе'
+          'На поверке'
+          'На аттестации'
+          'На калибровке'
+          'В ремонте'
+          'На консервации'
+          'Не исправно'
+          'Списание'
+        )
+        MaxLength = 0
+        Style = csDropDownList
+        TabOrder = 16
         Id = 262360
         FieldName = 'Состояние оборудования'
-        FieldSize = 300
-        Required = False
         SourceTId = 0
         SourceFId = 0
-        Delimiter = ', '
+        FieldSize = 300
+        Required = False
+        CheckExpression = 'IIF(NZ([Дата следующей проверки],DATE)<DATE & [Состояние оборудования]=''В работе'',''Надо поверить!'','''')'
         Editable = False
-        UpdateTree = False
       end
     end
     object dxTabSheet4: TdxTabSheet
       Caption = 'Сотрудники'
+      StopTab = False
       object dxLabel28: TdxLabel
-        Left = 24
+        Left = 192
         Height = 16
-        Top = 72
+        Top = 84
         Width = 188
         Caption = 'Допущены к оборудованию'
         ParentColor = False
@@ -1205,7 +1157,8 @@ object Form102: TdxForm
         DestTable = 0
         PromptFillTable = False
         ClearTableBeforeFill = False
-        Editable = False
+        Expression = 'DBGET(''Остаток ТМЦ'', ''Сотрудник'', ''[!ТМЦ]=[ТМЦ]'')'
+        Editable = True
         ListFields = <>
         DropDownCount = 8
         ListWidthExtra = 0
@@ -1215,7 +1168,24 @@ object Form102: TdxForm
       end
     end
     object dxTabSheet5: TdxTabSheet
-      Caption = 'Поверка (срок годности)'
+      Caption = 'Поверка/калибровка/аттестация'
+      StopTab = False
+      object dxCheckBox2: TdxCheckBox
+        Left = 252
+        Height = 23
+        Top = 384
+        Width = 326
+        Caption = 'Внесено в АС Веста'
+        TabOrder = 9
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 7283
+        FieldName = 'Веста'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = True
+        DefaultValue = '0'
+      end
       object dxLabel25: TdxLabel
         Left = 512
         Height = 16
@@ -1251,7 +1221,7 @@ object Form102: TdxForm
         Left = 12
         Height = 324
         Top = 92
-        Width = 388
+        Width = 464
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -1282,17 +1252,17 @@ object Form102: TdxForm
         ManualRefresh = False
       end
       object dxLabel22: TdxLabel
-        Left = 16
-        Height = 16
-        Top = 42
-        Width = 262
-        Caption = 'Межпроверочный интервал (месяцев)'
+        Left = 8
+        Height = 32
+        Top = 10
+        Width = 290
+        Caption = 'Межпроверочный интервал (месяцев)'#13#10'(межкалибровочный/межаттестационный)'
         ParentColor = False
       end
       object dxCalcEdit1: TdxCalcEdit
-        Left = 291
+        Left = 303
         Height = 24
-        Top = 42
+        Top = 14
         Width = 80
         CharCase = ecNormal
         MaxLength = 0
@@ -1322,10 +1292,10 @@ object Form102: TdxForm
         MaxLength = 0
         TabOrder = 4
         Id = 2573
-        FieldName = 'Номер свидетельства о поверке (калибровке, аттестации)'
+        FieldName = 'Номер документа поверки калибровки аттестации'
         FieldSize = 50
         Required = False
-        Expression = 'Block(COUNT(''Проверки ТМЦ''),'#13#10'setvar(''ID'', RECID(''ТМЦ'')),'#13#10'DBGET(''Проверка ТМЦ'', ''Документ'', ''[!Дата проверки]=[Дата проверки]&[!тмц]=Getvar("ID")''))'
+        Expression = '/*Block(COUNT(''Проверки ТМЦ''),'#13#10'setvar(''ID'', RECID(''ТМЦ'')),'#13#10'DBGET(''Проверка ТМЦ'', ''Документ'', ''[!Дата проверки]=[Дата проверки]&[!тмц]=Getvar("ID")''))    */'#13#10'TAKE(''Проверки ТМЦ'', ''Документ'', ''[Дата проверки]=[:Дата проверки]'')'
         Editable = False
       end
       object dxLabel20: TdxLabel
@@ -1368,17 +1338,17 @@ object Form102: TdxForm
         Editable = True
       end
       object dxLabel23: TdxLabel
-        Left = 492
-        Height = 16
-        Top = 118
-        Width = 293
-        Caption = 'Дата следующей поверки (срок годности)'
+        Left = 532
+        Height = 32
+        Top = 114
+        Width = 218
+        Caption = 'Дата следующей поверки'#13#10' (срок калибровки/аттестации)'
         ParentColor = False
       end
       object dxDateEdit4: TdxDateEdit
         Left = 803
         Height = 24
-        Top = 114
+        Top = 118
         Width = 100
         CharCase = ecNormal
         MaxLength = 0
@@ -1414,36 +1384,6 @@ object Form102: TdxForm
         Editable = True
         DefaultValue = '0'
       end
-      object dxCheckBox2: TdxCheckBox
-        Left = 500
-        Height = 23
-        Top = 360
-        Width = 326
-        Caption = 'Внесено в АС Веста'
-        TabOrder = 9
-        ValueChecked = '1'
-        ValueUnchecked = '0'
-        Id = 7283
-        FieldName = 'Веста'
-        CheckedText = 'Да'
-        UnCheckedText = 'Нет'
-        Editable = True
-        DefaultValue = '0'
-      end
-      object dxEdit14: TdxEdit
-        Left = 744
-        Height = 24
-        Top = 16
-        Width = 208
-        CharCase = ecNormal
-        MaxLength = 0
-        TabOrder = 10
-        Id = 8514
-        FieldName = 'Наименование документа'
-        FieldSize = 50
-        Required = False
-        Editable = False
-      end
       object dxLabel46: TdxLabel
         Left = 520
         Height = 16
@@ -1454,7 +1394,7 @@ object Form102: TdxForm
       end
       object dxEdit10: TdxMemo
         Left = 603
-        Height = 108
+        Height = 84
         Top = 236
         Width = 372
         ScrollBars = ssBoth
@@ -1469,9 +1409,35 @@ object Form102: TdxForm
         Editable = False
         UpdateTree = False
       end
+      object dxEdit14: TdxComboBox
+        Left = 744
+        Height = 24
+        Top = 16
+        Width = 208
+        AutoComplete = True
+        AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+        ItemHeight = 16
+        Items.Strings = (
+          'Свидетельство о поверке'
+          'Сертификат калибровки'
+          'Протокол аттестации'
+          'Аттестат'
+          'Клеймо'
+        )
+        MaxLength = 0
+        TabOrder = 10
+        Id = 8514
+        FieldName = 'Наименование документа'
+        SourceTId = 0
+        SourceFId = 0
+        FieldSize = 50
+        Required = False
+        Editable = False
+      end
     end
     object dxTabSheet6: TdxTabSheet
       Caption = 'Тех.обслуживание'
+      StopTab = False
       object dxLabel26: TdxLabel
         Left = 612
         Height = 16
@@ -1610,6 +1576,7 @@ object Form102: TdxForm
     end
     object dxTabSheet7: TdxTabSheet
       Caption = 'Файлы'
+      StopTab = False
       object dxCheckBox3: TdxCheckBox
         Left = 604
         Height = 23
@@ -1639,7 +1606,7 @@ object Form102: TdxForm
         Id = 8627
         FieldName = 'Архив'
         SourceTId = 530
-        SourceFId = 8614
+        SourceFId = 8613
         Required = False
         SourceTable = 0
         DestTable = 0
@@ -1736,6 +1703,7 @@ object Form102: TdxForm
     end
     object dxTabSheet8: TdxTabSheet
       Caption = 'Печать'
+      StopTab = False
       object dxQueryGrid6: TdxQueryGrid
         Left = 152
         Height = 178
@@ -1796,7 +1764,7 @@ object Form102: TdxForm
     Width = 296
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 12
+    TabOrder = 11
     Id = 2566
     FieldName = 'Инвентарный номер'
     FieldSize = 50
@@ -1804,43 +1772,18 @@ object Form102: TdxForm
     Editable = False
   end
   object dxEdit11: TdxEdit
-    Left = 680
+    Left = 644
     Height = 24
     Top = 156
-    Width = 348
+    Width = 376
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 13
+    TabOrder = 12
     Id = 7237
     FieldName = 'Изготовитель'
     FieldSize = 200
     Required = False
     Editable = False
-  end
-  object dxCalcEdit2: TdxCalcEdit
-    Left = 928
-    Height = 24
-    Top = 4
-    Width = 100
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 14
-    HideButton = False
-    CalculatorLayout = clNormal
-    AsInteger = 0
-    ButtonWidth = 24
-    NumGlyphs = 1
-    Flat = True
-    Id = 7259
-    FieldName = 'Идентификатор'
-    Precission = 0
-    Expression = '// [Номер ТМЦ]'#13#10'RECID(''ТМЦ'')'
-    Required = False
-    DefaultValue = 'RECID(''ТМЦ'')'
-    Editable = False
-    NullToZero = True
-    GroupDigits = False
-    PadZeros = True
   end
   object dxEdit12: TdxEdit
     Left = 188
@@ -1849,7 +1792,7 @@ object Form102: TdxForm
     Width = 828
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 15
+    TabOrder = 13
     Id = 7260
     FieldName = 'Наименование ТМЦ'
     FieldSize = 400
@@ -1865,35 +1808,8 @@ object Form102: TdxForm
     Caption = 'Накладная, сфет-фактура, поставщик'
     ParentColor = False
   end
-  object dxLookupComboBox9: TdxLookupComboBox
-    Left = 924
-    Height = 24
-    Top = 32
-    Width = 100
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 17
-    Id = 7320
-    FieldName = 'ТМЦ'
-    SourceTId = 102
-    SourceFId = 7259
-    Required = False
-    DefaultValue = '//RECID(''ТМЦ'')'
-    SourceTable = 0
-    DestTable = 0
-    PromptFillTable = False
-    ClearTableBeforeFill = False
-    Expression = '// [Номер ТМЦ]'#13#10'RECID(''ТМЦ'')'
-    Editable = True
-    ListFields = <>
-    DropDownCount = 8
-    ListWidthExtra = 0
-    HideList = False
-    HideButton = False
-    UpdateTree = False
-  end
   object dxLabel45: TdxLabel
-    Left = 812
+    Left = 852
     Height = 16
     Top = 100
     Width = 68
@@ -1907,7 +1823,7 @@ object Form102: TdxForm
     Width = 100
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 18
+    TabOrder = 15
     HideButton = False
     CalculatorLayout = clNormal
     AsInteger = 0
@@ -1938,7 +1854,7 @@ object Form102: TdxForm
     Top = 100
     Width = 340
     ScrollBars = ssBoth
-    TabOrder = 19
+    TabOrder = 16
     Id = 262280
     FieldName = 'Номенклатура поставщика'
     FieldSize = 0
@@ -1955,7 +1871,7 @@ object Form102: TdxForm
     Top = 268
     Width = 716
     ScrollBars = ssBoth
-    TabOrder = 16
+    TabOrder = 14
     Id = 7282
     FieldName = 'Право собственности'
     FieldSize = 50
@@ -1967,9 +1883,9 @@ object Form102: TdxForm
     UpdateTree = False
   end
   object dxLabel50: TdxLabel
-    Left = 564
+    Left = 500
     Height = 16
-    Top = 232
+    Top = 244
     Width = 115
     Caption = 'Номер ФГИС РА'
     Font.Color = clRed
@@ -1980,13 +1896,13 @@ object Form102: TdxForm
     ParentFont = False
   end
   object dxCalcEdit16: TdxCalcEdit
-    Left = 692
+    Left = 628
     Height = 24
-    Top = 228
-    Width = 188
+    Top = 240
+    Width = 160
     CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 20
+    TabOrder = 17
     HideButton = False
     CalculatorLayout = clNormal
     AsInteger = 0
@@ -1999,9 +1915,108 @@ object Form102: TdxForm
     Required = False
     DefaultValue = '0'
     Editable = False
-    NullToZero = True
+    NullToZero = False
     GroupDigits = False
     PadZeros = False
+  end
+  object dxEdit17: TdxEdit
+    Left = 606
+    Height = 24
+    Top = 104
+    Width = 148
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 18
+    Id = 262652
+    FieldName = 'Номер ИЦ'
+    FieldSize = 20
+    Required = False
+    Editable = False
+  end
+  object dxLabel51: TdxLabel
+    Left = 524
+    Height = 16
+    Top = 108
+    Width = 66
+    Caption = 'Номер ИЦ'
+    ParentColor = False
+  end
+  object dxLabel52: TdxLabel
+    Left = 812
+    Height = 16
+    Top = 188
+    Width = 99
+    Caption = 'Дата годности'
+    ParentColor = False
+  end
+  object dxDateEdit7: TdxDateEdit
+    Left = 915
+    Height = 24
+    Top = 184
+    Width = 112
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 19
+    HideButton = False
+    CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+    OKCaption = 'OK'
+    CancelCaption = 'Cancel'
+    DateOrder = doNone
+    ButtonWidth = 24
+    Flat = True
+    NumGlyphs = 1
+    Id = 262706
+    FieldName = 'Дата годности'
+    DateNow = False
+    Required = False
+    Editable = False
+  end
+  object dxLabel53: TdxLabel
+    Left = 808
+    Height = 16
+    Top = 216
+    Width = 141
+    Caption = 'Срок годности (мес)'
+    ParentColor = False
+  end
+  object dxCalcEdit17: TdxCalcEdit
+    Left = 956
+    Height = 24
+    Top = 212
+    Width = 72
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 20
+    HideButton = False
+    CalculatorLayout = clNormal
+    AsInteger = 0
+    ButtonWidth = 24
+    NumGlyphs = 1
+    Flat = True
+    Id = 262707
+    FieldName = 'Срок годности'
+    Precission = 0
+    Required = False
+    DefaultValue = '0'
+    Editable = False
+    NullToZero = False
+    GroupDigits = False
+    PadZeros = False
+  end
+  object dxEdit18: TdxEdit
+    Left = 972
+    Height = 24
+    Top = 8
+    Width = 80
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 21
+    Id = 263202
+    FieldName = 'ИД'
+    FieldSize = 50
+    Required = False
+    Expression = '// [Номер ТМЦ]'#13#10'RECID(''ТМЦ'')'
+    Editable = False
   end
   object Grid: TdxGrid
     Left = 0
@@ -2028,12 +2043,6 @@ object Form102: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f2499l'
-      end    
-      item
-        Tag = 2500
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f2500'
       end    
       item
         Tag = 2555
@@ -2084,6 +2093,12 @@ object Form102: TdxForm
         FieldName = 'f2566'
       end    
       item
+        Tag = 262652
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262652'
+      end    
+      item
         Tag = 2567
         Title.Caption = ' '
         Width = 100
@@ -2094,6 +2109,12 @@ object Form102: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f2568'
+      end    
+      item
+        Tag = 262706
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262706'
       end    
       item
         Tag = 2569
@@ -2158,38 +2179,37 @@ object Form102: TdxForm
       item
         Tag = 2581
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f2581'
       end    
       item
         Tag = 2582
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f2582'
       end    
       item
         Tag = 2639
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f2639'
       end    
       item
         Tag = 2657
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f2657l'
       end    
       item
         Tag = 2658
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f2658l'
-      end    
-      item
-        Tag = 2661
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f2661'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
@@ -2207,80 +2227,86 @@ object Form102: TdxForm
       item
         Tag = 7238
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7238'
       end    
       item
         Tag = 7239
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7239'
       end    
       item
         Tag = 7240
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7240'
       end    
       item
         Tag = 7241
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7241'
       end    
       item
         Tag = 7242
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7242'
       end    
       item
         Tag = 7243
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7243'
       end    
       item
         Tag = 7244
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7244'
       end    
       item
         Tag = 7245
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7245'
       end    
       item
         Tag = 7246
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7246'
       end    
       item
         Tag = 7247
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7247'
       end    
       item
         Tag = 7248
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7248'
       end    
       item
         Tag = 7249
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7249'
-      end    
-      item
-        Tag = 7259
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f7259'
       end    
       item
         Tag = 7260
@@ -2303,51 +2329,52 @@ object Form102: TdxForm
       item
         Tag = 7282
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7282'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 7283
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7283'
-      end    
-      item
-        Tag = 7320
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f7320l'
       end    
       item
         Tag = 7333
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7333l'
       end    
       item
         Tag = 7379
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7379'
       end    
       item
         Tag = 8514
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f8514'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 8626
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f8626'
       end    
       item
         Tag = 8627
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f8627l'
       end    
       item
@@ -2359,7 +2386,8 @@ object Form102: TdxForm
       item
         Tag = 262359
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262359'
       end    
       item
@@ -2371,8 +2399,21 @@ object Form102: TdxForm
       item
         Tag = 262401
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262401'
+      end    
+      item
+        Tag = 262707
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262707'
+      end    
+      item
+        Tag = 263202
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263202'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
@@ -2413,7 +2454,15 @@ object Form102: TdxForm
     ReadOnly = True
     RowSelect = True
     Options = [tvoAllowMultiselect, tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoRowSelect, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips]
-    Fields = <>
+    Fields = <    
+      item
+        FieldId = 2495
+        FieldSource = tfsForm
+      end    
+      item
+        FieldId = 2555
+        FieldSource = tfsForm
+      end>
     ExpandLevels = 0
   end
 end

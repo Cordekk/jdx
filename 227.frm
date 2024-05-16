@@ -1,12 +1,12 @@
 object Form227: TdxForm
   Left = 10
-  Height = 563
+  Height = 860
   Top = 10
-  Width = 862
+  Width = 1139
   Id = 227
   PId = 0
   FormCaption = 'Нормативный документ'
-  FormGroup = 'Общие'
+  FormGroup = 'Приемка'
   Font.Height = -13
   Font.Name = 'Verdana'
   AutoOpen = True
@@ -24,7 +24,7 @@ object Form227: TdxForm
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 24
     Height = 24
-    Top = 60
+    Top = 36
     Width = 764
     CharCase = ecNormal
     MaxLength = 0
@@ -49,7 +49,7 @@ object Form227: TdxForm
   object dxLabel1: TdxLabel
     Left = 24
     Height = 16
-    Top = 92
+    Top = 68
     Width = 159
     Caption = 'Нормативный документ'
     ParentColor = False
@@ -57,7 +57,7 @@ object Form227: TdxForm
   object dxLookupComboBox2: TdxLookupComboBox
     Left = 24
     Height = 24
-    Top = 116
+    Top = 92
     Width = 776
     CharCase = ecNormal
     MaxLength = 0
@@ -92,16 +92,16 @@ object Form227: TdxForm
   object dxLabel2: TdxLabel
     Left = 20
     Height = 16
-    Top = 36
+    Top = 12
     Width = 187
     Caption = 'Направление деятельности'
     ParentColor = False
   end
   object dxQueryGrid1: TdxQueryGrid
     Left = 20
-    Height = 316
-    Top = 184
-    Width = 388
+    Height = 596
+    Top = 232
+    Width = 632
     AutoAdvance = aaNone
     Color = clWindow
     Columns = <>
@@ -134,16 +134,16 @@ object Form227: TdxForm
   object dxLabel3: TdxLabel
     Left = 20
     Height = 16
-    Top = 164
+    Top = 204
     Width = 143
     Caption = 'Норматив продукции'
     ParentColor = False
   end
   object dxEdit1: TdxEdit
-    Left = 12
+    Left = 20
     Height = 24
-    Top = 536
-    Width = 684
+    Top = 128
+    Width = 776
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
@@ -152,13 +152,13 @@ object Form227: TdxForm
     FieldSize = 100
     Required = False
     Expression = '[Документ|Заголовок]'
-    Editable = False
+    Editable = True
   end
   object dxGrid1: TdxGrid
-    Left = 422
-    Height = 300
-    Top = 196
-    Width = 392
+    Left = 684
+    Height = 100
+    Top = 432
+    Width = 424
     AutoAdvance = aaNone
     Color = clWindow
     Columns = <>
@@ -187,6 +187,101 @@ object Form227: TdxForm
     AllowChangeSort = False
     Id = 232
   end
+  object dxLabel5: TdxLabel
+    Left = 28
+    Height = 16
+    Top = 169
+    Width = 89
+    Caption = 'Лаборатория'
+    ParentColor = False
+  end
+  object dxLookupComboBox4: TdxLookupComboBox
+    Left = 136
+    Height = 24
+    Top = 163
+    Width = 662
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 6
+    Id = 262970
+    FieldName = 'Лаборатория'
+    SourceTId = 25
+    SourceFId = 78
+    Filter = '// [ИД] in [Направление|Подразделения]'
+    Required = False
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Expression = '[Документ|Подразделение_адресат]'
+    Editable = True
+    ListFields = <    
+      item
+        FieldId = 77
+        Width = 100
+        Searchable = True
+      end>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = False
+    UpdateTree = False
+  end
+  object dxQueryGrid2: TdxQueryGrid
+    Left = 676
+    Height = 312
+    Top = 232
+    Width = 456
+    AutoAdvance = aaNone
+    Color = clWindow
+    Columns = <>
+    DefaultRowHeight = 20
+    DoubleBuffered = True
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+    ParentDoubleBuffered = False
+    ShowHint = True
+    TabOrder = 7
+    SelectedColor = clHighlight
+    GridLineStyle = psSolid
+    SelectedTextColor = clHighlightText
+    InactiveSelectedColor = clSilver
+    InactiveSelectedTextColor = clBlack
+    ShowButtons = True
+    VisibleButtons = [gbnAppend, gbnEdit, gbnRefresh, gbnGoto]
+    VisibleCaptions = []
+    FlatButtons = True
+    ButtonsColor = clBtnFace
+    ButtonSize = 25
+    ButtonFont.Height = -13
+    ButtonFont.Name = 'Verdana'
+    AlignmentButtons = taLeftJustify
+    HideButtonsWhenLostFocus = False
+    WordWrap = False
+    AllowChangeSort = False
+    Id = 3005
+    ManualRefresh = False
+  end
+  object dxLabel4: TdxLabel
+    Left = 852
+    Height = 16
+    Top = 212
+    Width = 60
+    Caption = 'шаблоны'
+    ParentColor = False
+  end
+  object dxRecordId1: TdxRecordId
+    Left = 39
+    Height = 24
+    Top = 841
+    Width = 100
+    ReadOnly = True
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 9
+    FieldName = 'ID'
+    StopTab = False
+    Id = 263119
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 100
@@ -198,26 +293,38 @@ object Form227: TdxForm
       item
         Tag = 2525
         Title.Caption = ' '
-        Width = 100
+        Width = 237
         FieldName = 'f2525l'
       end    
       item
         Tag = 2527
         Title.Caption = ' '
-        Width = 100
+        Width = 110
         FieldName = 'f2527l'
       end    
       item
         Tag = 2528
         Title.Caption = ' '
-        Width = 100
+        Width = 228
         FieldName = 'f2528'
+      end    
+      item
+        Tag = 262970
+        Title.Caption = ' '
+        Width = 200
+        FieldName = 'f262970l'
+      end    
+      item
+        Tag = 263119
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263119'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
     Font.Height = -13
     Font.Name = 'Verdana'
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
     ParentDoubleBuffered = False
     ReadOnly = True
     ShowHint = True

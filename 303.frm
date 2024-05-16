@@ -1,8 +1,8 @@
 object Form303: TdxForm
   Left = 10
-  Height = 647
+  Height = 815
   Top = 10
-  Width = 860
+  Width = 1325
   Id = 303
   PId = 0
   FormCaption = 'Акт списания'
@@ -25,7 +25,7 @@ object Form303: TdxForm
   Index = 64
   SoftCheck = False
   object dxEdit1: TdxEdit
-    Left = 770
+    Left = 1234
     Height = 24
     Top = 12
     Width = 56
@@ -61,7 +61,7 @@ object Form303: TdxForm
     ParentColor = False
   end
   object dxLabel2: TdxLabel
-    Left = 519
+    Left = 983
     Height = 16
     Top = 40
     Width = 72
@@ -69,7 +69,7 @@ object Form303: TdxForm
     ParentColor = False
   end
   object dxButton1: TdxButton
-    Left = 375
+    Left = 844
     Height = 30
     Top = 12
     Width = 135
@@ -154,7 +154,7 @@ object Form303: TdxForm
     ActionOnClick = '<actions><action type="5" /></actions>'
   end
   object dxLookupComboBox1: TdxLookupComboBox
-    Left = 515
+    Left = 979
     Height = 24
     Top = 60
     Width = 304
@@ -182,7 +182,7 @@ object Form303: TdxForm
     UpdateTree = False
   end
   object dxLookupComboBox2: TdxLookupComboBox
-    Left = 519
+    Left = 983
     Height = 24
     Top = 12
     Width = 296
@@ -241,9 +241,10 @@ object Form303: TdxForm
   end
   object dxQueryGrid1: TdxQueryGrid
     Left = 16
-    Height = 490
-    Top = 156
-    Width = 400
+    Height = 634
+    Top = 180
+    Width = 735
+    Anchors = [akTop, akLeft, akRight, akBottom]
     AutoAdvance = aaNone
     Color = clWindow
     Columns = <>
@@ -274,11 +275,11 @@ object Form303: TdxForm
     ManualRefresh = False
   end
   object dxQueryGrid2: TdxQueryGrid
-    Left = 428
-    Height = 350
-    Top = 160
-    Width = 422
-    Anchors = [akTop, akLeft, akRight, akBottom]
+    Left = 763
+    Height = 492
+    Top = 180
+    Width = 552
+    Anchors = [akTop, akRight, akBottom]
     AutoAdvance = aaNone
     Color = clWindow
     Columns = <>
@@ -309,42 +310,43 @@ object Form303: TdxForm
     ManualRefresh = False
   end
   object dxButton2: TdxButton
-    Left = 260
+    Left = 576
     Height = 30
-    Top = 124
+    Top = 128
     Width = 48
     Caption = '>'
     TabOrder = 8
     ActionOnClick = '<actions><if cond="[№]=null"><action type="5" /><action type="7" expression="Block('#13#10'SETVAR(''Id'',RECID(''Акт списания'')),'#13#10'SETVAR(''S'',GET(''Запрос_Пробы1'', ''Идентификатор'')),'#13#10'EDITINGREC(''Пробы'', CNUM(GETVAR(&quot;S&quot;)), ''Акт списания'',GETVAR(&quot;Id&quot;)'#13#10'), QUERYUPDATE(''Запрос_Пробы2''), '''''#13#10')"/></if><else><action type="7" expression="Block('#13#10'SETVAR(''Id'',RECID(''Акт списания'')),'#13#10'SETVAR(''S'',GET(''Запрос_Пробы1'', ''Идентификатор'')),'#13#10'EDITINGREC(''Пробы'', CNUM(GETVAR(&quot;S&quot;)), ''Акт списания'',GETVAR(&quot;Id&quot;)'#13#10'), QUERYUPDATE(''Запрос_Пробы2''), '''''#13#10')"/></else></actions>'
   end
   object dxButton3: TdxButton
-    Left = 372
+    Left = 688
     Height = 30
-    Top = 124
+    Top = 128
     Width = 48
     Caption = '<'
     TabOrder = 9
-    ActionOnClick = '<actions><action type="7" expression="Block('#13#10'SETVAR(''S'', GET(''Запрос_Пробы2'', ''Идентификатор'')),'#13#10'EDITINGREC(''Пробы'', GETVAR(''S''), ''Акт списания'', NULL),'#13#10'QUERYUPDATE(''Запрос_Пробы2''), '''''#13#10')"/></actions>'
+    ActionOnClick = '<actions><action type="7" expression="Block('#13#10'SETVAR(''S'', GET(''Запрос_Пробы2'', ''Идентификатор'')),'#13#10'EDITINGREC(''Пробы'', GETVAR(''S''), ''Акт списания'', NULL),'#13#10'QUERYUPDATE(''Запрос_Пробы2''), '''''#13#10')"/><action disabled="1" type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" qry="Запрос_Пробы2" keeppos="1" /></actions>'
   end
   object dxButton4: TdxButton
-    Left = 428
+    Left = 894
     Height = 30
-    Top = 608
+    Top = 780
     Width = 100
+    Anchors = [akRight, akBottom]
     Caption = 'Печать'
     TabOrder = 10
     ActionOnClick = '<actions><action type="2" template="Акт списания проб.odt" expression="" outfile="" fileaction="1" saverecord="1"/></actions>'
   end
   object dxLabel4: TdxLabel
-    Left = 16
+    Left = 28
     Height = 16
-    Top = 132
+    Top = 56
     Width = 176
     Caption = 'Поиск проб для списания'
     ParentColor = False
   end
   object dxLabel5: TdxLabel
-    Left = 428
+    Left = 768
     Height = 16
     Top = 136
     Width = 120
@@ -354,8 +356,8 @@ object Form303: TdxForm
   object dxLookupComboBox3: TdxLookupComboBox
     Left = 84
     Height = 24
-    Top = 56
-    Width = 284
+    Top = 80
+    Width = 336
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 11
@@ -379,16 +381,17 @@ object Form303: TdxForm
   object dxLabel6: TdxLabel
     Left = 24
     Height = 16
-    Top = 60
+    Top = 84
     Width = 38
     Caption = 'Напр.'
     ParentColor = False
   end
   object dxQueryGrid3: TdxQueryGrid
-    Left = 444
+    Left = 898
     Height = 90
-    Top = 516
+    Top = 688
     Width = 400
+    Anchors = [akRight, akBottom]
     AutoAdvance = aaNone
     Color = clWindow
     Columns = <>
@@ -419,18 +422,18 @@ object Form303: TdxForm
     ManualRefresh = False
   end
   object dxButton5: TdxButton
-    Left = 316
+    Left = 632
     Height = 30
-    Top = 124
+    Top = 128
     Width = 48
     Caption = 'Все >'
     TabOrder = 13
-    ActionOnClick = '<actions><action type="5" /><action type="7" expression="Block('#13#10'SETVAR(''Id'',RECID(''Акт списания'')),'#13#10'SMART_SETFIELDVALUE(''Пробы'', ''Акт списания'', GETVAR(&quot;Id&quot;), ''Запрос_Пробы1''),'#13#10''''')"/></actions>'
+    ActionOnClick = '<actions><action type="5" /><action type="7" expression="Block('#13#10'SETVAR(''Id'',RECID(''Акт списания'')),'#13#10'SMART_SETFIELDVALUE(''Пробы'', ''Акт списания'', GETVAR(&quot;Id&quot;), ''Запрос_Пробы1''),'#13#10''''')"/><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Запрос_Пробы1" keeppos="1" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Запрос_Пробы2" keeppos="1" /></actions>'
   end
   object dxLabel7: TdxLabel
     Left = 24
     Height = 16
-    Top = 96
+    Top = 120
     Width = 48
     Caption = 'Заявка'
     ParentColor = False
@@ -438,8 +441,8 @@ object Form303: TdxForm
   object dxLookupComboBox4: TdxLookupComboBox
     Left = 88
     Height = 24
-    Top = 88
-    Width = 148
+    Top = 112
+    Width = 200
     CharCase = ecNormal
     MaxLength = 0
     TabOrder = 14
@@ -460,6 +463,73 @@ object Form303: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+  end
+  object dxLabel8: TdxLabel
+    Left = 24
+    Height = 16
+    Top = 148
+    Width = 88
+    Caption = 'Даты приема'
+    ParentColor = False
+  end
+  object dxDateEdit2: TdxDateEdit
+    Left = 136
+    Height = 24
+    Top = 144
+    Width = 116
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 15
+    HideButton = False
+    CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+    OKCaption = 'OK'
+    CancelCaption = 'Cancel'
+    DateOrder = doNone
+    ButtonWidth = 24
+    Flat = True
+    NumGlyphs = 1
+    Id = 263060
+    FieldName = 'Дата1'
+    DateNow = False
+    Expression = '//[Номер]'#13#10'// ADDMONTH(SRV_DATE,-2)'
+    Required = False
+    Editable = True
+    DefaultValue = 'ADDMONTH(SRV_DATE,-2)'
+  end
+  object dxDateEdit3: TdxDateEdit
+    Left = 300
+    Height = 24
+    Top = 144
+    Width = 116
+    CharCase = ecNormal
+    MaxLength = 0
+    TabOrder = 16
+    HideButton = False
+    CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+    OKCaption = 'OK'
+    CancelCaption = 'Cancel'
+    DateOrder = doNone
+    ButtonWidth = 24
+    Flat = True
+    NumGlyphs = 1
+    Id = 263061
+    FieldName = 'Дата2'
+    DateNow = False
+    Expression = '//[Номер]'#13#10'// ADDMONTH(SRV_DATE,-1)'
+    Required = False
+    Editable = True
+    DefaultValue = 'ADDMONTH(SRV_DATE,-1)'
+  end
+  object dxLabel9: TdxLabel
+    Left = 280
+    Height = 25
+    Top = 144
+    Width = 10
+    Caption = '-'
+    Font.Height = -21
+    Font.Name = 'Verdana'
+    ParentColor = False
+    ParentFont = False
   end
   object Grid: TdxGrid
     Left = 0
@@ -510,6 +580,18 @@ object Form303: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f8568l'
+      end    
+      item
+        Tag = 263060
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263060'
+      end    
+      item
+        Tag = 263061
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263061'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

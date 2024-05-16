@@ -19,7 +19,7 @@ object Form530: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 82
+  Index = 81
   SoftCheck = False
   object dxCounter1: TdxCounter
     Left = 48
@@ -34,31 +34,6 @@ object Form530: TdxForm
     FieldName = 'Счетчик'
     Required = False
   end
-  object dxCalcEdit1: TdxCalcEdit
-    Left = 180
-    Height = 24
-    Top = 48
-    Width = 100
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 1
-    HideButton = True
-    CalculatorLayout = clNormal
-    AsInteger = 0
-    ButtonWidth = 24
-    NumGlyphs = 1
-    Flat = True
-    Id = 8614
-    FieldName = 'ID'
-    Precission = 0
-    Expression = '//[Счетчик]'#13#10'RECID(''Archiv'')'
-    Required = False
-    DefaultValue = '0'
-    Editable = False
-    NullToZero = True
-    GroupDigits = True
-    PadZeros = True
-  end
   object dxQueryGrid1: TdxQueryGrid
     Left = 20
     Height = 502
@@ -72,7 +47,7 @@ object Form530: TdxForm
     Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
     ParentDoubleBuffered = False
     ShowHint = True
-    TabOrder = 2
+    TabOrder = 1
     SelectedColor = clHighlight
     GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
@@ -99,7 +74,20 @@ object Form530: TdxForm
     Top = 180
     Width = 176
     Caption = 'Открыть документ'
+    TabOrder = 2
+  end
+  object dxRecordId1: TdxRecordId
+    Left = 880
+    Height = 24
+    Top = 4
+    Width = 100
+    ReadOnly = True
+    CharCase = ecNormal
+    MaxLength = 0
     TabOrder = 3
+    FieldName = 'ID'
+    StopTab = False
+    Id = 263045
   end
   object Grid: TdxGrid
     Left = 0
@@ -116,10 +104,10 @@ object Form530: TdxForm
         FieldName = 'f8613'
       end    
       item
-        Tag = 8614
+        Tag = 263045
         Title.Caption = ' '
         Width = 100
-        FieldName = 'f8614'
+        FieldName = 'f263045'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

@@ -1,0 +1,15 @@
+{@module
+Author=Cordek
+Version=0.1
+Description=В этом модуле содержится функция
+WEBVIEW - показывается, что сейчас база открыта через веб-сервер или нет.
+@}
+{@function
+Name=WEBVIEW
+@}
+
+function WEBVIEW(): Boolean;
+
+begin
+  Result := true;
+end;

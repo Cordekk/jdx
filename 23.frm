@@ -64,7 +64,7 @@ object Form23: TdxForm
   Tree = Tree.Owner
   Index = 3
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="ED8AA165-D098-4154-BDC2-E96B7E81EDAB" allfields="1" logfields="Field" users="User" /><action disabled="1" type="9" id="478D4C2F-AD93-440A-8F61-2A976EEC2D9E" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" numerator="№" allow_edit_number="0" datedoc="Дата счета" allow_edit_date="1" period="Год" /><action disabled="1" type="7" expression="Block('#13#10'Setvar(''org'','#13#10'NZ([Подразделение|Подразделение|Подразделение|Подразделение|Подразделение],'#13#10'NZ([Подразделение|Подразделение|Подразделение|Подразделение],'#13#10'NZ([Подразделение|Подразделение|Подразделение],'#13#10'NZ([Подразделение|Подразделение],'#13#10'[Подразделение])'#13#10')'#13#10')'#13#10')'#13#10')'#13#10')"/></actions>'
+  ActionOnCreate = '<actions><action type="9" id="ED8AA165-D098-4154-BDC2-E96B7E81EDAB" allfields="1" logfields="Field" users="User" /><action disabled="1" type="9" id="478D4C2F-AD93-440A-8F61-2A976EEC2D9E" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" numerator="№" allow_edit_number="0" datedoc="Дата счета" allow_edit_date="1" period="Год" /><action disabled="1" type="7" expression="Block('#13#10'Setvar(''org'','#13#10'NZ([Подразделение|Подразделение|Подразделение|Подразделение|Подразделение],'#13#10'NZ([Подразделение|Подразделение|Подразделение|Подразделение],'#13#10'NZ([Подразделение|Подразделение|Подразделение],'#13#10'NZ([Подразделение|Подразделение],'#13#10'[Подразделение])'#13#10')'#13#10')'#13#10')'#13#10')'#13#10')"/></actions>'
   object dxCalcEdit6: TdxCalcEdit
     Left = 180
     Height = 28
@@ -151,6 +151,7 @@ object Form23: TdxForm
     TabOrder = 22
     object dxTabSheet1: TdxTabSheet
       Caption = 'Услуги'
+      StopTab = False
       object dxGrid1: TdxGrid
         Left = 4
         Height = 222
@@ -234,6 +235,7 @@ object Form23: TdxForm
     end
     object dxTabSheet4: TdxTabSheet
       Caption = 'Связанные заявки'
+      StopTab = False
       object dxQueryGrid4: TdxQueryGrid
         Left = 0
         Height = 252
@@ -305,6 +307,7 @@ object Form23: TdxForm
     end
     object dxTabSheet2: TdxTabSheet
       Caption = 'Оплаты'
+      StopTab = False
       object dxQueryGrid3: TdxQueryGrid
         Left = 0
         Height = 72
@@ -573,6 +576,7 @@ object Form23: TdxForm
     end
     object dxTabSheet5: TdxTabSheet
       Caption = 'Файлы'
+      StopTab = False
       object dxQueryGrid9: TdxQueryGrid
         Left = 4
         Height = 214
@@ -654,7 +658,7 @@ object Form23: TdxForm
         Id = 8625
         FieldName = 'Архив'
         SourceTId = 530
-        SourceFId = 8614
+        SourceFId = 0
         Required = False
         SourceTable = 0
         DestTable = 0
@@ -671,6 +675,7 @@ object Form23: TdxForm
     end
     object dxTabSheet3: TdxTabSheet
       Caption = 'Изменения'
+      StopTab = False
       object dxQueryGrid7: TdxQueryGrid
         Left = 4
         Height = 236
@@ -1242,7 +1247,7 @@ object Form23: TdxForm
     Width = 163
     Caption = 'Сохранить'
     TabOrder = 23
-    ActionOnClick = '<actions><action type="5" /><if cond="result"><action type="3" form="Клиенты" filter="[Идентификатор]=[Клиент2]" table="" field="Долг_клиента" expression=""/><action type="3" form="Выставленные счета" filter="[Клиент2]=[Клиент2] & [Дата счета] &gt;=[Дата счета]" table="" field="Оплачен" expression=""/></if></actions>'
+    ActionOnClick = '<actions><action type="5" /><if cond="result"><action type="3" form="Клиенты" filter="[Идентификатор]=[Клиент2]" table="" field="Долг_клиента" expression=""/><action type="3" form="Выставленные счета" filter="[Клиент2]=[Клиент2] &amp; [Дата счета] &gt;=[Дата счета]" table="" field="Оплачен" expression=""/></if></actions>'
   end
   object dxCheckBox4: TdxCheckBox
     Left = 20

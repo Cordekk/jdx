@@ -58,8 +58,8 @@ object Form293: TdxForm
     Left = 21
     Height = 16
     Top = 86
-    Width = 168
-    Caption = 'Интервал обслуживания'
+    Width = 201
+    Caption = 'Интервал обслуживания (дн)'
     ParentColor = False
   end
   object dxCalcEdit1: TdxCalcEdit

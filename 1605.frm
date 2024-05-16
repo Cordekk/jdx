@@ -19,7 +19,7 @@ object Form1605: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 88
+  Index = 87
   SoftCheck = False
   object dxLabel1: TdxLabel
     Left = 8
@@ -131,6 +131,7 @@ object Form1605: TdxForm
     TabOrder = 4
     object dxTabSheet1: TdxTabSheet
       Caption = 'Шаблон хода работы'
+      StopTab = False
       object dxGrid1: TdxGrid
         Left = 4
         Height = 554
@@ -201,6 +202,7 @@ object Form1605: TdxForm
     end
     object dxTabSheet2: TdxTabSheet
       Caption = 'Исследования и оборудование'
+      StopTab = False
       object dxQueryGrid1: TdxQueryGrid
         Left = 4
         Height = 198
@@ -280,6 +282,7 @@ object Form1605: TdxForm
     end
     object dxTabSheet3: TdxTabSheet
       Caption = 'Материалы и реактивы'
+      StopTab = False
       object dxGrid2: TdxGrid
         Left = 0
         Height = 562
