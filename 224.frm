@@ -1,6 +1,6 @@
 object Form224: TdxForm
   Left = 10
-  Height = 635
+  Height = 640
   Top = 10
   Width = 1186
   Id = 224
@@ -21,13 +21,12 @@ object Form224: TdxForm
   Tree = Tree.Owner
   Index = 53
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="650D0CBE-8511-4666-AB7A-1D5DA01F4FDE" cbx="dxEdit3" /><action disabled="1" type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" condition="ROLE=''''" grid="cmp;ve_prop|dxEdit2;Видимость|dxLabel2;Видимость" stateevents="0" /><action disabled="1" type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" condition="ROLE=''''| ROLE=''Администратор''" grid="cmp;ve_prop|dxTabSheet2;Доступность" stateevents="1" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="650D0CBE-8511-4666-AB7A-1D5DA01F4FDE" cbx="dxEdit3" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE=''''| ROLE=''Администратор'' | Newrec = 1" grid="cmp;ve_prop|dxEdit2;Редактирование|dxEdit5;Редактирование|dxFile1;Видимость|dxEdit3;Редактирование|dxEdit6;Редактирование|dxLookupComboBox3;Редактирование|dxLookupComboBox2;Редактирование|dxLookupComboBox4;Редактирование|dxLookupComboBox1;Редактирование|dxEdit4;Редактирование" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE=''''| ROLE=''Администратор'' " grid="cmp;ve_prop|dxTabSheet2;Видимость" stateevents="1" /></actions>'
   object dxEdit1: TdxEdit
     Left = 32
     Height = 24
     Top = 44
     Width = 456
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 2473
@@ -44,13 +43,6 @@ object Form224: TdxForm
     Caption = 'Шаблон (название)'
     ParentColor = False
   end
-  object dxPageControl1: TdxPageControl
-    Left = 884
-    Height = 4
-    Top = 787
-    Width = 204
-    TabOrder = 1
-  end
   object dxPageControl2: TdxPageControl
     Left = 16
     Height = 536
@@ -58,7 +50,7 @@ object Form224: TdxForm
     Width = 1164
     ActivePage = dxTabSheet1
     TabIndex = 0
-    TabOrder = 2
+    TabOrder = 1
     object dxTabSheet1: TdxTabSheet
       Caption = 'Настройки шаблона'
       StopTab = False
@@ -67,7 +59,6 @@ object Form224: TdxForm
         Height = 24
         Top = 20
         Width = 388
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 0
         Id = 2474
@@ -75,7 +66,7 @@ object Form224: TdxForm
         FieldSize = 50
         Required = False
         Expression = '[Файл1]'#13#10'//GET_FILE_DESCRIPTION(''Файл1'')'
-        Editable = True
+        Editable = False
       end
       object dxLabel2: TdxLabel
         Left = 512
@@ -98,7 +89,6 @@ object Form224: TdxForm
         Height = 24
         Top = 416
         Width = 264
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
         Id = 2530
@@ -120,7 +110,6 @@ object Form224: TdxForm
         Height = 24
         Top = 416
         Width = 264
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 2
         Id = 2624
@@ -144,6 +133,7 @@ object Form224: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel5: TdxLabel
         Left = 28
@@ -158,7 +148,6 @@ object Form224: TdxForm
         Height = 24
         Top = 284
         Width = 268
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
         Id = 2625
@@ -177,6 +166,7 @@ object Form224: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel6: TdxLabel
         Left = 28
@@ -191,7 +181,6 @@ object Form224: TdxForm
         Height = 24
         Top = 64
         Width = 184
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 4
         Id = 131123
@@ -214,7 +203,6 @@ object Form224: TdxForm
         Top = 20
         Width = 393
         ReadOnly = True
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 5
         HideButton = False
@@ -238,7 +226,6 @@ object Form224: TdxForm
         Height = 24
         Top = 135
         Width = 351
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 6
         Id = 263090
@@ -260,7 +247,6 @@ object Form224: TdxForm
         Height = 24
         Top = 228
         Width = 275
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 7
         Id = 263182
@@ -279,6 +265,7 @@ object Form224: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel10: TdxLabel
         Left = 30
@@ -311,7 +298,6 @@ object Form224: TdxForm
         Height = 24
         Top = 344
         Width = 264
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 9
         Id = 263187
@@ -335,6 +321,7 @@ object Form224: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel11: TdxLabel
         Left = 32
@@ -508,7 +495,6 @@ object Form224: TdxForm
         Height = 24
         Top = 20
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 6
         HideButton = False
@@ -530,7 +516,6 @@ object Form224: TdxForm
         Height = 24
         Top = 52
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 7
         HideButton = False
@@ -555,9 +540,8 @@ object Form224: TdxForm
     Top = 16
     Width = 100
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
-    TabOrder = 3
+    TabOrder = 2
     FieldName = 'ID записи'
     StopTab = False
     Id = 263193
@@ -677,7 +661,6 @@ object Form224: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

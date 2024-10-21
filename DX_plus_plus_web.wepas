@@ -74,7 +74,7 @@ end;
 id=53B8D7C6-1DBB-4135-A8C5-F95314559221
 @}
 
-function AddRecordToForm(const FormName: String; Values: TVariantArray2d;
+function AddRecordToFormQuietly(const FormName: String; Values: TVariantArray2d;
   IgnoreAccess: Boolean; const ObjName, QueryName: String): Boolean;
 var
   i, n: Integer;

@@ -25,7 +25,6 @@ object Form6535: TdxForm
     Height = 24
     Top = 8
     Width = 376
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 130998
@@ -49,6 +48,7 @@ object Form6535: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel1: TdxLabel
     Left = 8
@@ -63,7 +63,6 @@ object Form6535: TdxForm
     Height = 24
     Top = 40
     Width = 372
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 130999
@@ -82,6 +81,7 @@ object Form6535: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel2: TdxLabel
     Left = 8
@@ -96,7 +96,6 @@ object Form6535: TdxForm
     Height = 24
     Top = 72
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     HideButton = False
@@ -128,7 +127,6 @@ object Form6535: TdxForm
     Height = 24
     Top = 104
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     HideButton = False
@@ -160,7 +158,6 @@ object Form6535: TdxForm
     Height = 24
     Top = 136
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     HideButton = False
@@ -193,7 +190,6 @@ object Form6535: TdxForm
     Height = 24
     Top = 168
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     HideButton = False
@@ -234,7 +230,6 @@ object Form6535: TdxForm
     Height = 24
     Top = 168
     Width = 76
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 131005
@@ -249,7 +244,6 @@ object Form6535: TdxForm
     Height = 24
     Top = 216
     Width = 376
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     Id = 131050
@@ -268,6 +262,7 @@ object Form6535: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel8: TdxLabel
     Left = 20
@@ -342,7 +337,6 @@ object Form6535: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

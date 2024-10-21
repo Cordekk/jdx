@@ -35,6 +35,7 @@ object Form235: TdxForm
       'Реактив'
       'Материал'
       'СИЗ'
+      'ПО'
       'Не материальные'
     )
     MaxLength = 0
@@ -68,7 +69,6 @@ object Form235: TdxForm
     Height = 24
     Top = 64
     Width = 248
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 2558
@@ -106,7 +106,6 @@ object Form235: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

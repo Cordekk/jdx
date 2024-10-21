@@ -26,7 +26,6 @@ object Form1306: TdxForm
     Height = 24
     Top = 132
     Width = 500
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 19977
@@ -50,13 +49,13 @@ object Form1306: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxEdit1: TdxEdit
     Left = 172
     Height = 24
     Top = 292
     Width = 388
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 19978
@@ -78,7 +77,6 @@ object Form1306: TdxForm
     Height = 24
     Top = 432
     Width = 320
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 20059
@@ -98,6 +96,7 @@ object Form1306: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel2: TdxLabel
     Left = 20
@@ -120,7 +119,6 @@ object Form1306: TdxForm
     Height = 24
     Top = 368
     Width = 300
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 131007
@@ -150,7 +148,6 @@ object Form1306: TdxForm
     Height = 24
     Top = 32
     Width = 504
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 263021
@@ -169,6 +166,7 @@ object Form1306: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel8: TdxLabel
     Left = 20
@@ -183,7 +181,6 @@ object Form1306: TdxForm
     Height = 24
     Top = 80
     Width = 512
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 263022
@@ -203,6 +200,7 @@ object Form1306: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel5: TdxLabel
     Left = 20
@@ -217,7 +215,6 @@ object Form1306: TdxForm
     Height = 24
     Top = 180
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     HideButton = False
@@ -248,7 +245,6 @@ object Form1306: TdxForm
     Height = 24
     Top = 216
     Width = 396
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     Id = 263024
@@ -268,6 +264,7 @@ object Form1306: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel30: TdxLabel
     Left = 20
@@ -373,7 +370,6 @@ object Form1306: TdxForm
     ParentDoubleBuffered = False
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

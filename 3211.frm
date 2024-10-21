@@ -1,8 +1,8 @@
 object Form1603: TdxForm
   Left = 10
-  Height = 907
+  Height = 786
   Top = 10
-  Width = 2280
+  Width = 1665
   Id = 3211
   PId = 0
   FormCaption = 'Просмотр исследований'
@@ -32,12 +32,14 @@ object Form1603: TdxForm
   Index = 87
   SoftCheck = False
   ActionOnCreate = '<actions><comment text="только для разработчика"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="role=''''" grid="cmp;ve_prop|dxLookupComboBox2;Редактирование|dxEdit2;Видимость|dxLabel10;Видимость|dxEdit5;Видимость|dxEdit6;Видимость|dxLabel13;Видимость|dxLabel15;Видимость|dxQueryGrid11;Видимость|dxCheckBox3;Видимость" stateevents="1" /><comment text="только для руководителя (настраиваетс в форме Сотрудники"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="DBGET(''Сотрудники'', ''Назначение исследований'', ''[!user]=user'')=1" grid="cmp;ve_prop|dxTabSheet1;Доступность" stateevents="0" /><comment text="Если нет исполнителя, то кнопки назначения не активны"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Исполнитель]&lt;&gt;null" grid="cmp;ve_prop|dxButton1;Доступность|dxButton2;Доступность|dxButton4;Доступность|dxButton3;Доступность" stateevents="0" /><comment text="непонятно зачем, всё равно каждый видит свои исследования"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="DBGET(''Сотрудники'', ''Исследования'', ''[!user]=user'')=1" grid="cmp;ve_prop|dxTabSheet3;Доступность" stateevents="0" /><comment text="видимость кнопки печать документ (кнопка 7), только при наличии шаблонов"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="0&lt;COUNT(''Шаблоны6'')" grid="cmp;ve_prop|dxButton7;Доступность" stateevents="0" /><comment text="видимость кнопки печать документ (кнопка 8), только при наличии шаблонов"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="0&lt;COUNT(''Шаблоны10'')" grid="cmp;ve_prop|dxButton8;Доступность" stateevents="0" /><comment text="чтобы редактировались исследования по кнопке"/><action type="9" id="AFB9DFCF-7996-43A1-A83A-BBCFC5A19928" queries="qry;fld;bn|Исследования принятые;;dxButton9" defact="0" /></actions>'
+  AllowResizeWindow = True
   object dxPageControl1: TdxPageControl
     Left = 4
-    Height = 882
+    Height = 772
     Top = 12
     Width = 1656
     ActivePage = dxTabSheet1
+    Anchors = [akTop, akLeft, akRight, akBottom]
     TabIndex = 0
     TabOrder = 0
     object dxTabSheet1: TdxTabSheet
@@ -45,10 +47,9 @@ object Form1603: TdxForm
       StopTab = False
       object dxQueryGrid1: TdxQueryGrid
         Left = 4
-        Height = 412
-        Top = 248
+        Height = 374
+        Top = 226
         Width = 546
-        Anchors = [akTop, akLeft, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -59,7 +60,6 @@ object Form1603: TdxForm
         ShowHint = True
         TabOrder = 1
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -97,7 +97,7 @@ object Form1603: TdxForm
       object dxLabel3: TdxLabel
         Left = 108
         Height = 16
-        Top = 214
+        Top = 198
         Width = 202
         Caption = 'Исследования в лаборатории'
         ParentColor = False
@@ -105,7 +105,7 @@ object Form1603: TdxForm
       object dxButton1: TdxButton
         Left = 414
         Height = 30
-        Top = 208
+        Top = 192
         Width = 48
         Caption = '>'
         TabOrder = 3
@@ -114,25 +114,25 @@ object Form1603: TdxForm
       object dxButton2: TdxButton
         Left = 362
         Height = 30
-        Top = 208
+        Top = 192
         Width = 48
         Caption = 'Все >'
         TabOrder = 4
         ActionOnClick = '<actions><action type="7" expression="Block('#13#10'SETVAR(''Id'',[Исполнитель]),'#13#10'SMART_SETFIELDVALUE(''Исследование'', ''Исполнитель'', GETVAR(&quot;Id&quot;), ''Исследования6''),'#13#10' QUERYUPDATE(''Исследования6''), QUERYUPDATE(''Исследования7''),'#13#10''''')"/></actions>'
       end
       object dxButton3: TdxButton
-        Left = 674
+        Left = 670
         Height = 30
-        Top = 216
+        Top = 188
         Width = 48
         Caption = '<'
         TabOrder = 5
         ActionOnClick = '<actions><action type="7" expression="Block('#13#10'SETVAR(''S'',GET(''Исследования7'', ''Идентификатор'')),'#13#10'EDITINGREC(''Исследование'', CNUM(GETVAR(&quot;S&quot;)), ''Исполнитель'', NULL'#13#10'), QUERYUPDATE(''Исследования7''), QUERYUPDATE(''Исследования6''), '''''#13#10')"/></actions>'
       end
       object dxLabel1: TdxLabel
-        Left = 804
+        Left = 800
         Height = 16
-        Top = 223
+        Top = 195
         Width = 190
         Caption = 'Исследования назначенные'
         ParentColor = False
@@ -142,7 +142,6 @@ object Form1603: TdxForm
         Height = 24
         Top = 124
         Width = 402
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 6
         Id = 52281
@@ -161,6 +160,7 @@ object Form1603: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel7: TdxLabel
         Left = 18
@@ -191,7 +191,6 @@ object Form1603: TdxForm
         Height = 24
         Top = 60
         Width = 440
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 7
         Id = 52277
@@ -210,6 +209,7 @@ object Form1603: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel4: TdxLabel
         Left = 18
@@ -224,7 +224,6 @@ object Form1603: TdxForm
         Height = 24
         Top = 24
         Width = 336
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 8
         Id = 52275
@@ -245,6 +244,7 @@ object Form1603: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel2: TdxLabel
         Left = 30
@@ -259,7 +259,6 @@ object Form1603: TdxForm
         Height = 24
         Top = 24
         Width = 344
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 9
         Id = 52274
@@ -279,6 +278,7 @@ object Form1603: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel8: TdxLabel
         Left = 426
@@ -293,7 +293,6 @@ object Form1603: TdxForm
         Height = 24
         Top = 161
         Width = 395
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 11
         Id = 130977
@@ -303,9 +302,9 @@ object Form1603: TdxForm
         Editable = True
       end
       object dxButton4: TdxButton
-        Left = 730
+        Left = 726
         Height = 30
-        Top = 216
+        Top = 188
         Width = 48
         Caption = 'Все <'
         TabOrder = 12
@@ -316,7 +315,6 @@ object Form1603: TdxForm
         Height = 24
         Top = 4
         Width = 236
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 13
         Id = 131029
@@ -338,7 +336,6 @@ object Form1603: TdxForm
         Height = 24
         Top = 136
         Width = 580
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 14
         Id = 131053
@@ -368,7 +365,6 @@ object Form1603: TdxForm
         Height = 24
         Top = 36
         Width = 236
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 15
         Id = 262321
@@ -378,11 +374,10 @@ object Form1603: TdxForm
         Editable = False
       end
       object dxQueryGrid7: TdxQueryGrid
-        Left = 12
-        Height = 155
-        Top = 692
+        Left = 8
+        Height = 117
+        Top = 624
         Width = 536
-        Anchors = [akTop, akLeft, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -393,7 +388,6 @@ object Form1603: TdxForm
         ShowHint = True
         TabOrder = 17
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -413,19 +407,18 @@ object Form1603: TdxForm
         ManualRefresh = False
       end
       object dxLabel11: TdxLabel
-        Left = 192
+        Left = 172
         Height = 16
-        Top = 672
+        Top = 608
         Width = 195
         Caption = 'Загруженность сотрудников'
         ParentColor = False
       end
       object dxQueryGrid10: TdxQueryGrid
-        Left = 952
-        Height = 72
-        Top = 752
+        Left = 944
+        Height = 68
+        Top = 660
         Width = 296
-        Anchors = [akTop, akLeft, akRight, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -436,7 +429,6 @@ object Form1603: TdxForm
         ShowHint = True
         TabOrder = 18
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -456,11 +448,10 @@ object Form1603: TdxForm
         ManualRefresh = False
       end
       object dxButton7: TdxButton
-        Left = 688
-        Height = 26
-        Top = 772
+        Left = 652
+        Height = 32
+        Top = 680
         Width = 264
-        Anchors = [akTop, akLeft, akRight, akBottom]
         Caption = 'Печать документа'
         Glyph.Data = {
           C6070000424DC607000000000000360000002800000016000000160000000100
@@ -531,7 +522,7 @@ object Form1603: TdxForm
         ActionOnClick = '<actions><action type="7" expression="BLOCK(setvar(''текущие образцы'',MERGE(''Исследования7'', ''Образец_Идентификатор'', '';'')),'#13#10'setfield(''Печать направления'',1)'#13#10')"/><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Пробы для направления" keeppos="0" /><action type="2" template="" expression="GET(''Шаблоны6'', ''Файл'')" outfile="" fileaction="1" saverecord="1"/><action type="7" expression="BLOCK(setvar(''текущие образцы'',null),'#13#10'setfield(''Печать направления'',0)'#13#10')"/></actions>'
       end
       object dxQueryGrid11: TdxQueryGrid
-        Left = 1368
+        Left = 1316
         Height = 384
         Top = 276
         Width = 272
@@ -545,7 +536,6 @@ object Form1603: TdxForm
         ShowHint = True
         TabOrder = 20
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -581,11 +571,10 @@ object Form1603: TdxForm
         DefaultValue = '0'
       end
       object dxQueryGrid2: TdxQueryGrid
-        Left = 560
-        Height = 472
-        Top = 252
-        Width = 1040
-        Anchors = [akTop, akLeft, akBottom]
+        Left = 556
+        Height = 432
+        Top = 224
+        Width = 1080
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -596,7 +585,6 @@ object Form1603: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -640,10 +628,9 @@ object Form1603: TdxForm
       StopTab = False
       object dxQueryGrid13: TdxQueryGrid
         Left = 372
-        Height = 431
+        Height = 393
         Top = 161
         Width = 920
-        Anchors = [akTop, akLeft, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -654,7 +641,6 @@ object Form1603: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -688,7 +674,6 @@ object Form1603: TdxForm
         ShowHint = True
         TabOrder = 2
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -709,10 +694,9 @@ object Form1603: TdxForm
       end
       object dxButton8: TdxButton
         Left = 456
-        Height = 26
-        Top = 604
+        Height = 36
+        Top = 580
         Width = 264
-        Anchors = [akTop, akLeft, akRight, akBottom]
         Caption = 'Печать документа'
         Glyph.Data = {
           C6070000424DC607000000000000360000002800000016000000160000000100
@@ -780,14 +764,13 @@ object Form1603: TdxForm
           00000000000000000000
         }
         TabOrder = 3
-        ActionOnClick = '<actions><action disabled="1" type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" disabled="1" disabled="1" qry="Пробы для направления1" keeppos="0" /><action type="2" template="" expression="GET(''Шаблоны10'', ''Файл'')" outfile="" fileaction="1" saverecord="0"/><action disabled="1" type="7" expression="Setfield(''Дата завершения'', null)"/></actions>'
+        ActionOnClick = '<actions><action disabled="1" type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" qry="Пробы для направления1" keeppos="0" /><action type="2" template="" expression="GET(''Шаблоны10'', ''Файл'')" outfile="" fileaction="1" saverecord="0"/><action disabled="1" type="7" expression="Setfield(''Дата завершения'', null)"/></actions>'
       end
       object dxQueryGrid15: TdxQueryGrid
-        Left = 780
-        Height = 104
-        Top = 600
-        Width = 284
-        Anchors = [akTop, akLeft, akRight, akBottom]
+        Left = 760
+        Height = 84
+        Top = 568
+        Width = 300
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -798,7 +781,6 @@ object Form1603: TdxForm
         ShowHint = True
         TabOrder = 4
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -819,10 +801,9 @@ object Form1603: TdxForm
       end
       object dxQueryGrid16: TdxQueryGrid
         Left = 0
-        Height = 492
+        Height = 528
         Top = 28
         Width = 368
-        Anchors = [akTop, akLeft, akRight, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -833,7 +814,6 @@ object Form1603: TdxForm
         ShowHint = True
         TabOrder = 5
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -863,7 +843,7 @@ object Form1603: TdxForm
       object dxLabel29: TdxLabel
         Left = 15
         Height = 16
-        Top = 551
+        Top = 567
         Width = 331
         Caption = 'Если проба старая, поставьте дату завершения'
         ParentColor = False
@@ -871,9 +851,8 @@ object Form1603: TdxForm
       object dxDateEdit5: TdxDateEdit
         Left = 17
         Height = 24
-        Top = 577
+        Top = 593
         Width = 119
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 7
         HideButton = False
@@ -907,7 +886,6 @@ object Form1603: TdxForm
         Height = 24
         Top = 4
         Width = 344
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 0
         Id = 262724
@@ -929,11 +907,12 @@ object Form1603: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel17: TdxLabel
-        Left = 92
+        Left = 104
         Height = 18
-        Top = 104
+        Top = 86
         Width = 237
         Caption = 'Исследования назначенные'
         Font.Height = -16
@@ -943,10 +922,9 @@ object Form1603: TdxForm
       end
       object dxQueryGrid5: TdxQueryGrid
         Left = 12
-        Height = 690
-        Top = 142
+        Height = 596
+        Top = 122
         Width = 443
-        Anchors = [akTop, akLeft, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -957,7 +935,6 @@ object Form1603: TdxForm
         ShowHint = True
         TabOrder = 1
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -977,9 +954,9 @@ object Form1603: TdxForm
         ManualRefresh = False
       end
       object dxLabel18: TdxLabel
-        Left = 504
+        Left = 536
         Height = 18
-        Top = 100
+        Top = 86
         Width = 205
         Caption = 'Исследования принятые'
         Font.Height = -16
@@ -989,10 +966,9 @@ object Form1603: TdxForm
       end
       object dxQueryGrid8: TdxQueryGrid
         Left = 460
-        Height = 688
-        Top = 144
+        Height = 596
+        Top = 122
         Width = 455
-        Anchors = [akTop, akLeft, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -1003,7 +979,6 @@ object Form1603: TdxForm
         ShowHint = True
         TabOrder = 3
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1025,7 +1000,7 @@ object Form1603: TdxForm
       object dxLabel19: TdxLabel
         Left = 422
         Height = 16
-        Top = 48
+        Top = 44
         Width = 78
         Caption = 'Показатель'
         ParentColor = False
@@ -1035,7 +1010,6 @@ object Form1603: TdxForm
         Height = 24
         Top = 44
         Width = 400
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 5
         Id = 262725
@@ -1054,6 +1028,7 @@ object Form1603: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel22: TdxLabel
         Left = 38
@@ -1068,7 +1043,6 @@ object Form1603: TdxForm
         Height = 24
         Top = 44
         Width = 236
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 6
         Id = 262726
@@ -1078,19 +1052,21 @@ object Form1603: TdxForm
         Editable = True
       end
       object dxLabel23: TdxLabel
-        Left = 1046
-        Height = 16
-        Top = 122
-        Width = 194
+        Left = 1044
+        Height = 18
+        Top = 86
+        Width = 238
         Caption = 'Исследования на доработке'
+        Font.Height = -16
+        Font.Name = 'Verdana'
         ParentColor = False
+        ParentFont = False
       end
       object dxQueryGrid9: TdxQueryGrid
         Left = 920
-        Height = 680
-        Top = 144
+        Height = 596
+        Top = 122
         Width = 392
-        Anchors = [akTop, akLeft, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -1101,7 +1077,6 @@ object Form1603: TdxForm
         ShowHint = True
         TabOrder = 7
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1123,7 +1098,7 @@ object Form1603: TdxForm
       object dxButton5: TdxButton
         Left = 350
         Height = 30
-        Top = 96
+        Top = 86
         Width = 48
         Caption = 'Все >'
         TabOrder = 9
@@ -1132,7 +1107,7 @@ object Form1603: TdxForm
       object dxButton6: TdxButton
         Left = 402
         Height = 30
-        Top = 96
+        Top = 86
         Width = 48
         Caption = '>'
         TabOrder = 10
@@ -1141,7 +1116,7 @@ object Form1603: TdxForm
       object dxLabel26: TdxLabel
         Left = 1295
         Height = 16
-        Top = 77
+        Top = 44
         Width = 46
         Caption = 'С даты'
         ParentColor = False
@@ -1149,9 +1124,8 @@ object Form1603: TdxForm
       object dxDateEdit3: TdxDateEdit
         Left = 1352
         Height = 24
-        Top = 69
+        Top = 44
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 11
         HideButton = False
@@ -1172,7 +1146,7 @@ object Form1603: TdxForm
       object dxLabel27: TdxLabel
         Left = 1490
         Height = 16
-        Top = 77
+        Top = 44
         Width = 16
         Caption = 'по'
         ParentColor = False
@@ -1180,9 +1154,8 @@ object Form1603: TdxForm
       object dxDateEdit4: TdxDateEdit
         Left = 1516
         Height = 24
-        Top = 69
+        Top = 44
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 12
         HideButton = False
@@ -1202,10 +1175,9 @@ object Form1603: TdxForm
       end
       object dxQueryGrid12: TdxQueryGrid
         Left = 1320
-        Height = 680
-        Top = 140
+        Height = 596
+        Top = 122
         Width = 380
-        Anchors = [akTop, akLeft, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -1216,7 +1188,6 @@ object Form1603: TdxForm
         ShowHint = True
         TabOrder = 13
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1238,7 +1209,7 @@ object Form1603: TdxForm
       object dxButton9: TdxButton
         Left = 860
         Height = 30
-        Top = 108
+        Top = 86
         Width = 44
         Caption = 'Ред.'
         TabOrder = 15
@@ -1247,11 +1218,22 @@ object Form1603: TdxForm
       object dxButton10: TdxButton
         Left = 775
         Height = 30
-        Top = 108
+        Top = 86
         Width = 76
         Caption = 'Печать'
         TabOrder = 16
         ActionOnClick = '<actions><action type="3" form="Исследование" filter="[Идентификатор]=GET(''Исследования принятые'', ''Идентификатор'')" table="" field="Методика из ОА" expression="Block('#13#10'CLICKBUTTONF(''dxButton7''),'#13#10'[Методика из ОА]'#13#10')"/></actions>'
+      end
+      object dxLabel30: TdxLabel
+        Left = 1404
+        Height = 18
+        Top = 86
+        Width = 240
+        Caption = 'Исследования выполненные'
+        Font.Height = -16
+        Font.Name = 'Verdana'
+        ParentColor = False
+        ParentFont = False
       end
     end
     object dxTabSheet2: TdxTabSheet
@@ -1259,10 +1241,9 @@ object Form1603: TdxForm
       StopTab = False
       object dxQueryGrid3: TdxQueryGrid
         Left = 0
-        Height = 772
+        Height = 672
         Top = 76
         Width = 616
-        Anchors = [akTop, akLeft, akRight, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -1273,7 +1254,6 @@ object Form1603: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1293,11 +1273,10 @@ object Form1603: TdxForm
         ManualRefresh = True
       end
       object dxEdit1: TdxEdit
-        Left = 96
+        Left = 106
         Height = 24
         Top = 16
         Width = 260
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
         Id = 52357
@@ -1308,18 +1287,20 @@ object Form1603: TdxForm
       end
       object dxLabel9: TdxLabel
         Left = 8
-        Height = 16
+        Height = 18
         Top = 20
-        Width = 78
+        Width = 96
         Caption = 'Поиск проб'
+        Font.Height = -16
+        Font.Name = 'Verdana'
         ParentColor = False
+        ParentFont = False
       end
       object dxQueryGrid4: TdxQueryGrid
         Left = 616
-        Height = 260
-        Top = 80
+        Height = 222
+        Top = 76
         Width = 1024
-        Anchors = [akTop, akLeft, akRight, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -1330,7 +1311,6 @@ object Form1603: TdxForm
         ShowHint = True
         TabOrder = 2
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1351,10 +1331,9 @@ object Form1603: TdxForm
       end
       object dxQueryGrid6: TdxQueryGrid
         Left = 616
-        Height = 476
-        Top = 368
-        Width = 1028
-        Anchors = [akTop, akLeft, akRight, akBottom]
+        Height = 408
+        Top = 336
+        Width = 1020
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -1365,7 +1344,6 @@ object Form1603: TdxForm
         ShowHint = True
         TabOrder = 3
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1387,9 +1365,12 @@ object Form1603: TdxForm
       object dxCheckBox2: TdxCheckBox
         Left = 960
         Height = 23
-        Top = 344
+        Top = 308
         Width = 120
         Caption = 'Показать все'
+        Font.Height = -16
+        Font.Name = 'Verdana'
+        ParentFont = False
         TabOrder = 4
         ValueChecked = '1'
         ValueUnchecked = '0'
@@ -1402,27 +1383,36 @@ object Form1603: TdxForm
       end
       object dxLabel20: TdxLabel
         Left = 784
-        Height = 16
-        Top = 348
-        Width = 97
+        Height = 18
+        Top = 312
+        Width = 120
         Caption = 'Исследования'
+        Font.Height = -16
+        Font.Name = 'Verdana'
         ParentColor = False
+        ParentFont = False
       end
       object dxLabel21: TdxLabel
-        Left = 716
-        Height = 16
+        Left = 784
+        Height = 18
         Top = 60
-        Width = 59
+        Width = 74
         Caption = 'Образцы'
+        Font.Height = -16
+        Font.Name = 'Verdana'
         ParentColor = False
+        ParentFont = False
       end
       object dxLabel14: TdxLabel
-        Left = 108
-        Height = 16
+        Left = 111
+        Height = 18
         Top = 56
-        Width = 134
+        Width = 167
         Caption = 'Пробы лаборатории'
+        Font.Height = -16
+        Font.Name = 'Verdana'
         ParentColor = False
+        ParentFont = False
       end
       object dxLabel15: TdxLabel
         Left = 1072
@@ -1437,7 +1427,6 @@ object Form1603: TdxForm
         Height = 24
         Top = 20
         Width = 200
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 6
         Id = 262322
@@ -1451,7 +1440,6 @@ object Form1603: TdxForm
         Height = 24
         Top = 13
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 7
         HideButton = False
@@ -1490,7 +1478,6 @@ object Form1603: TdxForm
         Height = 24
         Top = 13
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 8
         HideButton = False
@@ -1662,7 +1649,6 @@ object Form1603: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

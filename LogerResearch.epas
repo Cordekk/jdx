@@ -334,8 +334,8 @@ begin
     ConfigFm.Open;
     if ConfigFm['флажок_изменение'] then
       dxLoger[n].Fm.OnBeforeEdit :=@EditRecord;
-    if ConfigFm['Флажок_создание'] then
-      dxLoger[n].Fm.OnBeforeInsert :=@AddRecord;
+   { if ConfigFm['Флажок_создание'] then
+      dxLoger[n].Fm.OnBeforeInsert :=@AddRecord; } //уберу пока создание (добавление) исследований из лога
     if ConfigFm['Флажок_удаление'] then
       dxLoger[n].Fm.OnBeforeDelete := @DeleteRecord;
     if ConfigFm['флажок_дублирование'] then

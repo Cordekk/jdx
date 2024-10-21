@@ -34,7 +34,6 @@ object Form6534: TdxForm
     Height = 24
     Top = 76
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 130989
@@ -53,6 +52,7 @@ object Form6534: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel2: TdxLabel
     Left = 236
@@ -67,7 +67,6 @@ object Form6534: TdxForm
     Height = 24
     Top = 20
     Width = 336
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 130990
@@ -86,13 +85,13 @@ object Form6534: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxCalcEdit1: TdxCalcEdit
     Left = 12
     Height = 24
     Top = 76
     Width = 172
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     HideButton = False
@@ -115,7 +114,6 @@ object Form6534: TdxForm
     Height = 24
     Top = 200
     Width = 360
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 130992
@@ -134,6 +132,7 @@ object Form6534: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel3: TdxLabel
     Left = 12
@@ -148,7 +147,6 @@ object Form6534: TdxForm
     Height = 24
     Top = 268
     Width = 356
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 130993
@@ -161,7 +159,6 @@ object Form6534: TdxForm
     Height = 24
     Top = 304
     Width = 356
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 130994
@@ -190,7 +187,6 @@ object Form6534: TdxForm
     Height = 24
     Top = 116
     Width = 96
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 130995
@@ -343,7 +339,6 @@ object Form6534: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

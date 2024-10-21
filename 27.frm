@@ -21,12 +21,12 @@ object Form27: TdxForm
   Tree = Tree.Owner
   Index = 34
   SoftCheck = False
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' |   ROLE=''Администратор'' | Newrec = 1" grid="cmp;ve_prop|dxEdit1;Редактирование|dxLookupComboBox1;Редактирование|dxEdit3;Редактирование|dxEdit4;Редактирование" stateevents="1" /></actions>'
   object dxEdit1: TdxEdit
     Left = 8
     Height = 28
     Top = 24
     Width = 584
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 100
@@ -40,7 +40,6 @@ object Form27: TdxForm
     Height = 28
     Top = 88
     Width = 588
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 105
@@ -64,6 +63,7 @@ object Form27: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel1: TdxLabel
     Left = 16
@@ -94,7 +94,6 @@ object Form27: TdxForm
     Height = 28
     Top = 168
     Width = 576
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 262476
@@ -108,7 +107,6 @@ object Form27: TdxForm
     Height = 28
     Top = 216
     Width = 576
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 262704
@@ -123,7 +121,6 @@ object Form27: TdxForm
     Top = 280
     Width = 79
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     FieldName = 'ID'
@@ -177,7 +174,6 @@ object Form27: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

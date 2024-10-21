@@ -33,7 +33,6 @@ object Form1606: TdxForm
     Height = 24
     Top = 184
     Width = 428
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 26116
@@ -52,6 +51,7 @@ object Form1606: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel2: TdxLabel
     Left = 4
@@ -91,7 +91,6 @@ object Form1606: TdxForm
     Height = 24
     Top = 364
     Width = 288
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 26118
@@ -113,7 +112,6 @@ object Form1606: TdxForm
     Height = 24
     Top = 420
     Width = 296
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 26119
@@ -143,7 +141,6 @@ object Form1606: TdxForm
     Height = 24
     Top = 44
     Width = 396
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 26126
@@ -167,13 +164,13 @@ object Form1606: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxCalcEdit1: TdxCalcEdit
     Left = 146
     Height = 24
     Top = 460
     Width = 148
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     HideButton = False
@@ -204,7 +201,6 @@ object Form1606: TdxForm
     Height = 24
     Top = 492
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 26128
@@ -223,6 +219,7 @@ object Form1606: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel12: TdxLabel
     Left = 8
@@ -277,7 +274,6 @@ object Form1606: TdxForm
     Height = 24
     Top = 528
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     HideButton = False
@@ -342,7 +338,6 @@ object Form1606: TdxForm
     Height = 24
     Top = 120
     Width = 96
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 12
     HideButton = False
@@ -383,7 +378,6 @@ object Form1606: TdxForm
     Height = 24
     Top = 360
     Width = 220
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 13
     Id = 131051
@@ -413,6 +407,7 @@ object Form1606: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxCheckBox3: TdxCheckBox
     Left = 200
@@ -436,7 +431,6 @@ object Form1606: TdxForm
     Top = 4
     Width = 96
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 15
     Id = 131065
@@ -448,7 +442,6 @@ object Form1606: TdxForm
     Height = 24
     Top = 4
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 16
     Id = 131066
@@ -471,7 +464,6 @@ object Form1606: TdxForm
     Height = 24
     Top = 224
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 17
     HideButton = False
@@ -495,7 +487,6 @@ object Form1606: TdxForm
     Height = 24
     Top = 592
     Width = 368
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 18
     Id = 263064
@@ -517,7 +508,6 @@ object Form1606: TdxForm
     Height = 24
     Top = 392
     Width = 248
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 19
     Id = 263065
@@ -539,7 +529,6 @@ object Form1606: TdxForm
     Height = 24
     Top = 644
     Width = 296
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 20
     Id = 263067
@@ -558,13 +547,13 @@ object Form1606: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxObjectField3: TdxObjectField
     Left = 16
     Height = 24
     Top = 708
     Width = 304
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 21
     Id = 263068
@@ -609,7 +598,6 @@ object Form1606: TdxForm
     Height = 24
     Top = 736
     Width = 304
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 23
     Id = 263070
@@ -790,7 +778,6 @@ object Form1606: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

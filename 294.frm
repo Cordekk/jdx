@@ -29,26 +29,11 @@ object Form294: TdxForm
     Caption = 'Адрес'
     ParentColor = False
   end
-  object dxEdit1: TdxEdit
-    Left = 12
-    Height = 24
-    Top = 72
-    Width = 620
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 0
-    Id = 7276
-    FieldName = 'Адрес'
-    FieldSize = 150
-    Required = False
-    Editable = False
-  end
   object dxCalcEdit1: TdxCalcEdit
-    Left = 32
+    Left = 20
     Height = 24
-    Top = 136
+    Top = 268
     Width = 132
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     HideButton = False
@@ -71,7 +56,7 @@ object Form294: TdxForm
   object dxMemo1: TdxMemo
     Left = 16
     Height = 100
-    Top = 240
+    Top = 160
     Width = 576
     ScrollBars = ssBoth
     TabOrder = 2
@@ -88,10 +73,27 @@ object Form294: TdxForm
   object dxLabel2: TdxLabel
     Left = 24
     Height = 16
-    Top = 216
+    Top = 136
     Width = 148
     Caption = 'Право собственности'
     ParentColor = False
+  end
+  object dxEdit1: TdxMemo
+    Left = 12
+    Height = 84
+    Top = 48
+    Width = 620
+    ScrollBars = ssBoth
+    TabOrder = 0
+    Id = 7276
+    FieldName = 'Адрес'
+    FieldSize = 1000
+    Required = False
+    SourceTId = 0
+    SourceFId = 0
+    Delimiter = ', '
+    Editable = False
+    UpdateTree = False
   end
   object Grid: TdxGrid
     Left = 0
@@ -128,7 +130,6 @@ object Form294: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

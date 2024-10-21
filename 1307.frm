@@ -25,7 +25,6 @@ object Form1307: TdxForm
     Height = 24
     Top = 24
     Width = 284
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 19991
@@ -44,13 +43,13 @@ object Form1307: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxCalcEdit1: TdxCalcEdit
     Left = 24
     Height = 24
     Top = 80
     Width = 156
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     HideButton = False
@@ -75,7 +74,6 @@ object Form1307: TdxForm
     Height = 24
     Top = 140
     Width = 60
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 19993
@@ -95,6 +93,7 @@ object Form1307: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object Grid: TdxGrid
     Left = 0
@@ -130,7 +129,6 @@ object Form1307: TdxForm
     ParentDoubleBuffered = False
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

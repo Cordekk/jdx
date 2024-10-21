@@ -36,7 +36,6 @@ object Form83: TdxForm
     Height = 24
     Top = 84
     Width = 304
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 422
@@ -61,13 +60,13 @@ object Form83: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxObjectField1: TdxObjectField
     Left = 8
     Height = 24
     Top = 180
     Width = 304
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 423
@@ -80,7 +79,6 @@ object Form83: TdxForm
     Height = 24
     Top = 256
     Width = 304
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 424
@@ -93,7 +91,6 @@ object Form83: TdxForm
     Height = 24
     Top = 216
     Width = 304
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 425
@@ -122,7 +119,6 @@ object Form83: TdxForm
     Height = 24
     Top = 32
     Width = 304
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 455
@@ -141,6 +137,7 @@ object Form83: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxComboBox1: TdxComboBox
     Left = 8
@@ -218,7 +215,6 @@ object Form83: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

@@ -26,7 +26,6 @@ object Form236: TdxForm
     Height = 24
     Top = 60
     Width = 368
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 2584
@@ -45,6 +44,7 @@ object Form236: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel1: TdxLabel
     Left = 20
@@ -59,7 +59,6 @@ object Form236: TdxForm
     Height = 24
     Top = 92
     Width = 372
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 2585
@@ -83,6 +82,7 @@ object Form236: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel2: TdxLabel
     Left = 20
@@ -97,7 +97,6 @@ object Form236: TdxForm
     Height = 24
     Top = 124
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     HideButton = False
@@ -128,7 +127,6 @@ object Form236: TdxForm
     Height = 24
     Top = 156
     Width = 372
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 2587
@@ -148,6 +146,7 @@ object Form236: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel4: TdxLabel
     Left = 20
@@ -198,7 +197,6 @@ object Form236: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

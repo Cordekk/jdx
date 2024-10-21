@@ -1,17 +1,17 @@
 object Form104: TdxForm
   Left = 10
-  Height = 806
+  Height = 863
   Top = 10
-  Width = 842
+  Width = 871
   Id = 104
   PId = 0
   FormCaption = 'Помещения'
-  FormGroup = 'ТМЦ'
+  FormGroup = 'Лаборатория'
   Font.Height = -13
   Font.Name = 'Verdana'
   AutoOpen = True
   ViewType = vtGridOnly
-  ParentField = 0
+  ParentField = 7236
   LevelCount = 5
   Grid = Grid.Owner
   ShowScrollBars = True
@@ -25,8 +25,7 @@ object Form104: TdxForm
     Left = 8
     Height = 24
     Top = 80
-    Width = 764
-    CharCase = ecNormal
+    Width = 660
     MaxLength = 0
     TabOrder = 0
     Id = 1829
@@ -48,7 +47,6 @@ object Form104: TdxForm
     Height = 24
     Top = 308
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     HideButton = False
@@ -87,8 +85,7 @@ object Form104: TdxForm
     Left = 8
     Height = 24
     Top = 28
-    Width = 764
-    CharCase = ecNormal
+    Width = 620
     MaxLength = 0
     TabOrder = 2
     Id = 1831
@@ -112,13 +109,13 @@ object Form104: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxCalcEdit2: TdxCalcEdit
     Left = 40
     Height = 24
     Top = 408
     Width = 68
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     HideButton = False
@@ -130,6 +127,7 @@ object Form104: TdxForm
     Id = 1832
     FieldName = 'МинТемп'
     Precission = 1
+    Expression = 'BLOCK('#13#10'IIF([МаксТемп]=null,Setfield(''МаксТемп'',MINIF(''Методики в помещении'', ''МаксТемп'', ''[МаксТемп]<>null'')),''''),'#13#10'IIF([МинДавление]=null,Setfield(''МинДавление'',MAXIF(''Методики в помещении'', ''МинДавление'', ''[МинДавление]<>null'')),''''),'#13#10'IIF([МаксДавление]=null,Setfield(''МаксДавление'',MINIF(''Методики в помещении'', ''МаксДавление'', ''[МаксДавление]<>null'')),''''),'#13#10'IIF([МинВлажн]=null,Setfield(''МинВлажн'',MAXIF(''Методики в помещении'', ''МинВлажн'', ''[МинВлажн]<>null'')),''''),'#13#10'IIF([МаксВлажн]=null,Setfield(''МаксВлажн'',MINIF(''Методики в помещении'', ''МаксВлажн'', ''[МаксВлажн]<>null'')),''''),'#13#10'IIF([НапряжениеМин]=null,Setfield(''НапряжениеМин'',MAXIF(''Методики в помещении'', ''НапряжениеМин'', ''[НапряжениеМин]<>null'')),''''),'#13#10'IIF([НапряжениеМакс]=null,Setfield(''НапряжениеМакс'',MINIF(''Методики в помещении'', ''НапряжениеМакс'', ''[НапряжениеМакс]<>null'')),''''),'#13#10'IIF([ЧастотаМин]=null,Setfield(''ЧастотаМин'',MAXIF(''Методики в помещении'', ''ЧастотаМин'', ''[ЧастотаМин]<>null'')),''''),'#13#10'IIF([ЧастотаМакс]=null,Setfield(''ЧастотаМакс'',MINIF(''Методики в помещении'', ''ЧастотаМакс'', ''[ЧастотаМакс]<>null'')),''''),'#13#10'IIF([МинТемп]=null,MAXIF(''Методики в помещении'', ''МинТемп'',''[МинТемп]<>null''),[МинТемп])'#13#10')'
     Required = False
     Editable = False
     NullToZero = False
@@ -141,7 +139,6 @@ object Form104: TdxForm
     Height = 24
     Top = 408
     Width = 64
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     HideButton = False
@@ -164,7 +161,6 @@ object Form104: TdxForm
     Height = 24
     Top = 408
     Width = 59
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     HideButton = False
@@ -203,7 +199,6 @@ object Form104: TdxForm
     Height = 24
     Top = 408
     Width = 56
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     HideButton = False
@@ -234,7 +229,6 @@ object Form104: TdxForm
     Height = 24
     Top = 408
     Width = 56
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     HideButton = False
@@ -257,7 +251,6 @@ object Form104: TdxForm
     Height = 24
     Top = 408
     Width = 52
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     HideButton = False
@@ -288,7 +281,6 @@ object Form104: TdxForm
     Height = 24
     Top = 272
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     Id = 7235
@@ -317,8 +309,7 @@ object Form104: TdxForm
     Left = 8
     Height = 24
     Top = 128
-    Width = 756
-    CharCase = ecNormal
+    Width = 656
     MaxLength = 0
     TabOrder = 10
     Id = 7236
@@ -337,6 +328,7 @@ object Form104: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel10: TdxLabel
     Left = 40
@@ -351,7 +343,6 @@ object Form104: TdxForm
     Height = 24
     Top = 464
     Width = 72
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 11
     HideButton = False
@@ -374,7 +365,6 @@ object Form104: TdxForm
     Height = 24
     Top = 464
     Width = 60
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 12
     HideButton = False
@@ -397,7 +387,6 @@ object Form104: TdxForm
     Height = 24
     Top = 464
     Width = 60
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 13
     HideButton = False
@@ -428,7 +417,6 @@ object Form104: TdxForm
     Height = 24
     Top = 464
     Width = 60
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 14
     HideButton = False
@@ -451,7 +439,6 @@ object Form104: TdxForm
     Height = 24
     Top = 184
     Width = 760
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 15
     Id = 7277
@@ -471,6 +458,7 @@ object Form104: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel12: TdxLabel
     Left = 8
@@ -480,55 +468,13 @@ object Form104: TdxForm
     Caption = 'Адрес'
     ParentColor = False
   end
-  object dxQueryGrid1: TdxQueryGrid
-    Left = 8
-    Height = 266
-    Top = 532
-    Width = 444
-    AutoAdvance = aaNone
-    Color = clWindow
-    Columns = <>
-    DefaultRowHeight = 20
-    DoubleBuffered = True
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
-    ParentDoubleBuffered = False
-    ShowHint = True
-    TabOrder = 16
-    SelectedColor = clHighlight
-    GridLineStyle = psSolid
-    SelectedTextColor = clHighlightText
-    InactiveSelectedColor = clSilver
-    InactiveSelectedTextColor = clBlack
-    ShowButtons = False
-    VisibleButtons = []
-    VisibleCaptions = []
-    FlatButtons = False
-    ButtonsColor = clBtnFace
-    ButtonSize = 25
-    ButtonFont.Height = -9
-    ButtonFont.Name = 'Verdana'
-    AlignmentButtons = taLeftJustify
-    HideButtonsWhenLostFocus = False
-    WordWrap = False
-    AllowChangeSort = False
-    Id = 350
-    ManualRefresh = False
-  end
-  object dxLabel13: TdxLabel
-    Left = 60
-    Height = 16
-    Top = 500
-    Width = 125
-    Caption = 'ТМЦ в помещении'
-    ParentColor = False
-  end
   object dxMemo1: TdxMemo
     Left = 252
     Height = 80
     Top = 292
     Width = 512
     ScrollBars = ssBoth
-    TabOrder = 17
+    TabOrder = 16
     Id = 7279
     FieldName = 'Дополнительно'
     FieldSize = 300
@@ -547,47 +493,6 @@ object Form104: TdxForm
     Caption = 'Оснащение списком'
     ParentColor = False
   end
-  object dxGrid1: TdxGrid
-    Left = 492
-    Height = 238
-    Top = 468
-    Width = 308
-    AutoAdvance = aaNone
-    Color = clWindow
-    Columns = <>
-    DefaultRowHeight = 20
-    DoubleBuffered = True
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
-    ParentDoubleBuffered = False
-    ShowHint = True
-    TabOrder = 18
-    SelectedColor = clHighlight
-    GridLineStyle = psSolid
-    SelectedTextColor = clHighlightText
-    InactiveSelectedColor = clSilver
-    InactiveSelectedTextColor = clBlack
-    ShowButtons = True
-    VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnMoveUp, gbnMoveDown]
-    VisibleCaptions = []
-    FlatButtons = True
-    ButtonsColor = clBtnFace
-    ButtonSize = 25
-    ButtonFont.Height = -13
-    ButtonFont.Name = 'Verdana'
-    AlignmentButtons = taLeftJustify
-    HideButtonsWhenLostFocus = False
-    WordWrap = False
-    AllowChangeSort = False
-    Id = 298
-  end
-  object dxLabel15: TdxLabel
-    Left = 636
-    Height = 16
-    Top = 452
-    Width = 147
-    Caption = 'Оснащение таблицей'
-    ParentColor = False
-  end
   object dxComboBox1: TdxComboBox
     Left = 264
     Height = 24
@@ -601,7 +506,7 @@ object Form104: TdxForm
       'Приспособленное'
     )
     MaxLength = 0
-    TabOrder = 20
+    TabOrder = 17
     Id = 7338
     FieldName = 'Спец'
     SourceTId = 0
@@ -618,44 +523,213 @@ object Form104: TdxForm
     Caption = 'Специальное или приспособленное'
     ParentColor = False
   end
-  object dxLabel17: TdxLabel
-    Left = 216
-    Height = 16
-    Top = 508
-    Width = 49
-    Caption = 'Фильтр'
-    ParentColor = False
-  end
-  object dxLookupComboBox4: TdxLookupComboBox
-    Left = 280
+  object dxRecordId1: TdxRecordId
+    Left = 696
     Height = 24
-    Top = 504
-    Width = 128
-    CharCase = ecNormal
+    Top = 0
+    Width = 100
+    ReadOnly = True
     MaxLength = 0
+    TabOrder = 18
+    FieldName = 'ID'
+    StopTab = False
+    Id = 263078
+  end
+  object dxButton1: TdxButton
+    Left = 416
+    Height = 20
+    Top = 152
+    Width = 256
+    Caption = 'переместить оборудование выше'
+    TabOrder = 19
+    ActionOnClick = '<actions><action type="7" expression="SMART_SETFIELDVALUE(''ТМЦ'',''Место установки или хранения'',[Помещение],''ТМЦ в помещении'')"/></actions>'
+  end
+  object dxPageControl1: TdxPageControl
+    Left = 4
+    Height = 296
+    Top = 508
+    Width = 856
+    ActivePage = dxTabSheet3
+    TabIndex = 0
+    TabOrder = 20
+    object dxTabSheet3: TdxTabSheet
+      Caption = 'Оснащение помещения'
+      StopTab = False
+      object dxLabel15: TdxLabel
+        Left = 320
+        Height = 16
+        Top = 8
+        Width = 147
+        Caption = 'Оснащение таблицей'
+        ParentColor = False
+      end
+      object dxGrid1: TdxGrid
+        Left = 24
+        Height = 228
+        Top = 32
+        Width = 684
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 0
+        SelectedColor = clHighlight
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = True
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnMoveUp, gbnMoveDown]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -13
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 298
+      end
+    end
+    object dxTabSheet1: TdxTabSheet
+      Caption = 'ТМЦ в помещении'
+      StopTab = False
+      object dxLabel17: TdxLabel
+        Left = 216
+        Height = 16
+        Top = 4
+        Width = 49
+        Caption = 'Фильтр'
+        ParentColor = False
+      end
+      object dxLookupComboBox4: TdxLookupComboBox
+        Left = 280
+        Height = 24
+        Top = 0
+        Width = 128
+        MaxLength = 0
+        TabOrder = 0
+        Id = 262403
+        FieldName = 'Тип'
+        SourceTId = 235
+        SourceFId = 2558
+        Required = False
+        SourceTable = 0
+        DestTable = 0
+        PromptFillTable = False
+        ClearTableBeforeFill = False
+        Editable = True
+        ListFields = <>
+        DropDownCount = 8
+        ListWidthExtra = 0
+        HideList = False
+        HideButton = False
+        UpdateTree = False
+        ListSource = 0
+      end
+      object dxQueryGrid1: TdxQueryGrid
+        Left = 8
+        Height = 236
+        Top = 28
+        Width = 796
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 1
+        SelectedColor = clHighlight
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = False
+        VisibleButtons = []
+        VisibleCaptions = []
+        FlatButtons = False
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -9
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 350
+        ManualRefresh = False
+      end
+    end
+    object dxTabSheet2: TdxTabSheet
+      Caption = 'Методики в помещении'
+      StopTab = False
+      object dxQueryGrid2: TdxQueryGrid
+        Left = 19
+        Height = 231
+        Top = 13
+        Width = 805
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 0
+        SelectedColor = clHighlight
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = False
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -13
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 3030
+        ManualRefresh = False
+      end
+      object dxLabel13: TdxLabel
+        Left = 60
+        Height = 16
+        Top = 248
+        Width = 347
+        Caption = 'Через эту таблицу добавлять записи не следует!!'
+        Font.Color = clRed
+        Font.Height = -13
+        Font.Name = 'Verdana'
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+  end
+  object dxButton5: TdxButton
+    Left = 432
+    Height = 22
+    Top = 824
+    Width = 68
+    Caption = 'Печатать'
     TabOrder = 21
-    Id = 262403
-    FieldName = 'Тип'
-    SourceTId = 235
-    SourceFId = 2558
-    Required = False
-    SourceTable = 0
-    DestTable = 0
-    PromptFillTable = False
-    ClearTableBeforeFill = False
-    Editable = True
-    ListFields = <>
-    DropDownCount = 8
-    ListWidthExtra = 0
-    HideList = False
-    HideButton = False
-    UpdateTree = False
+    ActionOnClick = '<actions><action type="2" template="" expression="GET(''Печать ТМЦ1'', ''Файл'')" outfile="" fileaction="1" saverecord="1"/></actions>'
   end
   object dxQueryGrid6: TdxQueryGrid
     Left = 532
-    Height = 86
-    Top = 712
-    Width = 260
+    Height = 72
+    Top = 802
+    Width = 324
     AutoAdvance = aaNone
     Color = clWindow
     Columns = <>
@@ -666,7 +740,6 @@ object Form104: TdxForm
     ShowHint = True
     TabOrder = 22
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -684,28 +757,6 @@ object Form104: TdxForm
     AllowChangeSort = False
     Id = 2925
     ManualRefresh = False
-  end
-  object dxButton5: TdxButton
-    Left = 452
-    Height = 30
-    Top = 736
-    Width = 80
-    Caption = 'Печатать'
-    TabOrder = 23
-    ActionOnClick = '<actions><action type="2" template="" expression="GET(''Печать ТМЦ1'', ''Файл'')" outfile="" fileaction="1" saverecord="1"/></actions>'
-  end
-  object dxRecordId1: TdxRecordId
-    Left = 792
-    Height = 24
-    Top = 776
-    Width = 100
-    ReadOnly = True
-    CharCase = ecNormal
-    MaxLength = 0
-    TabOrder = 24
-    FieldName = 'ID'
-    StopTab = False
-    Id = 263078
   end
   object Grid: TdxGrid
     Left = 0
@@ -844,7 +895,6 @@ object Form104: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -875,7 +925,15 @@ object Form104: TdxForm
     ReadOnly = True
     RowSelect = True
     Options = [tvoAllowMultiselect, tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoRowSelect, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips]
-    Fields = <>
+    Fields = <    
+      item
+        FieldId = 1831
+        FieldSource = tfsForm
+      end    
+      item
+        FieldId = 7236
+        FieldSource = tfsForm
+      end>
     ExpandLevels = 0
   end
 end

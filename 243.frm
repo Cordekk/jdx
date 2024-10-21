@@ -39,7 +39,6 @@ object Form243: TdxForm
     ShowHint = True
     TabOrder = 0
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -63,7 +62,6 @@ object Form243: TdxForm
     Height = 24
     Top = 12
     Width = 196
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 7274
@@ -82,6 +80,7 @@ object Form243: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxQueryGrid2: TdxQueryGrid
     Left = 692
@@ -98,7 +97,6 @@ object Form243: TdxForm
     ShowHint = True
     TabOrder = 2
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -214,7 +212,6 @@ object Form243: TdxForm
     ShowHint = True
     TabOrder = 4
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -256,7 +253,6 @@ object Form243: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

@@ -37,7 +37,6 @@ object Form237: TdxForm
     Height = 24
     Top = 4
     Width = 116
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     HideButton = False
@@ -89,7 +88,6 @@ object Form237: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -145,7 +143,6 @@ object Form237: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -183,7 +180,6 @@ object Form237: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -221,7 +217,6 @@ object Form237: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -259,7 +254,6 @@ object Form237: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -293,7 +287,6 @@ object Form237: TdxForm
     Height = 24
     Top = 28
     Width = 216
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 8247
@@ -312,6 +305,7 @@ object Form237: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object Grid: TdxGrid
     Left = 0
@@ -342,7 +336,6 @@ object Form237: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

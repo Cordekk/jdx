@@ -27,7 +27,6 @@ object Form28: TdxForm
     Height = 28
     Top = 44
     Width = 620
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 101
@@ -41,7 +40,6 @@ object Form28: TdxForm
     Height = 28
     Top = 88
     Width = 104
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 1799
@@ -72,7 +70,6 @@ object Form28: TdxForm
     Height = 28
     Top = 84
     Width = 140
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     HideButton = False
@@ -116,7 +113,6 @@ object Form28: TdxForm
         Height = 28
         Top = 101
         Width = 300
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 0
         Id = 262443
@@ -236,7 +232,6 @@ object Form28: TdxForm
         Height = 28
         Top = 337
         Width = 80
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 6
         HideButton = False
@@ -288,7 +283,6 @@ object Form28: TdxForm
         Height = 28
         Top = 81
         Width = 300
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 0
         Id = 262661
@@ -432,7 +426,6 @@ object Form28: TdxForm
         Height = 28
         Top = 369
         Width = 80
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 7
         HideButton = False
@@ -460,7 +453,6 @@ object Form28: TdxForm
         Height = 28
         Top = 81
         Width = 300
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 0
         Id = 262454
@@ -580,7 +572,6 @@ object Form28: TdxForm
         Height = 28
         Top = 369
         Width = 80
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 6
         HideButton = False
@@ -650,7 +641,6 @@ object Form28: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -696,7 +686,6 @@ object Form28: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -796,7 +785,6 @@ object Form28: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -851,7 +839,6 @@ object Form28: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -993,7 +980,6 @@ object Form28: TdxForm
     Height = 28
     Top = 4
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 262974
@@ -1280,7 +1266,6 @@ object Form28: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

@@ -65,7 +65,6 @@ object Form56: TdxForm
     Height = 24
     Top = 88
     Width = 612
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 263146
@@ -125,7 +124,6 @@ object Form56: TdxForm
     Height = 24
     Top = 152
     Width = 708
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 263148
@@ -181,7 +179,6 @@ object Form56: TdxForm
     Height = 24
     Top = 288
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 263151
@@ -252,7 +249,6 @@ object Form56: TdxForm
     ParentDoubleBuffered = False
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

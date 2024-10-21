@@ -1,0 +1,30 @@
+{@module
+Author=YurAnt
+Version=1.0
+Description= Берет текущую дату и время с сервера
+@}
+
+{@function
+Name=SRV_TIME
+@}
+
+function SRV_TIME:TDateTime;
+var qSQL:TdxSQLQuery;
+begin
+qSQL:= Session.sqlSelect('select CURRENT_TIME from rdb$database');
+Result:=qSQL.AsDt['CURRENT_TIME'];
+qSQL.Free;
+end;
+
+{@function
+Name=SRV_DATE
+@}
+
+function SRV_DATE:TDateTime;
+var qSQL:TdxSQLQuery;
+begin
+qSQL:=Session.sqlSelect('select CURRENT_DATE from rdb$database');
+Result:=qSQL.AsDt['CURRENT_DATE'];
+qSQL.Free;
+end;
+

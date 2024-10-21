@@ -21,12 +21,12 @@ object Form110: TdxForm
   Tree = Tree.Owner
   Index = 0
   SoftCheck = False
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE=''''| ROLE=''Администратор'' | Newrec =1" grid="cmp;ve_prop|dxEdit3;Редактирование|dxEdit1;Редактирование|dxEdit2;Редактирование|dxCheckBox1;Редактирование|dxComboBox1;Редактирование" stateevents="1" /></actions>'
   object dxEdit1: TdxEdit
     Left = 28
     Height = 24
     Top = 52
     Width = 428
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 1861
@@ -40,7 +40,6 @@ object Form110: TdxForm
     Height = 24
     Top = 116
     Width = 436
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 1862
@@ -117,7 +116,6 @@ object Form110: TdxForm
     Height = 24
     Top = 272
     Width = 440
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 131042
@@ -175,7 +173,6 @@ object Form110: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

@@ -26,7 +26,6 @@ object Form34: TdxForm
     Height = 28
     Top = 16
     Width = 276
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 128
@@ -40,7 +39,6 @@ object Form34: TdxForm
     Height = 28
     Top = 200
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     HideButton = False
@@ -89,7 +87,6 @@ object Form34: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

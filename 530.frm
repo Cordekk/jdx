@@ -27,7 +27,6 @@ object Form530: TdxForm
     Top = 48
     Width = 100
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 8613
@@ -49,7 +48,6 @@ object Form530: TdxForm
     ShowHint = True
     TabOrder = 1
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -82,7 +80,6 @@ object Form530: TdxForm
     Top = 4
     Width = 100
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     FieldName = 'ID'
@@ -118,7 +115,6 @@ object Form530: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

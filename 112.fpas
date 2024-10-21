@@ -84,25 +84,9 @@ end;
 end;
 
 
-procedure Create9 (Sender: TObject);
-
-begin
-  Self.Edit;
-  while not Self.EOF do //для редактирования всех документов по очереди
-  begin
-    Self.Params['Текст_put']:= Self.Ass['Описание']; // скопировали текст
-    self.Validate;
-    Self.Post; //сохраняем, чтобы сработала запись в Мемо
-    Self.MoveNext; //для перехода на следующую запись
-    Self.Edit;
-  end;
-   end;
-
-
 procedure Form_Create;
 begin
   dxButton11.OnClick := @TASKFORALL; // назначение задачи группе исполнителей
   dxButton9.OnClick := @TASK; // назначение задаи одному исполнителю
   dxQueryGrid9.OnAfterScroll:=@dxQueryGrid1OnAfterScroll; // Указать номер запроса!! открытие приложенных файлов
-  //dxButton13.OnClick := @Create9;
   end;

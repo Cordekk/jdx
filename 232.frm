@@ -25,7 +25,6 @@ object Form232: TdxForm
     Height = 24
     Top = 192
     Width = 536
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 2541
@@ -44,13 +43,13 @@ object Form232: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxEdit1: TdxEdit
     Left = 36
     Height = 24
     Top = 444
     Width = 532
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 2542
@@ -64,7 +63,6 @@ object Form232: TdxForm
     Height = 24
     Top = 52
     Width = 544
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 262628
@@ -84,13 +82,13 @@ object Form232: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLookupComboBox3: TdxLookupComboBox
     Left = 28
     Height = 24
     Top = 112
     Width = 544
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 262629
@@ -110,6 +108,7 @@ object Form232: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel1: TdxLabel
     Left = 28
@@ -156,7 +155,6 @@ object Form232: TdxForm
     Height = 24
     Top = 511
     Width = 638
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 262773
@@ -181,6 +179,7 @@ object Form232: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel7: TdxLabel
     Left = 32
@@ -195,7 +194,6 @@ object Form232: TdxForm
     Height = 24
     Top = 12
     Width = 88
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 262774
@@ -217,7 +215,6 @@ object Form232: TdxForm
     Height = 24
     Top = 288
     Width = 396
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 262775
@@ -252,6 +249,7 @@ object Form232: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel30: TdxLabel
     Left = 32
@@ -293,7 +291,6 @@ object Form232: TdxForm
     Height = 24
     Top = 720
     Width = 228
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     Id = 262972
@@ -306,7 +303,6 @@ object Form232: TdxForm
     Height = 24
     Top = 248
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     HideButton = False
@@ -402,7 +398,6 @@ object Form232: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

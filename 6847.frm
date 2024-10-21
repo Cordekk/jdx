@@ -27,7 +27,6 @@ object Form14: TdxForm
     Height = 24
     Top = 776
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 20
     HideButton = False
@@ -53,7 +52,6 @@ object Form14: TdxForm
     Top = 4
     Width = 84
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 262503
@@ -65,7 +63,6 @@ object Form14: TdxForm
     Height = 24
     Top = 0
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 262504
@@ -97,7 +94,6 @@ object Form14: TdxForm
     Height = 24
     Top = 40
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     HideButton = True
@@ -121,7 +117,6 @@ object Form14: TdxForm
     Height = 24
     Top = 40
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     HideButton = True
@@ -146,7 +141,6 @@ object Form14: TdxForm
     Height = 24
     Top = 4
     Width = 304
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 262507
@@ -167,13 +161,13 @@ object Form14: TdxForm
     HideList = False
     HideButton = True
     UpdateTree = False
+    ListSource = 0
   end
   object dxLookupComboBox5: TdxLookupComboBox
     Left = 532
     Height = 24
     Top = 36
     Width = 304
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 262508
@@ -198,6 +192,7 @@ object Form14: TdxForm
     HideList = False
     HideButton = True
     UpdateTree = False
+    ListSource = 0
   end
   object dxButton1: TdxButton
     Left = 792
@@ -289,7 +284,6 @@ object Form14: TdxForm
     Height = 24
     Top = 80
     Width = 132
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     Id = 262511
@@ -313,6 +307,7 @@ object Form14: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel4: TdxLabel
     Left = 8
@@ -327,7 +322,6 @@ object Form14: TdxForm
     Height = 24
     Top = 135
     Width = 607
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     Id = 262520
@@ -349,7 +343,6 @@ object Form14: TdxForm
     Height = 24
     Top = 167
     Width = 607
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     Id = 262521
@@ -371,7 +364,6 @@ object Form14: TdxForm
     Height = 24
     Top = 199
     Width = 607
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 10
     Id = 262522
@@ -391,6 +383,7 @@ object Form14: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel7: TdxLabel
     Left = 28
@@ -436,7 +429,6 @@ object Form14: TdxForm
     Height = 24
     Top = 299
     Width = 607
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 12
     HideButton = False
@@ -468,7 +460,6 @@ object Form14: TdxForm
     Height = 24
     Top = 330
     Width = 607
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 13
     HideButton = False
@@ -532,7 +523,6 @@ object Form14: TdxForm
     Height = 24
     Top = 394
     Width = 607
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 15
     HideButton = False
@@ -565,7 +555,6 @@ object Form14: TdxForm
     Height = 24
     Top = 426
     Width = 607
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 16
     HideButton = False
@@ -608,7 +597,6 @@ object Form14: TdxForm
     ShowHint = True
     TabOrder = 17
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -649,7 +637,6 @@ object Form14: TdxForm
     Height = 24
     Top = 231
     Width = 607
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 19
     Id = 262534
@@ -678,13 +665,13 @@ object Form14: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLookupComboBox6: TdxLookupComboBox
     Left = 272
     Height = 24
     Top = 484
     Width = 356
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 21
     Id = 262548
@@ -719,6 +706,7 @@ object Form14: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel15: TdxLabel
     Left = 104
@@ -880,7 +868,6 @@ object Form14: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

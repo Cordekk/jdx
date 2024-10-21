@@ -2,7 +2,7 @@ object Form103: TdxForm
   Left = 10
   Height = 602
   Top = 10
-  Width = 498
+  Width = 506
   Id = 103
   PId = 0
   FormCaption = 'Проверка ТМЦ'
@@ -21,13 +21,13 @@ object Form103: TdxForm
   Tree = Tree.Owner
   Index = 41
   SoftCheck = False
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE=''''| ROLE=''Администратор''" grid="cmp;ve_prop|dxLookupComboBox3;Редактирование" stateevents="1" /></actions>'
   object dxCounter1: TdxCounter
     Left = 36
     Height = 24
     Top = 8
     Width = 80
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 2494
@@ -39,7 +39,6 @@ object Form103: TdxForm
     Height = 24
     Top = 256
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     HideButton = False
@@ -61,7 +60,6 @@ object Form103: TdxForm
     Height = 24
     Top = 376
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     HideButton = False
@@ -84,7 +82,6 @@ object Form103: TdxForm
     Height = 24
     Top = 188
     Width = 412
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 2515
@@ -103,6 +100,7 @@ object Form103: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxComboBox1: TdxComboBox
     Left = 36
@@ -157,7 +155,6 @@ object Form103: TdxForm
     Height = 24
     Top = 316
     Width = 432
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 2517
@@ -187,7 +184,6 @@ object Form103: TdxForm
     Height = 24
     Top = 12
     Width = 284
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 2518
@@ -208,6 +204,7 @@ object Form103: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel6: TdxLabel
     Left = 56
@@ -254,14 +251,13 @@ object Form103: TdxForm
     Left = 132
     Height = 24
     Top = 56
-    Width = 100
-    CharCase = ecNormal
+    Width = 352
     MaxLength = 0
     TabOrder = 8
     Id = 7254
     FieldName = 'тмц'
     SourceTId = 102
-    SourceFId = 2496
+    SourceFId = 7260
     Required = False
     SourceTable = 0
     DestTable = 0
@@ -279,6 +275,7 @@ object Form103: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel9: TdxLabel
     Left = 76
@@ -359,7 +356,6 @@ object Form103: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

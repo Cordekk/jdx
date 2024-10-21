@@ -52,7 +52,6 @@ object Form33: TdxForm
     Height = 28
     Top = 176
     Width = 328
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 116
@@ -67,7 +66,6 @@ object Form33: TdxForm
     Height = 28
     Top = 12
     Width = 220
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 117
@@ -81,7 +79,6 @@ object Form33: TdxForm
     Height = 28
     Top = 60
     Width = 212
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 118
@@ -95,7 +92,6 @@ object Form33: TdxForm
     Height = 28
     Top = 104
     Width = 216
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 119
@@ -109,7 +105,6 @@ object Form33: TdxForm
     Height = 28
     Top = 252
     Width = 332
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 120
@@ -147,7 +142,6 @@ object Form33: TdxForm
     Height = 28
     Top = 320
     Width = 332
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 1841
@@ -284,7 +278,6 @@ object Form33: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

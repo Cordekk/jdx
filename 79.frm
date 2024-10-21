@@ -1,6 +1,6 @@
 object Form40: TdxForm
   Left = 10
-  Height = 413
+  Height = 597
   Top = 10
   Width = 866
   Id = 79
@@ -29,7 +29,6 @@ object Form40: TdxForm
     Height = 24
     Top = 36
     Width = 420
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 400
@@ -44,7 +43,6 @@ object Form40: TdxForm
     Height = 24
     Top = 8
     Width = 56
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 401
@@ -64,7 +62,6 @@ object Form40: TdxForm
     Height = 24
     Top = 36
     Width = 316
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 402
@@ -85,6 +82,7 @@ object Form40: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel2: TdxLabel
     Left = 80
@@ -96,8 +94,8 @@ object Form40: TdxForm
   end
   object dxMemo1: TdxMemo
     Left = 12
-    Height = 240
-    Top = 88
+    Height = 244
+    Top = 180
     Width = 420
     ScrollBars = ssBoth
     TabOrder = 3
@@ -113,9 +111,9 @@ object Form40: TdxForm
     UpdateTree = False
   end
   object dxCheckBox1: TdxCheckBox
-    Left = 502
+    Left = 500
     Height = 16
-    Top = 344
+    Top = 348
     Width = 152
     Caption = 'Проблема решена'
     TabOrder = 4
@@ -130,17 +128,17 @@ object Form40: TdxForm
     DefaultValue = '0'
   end
   object dxLabel3: TdxLabel
-    Left = 104
+    Left = 20
     Height = 16
-    Top = 64
+    Top = 156
     Width = 137
     Caption = 'Описание проблемы'
     ParentColor = False
   end
   object dxMemo2: TdxMemo
-    Left = 502
+    Left = 498
     Height = 124
-    Top = 100
+    Top = 204
     Width = 312
     ScrollBars = ssBoth
     TabOrder = 5
@@ -156,27 +154,26 @@ object Form40: TdxForm
     UpdateTree = False
   end
   object dxLabel4: TdxLabel
-    Left = 502
+    Left = 498
     Height = 16
-    Top = 76
+    Top = 180
     Width = 130
     Caption = 'Решение проблемы'
     ParentColor = False
   end
   object dxLabel5: TdxLabel
-    Left = 502
+    Left = 498
     Height = 16
-    Top = 252
+    Top = 108
     Width = 180
     Caption = 'Ответственный сотрудник'
     ParentColor = False
   end
   object dxLookupComboBox2: TdxLookupComboBox
-    Left = 502
+    Left = 498
     Height = 24
-    Top = 284
+    Top = 140
     Width = 316
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 406
@@ -195,14 +192,14 @@ object Form40: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxFile1: TdxFile
     Left = 100
     Height = 24
-    Top = 340
+    Top = 428
     Width = 332
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     HideButton = False
@@ -217,7 +214,7 @@ object Form40: TdxForm
   object dxLabel6: TdxLabel
     Left = 12
     Height = 16
-    Top = 344
+    Top = 432
     Width = 84
     Caption = 'Приложение'
     ParentColor = False
@@ -227,7 +224,6 @@ object Form40: TdxForm
     Height = 24
     Top = 8
     Width = 124
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     HideButton = False
@@ -257,7 +253,7 @@ object Form40: TdxForm
   object dxLabel8: TdxLabel
     Left = 20
     Height = 16
-    Top = 376
+    Top = 464
     Width = 33
     Caption = 'Срок'
     ParentColor = False
@@ -265,9 +261,8 @@ object Form40: TdxForm
   object dxDateEdit2: TdxDateEdit
     Left = 96
     Height = 24
-    Top = 372
+    Top = 460
     Width = 128
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     HideButton = False
@@ -284,6 +279,44 @@ object Form40: TdxForm
     Expression = 'ADDDAY([Дата],3)'
     Required = False
     Editable = True
+  end
+  object dxLabel9: TdxLabel
+    Left = 16
+    Height = 16
+    Top = 72
+    Width = 139
+    Caption = 'Программа и версия'
+    ParentColor = False
+  end
+  object dxLookupComboBox3: TdxLookupComboBox
+    Left = 12
+    Height = 24
+    Top = 104
+    Width = 416
+    MaxLength = 0
+    TabOrder = 10
+    Id = 263226
+    FieldName = 'Программа'
+    SourceTId = 102
+    SourceFId = 7260
+    Required = False
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Editable = False
+    ListFields = <    
+      item
+        FieldId = 2499
+        Width = 100
+        Searchable = True
+      end>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = False
+    UpdateTree = False
+    ListSource = 0
   end
   object Grid: TdxGrid
     Left = 0
@@ -353,6 +386,12 @@ object Form40: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f2449'
+      end    
+      item
+        Tag = 263226
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263226l'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
@@ -363,7 +402,6 @@ object Form40: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

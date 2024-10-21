@@ -2,14 +2,14 @@ object Form32: TdxForm
   Left = 10
   Height = 578
   Top = 10
-  Width = 719
+  Width = 803
   Id = 6856
   PId = 0
   FormCaption = 'Эксперимент с запросом'
   Font.Height = -13
   Font.Name = 'Verdana'
   AutoOpen = True
-  ViewType = vtGridOnly
+  ViewType = vtSimpleForm
   ParentField = 0
   LevelCount = 5
   Grid = Grid.Owner
@@ -22,11 +22,10 @@ object Form32: TdxForm
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton1" fields="fl|Оборудование" /></actions>'
   object dxLookupComboBox16: TdxLookupComboBox
-    Left = 119
+    Left = 75
     Height = 24
-    Top = 72
+    Top = 108
     Width = 372
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 262695
@@ -51,28 +50,29 @@ object Form32: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel29: TdxLabel
-    Left = 119
+    Left = 75
     Height = 16
-    Top = 108
+    Top = 144
     Width = 98
     Caption = 'Оборудование'
     ParentColor = False
   end
   object dxButton1: TdxButton
-    Left = 451
+    Left = 407
     Height = 30
-    Top = 104
+    Top = 140
     Width = 36
     Caption = '+'
     TabOrder = 1
     ActionOnClick = '<actions><action type="7" expression="IIF([Оборудование]=null,'''','#13#10'Block('#13#10'setfield('#13#10'''Выбранное оборудование'', NZ([Выбранное оборудование],'' '')+'#13#10'NZ([Оборудование|Наименование ТМЦ]+'' зав №''+  [Оборудование|Заводской (серийный) №] + ''; '','''')'#13#10'),'#13#10'setfield(''Оборудование'',null)'#13#10')'#13#10')"/></actions>'
   end
   object dxMemo2: TdxMemo
-    Left = 119
+    Left = 75
     Height = 100
-    Top = 136
+    Top = 172
     Width = 376
     ScrollBars = ssBoth
     TabOrder = 2
@@ -101,7 +101,6 @@ object Form32: TdxForm
     ShowHint = True
     TabOrder = 3
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -124,7 +123,7 @@ object Form32: TdxForm
     Left = 64
     Height = 88
     Top = 452
-    Width = 251
+    Width = 335
     Anchors = [akTop, akLeft, akRight, akBottom]
     AutoAdvance = aaNone
     Color = clWindow
@@ -136,7 +135,6 @@ object Form32: TdxForm
     ShowHint = True
     TabOrder = 4
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -159,7 +157,7 @@ object Form32: TdxForm
     Left = 332
     Height = 30
     Top = 476
-    Width = 224
+    Width = 308
     Anchors = [akTop, akLeft, akRight, akBottom]
     Caption = 'Печать документа'
     Glyph.Data = {
@@ -230,6 +228,110 @@ object Form32: TdxForm
     TabOrder = 5
     ActionOnClick = '<actions><action type="2" template="" expression="GET(''Шаблоны7'', ''Файл'')" outfile="" fileaction="1" saverecord="1"/><action type="10" title="!!!" message="" msgtype="0" exprmsg="result" buttons="1;0;0;0;0;0;0;0;0;0;0"/></actions>'
   end
+  object dxCalcEdit1: TdxCalcEdit
+    Left = 480
+    Height = 24
+    Top = 191
+    Width = 88
+    MaxLength = 0
+    TabOrder = 6
+    HideButton = False
+    CalculatorLayout = clNormal
+    AsInteger = 0
+    ButtonWidth = 24
+    NumGlyphs = 1
+    Flat = True
+    Id = 263206
+    FieldName = 'Число'
+    Precission = 5
+    Expression = 'CNUM([Выбранное оборудование])'
+    Required = False
+    DefaultValue = '0'
+    Editable = False
+    NullToZero = True
+    GroupDigits = True
+    PadZeros = True
+  end
+  object dxButton5: TdxButton
+    Left = 204
+    Height = 30
+    Top = 12
+    Width = 260
+    Caption = 'Заполнить оборудование'
+    TabOrder = 7
+    ActionOnClick = '<actions><action type="9" id="53B8D7C6-1DBB-4135-A8C5-F95314559221" form="Анализная карта" values="field;expr|Исполнитель;1" ignoreaccess="1" obj="Анализная карта" qry="" /><action disabled="1" type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" form="Анализная карта" values="field;expr|Исполнитель;[Исполнитель]" ignoreaccess="1" obj="Анализная карта" qry="" /></actions>'
+  end
+  object dxLabel5: TdxLabel
+    Left = 8
+    Height = 16
+    Top = 45
+    Width = 87
+    Caption = 'Исполнитель'
+    ParentColor = False
+  end
+  object dxLookupComboBox5: TdxLookupComboBox
+    Left = 132
+    Height = 24
+    Top = 41
+    Width = 612
+    MaxLength = 0
+    TabOrder = 8
+    Id = 263224
+    FieldName = 'Исполнитель'
+    SourceTId = 24
+    SourceFId = 87
+    Required = False
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Editable = False
+    ListFields = <>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = True
+    UpdateTree = False
+    ListSource = 0
+  end
+  object dxLabel27: TdxLabel
+    Left = 0
+    Height = 16
+    Top = 76
+    Width = 116
+    Caption = 'Анализная карта'
+    ParentColor = False
+  end
+  object dxLookupComboBox15: TdxLookupComboBox
+    Left = 128
+    Height = 24
+    Top = 72
+    Width = 172
+    MaxLength = 0
+    TabOrder = 9
+    Id = 263225
+    FieldName = 'Анализная карта'
+    SourceTId = 1839
+    SourceFId = 28728
+    Required = False
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Editable = True
+    ListFields = <    
+      item
+        FieldId = 52286
+        Width = 100
+        Searchable = False
+      end>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = False
+    UpdateTree = False
+    ListSource = 0
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 150
@@ -249,6 +351,24 @@ object Form32: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262696'
+      end    
+      item
+        Tag = 263206
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263206'
+      end    
+      item
+        Tag = 263224
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263224l'
+      end    
+      item
+        Tag = 263225
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263225l'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
@@ -259,7 +379,6 @@ object Form32: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

@@ -26,7 +26,6 @@ object Form48: TdxForm
     Height = 24
     Top = 36
     Width = 386
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 263032
@@ -55,6 +54,7 @@ object Form48: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel1: TdxLabel
     Left = 12
@@ -69,7 +69,6 @@ object Form48: TdxForm
     Height = 24
     Top = 152
     Width = 52
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     HideButton = False
@@ -92,7 +91,6 @@ object Form48: TdxForm
     Height = 24
     Top = 152
     Width = 64
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     HideButton = False
@@ -115,7 +113,6 @@ object Form48: TdxForm
     Height = 24
     Top = 152
     Width = 56
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     HideButton = False
@@ -154,7 +151,6 @@ object Form48: TdxForm
     Height = 24
     Top = 152
     Width = 52
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     HideButton = False
@@ -185,7 +181,6 @@ object Form48: TdxForm
     Height = 24
     Top = 152
     Width = 56
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     HideButton = False
@@ -216,7 +211,6 @@ object Form48: TdxForm
     Height = 24
     Top = 220
     Width = 72
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     HideButton = False
@@ -239,7 +233,6 @@ object Form48: TdxForm
     Height = 24
     Top = 220
     Width = 72
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     HideButton = False
@@ -262,7 +255,6 @@ object Form48: TdxForm
     Height = 24
     Top = 220
     Width = 60
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     HideButton = False
@@ -293,7 +285,6 @@ object Form48: TdxForm
     Height = 24
     Top = 220
     Width = 60
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     HideButton = False
@@ -324,7 +315,6 @@ object Form48: TdxForm
     Height = 24
     Top = 152
     Width = 52
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 10
     HideButton = False
@@ -341,6 +331,15 @@ object Form48: TdxForm
     NullToZero = False
     GroupDigits = True
     PadZeros = True
+  end
+  object dxButton1: TdxButton
+    Left = 240
+    Height = 30
+    Top = 72
+    Width = 275
+    Caption = 'Заполнить требования из помещения'
+    TabOrder = 11
+    ActionOnClick = '<actions><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|МаксВлажн;[Помещение&amp;00A6МаксВлажн]|МаксДавление;[Помещение&amp;00A6МаксДавление]|МаксТемп;[Помещение&amp;00A6МаксТемп]|МинВлажн;[Помещение&amp;00A6МинВлажн]|МинДавление;[Помещение&amp;00A6МинДавление]|МинТемп;[Помещение&amp;00A6МинТемп]|НапряжениеМакс;[Помещение&amp;00A6НапряжениеМакс]|НапряжениеМин;[Помещение&amp;00A6НапряжениеМин]|ЧастотаМакс;[Помещение&amp;00A6ЧастотаМакс]|ЧастотаМин;[Помещение&amp;00A6ЧастотаМин]" ignoreaccess="0" saverec="0" /></actions>'
   end
   object Grid: TdxGrid
     Left = 0
@@ -425,7 +424,6 @@ object Form48: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

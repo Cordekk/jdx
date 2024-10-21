@@ -25,7 +25,6 @@ object Form501: TdxForm
     Height = 24
     Top = 204
     Width = 404
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 8427
@@ -44,6 +43,7 @@ object Form501: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel1: TdxLabel
     Left = 20
@@ -58,7 +58,6 @@ object Form501: TdxForm
     Height = 24
     Top = 236
     Width = 404
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 8428
@@ -78,6 +77,7 @@ object Form501: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel2: TdxLabel
     Left = 20
@@ -92,7 +92,6 @@ object Form501: TdxForm
     Height = 24
     Top = 268
     Width = 404
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 8429
@@ -113,7 +112,6 @@ object Form501: TdxForm
     Height = 24
     Top = 300
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     HideButton = False
@@ -145,7 +143,6 @@ object Form501: TdxForm
     Height = 24
     Top = 96
     Width = 396
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 8432
@@ -166,6 +163,7 @@ object Form501: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel6: TdxLabel
     Left = 20
@@ -180,7 +178,6 @@ object Form501: TdxForm
     Height = 24
     Top = 128
     Width = 396
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 8433
@@ -201,6 +198,7 @@ object Form501: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel7: TdxLabel
     Left = 20
@@ -223,7 +221,6 @@ object Form501: TdxForm
     Height = 24
     Top = 376
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     HideButton = False
@@ -264,7 +261,6 @@ object Form501: TdxForm
     Height = 24
     Top = 408
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     HideButton = False
@@ -357,7 +353,6 @@ object Form501: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

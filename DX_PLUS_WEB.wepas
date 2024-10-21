@@ -1,6 +1,6 @@
 {@module
 Author=DataExpress
-Version=1.72.1 изменения в изменениях группы записей
+Version=1.73.1
 HomePage=https://forum.mydataexpress.ru/viewtopic.php?f=16&t=3295
 Description=Множество полезных вещей. Веб-версия.
 @}
@@ -184,7 +184,7 @@ begin
     ArfArr[n] := Arf;
   end;
 
-  Self.GotoForm(FormName, Fm.RecId, False);
+  Self.GotoForm(FormName, Fm.RecId, gtoDefault);
   Result := False;
 end;
 
@@ -222,7 +222,7 @@ begin
     end;
   end;
   Fm.Edit;
-  Self.GotoForm(FormName, RId, False);
+  Self.GotoForm(FormName, RId, gtoDefault);
   Result := True;
 
   if ObjName <> '' then
@@ -301,7 +301,7 @@ begin
       Exit;
     end;
     OnShowForm := @SrfShowForm;
-    Self.GotoForm(FormName, RId, False);
+    Self.GotoForm(FormName, RId, gtoDefault);
     Result := True;
   end;
   n := Length(SrfArr);
@@ -566,9 +566,9 @@ begin
     asCantDelete:
       Fm.MsgBox('Внимание', 'Недостаточно прав для удаления записи.');
     asModified:
-      Fm.GotoForm(Fm.FormCaption, Fm.RecId, False);
+      Fm.GotoForm(Fm.FormCaption, Fm.RecId, gtoDefault);
     asDeleted:
-      Fm.GotoForm(Fm.FormCaption, Fm.RecId, False);
+      Fm.GotoForm(Fm.FormCaption, Fm.RecId, gtoDefault);
     asLocked:
       Fm.MsgBox('Внимание', 'Невозможно удалить запись. Запись редактируется пользователем "' + Fm.WhoEdit(Fm.RecId) + '".');
     asHasRef:
@@ -712,7 +712,7 @@ begin
     end;
 
     if ActionAfter = 'Показать окно редактирования' then
-      Self.GotoForm(Tbl.FormCaption, Tbl.RecId, False)
+      Self.GotoForm(Tbl.FormCaption, Tbl.RecId, gtoDefault)
     else if ActionAfter = 'Сохранить запись' then
     begin
       if Tbl.Validate then
@@ -770,7 +770,7 @@ begin
     end;
 
     if ActionAfter = 'Показать окно редактирования' then
-      Self.GotoForm(Tbl.FormCaption, Tbl.RecId, False)
+      Self.GotoForm(Tbl.FormCaption, Tbl.RecId, gtoDefault)
     else if ActionAfter = 'Сохранить запись' then
     begin
       if Tbl.Validate then
@@ -869,7 +869,7 @@ begin
     end;
   end;
 
-  RecId := Tbl.RecId;      //здесь номер строки таблицы
+  RecId := Tbl.RecId;
   Tbl.DisableScrollEvents;
   Tbl.MoveFirst;
 
@@ -905,7 +905,6 @@ begin
     end;
     Tbl.MoveNext;
   end;
-  Tbl.GotoRecord(RecId); //чтобы вернуться на запись
   Result := True;
 
   finally
@@ -1921,6 +1920,6 @@ begin
       DoSetFieldError('Вставить значения', i+1, V);
     end;
   end;
-  Self.GotoForm(FormName, 1, False);
+  Self.GotoForm(FormName, 1, gtoDefault);
   Result := True;
 end;

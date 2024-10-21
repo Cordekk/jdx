@@ -33,7 +33,6 @@ object Form45: TdxForm
     Height = 24
     Top = 120
     Width = 420
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 262892
@@ -47,7 +46,6 @@ object Form45: TdxForm
     Height = 24
     Top = 168
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     HideButton = False
@@ -92,7 +90,6 @@ object Form45: TdxForm
     ParentDoubleBuffered = False
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

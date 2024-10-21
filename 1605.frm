@@ -59,7 +59,6 @@ object Form1605: TdxForm
     Height = 24
     Top = 116
     Width = 424
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 26139
@@ -83,6 +82,7 @@ object Form1605: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel3: TdxLabel
     Left = 28
@@ -97,7 +97,6 @@ object Form1605: TdxForm
     Height = 24
     Top = 4
     Width = 128
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 26147
@@ -113,7 +112,6 @@ object Form1605: TdxForm
     Top = 4
     Width = 100
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 26148
@@ -148,7 +146,6 @@ object Form1605: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -179,7 +176,6 @@ object Form1605: TdxForm
         Height = 24
         Top = 4
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 2
         HideButton = False
@@ -218,7 +214,6 @@ object Form1605: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -260,7 +255,6 @@ object Form1605: TdxForm
         ShowHint = True
         TabOrder = 1
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -299,7 +293,6 @@ object Form1605: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -366,7 +359,6 @@ object Form1605: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

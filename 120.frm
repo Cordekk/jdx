@@ -1,6 +1,6 @@
 object Form120: TdxForm
   Left = 10
-  Height = 597
+  Height = 611
   Top = 10
   Width = 752
   Id = 120
@@ -21,13 +21,12 @@ object Form120: TdxForm
   Tree = Tree.Owner
   Index = 27
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="C4739490-B4C1-4311-B110-A46E5C720F95" allfields="1" logfields="Field" users="User" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="C4739490-B4C1-4311-B110-A46E5C720F95" allfields="1" logfields="Field" users="User" /><comment text="пересчитать шифр исследований"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton1" fields="fl|Шифр_образца" /></actions>'
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 20
     Height = 24
     Top = 80
     Width = 224
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 1953
@@ -46,6 +45,7 @@ object Form120: TdxForm
     HideList = True
     HideButton = True
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel1: TdxLabel
     Left = 32
@@ -76,7 +76,6 @@ object Form120: TdxForm
     Height = 24
     Top = 112
     Width = 596
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 1955
@@ -89,7 +88,6 @@ object Form120: TdxForm
     Height = 24
     Top = 156
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     HideButton = False
@@ -122,7 +120,6 @@ object Form120: TdxForm
     Height = 24
     Top = 156
     Width = 380
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 1957
@@ -145,7 +142,6 @@ object Form120: TdxForm
     Height = 24
     Top = 12
     Width = 300
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 1958
@@ -166,13 +162,13 @@ object Form120: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxEdit3: TdxEdit
     Left = 636
     Height = 24
     Top = 44
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 2478
@@ -186,7 +182,7 @@ object Form120: TdxForm
   object dxPageControl1: TdxPageControl
     Left = 8
     Height = 216
-    Top = 366
+    Top = 380
     Width = 716
     ActivePage = dxTabSheet3
     Anchors = [akLeft, akBottom]
@@ -210,7 +206,6 @@ object Form120: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -234,7 +229,6 @@ object Form120: TdxForm
         Height = 24
         Top = 135
         Width = 80
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 2
         HideButton = False
@@ -259,7 +253,6 @@ object Form120: TdxForm
         Height = 24
         Top = 0
         Width = 64
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
         HideButton = False
@@ -309,7 +302,6 @@ object Form120: TdxForm
         Height = 24
         Top = 0
         Width = 76
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 5
         HideButton = False
@@ -334,7 +326,6 @@ object Form120: TdxForm
         Height = 24
         Top = 0
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 6
         HideButton = False
@@ -373,7 +364,6 @@ object Form120: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -410,7 +400,6 @@ object Form120: TdxForm
         Height = 24
         Top = 40
         Width = 244
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 0
         Id = 4562
@@ -430,13 +419,13 @@ object Form120: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxObjectField2: TdxObjectField
         Left = 20
         Height = 24
         Top = 92
         Width = 248
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
         Id = 8538
@@ -449,7 +438,6 @@ object Form120: TdxForm
         Height = 24
         Top = 40
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 2
         HideButton = False
@@ -472,7 +460,6 @@ object Form120: TdxForm
         Height = 24
         Top = 96
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
         HideButton = False
@@ -527,7 +514,6 @@ object Form120: TdxForm
         Height = 24
         Top = 148
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 4
         Id = 131107
@@ -556,7 +542,6 @@ object Form120: TdxForm
         Height = 24
         Top = 163
         Width = 220
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 5
         Id = 8664
@@ -581,7 +566,6 @@ object Form120: TdxForm
     Height = 24
     Top = 44
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     HideButton = False
@@ -599,7 +583,6 @@ object Form120: TdxForm
     Height = 24
     Top = 44
     Width = 132
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     HideButton = False
@@ -647,7 +630,6 @@ object Form120: TdxForm
     Height = 24
     Top = 236
     Width = 96
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 10
     Id = 263015
@@ -667,6 +649,7 @@ object Form120: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel30: TdxLabel
     Left = 20
@@ -718,6 +701,15 @@ object Form120: TdxForm
     Delimiter = ', '
     Editable = False
     UpdateTree = False
+  end
+  object dxButton1: TdxButton
+    Left = 28
+    Height = 30
+    Top = 587
+    Width = 192
+    Caption = 'Пересчитать исследования'
+    TabOrder = 13
+    ActionOnClick = '<actions><action type="3" form="Исследование" filter="[Образец]=RECID(''Образцы'')" table="" field="Исследование" expression=""/></actions>'
   end
   object Grid: TdxGrid
     Left = 0
@@ -875,7 +867,6 @@ object Form120: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

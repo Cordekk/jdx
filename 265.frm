@@ -34,7 +34,6 @@ object Form18: TdxForm
     Height = 24
     Top = 112
     Width = 272
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 4508
@@ -57,7 +56,6 @@ object Form18: TdxForm
     Height = 24
     Top = 148
     Width = 180
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 4509
@@ -107,7 +105,6 @@ object Form18: TdxForm
     Top = 236
     Width = 316
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     HideButton = False
@@ -131,7 +128,6 @@ object Form18: TdxForm
     Height = 24
     Top = 272
     Width = 336
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 4513
@@ -147,6 +143,7 @@ object Form18: TdxForm
     Top = 308
     Width = 248
     Caption = 'Запись создана'
+    ParentBackground = False
     TabOrder = 5
     StopTab = False
     object dxLabel8: TdxLabel
@@ -162,7 +159,6 @@ object Form18: TdxForm
       Height = 24
       Top = 8
       Width = 100
-      CharCase = ecNormal
       MaxLength = 0
       TabOrder = 0
       HideButton = False
@@ -193,7 +189,6 @@ object Form18: TdxForm
       Height = 24
       Top = 40
       Width = 100
-      CharCase = ecNormal
       MaxLength = 0
       TabOrder = 1
       HideButton = False
@@ -219,7 +214,6 @@ object Form18: TdxForm
     Height = 24
     Top = 432
     Width = 428
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 4516
@@ -241,6 +235,7 @@ object Form18: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxCheckBox1: TdxCheckBox
     Left = 200
@@ -319,7 +314,6 @@ object Form18: TdxForm
     Top = 236
     Width = 156
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 10
     HideButton = False
@@ -421,7 +415,6 @@ object Form18: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

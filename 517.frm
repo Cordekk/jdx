@@ -27,7 +27,6 @@ object Form517: TdxForm
     Height = 24
     Top = 8
     Width = 312
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 8416
@@ -49,7 +48,6 @@ object Form517: TdxForm
     Height = 24
     Top = 40
     Width = 388
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 8417
@@ -108,7 +106,6 @@ object Form517: TdxForm
     ShowHint = True
     TabOrder = 3
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -161,7 +158,6 @@ object Form517: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

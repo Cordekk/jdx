@@ -27,7 +27,6 @@ object Form5: TdxForm
     Top = 64
     Width = 100
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     FieldName = 'ID'
@@ -48,7 +47,6 @@ object Form5: TdxForm
     Top = 40
     Width = 100
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 263054
@@ -69,7 +67,6 @@ object Form5: TdxForm
     Height = 24
     Top = 40
     Width = 80
-    CharCase = ecNormal
     Font.Height = -13
     Font.Name = 'Verdana'
     MaxLength = 0
@@ -90,7 +87,6 @@ object Form5: TdxForm
     Height = 24
     Top = 40
     Width = 132
-    CharCase = ecNormal
     Font.Height = -13
     Font.Name = 'Verdana'
     MaxLength = 0
@@ -125,7 +121,6 @@ object Form5: TdxForm
     Height = 24
     Top = 32
     Width = 300
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 263057
@@ -146,13 +141,13 @@ object Form5: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLookupComboBox16: TdxLookupComboBox
     Left = 826
     Height = 24
     Top = 68
     Width = 300
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 263058
@@ -172,6 +167,7 @@ object Form5: TdxForm
     HideList = True
     HideButton = True
     UpdateTree = False
+    ListSource = 0
   end
   object dxPageControl1: TdxPageControl
     Left = 0
@@ -199,7 +195,6 @@ object Form5: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -313,7 +308,6 @@ object Form5: TdxForm
     ShowHint = True
     TabOrder = 8
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -385,7 +379,6 @@ object Form5: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

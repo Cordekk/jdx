@@ -2,7 +2,7 @@ object Form102: TdxForm
   Left = 10
   Height = 813
   Top = 10
-  Width = 1058
+  Width = 1078
   Id = 102
   PId = 0
   FormCaption = 'ТМЦ'
@@ -44,6 +44,7 @@ object Form102: TdxForm
       'Реактив'
       'Материал'
       'СИЗ'
+      'ПО'
       'Не материальные'
     )
     MaxLength = 0
@@ -70,8 +71,6 @@ object Form102: TdxForm
     Height = 24
     Top = 8
     Width = 80
-    ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 2496
@@ -83,7 +82,6 @@ object Form102: TdxForm
     Height = 24
     Top = 64
     Width = 492
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 2499
@@ -102,6 +100,7 @@ object Form102: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel2: TdxLabel
     Left = 16
@@ -125,7 +124,6 @@ object Form102: TdxForm
     Height = 24
     Top = 8
     Width = 236
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 2555
@@ -146,6 +144,7 @@ object Form102: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel5: TdxLabel
     Left = 496
@@ -160,7 +159,6 @@ object Form102: TdxForm
     Height = 24
     Top = 152
     Width = 320
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 2559
@@ -182,7 +180,6 @@ object Form102: TdxForm
     Height = 24
     Top = 216
     Width = 296
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 2560
@@ -204,7 +201,6 @@ object Form102: TdxForm
     Height = 24
     Top = 180
     Width = 316
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 2562
@@ -223,6 +219,7 @@ object Form102: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel9: TdxLabel
     Left = 12
@@ -245,7 +242,6 @@ object Form102: TdxForm
     Height = 24
     Top = 188
     Width = 112
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     HideButton = False
@@ -292,7 +288,6 @@ object Form102: TdxForm
     Height = 24
     Top = 64
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     HideButton = False
@@ -312,10 +307,10 @@ object Form102: TdxForm
     PadZeros = True
   end
   object dxPageControl1: TdxPageControl
-    Left = 16
+    Left = 4
     Height = 460
     Top = 296
-    Width = 1004
+    Width = 1068
     ActivePage = dxTabSheet1
     TabIndex = 0
     TabOrder = 10
@@ -351,7 +346,6 @@ object Form102: TdxForm
         Height = 24
         Top = 134
         Width = 788
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 2
         Id = 2561
@@ -389,7 +383,6 @@ object Form102: TdxForm
         Height = 24
         Top = 296
         Width = 752
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 4
         Id = 2657
@@ -408,13 +401,13 @@ object Form102: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLookupComboBox8: TdxLookupComboBox
         Left = 196
         Height = 24
         Top = 336
         Width = 748
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 5
         Id = 2658
@@ -433,6 +426,7 @@ object Form102: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel32: TdxLabel
         Left = 40
@@ -591,7 +585,6 @@ object Form102: TdxForm
         Height = 24
         Top = 40
         Width = 108
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 0
         HideButton = False
@@ -621,7 +614,6 @@ object Form102: TdxForm
         Height = 24
         Top = 72
         Width = 328
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
         Id = 2571
@@ -640,6 +632,7 @@ object Form102: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel33: TdxLabel
         Left = 32
@@ -679,7 +672,6 @@ object Form102: TdxForm
         Height = 24
         Top = 232
         Width = 52
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
         HideButton = False
@@ -702,7 +694,6 @@ object Form102: TdxForm
         Height = 24
         Top = 232
         Width = 64
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 4
         HideButton = False
@@ -725,7 +716,6 @@ object Form102: TdxForm
         Height = 24
         Top = 232
         Width = 56
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 5
         HideButton = False
@@ -764,7 +754,6 @@ object Form102: TdxForm
         Height = 24
         Top = 232
         Width = 52
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 6
         HideButton = False
@@ -795,7 +784,6 @@ object Form102: TdxForm
         Height = 24
         Top = 232
         Width = 56
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 7
         HideButton = False
@@ -818,7 +806,6 @@ object Form102: TdxForm
         Height = 24
         Top = 232
         Width = 52
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 8
         HideButton = False
@@ -841,7 +828,6 @@ object Form102: TdxForm
         Height = 24
         Top = 288
         Width = 72
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 9
         HideButton = False
@@ -864,7 +850,6 @@ object Form102: TdxForm
         Height = 24
         Top = 288
         Width = 60
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 10
         HideButton = False
@@ -887,7 +872,6 @@ object Form102: TdxForm
         Height = 24
         Top = 288
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 11
         HideButton = False
@@ -934,7 +918,6 @@ object Form102: TdxForm
         Height = 24
         Top = 288
         Width = 72
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 12
         HideButton = False
@@ -957,7 +940,6 @@ object Form102: TdxForm
         Height = 24
         Top = 288
         Width = 60
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 13
         HideButton = False
@@ -980,7 +962,6 @@ object Form102: TdxForm
         Height = 24
         Top = 40
         Width = 324
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 14
         Id = 7275
@@ -1005,6 +986,7 @@ object Form102: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel42: TdxLabel
         Left = 224
@@ -1027,7 +1009,6 @@ object Form102: TdxForm
         Height = 24
         Top = 40
         Width = 364
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 15
         Id = 7333
@@ -1047,6 +1028,7 @@ object Form102: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel49: TdxLabel
         Left = 112
@@ -1087,6 +1069,10 @@ object Form102: TdxForm
         Editable = False
       end
     end
+    object dxTabSheet10: TdxTabSheet
+      Caption = 'Дополнительно'
+      StopTab = False
+    end
     object dxTabSheet4: TdxTabSheet
       Caption = 'Сотрудники'
       StopTab = False
@@ -1113,7 +1099,6 @@ object Form102: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1145,7 +1130,6 @@ object Form102: TdxForm
         Height = 24
         Top = 16
         Width = 304
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
         Id = 2572
@@ -1165,6 +1149,7 @@ object Form102: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
     end
     object dxTabSheet5: TdxTabSheet
@@ -1199,7 +1184,6 @@ object Form102: TdxForm
         Height = 24
         Top = 184
         Width = 432
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
         Id = 2577
@@ -1232,7 +1216,6 @@ object Form102: TdxForm
         ShowHint = True
         TabOrder = 2
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1264,7 +1247,6 @@ object Form102: TdxForm
         Height = 24
         Top = 14
         Width = 80
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
         HideButton = False
@@ -1288,7 +1270,6 @@ object Form102: TdxForm
         Height = 24
         Top = 46
         Width = 220
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 4
         Id = 2573
@@ -1319,7 +1300,6 @@ object Form102: TdxForm
         Height = 24
         Top = 82
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 5
         HideButton = False
@@ -1350,7 +1330,6 @@ object Form102: TdxForm
         Height = 24
         Top = 118
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 6
         HideButton = False
@@ -1451,7 +1430,6 @@ object Form102: TdxForm
         Height = 24
         Top = 34
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 0
         HideButton = False
@@ -1481,7 +1459,6 @@ object Form102: TdxForm
         Height = 24
         Top = 66
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
         HideButton = False
@@ -1513,7 +1490,6 @@ object Form102: TdxForm
         ShowHint = True
         TabOrder = 2
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1547,7 +1523,6 @@ object Form102: TdxForm
         ShowHint = True
         TabOrder = 3
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1572,6 +1547,43 @@ object Form102: TdxForm
         Width = 207
         Caption = 'Периодичность обслуживания'
         ParentColor = False
+      end
+    end
+    object dxTabSheet9: TdxTabSheet
+      Caption = 'проверки'
+      StopTab = False
+      object dxQueryGrid3: TdxQueryGrid
+        Left = 8
+        Height = 392
+        Top = 28
+        Width = 668
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 0
+        SelectedColor = clHighlight
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = False
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -13
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 3026
+        ManualRefresh = False
       end
     end
     object dxTabSheet7: TdxTabSheet
@@ -1600,7 +1612,6 @@ object Form102: TdxForm
         Top = 400
         Width = 288
         Anchors = [akTop, akLeft, akRight, akBottom]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
         Id = 8627
@@ -1619,6 +1630,7 @@ object Form102: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxButton2: TdxButton
         Left = 36
@@ -1645,7 +1657,6 @@ object Form102: TdxForm
         ShowHint = True
         TabOrder = 3
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1719,7 +1730,6 @@ object Form102: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1762,7 +1772,6 @@ object Form102: TdxForm
     Height = 24
     Top = 242
     Width = 296
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 11
     Id = 2566
@@ -1776,7 +1785,6 @@ object Form102: TdxForm
     Height = 24
     Top = 156
     Width = 376
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 12
     Id = 7237
@@ -1790,15 +1798,14 @@ object Form102: TdxForm
     Height = 24
     Top = 772
     Width = 828
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 13
     Id = 7260
     FieldName = 'Наименование ТМЦ'
     FieldSize = 400
     Required = False
-    Expression = '[Номенклатура|Наименование]+ nz('' '' + [Модель, марка],'''') + nz('' '' + [Тип СИ СО (номер)],'''')'
-    Editable = False
+    Expression = '[Номенклатура|Наименование]+ nz('' '' + [Модель, марка],'''')'
+    Editable = True
   end
   object dxLabel44: TdxLabel
     Left = 12
@@ -1821,7 +1828,6 @@ object Form102: TdxForm
     Height = 24
     Top = 96
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 15
     HideButton = False
@@ -1900,7 +1906,6 @@ object Form102: TdxForm
     Height = 24
     Top = 240
     Width = 160
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 17
     HideButton = False
@@ -1924,7 +1929,6 @@ object Form102: TdxForm
     Height = 24
     Top = 104
     Width = 148
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 18
     Id = 262652
@@ -1954,7 +1958,6 @@ object Form102: TdxForm
     Height = 24
     Top = 184
     Width = 112
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 19
     HideButton = False
@@ -1984,7 +1987,6 @@ object Form102: TdxForm
     Height = 24
     Top = 212
     Width = 72
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 20
     HideButton = False
@@ -2008,7 +2010,6 @@ object Form102: TdxForm
     Height = 24
     Top = 8
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 21
     Id = 263202
@@ -2017,6 +2018,18 @@ object Form102: TdxForm
     Required = False
     Expression = '// [Номер ТМЦ]'#13#10'RECID(''ТМЦ'')'
     Editable = False
+  end
+  object dxRecordId1: TdxRecordId
+    Left = 1064
+    Height = 24
+    Top = 8
+    Width = 100
+    ReadOnly = True
+    MaxLength = 0
+    TabOrder = 22
+    FieldName = 'ID записи'
+    StopTab = False
+    Id = 263220
   end
   object Grid: TdxGrid
     Left = 0
@@ -2414,6 +2427,12 @@ object Form102: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f263202'
+      end    
+      item
+        Tag = 263220
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263220'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
@@ -2424,7 +2443,6 @@ object Form102: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

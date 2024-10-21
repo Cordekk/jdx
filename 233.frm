@@ -26,7 +26,6 @@ object Form233: TdxForm
     Height = 24
     Top = 208
     Width = 392
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 2544
@@ -45,6 +44,7 @@ object Form233: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel1: TdxLabel
     Left = 460
@@ -59,7 +59,6 @@ object Form233: TdxForm
     Height = 24
     Top = 208
     Width = 776
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 2545
@@ -83,6 +82,7 @@ object Form233: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel2: TdxLabel
     Left = 8
@@ -97,7 +97,6 @@ object Form233: TdxForm
     Height = 24
     Top = 148
     Width = 776
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 2548
@@ -122,6 +121,7 @@ object Form233: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel3: TdxLabel
     Left = 8
@@ -136,7 +136,6 @@ object Form233: TdxForm
     Height = 24
     Top = 104
     Width = 776
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 2549
@@ -155,6 +154,7 @@ object Form233: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel4: TdxLabel
     Left = 12
@@ -168,13 +168,12 @@ object Form233: TdxForm
     Left = 180
     Height = 24
     Top = 12
-    Width = 436
-    CharCase = ecNormal
+    Width = 592
     MaxLength = 0
     TabOrder = 4
     Id = 2550
     FieldName = 'Название шаблона'
-    FieldSize = 50
+    FieldSize = 150
     Required = False
     Expression = 'NZ([Название шаблона],NZ([Продукция|Название],[Группа продукции|Название]))'
     Editable = True
@@ -194,7 +193,6 @@ object Form233: TdxForm
     ShowHint = True
     TabOrder = 5
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -217,7 +215,6 @@ object Form233: TdxForm
     Height = 24
     Top = 8
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 2553
@@ -240,7 +237,6 @@ object Form233: TdxForm
     Height = 24
     Top = 47
     Width = 594
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     Id = 262976
@@ -266,6 +262,7 @@ object Form233: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel6: TdxLabel
     Left = 40
@@ -274,6 +271,24 @@ object Form233: TdxForm
     Width = 89
     Caption = 'Лаборатория'
     ParentColor = False
+  end
+  object dxButton1: TdxButton
+    Left = 844
+    Height = 30
+    Top = 104
+    Width = 244
+    Caption = 'Поменять группу в таблице'
+    TabOrder = 9
+    ActionOnClick = '<actions><action type="9" id="8D8123AE-0A6C-4349-9152-F9399322BE50" tbl="Показатель3" values="field;expr|Группа продукции;[!Группа продукции]" filter="" prompt="" /></actions>'
+  end
+  object dxButton2: TdxButton
+    Left = 844
+    Height = 30
+    Top = 148
+    Width = 252
+    Caption = 'Поменять продукцию в таблице'
+    TabOrder = 10
+    ActionOnClick = '<actions><action type="9" id="8D8123AE-0A6C-4349-9152-F9399322BE50" tbl="Показатель3" values="field;expr|Продукция;[!Продукция]" filter="" prompt="" /></actions>'
   end
   object Grid: TdxGrid
     Left = 0
@@ -334,7 +349,6 @@ object Form233: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

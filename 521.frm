@@ -1,6 +1,6 @@
 object Form521: TdxForm
   Left = 10
-  Height = 208
+  Height = 294
   Top = 10
   Width = 728
   Id = 521
@@ -13,13 +13,14 @@ object Form521: TdxForm
   ParentField = 0
   LevelCount = 5
   Grid = Grid.Owner
-  ShowScrollBars = False
+  ShowScrollBars = True
   ConfirmSaveRecord = False
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
   Index = 0
   SoftCheck = False
+  AllowResizeWindow = True
   object dxLabel1: TdxLabel
     Left = 8
     Height = 16
@@ -33,7 +34,6 @@ object Form521: TdxForm
     Height = 24
     Top = 56
     Width = 519
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 8500
@@ -51,13 +51,14 @@ object Form521: TdxForm
       item
         FieldId = 1828
         Width = 100
-        Searchable = False
+        Searchable = True
       end>
     DropDownCount = 8
-    ListWidthExtra = 0
+    ListWidthExtra = 100
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel2: TdxLabel
     Left = 8
@@ -70,9 +71,8 @@ object Form521: TdxForm
   object dxCalcEdit1: TdxCalcEdit
     Left = 166
     Height = 24
-    Top = 136
+    Top = 168
     Width = 123
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     HideButton = False
@@ -94,7 +94,7 @@ object Form521: TdxForm
   object dxLabel3: TdxLabel
     Left = 8
     Height = 16
-    Top = 136
+    Top = 168
     Width = 79
     Caption = 'Количество'
     ParentColor = False
@@ -102,9 +102,8 @@ object Form521: TdxForm
   object dxObjectField1: TdxObjectField
     Left = 166
     Height = 24
-    Top = 168
+    Top = 200
     Width = 123
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 8502
@@ -115,7 +114,7 @@ object Form521: TdxForm
   object dxLabel4: TdxLabel
     Left = 8
     Height = 16
-    Top = 168
+    Top = 200
     Width = 45
     Caption = 'Ед.изм'
     ParentColor = False
@@ -150,7 +149,6 @@ object Form521: TdxForm
     Height = 24
     Top = 88
     Width = 516
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 262740
@@ -173,13 +171,14 @@ object Form521: TdxForm
     DropDownCount = 8
     ListWidthExtra = 100
     HideList = False
-    HideButton = True
+    HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxCheckBox1: TdxCheckBox
     Left = 344
     Height = 23
-    Top = 136
+    Top = 168
     Width = 222
     Caption = 'Обязательно для протокола'
     TabOrder = 5
@@ -192,6 +191,39 @@ object Form521: TdxForm
     Editable = False
     DefaultValue = '1'
   end
+  object dxObjectField2: TdxObjectField
+    Left = 173
+    Height = 24
+    Top = 242
+    Width = 100
+    MaxLength = 0
+    TabOrder = 6
+    Id = 263222
+    FieldName = 'ТМЦ_ИД'
+    ObjId = 262740
+    FieldId = 263220
+    StopTab = False
+  end
+  object dxLabel6: TdxLabel
+    Left = 23
+    Height = 16
+    Top = 125
+    Width = 44
+    Caption = 'Зав.№'
+  end
+  object dxObjectField3: TdxObjectField
+    Left = 170
+    Height = 24
+    Top = 128
+    Width = 402
+    MaxLength = 0
+    TabOrder = 7
+    Id = 263229
+    FieldName = 'Зав.№'
+    ObjId = 262740
+    FieldId = 2560
+    StopTab = False
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 150
@@ -203,14 +235,33 @@ object Form521: TdxForm
       item
         Tag = 8499
         Title.Caption = ' '
-        Width = 219
+        Width = 210
         FieldName = 'f8499'
       end    
       item
         Tag = 8500
         Title.Caption = ' '
-        Width = 178
+        Width = 162
         FieldName = 'f8500l'
+      end    
+      item
+        Tag = 262740
+        Title.Caption = ' '
+        Width = 227
+        FieldName = 'f262740l'
+      end    
+      item
+        Tag = 263229
+        Title.Caption = ' '
+        Width = 120
+        FieldName = 'f263229'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262741
+        Title.Caption = ' '
+        Width = 87
+        FieldName = 'f262741'
       end    
       item
         Tag = 8501
@@ -221,23 +272,17 @@ object Form521: TdxForm
       item
         Tag = 8502
         Title.Caption = ' '
-        Width = 100
+        Width = 62
         FieldName = 'f8502'
       end    
       item
-        Tag = 262740
+        Tag = 263222
         Title.Caption = ' '
-        Width = 100
-        FieldName = 'f262740l'
-      end    
-      item
-        ButtonStyle = cbsCheckboxColumn
-        Tag = 262741
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f262741'
+        Width = 0
+        Visible = False
+        FieldName = 'f263222'
       end>
-    DefaultRowHeight = 20
+    DefaultRowHeight = 24
     DoubleBuffered = True
     Font.Height = -13
     Font.Name = 'Verdana'
@@ -246,7 +291,6 @@ object Form521: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -260,9 +304,10 @@ object Form521: TdxForm
     ButtonFont.Name = 'Verdana'
     AlignmentButtons = taLeftJustify
     HideButtonsWhenLostFocus = False
-    WordWrap = False
+    WordWrap = True
     AllowChangeSort = True
     Id = 0
+    ShowRowDeleteButton = True
   end
   object Tree: TdxFormTree
     Left = 0

@@ -34,7 +34,6 @@ object Form97498: TdxForm
     Height = 24
     Top = 412
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     HideButton = False
@@ -57,7 +56,6 @@ object Form97498: TdxForm
     Height = 24
     Top = 444
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     HideButton = False
@@ -86,6 +84,7 @@ object Form97498: TdxForm
         Top = 16
         Width = 432
         Caption = 'Случаи регистрации событий в логе:'
+        ParentBackground = False
         TabOrder = 0
         StopTab = False
         object dxCheckBox2: TdxCheckBox
@@ -170,6 +169,7 @@ object Form97498: TdxForm
         Top = 211
         Width = 432
         Caption = 'Автоочистка'
+        ParentBackground = False
         TabOrder = 1
         StopTab = False
         object dxDateEdit1: TdxDateEdit
@@ -177,7 +177,6 @@ object Form97498: TdxForm
           Height = 24
           Top = 40
           Width = 100
-          CharCase = ecNormal
           MaxLength = 0
           TabOrder = 0
           HideButton = False
@@ -246,6 +245,7 @@ object Form97498: TdxForm
         Top = 12
         Width = 432
         Caption = 'Доступ к форме параметров'
+        ParentBackground = False
         TabOrder = 0
         StopTab = False
         object dxLabel4: TdxLabel
@@ -261,7 +261,6 @@ object Form97498: TdxForm
           Height = 24
           Top = 8
           Width = 192
-          CharCase = ecNormal
           MaxLength = 0
           TabOrder = 0
           Id = 8223
@@ -376,7 +375,6 @@ object Form97498: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

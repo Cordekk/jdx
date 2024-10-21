@@ -21,12 +21,12 @@ object Form109: TdxForm
   Tree = Tree.Owner
   Index = 4
   SoftCheck = False
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' |   ROLE=''Администратор'' | Newrec = 1" grid="cmp;ve_prop|dxEdit1;Редактирование|dxLookupComboBox1;Редактирование|dxLookupComboBox2;Редактирование" stateevents="1" /></actions>'
   object dxEdit1: TdxEdit
     Left = 28
     Height = 24
     Top = 64
     Width = 312
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 1838
@@ -40,7 +40,6 @@ object Form109: TdxForm
     Height = 24
     Top = 136
     Width = 308
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 8600
@@ -59,13 +58,13 @@ object Form109: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLookupComboBox2: TdxLookupComboBox
     Left = 32
     Height = 24
     Top = 196
     Width = 308
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 8601
@@ -85,6 +84,31 @@ object Form109: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
+  end
+  object dxLabel1: TdxLabel
+    Left = 38
+    Height = 16
+    Top = 33
+    Width = 130
+    Caption = 'Группа показателя'
+    ParentColor = False
+  end
+  object dxLabel2: TdxLabel
+    Left = 36
+    Height = 16
+    Top = 116
+    Width = 228
+    Caption = 'Родительская группа показателя'
+    ParentColor = False
+  end
+  object dxLabel3: TdxLabel
+    Left = 32
+    Height = 16
+    Top = 176
+    Width = 99
+    Caption = 'Корень группы'
+    ParentColor = False
   end
   object Grid: TdxGrid
     Left = 0
@@ -121,7 +145,6 @@ object Form109: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

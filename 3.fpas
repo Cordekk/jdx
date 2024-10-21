@@ -1,3 +1,6 @@
+Var
+  MaxID: integer;
+
 
 procedure CreateSamples(Sender: TObject);
 var
@@ -10,11 +13,11 @@ begin
   //while Self.EOF = False do //для импорта образцов из всех заявок
   //begin //для импорта всех заявок
   // Если проб нет, то выходим, иначе продолжаем.
-  Self['Дубль']:=null;
+  Self['Дубль']:=Self.recid;
   Q := Self.Queries['Пробы1'];
   Q.Refresh;
   if Self['Пробы'] = 0 then Exit;
-    dxButton1.click;
+    dxButton1.click; //сохранить
     Q.DisableControls;
     Q.MoveFirst;
      // Создаем экземпляр форм "Пробы" и "Образцы".
@@ -45,7 +48,8 @@ begin
            Sm.OpenRecord(0);
            Sm.Append;
            ii := ii + 1;
-           nn := nn+1;
+           nn := nn+1;  //НОМЕР должен быть на 1 больше, чем предыдущий
+           // if n=1 then nn := 0 else nn := nn+1; //  ДЛЯ ОДНОГО ОБРАЗЦА не будет добавляться номе 1, и следовательно не будет добавляться в шифр /1
            Sm['Проба'] := ID;
           //  IF n = 1 Then Sm['Номер_образца'] := 0
           //  else
@@ -92,8 +96,9 @@ begin
   //end; // //для импорта всех заявок
 end;
 
-
-procedure DuplicateBnClick(Sender: TObject); //заменил на действие, оставил на память, можно ещё использовать
+  //заменил на действие, оставил на память, можно ещё использовать
+  {
+procedure DuplicateBnClick(Sender: TObject);
 var
   Fm: TdxForm;
   Vals: TParamList;
@@ -160,7 +165,7 @@ begin
   // О списке тоже не забываем
     Vals.Free;
 end;
-
+}
 
 // Процедура открытия файла по клику на запросе формы хранения файлов
 procedure OpenFile(Sender: TObject);
@@ -200,19 +205,23 @@ end;
 
 
 
-  //добавление исследований из "плана испытаний" Заявки клиента
+  // добавление исследований из "плана испытаний" Заявки клиента
+  // надо для оптимизации переделывать на SQL
 procedure CreateReseach(Sender: TObject);
 var
-  Sm, Pk, Zd: TdxForm;
+  Sm, Pk, Sample, Zd: TdxForm;
   Q: TdxQueryGrid;
   I: Integer;
 begin
   Q := Self.Queries['Образцы1']; //берем запрос образцы, в нем должен быть номер, вид упаковки, консервация, группа продукции, продукция
+  Self['Отобразить все образцы']:=1;
+  CountSample.Click; // пересчитать шифр в образцах, в кнопке "Пересчитать образцы" массовые вычисления по форме образцы
   Q.Refresh;
   Q.DisableControls;
   Q.MoveFirst;
   // Создаем экземпляр форм "Исследование" и "Показатель для исследования".
    Sm := TdxForm.Create('Исследование');
+   Sample := TdxForm.Create('Образцы');
    Pk := Self.Forms['Показатель42'];
    Zd := TdxForm.Create('Задание лаборатории');  // Добавим форму задание  для лаборатории, зате откроем новый экземпляр
    Zd.OpenRecord(0);
@@ -222,7 +231,12 @@ begin
    Pk.DisableControls;
     while Q.Eof = False do  // пока есть строки в запросе выполняется действие
      begin
-       // Считываем из базы конкретную запись, которая выделена в запросе и добавляем исследования
+      {    //убрал пересчет шифра из скрипта, отрабатывал некорректно (нужно игнорировать блокировки)
+         Sample.OpenRecord(Q.RecId); //надо открыть образец, и если он один, то убрать из шифра /1
+          Sample.Edit;
+         Sample['Шифр_образца']:= VarToStr(EvalExpr('NZ([Проба|Шифр_пробы],"")+ IIF([Номер_образца]=0 |DBCOUNT("Образцы", "[!Проба]=[Проба]")=1,"","/" + CSTR([Номер_образца]))',Sample));
+         Sample.Post; // надо сохранить исправленный шифр.}
+       // Считываем из базы конкретную запись по образцу, которая выделена в запросе и добавляем исследования
        Pk.MoveFirst;
         while Pk.Eof = False do  // пока есть строки в таблице выполняется действие
         begin
@@ -262,6 +276,7 @@ begin
     Zd.Close;
     Sm.free;
     Zd.free;
+    Sample.free;
     dxButton7.OnClick; //заполнить Self.['Задание']
     Q.EnableControls;
     Pk.EnableControls;
@@ -332,8 +347,38 @@ begin
 	end;
 end;
 
-  procedure Form_Create;
+
+procedure AR(S: TObject);
+Var
+  BufId: integer;
+  SQLid: TdxSQLQuery;
 begin
+if not Self.Opened then exit;
+SQLid:=sqlselect('Select max(id) from [Заявка клиента]');
+IF MaxID = SQLid.Field[0].asInteger THEN exit;
+ MaxID := SQLid.Field[0].asInteger;
+if (Self.State <> dsEdit) and
+   (Self.State <> dsInsert)  then
+   Begin
+     //сохраняем идентификатор в переменной
+      BufId := Self.Recid;
+      Self.Refresh;
+      //переходим к записи с ранее сохранённым id
+   try
+   Self.GotoRecord(BufId); //  пытаемся перйти к той записи, на которой был курсор
+   except
+   end;
+   End;
+end;
+
+
+  procedure Form_Create;
+  var T: TTimer;
+begin
+T := TTimer.Create(Self);         // таймер для обновления таблицы
+T.Enabled:=true;
+T.Interval := 30000;  // 30 секунд
+T.Ontimer := @AR;
   dxButton3.OnClick := @CreateSamples; // получение образцов
  // DuplicateBn.OnClick := @DuplicateBnClick; // внесение пробы (и дублирование), временно заменил на действие дублировать в запросе и добавление новой записи в пробы
   dxQueryGrid7.OnAfterScroll:=@dxQueryGrid1OnAfterScroll; // открытие приложенных файлов

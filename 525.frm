@@ -26,7 +26,6 @@ object Form525: TdxForm
     Height = 24
     Top = 432
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     HideButton = False
@@ -66,7 +65,6 @@ object Form525: TdxForm
     Height = 24
     Top = 404
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     HideButton = False
@@ -136,7 +134,6 @@ object Form525: TdxForm
     ShowHint = True
     TabOrder = 6
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -170,7 +167,6 @@ object Form525: TdxForm
     ShowHint = True
     TabOrder = 8
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -221,7 +217,6 @@ object Form525: TdxForm
     ShowHint = True
     TabOrder = 11
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -271,7 +266,6 @@ object Form525: TdxForm
     ShowHint = True
     TabOrder = 13
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -337,7 +331,6 @@ object Form525: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

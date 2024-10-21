@@ -49,7 +49,6 @@ object Form516: TdxForm
     Height = 24
     Top = 120
     Width = 316
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 8510
@@ -69,13 +68,13 @@ object Form516: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLookupComboBox3: TdxLookupComboBox
     Left = 193
     Height = 24
     Top = 152
     Width = 312
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 8511
@@ -95,13 +94,13 @@ object Form516: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLookupComboBox4: TdxLookupComboBox
     Left = 193
     Height = 24
     Top = 184
     Width = 312
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 8512
@@ -121,6 +120,7 @@ object Form516: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel4: TdxLabel
     Left = 24
@@ -151,7 +151,6 @@ object Form516: TdxForm
     Height = 24
     Top = 36
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     HideButton = False
@@ -175,7 +174,6 @@ object Form516: TdxForm
     Height = 24
     Top = 68
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     HideButton = False
@@ -199,7 +197,6 @@ object Form516: TdxForm
     Height = 24
     Top = 4
     Width = 328
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 262427
@@ -218,6 +215,7 @@ object Form516: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object Grid: TdxGrid
     Left = 0
@@ -272,7 +270,6 @@ object Form516: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

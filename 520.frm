@@ -25,7 +25,6 @@ object Form520: TdxForm
     Height = 24
     Top = 8
     Width = 260
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 8497
@@ -44,6 +43,7 @@ object Form520: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel1: TdxLabel
     Left = 8
@@ -58,7 +58,6 @@ object Form520: TdxForm
     Height = 24
     Top = 40
     Width = 260
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 8498
@@ -77,6 +76,7 @@ object Form520: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel2: TdxLabel
     Left = 8
@@ -115,7 +115,6 @@ object Form520: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

@@ -1,3 +1,10 @@
+
+{@module
+Author=YurAnt
+Version=1.0
+Description= Берет текущую дату и время с сервера
+@}
+
 {@function
 OrigName=SRV_TIME
 Name=SRV_TIME

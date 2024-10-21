@@ -21,12 +21,12 @@ object Form37: TdxForm
   Tree = Tree.Owner
   Index = 39
   SoftCheck = False
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' |   ROLE=''Администратор'' | Newrec = 1" grid="cmp;ve_prop|dxEdit1;Редактирование|dxComboBox1;Редактирование|dxEdit2;Редактирование" stateevents="1" /></actions>'
   object dxEdit1: TdxEdit
     Left = 32
     Height = 28
     Top = 108
     Width = 608
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 168
@@ -118,7 +118,8 @@ object Form37: TdxForm
       item
         Tag = 262680
         Title.Caption = ' '
-        Width = 166
+        Width = 0
+        Visible = False
         FieldName = 'f262680'
       end    
       item
@@ -130,18 +131,19 @@ object Form37: TdxForm
       item
         Tag = 263153
         Title.Caption = ' '
-        Width = 126
+        Width = 0
+        Visible = False
         FieldName = 'f263153'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
     Font.Height = -17
     Font.Name = 'Verdana'
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgDisplayMemoText]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgDisplayMemoText]
     ParentDoubleBuffered = False
+    ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

@@ -67,7 +67,6 @@ object Form524: TdxForm
     Height = 24
     Top = 40
     Width = 484
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 8573
@@ -91,6 +90,7 @@ object Form524: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel3: TdxLabel
     Left = 8
@@ -105,7 +105,6 @@ object Form524: TdxForm
     Height = 24
     Top = 76
     Width = 640
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 8574
@@ -129,6 +128,7 @@ object Form524: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel6: TdxLabel
     Left = 12
@@ -143,7 +143,6 @@ object Form524: TdxForm
     Height = 24
     Top = 116
     Width = 640
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 8577
@@ -168,6 +167,7 @@ object Form524: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxCheckBox1: TdxCheckBox
     Left = 716
@@ -198,7 +198,6 @@ object Form524: TdxForm
     Height = 24
     Top = 8
     Width = 472
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 8580
@@ -222,6 +221,7 @@ object Form524: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel5: TdxLabel
     Left = 64
@@ -236,7 +236,6 @@ object Form524: TdxForm
     Height = 24
     Top = 238
     Width = 468
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 8581
@@ -255,6 +254,7 @@ object Form524: TdxForm
     HideList = False
     HideButton = True
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel7: TdxLabel
     Left = 27
@@ -269,7 +269,6 @@ object Form524: TdxForm
     Height = 24
     Top = 278
     Width = 472
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     Id = 8582
@@ -288,6 +287,7 @@ object Form524: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxMemo1: TdxMemo
     Left = 192
@@ -697,7 +697,6 @@ object Form524: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

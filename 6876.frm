@@ -21,7 +21,7 @@ object Form54: TdxForm
   Tree = Tree.Owner
   Index = 110
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="650D0CBE-8511-4666-AB7A-1D5DA01F4FDE" cbx="dxComboBox1" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="650D0CBE-8511-4666-AB7A-1D5DA01F4FDE" cbx="dxComboBox1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' |   ROLE=''Администратор'' | Newrec = 1" grid="cmp;ve_prop|dxEdit1;Редактирование|dxComboBox1;Редактирование|dxButton2;Доступность|dxMemo2;Редактирование|dxMemo3;Редактирование|dxEdit2;Редактирование" stateevents="1" /></actions>'
   object dxLabel1: TdxLabel
     Left = 24
     Height = 16
@@ -238,7 +238,6 @@ object Form54: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

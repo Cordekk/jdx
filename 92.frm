@@ -30,7 +30,6 @@ object Form92: TdxForm
     Height = 24
     Top = 48
     Width = 704
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 496
@@ -50,13 +49,13 @@ object Form92: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxCalcEdit1: TdxCalcEdit
     Left = 20
     Height = 24
     Top = 120
     Width = 276
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     HideButton = False
@@ -80,7 +79,6 @@ object Form92: TdxForm
     Height = 24
     Top = 116
     Width = 264
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 498
@@ -93,7 +91,6 @@ object Form92: TdxForm
     Height = 24
     Top = 188
     Width = 272
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     HideButton = False
@@ -119,7 +116,6 @@ object Form92: TdxForm
     Height = 24
     Top = 188
     Width = 276
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     HideButton = False
@@ -144,7 +140,6 @@ object Form92: TdxForm
     Height = 24
     Top = 236
     Width = 272
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     HideButton = False
@@ -169,7 +164,6 @@ object Form92: TdxForm
     Height = 24
     Top = 304
     Width = 260
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     HideButton = False
@@ -242,7 +236,6 @@ object Form92: TdxForm
     Height = 24
     Top = 236
     Width = 96
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     HideButton = False
@@ -267,7 +260,6 @@ object Form92: TdxForm
     Height = 24
     Top = 364
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     HideButton = False
@@ -301,7 +293,6 @@ object Form92: TdxForm
     ShowHint = True
     TabOrder = 9
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -333,7 +324,6 @@ object Form92: TdxForm
     Height = 24
     Top = 400
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 10
     HideButton = False
@@ -430,7 +420,6 @@ object Form92: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

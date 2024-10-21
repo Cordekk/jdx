@@ -28,7 +28,6 @@ object Form297: TdxForm
     Top = 16
     Width = 80
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 7300
@@ -40,7 +39,6 @@ object Form297: TdxForm
     Height = 24
     Top = 76
     Width = 272
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 7301
@@ -59,6 +57,7 @@ object Form297: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel1: TdxLabel
     Left = 32
@@ -73,7 +72,6 @@ object Form297: TdxForm
     Height = 24
     Top = 108
     Width = 272
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 7302
@@ -92,6 +90,7 @@ object Form297: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel2: TdxLabel
     Left = 32
@@ -106,7 +105,6 @@ object Form297: TdxForm
     Height = 24
     Top = 16
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     HideButton = False
@@ -136,7 +134,6 @@ object Form297: TdxForm
     Height = 24
     Top = 16
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     HideButton = False
@@ -186,7 +183,6 @@ object Form297: TdxForm
     ShowHint = True
     TabOrder = 6
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -209,7 +205,6 @@ object Form297: TdxForm
     Height = 24
     Top = 8
     Width = 88
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     HideButton = False
@@ -242,7 +237,6 @@ object Form297: TdxForm
     Height = 24
     Top = 500
     Width = 232
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     Id = 7316
@@ -264,6 +258,7 @@ object Form297: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel4: TdxLabel
     Left = 24
@@ -310,7 +305,6 @@ object Form297: TdxForm
     Height = 24
     Top = 468
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 12
     HideButton = False
@@ -419,7 +413,6 @@ object Form297: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

@@ -27,7 +27,6 @@ object Form522: TdxForm
     Top = 16
     Width = 100
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 8505
@@ -39,7 +38,6 @@ object Form522: TdxForm
     Height = 24
     Top = 16
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     HideButton = False
@@ -61,7 +59,6 @@ object Form522: TdxForm
     Height = 24
     Top = 68
     Width = 444
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 8507
@@ -85,6 +82,7 @@ object Form522: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel1: TdxLabel
     Left = 24
@@ -129,7 +127,6 @@ object Form522: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

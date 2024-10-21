@@ -31,7 +31,6 @@ object Form225: TdxForm
     Top = 12
     Width = 80
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 2492
@@ -43,7 +42,6 @@ object Form225: TdxForm
     Height = 24
     Top = 124
     Width = 348
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 2503
@@ -62,6 +60,7 @@ object Form225: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel3: TdxLabel
     Left = 12
@@ -76,7 +75,6 @@ object Form225: TdxForm
     Height = 24
     Top = 152
     Width = 348
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 2504
@@ -95,6 +93,7 @@ object Form225: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel4: TdxLabel
     Left = 12
@@ -109,7 +108,6 @@ object Form225: TdxForm
     Height = 24
     Top = 12
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     HideButton = False
@@ -139,7 +137,6 @@ object Form225: TdxForm
     Height = 24
     Top = 12
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     HideButton = False
@@ -171,7 +168,6 @@ object Form225: TdxForm
     Height = 24
     Top = 60
     Width = 348
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 2635
@@ -195,6 +191,7 @@ object Form225: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxCheckBox1: TdxCheckBox
     Left = 516
@@ -218,7 +215,6 @@ object Form225: TdxForm
     Height = 24
     Top = 8
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     HideButton = False
@@ -253,7 +249,6 @@ object Form225: TdxForm
     Top = 514
     Width = 316
     Anchors = [akRight, akBottom]
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     Id = 7314
@@ -275,6 +270,7 @@ object Form225: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel7: TdxLabel
     Left = 6
@@ -364,7 +360,6 @@ object Form225: TdxForm
     Height = 24
     Top = 92
     Width = 344
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 13
     Id = 7334
@@ -405,7 +400,6 @@ object Form225: TdxForm
     Top = 485
     Width = 100
     Anchors = [akRight, akBottom]
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 15
     HideButton = False
@@ -462,7 +456,6 @@ object Form225: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -504,7 +497,6 @@ object Form225: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -576,7 +568,6 @@ object Form225: TdxForm
     ShowHint = True
     TabOrder = 19
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -692,7 +683,6 @@ object Form225: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

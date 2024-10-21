@@ -33,7 +33,6 @@ object Form36: TdxForm
     Height = 24
     Top = 24
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     HideButton = False
@@ -65,7 +64,6 @@ object Form36: TdxForm
     Height = 24
     Top = 56
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     HideButton = False
@@ -153,7 +151,6 @@ object Form36: TdxForm
     Height = 24
     Top = 132
     Width = 84
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     HideButton = False
@@ -185,7 +182,6 @@ object Form36: TdxForm
     Height = 24
     Top = 132
     Width = 72
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     HideButton = False
@@ -217,7 +213,6 @@ object Form36: TdxForm
     Height = 24
     Top = 212
     Width = 84
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     HideButton = False
@@ -249,7 +244,6 @@ object Form36: TdxForm
     Height = 24
     Top = 212
     Width = 72
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     HideButton = False
@@ -281,7 +275,6 @@ object Form36: TdxForm
     Height = 24
     Top = 292
     Width = 84
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     HideButton = False
@@ -313,7 +306,6 @@ object Form36: TdxForm
     Height = 24
     Top = 292
     Width = 72
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     HideButton = False
@@ -407,7 +399,6 @@ object Form36: TdxForm
     Height = 24
     Top = 364
     Width = 84
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 13
     HideButton = False
@@ -439,7 +430,6 @@ object Form36: TdxForm
     Height = 24
     Top = 364
     Width = 72
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 14
     HideButton = False
@@ -591,7 +581,6 @@ object Form36: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

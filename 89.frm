@@ -26,7 +26,6 @@ object Form89: TdxForm
     Height = 24
     Top = 104
     Width = 544
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 1853
@@ -45,13 +44,13 @@ object Form89: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLookupComboBox2: TdxLookupComboBox
     Left = 28
     Height = 24
     Top = 160
     Width = 544
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 1854
@@ -70,6 +69,7 @@ object Form89: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel1: TdxLabel
     Left = 28
@@ -92,7 +92,6 @@ object Form89: TdxForm
     Height = 24
     Top = 44
     Width = 548
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 1855
@@ -111,13 +110,13 @@ object Form89: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxEdit1: TdxEdit
     Left = 28
     Height = 24
     Top = 364
     Width = 548
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 1856
@@ -173,7 +172,6 @@ object Form89: TdxForm
     Height = 24
     Top = 396
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     HideButton = False
@@ -205,7 +203,6 @@ object Form89: TdxForm
     Height = 24
     Top = 428
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     HideButton = False
@@ -352,7 +349,6 @@ object Form89: TdxForm
     Height = 24
     Top = 300
     Width = 544
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 10
     Id = 262737
@@ -381,6 +377,7 @@ object Form89: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel11: TdxLabel
     Left = 32
@@ -395,7 +392,6 @@ object Form89: TdxForm
     Height = 24
     Top = 240
     Width = 288
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 11
     Id = 262738
@@ -493,7 +489,6 @@ object Form89: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

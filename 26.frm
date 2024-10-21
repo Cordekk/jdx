@@ -34,7 +34,7 @@ object Form26: TdxForm
   Tree = Tree.Owner
   Index = 15
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="F5587D26-710A-4F6E-AF8B-ACAF9034982F" allfields="0" logfields="Field|Выбранное оборудование|Дата завершения|Дата изменения|Дата поступления|Дата принятия|Дополнения|Доработка|Анализная карта|Значение|U|X|Archiv|Исполнитель|Контроль|Нормативный документ|Норматив|Принял исполнитель|Сотрудник" users="User" /><action disabled="1" type="9" id="0D75186F-C6BB-4B69-BCF9-092FD2C316A3" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" fields="field|Значение|Положительное|Ед.изм|U|Постинфекционное|Нет вакциональных антител" queries="query" /><comment text="НАстройки видимости зависят от настроек ролей"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''Администратор'' |  ROLE = ''''" grid="cmp;ve_prop|dxLookupComboBox10;Редактирование|dxLookupComboBox5;Редактирование|dxLookupComboBox8;Редактирование|dxCalcEdit3;Редактирование|dxLookupComboBox13;Редактирование|dxCalcEdit1;Редактирование|dxLookupComboBox12;Редактирование|dxTabSheet5;Видимость|dxTabSheet4;Видимость" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''Администратор'' |  ROLE = '''' | ROLE = ''Приемка''" grid="cmp;ve_prop|dxCheckBox1;Редактирование|dxCheckBox3;Редактирование|dxCheckBox2;Редактирование|dxLookupComboBox9;Редактирование|dxEdit5;Редактирование" stateevents="1" /><comment text="Дальше настройки видимости зависят от прав пользователя (форма сотрудники)"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Исполнитель|user]=user &amp; [Контроль]=0'#13#10'&amp; IIF([Методика из ОА|Приемка обязательна]=1,[Принял исполнитель]=1,1=1)  //если приемка обязательна, надо сначала принять" grid="cmp;ve_prop|dxEdit3;Редактирование|dxLookupComboBox7;Редактирование|dxEdit4;Редактирование|dxCalcEdit5;Редактирование|dxCheckBox1;Редактирование|dxLookupComboBox16;Редактирование|dxMemo2;Редактирование|dxEdit10;Редактирование" stateevents="1" /><comment text="дает возможность подписать, только тем, кто имеет право"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition=" IIF([Контроль]=0  &amp;[Исполнитель|user]=user,1,0)&gt;0  /* если текущий пользователь исполнитель и исследование не закрыто */'#13#10'| IIF([Дата завершения]&lt;&gt;null &amp;[Контроль]=0  &amp; [Исполнитель|Подпись исследований]=0 &amp;  DBGET(''Сотрудники'', ''Подпись исследований'', ''[!user]=user'')=1,1,0)&gt;0'#13#10'     /* и если исследование не закрыто, дата завершения стоит и исполнитель не может подписать, а текущий пользователь может подписать  */'#13#10'     &amp; IIF([Методика из ОА|Приемка обязательна]=1,[Принял исполнитель]=1,1=1)  //если приемка обязательна, надо сначала принять" grid="cmp;ve_prop|dxButton2;Доступность" stateevents="1" /><comment text="Добавляет оборудование в выбранное оборудование"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton1" fields="fl|Оборудование" /><comment text="если шаблон выбран, то выбор для печати не отображается"/><action disabled="1" type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" condition="[Методика из ОА|Шаблон печати]=null" grid="cmp;ve_prop|dxQueryGrid6;Видимость" stateevents="0" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="F5587D26-710A-4F6E-AF8B-ACAF9034982F" allfields="0" logfields="Field|Выбранное оборудование|Дата завершения|Дата изменения|Дата поступления|Дата принятия|Дополнения|Доработка|Анализная карта|Значение|U|X|Archiv|Исполнитель|Контроль|Нормативный документ|Норматив|Принял исполнитель|Сотрудник" users="User" /><action disabled="1" type="9" id="0D75186F-C6BB-4B69-BCF9-092FD2C316A3" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" fields="field|Значение|Положительное|Ед.изм|U|Постинфекционное|Нет вакциональных антител" queries="query" /><comment text="Настройки видимости зависят от настроек ролей"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''Администратор'' |  ROLE = ''''" grid="cmp;ve_prop|dxLookupComboBox10;Редактирование|dxLookupComboBox5;Редактирование|dxLookupComboBox8;Редактирование|dxCalcEdit3;Редактирование|dxLookupComboBox13;Редактирование|dxCalcEdit1;Редактирование|dxLookupComboBox12;Редактирование|dxTabSheet5;Видимость|dxTabSheet4;Видимость" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''Администратор'' |  ROLE = '''' | ROLE = ''Приемка''" grid="cmp;ve_prop|dxCheckBox1;Редактирование|dxCheckBox3;Редактирование|dxCheckBox2;Редактирование|dxLookupComboBox9;Редактирование|dxEdit5;Редактирование" stateevents="1" /><comment text="Дальше настройки видимости зависят от прав пользователя (форма сотрудники)"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Исполнитель|user]=user &amp; [Контроль]=0'#13#10'&amp; IIF([Методика из ОА|Приемка обязательна]=1,[Принял исполнитель]=1,1=1)  //если приемка обязательна, надо сначала принять" grid="cmp;ve_prop|dxEdit3;Редактирование|dxLookupComboBox7;Редактирование|dxEdit4;Редактирование|dxCalcEdit5;Редактирование|dxCheckBox1;Редактирование|dxLookupComboBox16;Редактирование|dxMemo2;Редактирование|dxEdit10;Редактирование" stateevents="1" /><comment text="дает возможность подписать, только тем, кто имеет право"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition=" IIF([Контроль]=0  &amp;[Исполнитель|user]=user,1,0)&gt;0  /* если текущий пользователь исполнитель и исследование не закрыто */'#13#10'| IIF([Дата завершения]&lt;&gt;null &amp;[Контроль]=0  &amp; [Исполнитель|Подпись исследований]=0 &amp;  DBGET(''Сотрудники'', ''Подпись исследований'', ''[!user]=user'')=1,1,0)&gt;0'#13#10'     /* и если исследование не закрыто, дата завершения стоит и исполнитель не может подписать, а текущий пользователь может подписать  */'#13#10'     &amp; IIF([Методика из ОА|Приемка обязательна]=1,[Принял исполнитель]=1,1=1)  //если приемка обязательна, надо сначала принять" grid="cmp;ve_prop|dxButton2;Доступность" stateevents="1" /><comment text="Добавляет оборудование в выбранное оборудование"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton1" fields="fl|Оборудование" /><comment text="если шаблон выбран, то выбор для печати не отображается"/><action disabled="1" type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" condition="[Методика из ОА|Шаблон печати]=null" grid="cmp;ve_prop|dxQueryGrid6;Видимость" stateevents="0" /><comment text="Чтобы открыть ТМЦ, а не ход испытаний по клику на оборудование в запросе"/><action type="9" id="AFB9DFCF-7996-43A1-A83A-BBCFC5A19928" queries="qry;fld;bn|Оборудование в протоколе1;;dxButton8" defact="0" /></actions>'
   object dxLabel1: TdxLabel
     Left = 16
     Height = 20
@@ -48,7 +48,6 @@ object Form26: TdxForm
     Height = 28
     Top = 68
     Width = 144
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 98
@@ -68,13 +67,13 @@ object Form26: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLookupComboBox2: TdxLookupComboBox
     Left = 140
     Height = 28
     Top = 145
     Width = 460
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 103
@@ -94,6 +93,7 @@ object Form26: TdxForm
     HideList = True
     HideButton = True
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel3: TdxLabel
     Left = 16
@@ -116,7 +116,6 @@ object Form26: TdxForm
     Height = 28
     Top = 28
     Width = 300
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 189
@@ -137,6 +136,7 @@ object Form26: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel5: TdxLabel
     Left = 16
@@ -151,7 +151,6 @@ object Form26: TdxForm
     Height = 28
     Top = 225
     Width = 612
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 199
@@ -171,13 +170,13 @@ object Form26: TdxForm
     HideList = False
     HideButton = True
     UpdateTree = False
+    ListSource = 0
   end
   object dxEdit1: TdxEdit
     Left = 780
     Height = 28
     Top = 24
     Width = 96
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 452
@@ -192,7 +191,6 @@ object Form26: TdxForm
     Height = 28
     Top = 840
     Width = 496
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 453
@@ -248,7 +246,6 @@ object Form26: TdxForm
     Height = 28
     Top = 185
     Width = 612
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     Id = 1851
@@ -268,6 +265,7 @@ object Form26: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel13: TdxLabel
     Left = 12
@@ -282,7 +280,6 @@ object Form26: TdxForm
     Height = 28
     Top = 280
     Width = 516
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     Id = 1852
@@ -307,6 +304,7 @@ object Form26: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxMemo1: TdxMemo
     Left = 144
@@ -339,7 +337,6 @@ object Form26: TdxForm
     Height = 28
     Top = 24
     Width = 180
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 11
     Id = 2613
@@ -359,6 +356,7 @@ object Form26: TdxForm
     HideList = True
     HideButton = True
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel16: TdxLabel
     Left = 372
@@ -391,65 +389,64 @@ object Form26: TdxForm
       object dxLabel10: TdxLabel
         Left = 8
         Height = 20
-        Top = 71
-        Width = 65
-        Caption = 'Ед.изм.'
+        Top = 72
+        Width = 122
+        Caption = 'Ед.измерения'
         ParentColor = False
       end
       object dxLabel9: TdxLabel
-        Left = 4
+        Left = 8
         Height = 20
-        Top = 139
+        Top = 156
         Width = 168
         Caption = 'Точность (U или d)'
         ParentColor = False
       end
       object dxEdit4: TdxEdit
-        Left = 104
+        Left = 184
         Height = 28
-        Top = 163
+        Top = 148
         Width = 128
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 2
         Id = 1847
         FieldName = 'U'
         FieldSize = 50
         Required = False
-        Expression = '// [X] - это не округленное значение'#13#10'IIF([X]=0,0,'#13#10'Block('#13#10'setvar(''U'',TEXT("{CSTR("+[Формула точности]+")}")),'#13#10'setvar(''Значцифры'', 2),'#13#10'setvar(''вид_округл'',CASEOF([Методика из ОА|Округление],''До целых=0;1 знак=1;2 знака=2;3 знака=3;4 знака=4;5 знаков=5'')),'#13#10'setvar(''округл'','#13#10' IIF([Методика из ОА|Округление]=''2-е значащие цифры (по умолчанию)'','#13#10'   getvar(''Значцифры'')+TRUNC(LN(CNUM(getvar(''U'')))/2.30258509299+1),'#13#10'   getvar(''вид_округл''))),'#13#10'ROUNDTO(CNUM(getvar(''U'')),getvar(''округл''))'#13#10'))'#13#10#13#10#13#10'/*'#13#10'setvar(''вид_округл'',CASEOF([Методика из ОА|Округление],'#13#10'''До целых=0;1 знак=1;2 знака=2;3 знака=3;4 знака=4;5 знаков=5;2-е значащие цифры (по умолчанию)='')) */'
+        Expression = '// [X] - это не округленное значение'#13#10'IIF([X]=0,''-'','#13#10'Block('#13#10'setvar(''U'',TEXT("{CSTR("+[Формула точности]+")}")),'#13#10'setvar(''Значцифры'', 2),'#13#10'setvar(''вид_округл'',CASEOF([Методика из ОА|Округление],''До целых=0;1 знак=1;2 знака=2;3 знака=3;4 знака=4;5 знаков=5'')),'#13#10'setvar(''округл'','#13#10' IIF([Методика из ОА|Округление]=''2-е значащие цифры (по умолчанию)'','#13#10'   getvar(''Значцифры'')+TRUNC(LN(CNUM(getvar(''U'')))/2.30258509299+1),'#13#10'   getvar(''вид_округл''))),'#13#10'setvar(''U'',ROUNDTO(CNUM(getvar(''U'')),getvar(''округл''))),'#13#10'IIF(CNUM(getvar(''U''))=0,''-'',getvar(''U''))'#13#10'))'#13#10#13#10#13#10'/*'#13#10'setvar(''вид_округл'',CASEOF([Методика из ОА|Округление],'#13#10'''До целых=0;1 знак=1;2 знака=2;3 знака=3;4 знака=4;5 знаков=5;2-е значащие цифры (по умолчанию)='')) */'
         Editable = True
       end
       object dxEdit3: TdxMemo
         Left = 100
-        Height = 49
+        Height = 57
         Top = 7
-        Width = 788
+        Width = 628
         ScrollBars = ssBoth
         TabOrder = 0
         Id = 1846
         FieldName = 'Значение'
         FieldSize = 0
         Required = False
-        SourceTId = 0
-        SourceFId = 0
+        SourceTId = 37
+        SourceFId = 168
         Delimiter = ', '
+        Filter = '[Список]=''Исследование'''#13#10'& [Фильтр]=[Методика из ОА|Фильтр для значения]'
         Editable = True
         UpdateTree = False
       end
       object dxLabel28: TdxLabel
-        Left = 4
+        Left = 8
         Height = 20
-        Top = 112
-        Width = 96
-        Caption = 'Ср.знач(X)'
+        Top = 120
+        Width = 102
+        Caption = 'Ср.знач (X)'
         ParentColor = False
       end
       object dxCalcEdit5: TdxCalcEdit
-        Left = 104
+        Left = 184
         Height = 28
         Top = 108
         Width = 128
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
         HideButton = False
@@ -469,78 +466,23 @@ object Form26: TdxForm
         GroupDigits = False
         PadZeros = False
       end
-      object dxLookupComboBox16: TdxLookupComboBox
-        Left = 332
-        Height = 28
-        Top = 72
-        Width = 528
-        CharCase = ecNormal
-        MaxLength = 0
-        TabOrder = 4
-        Id = 262693
-        FieldName = 'Оборудование'
-        SourceTId = 102
-        SourceFId = 7260
-        Filter = '[Вид]=''Оборудование'''#13#10'&'#13#10'[ИД] notin MERGE(''Оборудование в протоколе1'', ''Идентификатор'', '';'')'#13#10'/*[Вид]=''Оборудование'''#13#10'&'#13#10'{[!Заводской (серийный) №] notin REPLACEALL(REPLACEALL([Выбранное оборудование],'' зав №'','';''),''; ''  ,'';'')'#13#10'& [!Наименование ТМЦ] notin REPLACEALL(REPLACEALL([Выбранное оборудование],'' зав №'','';''),''; ''  ,'';'')}'#13#10'|'#13#10'{{[!Заводской (серийный) №] = ''-'' | [!Заводской (серийный) №] =''''}'#13#10'& [!Наименование ТМЦ] notin REPLACEALL(REPLACEALL([Выбранное оборудование],'' зав №'','';''),''; ''  ,'';'')} */'
-        Required = False
-        SourceTable = 0
-        DestTable = 0
-        PromptFillTable = False
-        ClearTableBeforeFill = False
-        Editable = True
-        ListFields = <        
-          item
-            FieldId = 2560
-            Width = 100
-            Searchable = True
-          end>
-        DropDownCount = 8
-        ListWidthExtra = 100
-        HideList = False
-        HideButton = False
-        UpdateTree = False
-      end
-      object dxMemo2: TdxMemo
-        Left = 332
-        Height = 160
-        Top = 136
-        Width = 576
-        ScrollBars = ssBoth
-        TabOrder = 5
-        Id = 262694
-        FieldName = 'Выбранное оборудование'
-        FieldSize = 0
-        Required = False
-        SourceTId = 0
-        SourceFId = 0
-        Delimiter = ', '
-        Expression = 'IIF([Методика из ОА|Одинаковое оборудование в шаблоне]=1,'#13#10'DBMERGE(''Область деятельности'', ''Выбранное оборудование'', ''[!Адрес]=[Методика из ОА|Адрес]'#13#10'&[!Методика]=[Методика из ОА|Методика]'#13#10'&[!Шаблон печати]=[Методика из ОА|Шаблон печати]'')'#13#10',[Методика из ОА|Выбранное оборудование])'
-        Editable = True
-        UpdateTree = False
-      end
       object dxLabel29: TdxLabel
-        Left = 332
-        Height = 20
-        Top = 108
-        Width = 127
-        Caption = 'Оборудование'
+        Left = 348
+        Height = 23
+        Top = 148
+        Width = 356
+        Caption = 'Оборудование на соседней вкладке'
+        Font.Color = clRed
+        Font.Height = -19
+        Font.Name = 'Verdana'
         ParentColor = False
-      end
-      object dxButton1: TdxButton
-        Left = 864
-        Height = 30
-        Top = 104
-        Width = 36
-        Caption = '+'
-        TabOrder = 6
-        ActionOnClick = '<actions><action type="7" expression="IIF([Оборудование]=null,'''','#13#10'Block('#13#10'setfield('#13#10'''Выбранное оборудование'', NZ([Выбранное оборудование],'''')+'#13#10'NZ(NZ([Оборудование|Наименование ТМЦ],'''')+'' зав №''+  NZ([Оборудование|Заводской (серийный) №],'''') + ''; '','''')'#13#10'),'#13#10'setfield(''Оборудование'',null)'#13#10')'#13#10')"/></actions>'
+        ParentFont = False
       end
       object dxLookupComboBox7: TdxLookupComboBox
-        Left = 100
+        Left = 184
         Height = 28
-        Top = 67
-        Width = 128
-        CharCase = ecNormal
+        Top = 68
+        Width = 104
         MaxLength = 0
         TabOrder = 1
         Id = 1848
@@ -565,41 +507,7 @@ object Form26: TdxForm
         HideList = False
         HideButton = True
         UpdateTree = False
-      end
-      object dxQueryGrid5: TdxQueryGrid
-        Left = 912
-        Height = 268
-        Top = 28
-        Width = 372
-        Anchors = [akRight, akBottom]
-        AutoAdvance = aaNone
-        Color = clWindow
-        Columns = <>
-        DefaultRowHeight = 20
-        DoubleBuffered = True
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
-        ParentDoubleBuffered = False
-        ShowHint = True
-        TabOrder = 7
-        SelectedColor = clHighlight
-        GridLineStyle = psSolid
-        SelectedTextColor = clHighlightText
-        InactiveSelectedColor = clSilver
-        InactiveSelectedTextColor = clBlack
-        ShowButtons = False
-        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
-        VisibleCaptions = []
-        FlatButtons = True
-        ButtonsColor = clBtnFace
-        ButtonSize = 25
-        ButtonFont.Height = -17
-        ButtonFont.Name = 'Verdana'
-        AlignmentButtons = taLeftJustify
-        HideButtonsWhenLostFocus = False
-        WordWrap = False
-        AllowChangeSort = False
-        Id = 2987
-        ManualRefresh = False
+        ListSource = 0
       end
       object dxLabel34: TdxLabel
         Left = 1056
@@ -621,9 +529,9 @@ object Form26: TdxForm
         Left = 4
         Height = 68
         Top = 228
-        Width = 324
+        Width = 732
         ScrollBars = ssBoth
-        TabOrder = 8
+        TabOrder = 4
         Id = 263044
         FieldName = 'Дополнения'
         FieldSize = 0
@@ -635,10 +543,10 @@ object Form26: TdxForm
         UpdateTree = False
       end
       object dxQueryGrid7: TdxQueryGrid
-        Left = 912
+        Left = 756
         Height = 268
         Top = 28
-        Width = 384
+        Width = 540
         Anchors = [akRight, akBottom]
         AutoAdvance = aaNone
         Color = clWindow
@@ -648,9 +556,8 @@ object Form26: TdxForm
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
         ParentDoubleBuffered = False
         ShowHint = True
-        TabOrder = 9
+        TabOrder = 5
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -674,18 +581,18 @@ object Form26: TdxForm
       Caption = 'Оборудование в протокол'
       StopTab = False
       object dxLabel33: TdxLabel
-        Left = 244
+        Left = 504
         Height = 20
-        Top = 4
+        Top = 40
         Width = 204
         Caption = 'Таблица оборудования'
         ParentColor = False
       end
       object dxQueryGrid10: TdxQueryGrid
-        Left = 32
-        Height = 232
-        Top = 44
-        Width = 928
+        Left = 28
+        Height = 208
+        Top = 68
+        Width = 1208
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -696,12 +603,11 @@ object Form26: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
-        ShowButtons = False
-        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
+        ShowButtons = True
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh]
         VisibleCaptions = []
         FlatButtons = True
         ButtonsColor = clBtnFace
@@ -714,6 +620,81 @@ object Form26: TdxForm
         AllowChangeSort = False
         Id = 2985
         ManualRefresh = False
+      end
+      object dxLookupComboBox16: TdxLookupComboBox
+        Left = 260
+        Height = 28
+        Top = 4
+        Width = 564
+        MaxLength = 0
+        TabOrder = 1
+        Id = 262693
+        FieldName = 'Оборудование'
+        SourceTId = 102
+        SourceFId = 7260
+        Filter = '[Вид]=''Оборудование'''#13#10'& [ID записи] notin MERGE(''Оборудование в протоколе1'', ''Идентификатор'', '';'')'#13#10'/*[Вид]=''Оборудование'''#13#10'&'#13#10'{[!Заводской (серийный) №] notin REPLACEALL(REPLACEALL([Выбранное оборудование],'' зав №'','';''),''; ''  ,'';'')'#13#10'& [!Наименование ТМЦ] notin REPLACEALL(REPLACEALL([Выбранное оборудование],'' зав №'','';''),''; ''  ,'';'')}'#13#10'|'#13#10'{{[!Заводской (серийный) №] = ''-'' | [!Заводской (серийный) №] =''''}'#13#10'& [!Наименование ТМЦ] notin REPLACEALL(REPLACEALL([Выбранное оборудование],'' зав №'','';''),''; ''  ,'';'')} */'
+        Required = False
+        SourceTable = 0
+        DestTable = 0
+        PromptFillTable = False
+        ClearTableBeforeFill = False
+        Editable = True
+        ListFields = <        
+          item
+            FieldId = 2560
+            Width = 100
+            Searchable = True
+          end>
+        DropDownCount = 8
+        ListWidthExtra = 100
+        HideList = False
+        HideButton = False
+        UpdateTree = False
+        ListSource = 0
+      end
+      object dxButton1: TdxButton
+        Left = 868
+        Height = 30
+        Top = 4
+        Width = 36
+        Caption = '+'
+        TabOrder = 2
+        ActionOnClick = '<actions><comment text="старая функция заполнения текстового поля"/><action disabled="1" type="7" expression="IIF([Оборудование]=null,'''','#13#10'Block('#13#10'setfield('#13#10'''Выбранное оборудование'', NZ([Выбранное оборудование],'''')+'#13#10'NZ(NZ([Оборудование|Наименование ТМЦ],'''')+'' зав №''+  NZ([Оборудование|Заводской (серийный) №],'''') + ''; '','''')'#13#10'),'#13#10'setfield(''Оборудование'',null)'#13#10')'#13#10')"/><if cond="[Оборудование]&lt;&gt;null"><if cond="[Анализная карта]=null"><action type="9" id="53B8D7C6-1DBB-4135-A8C5-F95314559221" form="Анализная карта" values="field;expr|Исполнитель;[Исполнитель]" ignoreaccess="1" obj="Анализная карта" qry="Оборудование в протоколе1" /></if><comment text="Новая функция добавляет запись в отдельную форму и обновляет запрос если поле оборудование заполнено"/><action type="9" id="53B8D7C6-1DBB-4135-A8C5-F95314559221" form="Ход испытаний" values="field;expr|Анализная карта;[Анализная карта]|Номенклатура;[Оборудование&amp;00A6Номенклатура]|Оборудование;[Оборудование]|Обязательно для протокола;1|Проверка оборудования;1|Проверено;1" ignoreaccess="0" obj="" qry="Оборудование в протоколе1" /><comment text="затем обнуляем поле оборудование"/><action type="7" expression="IIF([Оборудование]=null,'''','#13#10'setfield(''Оборудование'',null)'#13#10')"/></if></actions>'
+      end
+      object dxLabel38: TdxLabel
+        Left = 28
+        Height = 20
+        Top = 12
+        Width = 212
+        Caption = 'Добавить оборудование'
+        ParentColor = False
+      end
+      object dxButton5: TdxButton
+        Left = 940
+        Height = 30
+        Top = 2
+        Width = 260
+        Caption = 'Заполнить оборудование'
+        TabOrder = 4
+        ActionOnClick = '<actions><if cond="[Анализная карта]=null"><action type="9" id="53B8D7C6-1DBB-4135-A8C5-F95314559221" form="Анализная карта" values="field;expr|Исполнитель;[Исполнитель]" ignoreaccess="1" obj="Анализная карта" qry="" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Оборудование в протоколе1" keeppos="0" /></if><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Оборудование в протоколе2" keeppos="0" /><action type="9" id="35B8560B-A110-4BF9-B886-635E7BED9058" fm="Ход испытаний" qry="Оборудование в протоколе2" fields="fl;qfl;expr|Исследование;;RECID(''Исследование'')|Анализная карта;;[Анализная карта]|Номенклатура;Номенклатура_ИД;1|Оборудование;ТМЦ_ИД;1|Проверка оборудования;;1|Проверено;;1|Обязательно для протокола;;1" msg="" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Оборудование в протоколе1" keeppos="0" /></actions>'
+      end
+      object dxButton6: TdxButton
+        Left = 944
+        Height = 30
+        Top = 36
+        Width = 252
+        Caption = 'Очистить таблицу'
+        TabOrder = 5
+        ActionOnClick = '<actions><action type="9" id="3C3908DD-0725-493B-98BE-CDE84D76FA74" form="Ход испытаний" filter="[ID записи] in MERGE(''Оборудование в протоколе1'', ''ID записи'', '';'')'#13#10'&amp; [Исследование] = RECID(''Исследование'')" prompt="" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Оборудование в протоколе1" keeppos="0" /></actions>'
+      end
+      object dxButton8: TdxButton
+        Left = 31
+        Height = 22
+        Top = 275
+        Width = 132
+        Caption = 'открыть ТМЦ'
+        TabOrder = 6
+        ActionOnClick = '<actions><action type="9" id="E30DB736-3D71-4710-A25A-53525B5425E4" form="ТМЦ" recid="CNUM(GET(''Оборудование в протоколе1'', ''Идентификатор''))" ignoreaccess="0" obj="" qry="Оборудование в протоколе1" /></actions>'
       end
     end
     object dxTabSheet2: TdxTabSheet
@@ -734,7 +715,6 @@ object Form26: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -791,7 +771,6 @@ object Form26: TdxForm
         Height = 28
         Top = 63
         Width = 112
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 2
         HideButton = False
@@ -850,7 +829,6 @@ object Form26: TdxForm
         Top = 276
         Width = 694
         Anchors = [akTop, akLeft, akRight, akBottom]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 5
         Id = 8635
@@ -869,6 +847,7 @@ object Form26: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
     end
     object dxTabSheet1: TdxTabSheet
@@ -879,7 +858,6 @@ object Form26: TdxForm
         Height = 28
         Top = 40
         Width = 244
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 0
         Id = 4563
@@ -899,13 +877,13 @@ object Form26: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLookupComboBox12: TdxLookupComboBox
         Left = 28
         Height = 28
         Top = 100
         Width = 244
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
         Id = 4565
@@ -925,13 +903,13 @@ object Form26: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLookupComboBox14: TdxLookupComboBox
         Left = 24
         Height = 28
         Top = 152
         Width = 244
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 2
         Id = 8529
@@ -951,13 +929,13 @@ object Form26: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxCalcEdit3: TdxCalcEdit
         Left = 320
         Height = 28
         Top = 104
         Width = 128
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
         HideButton = False
@@ -982,7 +960,6 @@ object Form26: TdxForm
         Height = 28
         Top = 256
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 4
         Id = 8534
@@ -996,7 +973,6 @@ object Form26: TdxForm
         Height = 28
         Top = 256
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 5
         HideButton = False
@@ -1036,7 +1012,6 @@ object Form26: TdxForm
         Height = 28
         Top = 260
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 7
         HideButton = False
@@ -1067,7 +1042,6 @@ object Form26: TdxForm
         Height = 28
         Top = 8
         Width = 76
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 8
         HideButton = False
@@ -1132,7 +1106,6 @@ object Form26: TdxForm
         Height = 28
         Top = 40
         Width = 156
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 9
         Id = 131063
@@ -1153,7 +1126,6 @@ object Form26: TdxForm
         Height = 28
         Top = 255
         Width = 48
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 10
         HideButton = False
@@ -1193,7 +1165,6 @@ object Form26: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1217,7 +1188,6 @@ object Form26: TdxForm
         Height = 28
         Top = 40
         Width = 172
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
         Id = 262424
@@ -1229,14 +1199,19 @@ object Form26: TdxForm
         DestTable = 0
         PromptFillTable = False
         ClearTableBeforeFill = False
-        Expression = 'GET(''Результаты испытаний'', ''Анализная карта'')'
-        Editable = False
-        ListFields = <>
+        Editable = True
+        ListFields = <        
+          item
+            FieldId = 52286
+            Width = 100
+            Searchable = False
+          end>
         DropDownCount = 8
         ListWidthExtra = 0
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel27: TdxLabel
         Left = 12
@@ -1262,7 +1237,6 @@ object Form26: TdxForm
         ShowHint = True
         TabOrder = 2
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1335,7 +1309,7 @@ object Form26: TdxForm
         SourceTId = 0
         SourceFId = 0
         Delimiter = ', '
-        Expression = '// [Дата изменения] /* при наличии нормативного документа устанавливается формаула для расчета положительных - правиало принятия решения простое */'#13#10'IIF(newrec=1,[Нормативная формула],  // в создаваемых исследованиях не надо искать норматив'#13#10'NZ(DBGET(''Норматив продукции'', ''Нормативная формула'', ''[!Показатель]=[Показатель]&'#13#10'[!Нормативный документ]=[Нормативный документ] &'#13#10'{[!Продукция]=[Образец|Проба|Продукция]|[!Группа продукции]=[Образец|Проба|Продукция|Группа продукции2]}&'#13#10'{[!Репродукция]=[Образец|Проба|Репродукция]|[!Репродукция]=""}&'#13#10'{[!Категория]=[Образец|Проба|Категория]|[!Категория]=""}''),''[''+''Положительное''+'']'')'#13#10'/*для того, чтобы при отсутствии номратива подставлялось само значение флажка*/'#13#10')'
+        Expression = '// [Значение] [X] [Дата изменения] /* при наличии нормативного документа устанавливается формаула для расчета положительных - правиало принятия решения простое */'#13#10'IIF(newrec=1,[Нормативная формула],  // в создаваемых исследованиях не надо искать норматив'#13#10'NZ(DBGET(''Норматив продукции'', ''Нормативная формула'', ''[!Показатель]=[Показатель]&'#13#10'[!Нормативный документ]=[Нормативный документ] &'#13#10'{[!Продукция]=[Образец|Проба|Продукция]|[!Группа продукции]=[Образец|Проба|Продукция|Группа продукции2]}&'#13#10'{[!Репродукция]=[Образец|Проба|Репродукция]|[!Репродукция]=""}&'#13#10'{[!Категория]=[Образец|Проба|Категория]|[!Категория]=""}''),''[''+''Положительное''+'']'')'#13#10'/*для того, чтобы при отсутствии норматива подставлялось само значение флажка*/'#13#10')'
         Editable = False
         UpdateTree = False
       end
@@ -1402,7 +1376,6 @@ object Form26: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1446,19 +1419,19 @@ object Form26: TdxForm
         DefaultValue = '0'
       end
       object dxButton4: TdxButton
-        Left = 536
+        Left = 644
         Height = 30
         Top = 252
         Width = 260
-        Caption = 'заполнить анализную карту'
+        Caption = 'Заполнить оборудование'
         TabOrder = 2
-        ActionOnClick = '<actions><if cond="[Анализная карта]=null"><action type="9" id="53B8D7C6-1DBB-4135-A8C5-F95314559221" form="Анализная карта" values="field;expr|Исполнитель;[Исполнитель]" ignoreaccess="1" obj="Анализная карта" qry="Оборудование в протоколе1" /></if><action type="9" id="35B8560B-A110-4BF9-B886-635E7BED9058" fm="Ход испытаний" qry="Оборудование в протоколе2" fields="fl;qfl;expr|Исследование;;RECID(''Исследование'')|Анализная карта;;[Анализная карта]|Номенклатура;Номенклатура_ИД;1|Оборудование;ТМЦ_ИД;1|Проверка оборудования;;1|Проверено;;1" msg="" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Оборудование в протоколе1" keeppos="0" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Оборудование в протоколе2" keeppos="0" /></actions>'
+        ActionOnClick = '<actions><if cond="COUNT(''Оборудование в протоколе1'')=0"><if cond="[Анализная карта]=null"><action type="9" id="53B8D7C6-1DBB-4135-A8C5-F95314559221" form="Анализная карта" values="field;expr|Исполнитель;[Исполнитель]" ignoreaccess="1" obj="Анализная карта" qry="Оборудование в протоколе1" /></if><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Оборудование в протоколе2" keeppos="0" /><action type="9" id="35B8560B-A110-4BF9-B886-635E7BED9058" fm="Ход испытаний" qry="Оборудование в протоколе2" fields="fl;qfl;expr|Исследование;;RECID(''Исследование'')|Анализная карта;;[Анализная карта]|Номенклатура;Номенклатура_ИД;1|Оборудование;ТМЦ_ИД;1|Проверка оборудования;;1|Проверено;;1|Обязательно для протокола;;1" msg="" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Оборудование в протоколе1" keeppos="0" /></if></actions>'
       end
       object dxQueryGrid11: TdxQueryGrid
-        Left = 520
-        Height = 200
-        Top = 44
-        Width = 384
+        Left = 452
+        Height = 124
+        Top = 120
+        Width = 444
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -1469,7 +1442,6 @@ object Form26: TdxForm
         ShowHint = True
         TabOrder = 3
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1486,7 +1458,7 @@ object Form26: TdxForm
         WordWrap = False
         AllowChangeSort = False
         Id = 2996
-        ManualRefresh = False
+        ManualRefresh = True
       end
       object dxCheckBox10: TdxCheckBox
         Left = 201
@@ -1503,6 +1475,75 @@ object Form26: TdxForm
         UnCheckedText = 'Нет'
         Editable = False
         DefaultValue = '0'
+      end
+      object dxQueryGrid5: TdxQueryGrid
+        Left = 928
+        Height = 268
+        Top = 28
+        Width = 372
+        Anchors = [akRight, akBottom]
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 5
+        SelectedColor = clHighlight
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = False
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -17
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 2987
+        ManualRefresh = False
+      end
+      object dxLabel36: TdxLabel
+        Left = 972
+        Height = 20
+        Top = 4
+        Width = 310
+        Caption = 'Требования к условиям испытаний'
+        ParentColor = False
+      end
+      object dxMemo2: TdxMemo
+        Left = 448
+        Height = 92
+        Top = 16
+        Width = 460
+        ScrollBars = ssBoth
+        TabOrder = 6
+        Id = 262694
+        FieldName = 'Выбранное оборудование'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Expression = '/*IIF([Методика из ОА|Одинаковое оборудование в шаблоне]=1,'#13#10'DBMERGE(''Область деятельности'', ''Выбранное оборудование'', ''[!Адрес]=[Методика из ОА|Адрес]'#13#10'&[!Методика]=[Методика из ОА|Методика]'#13#10'&[!Шаблон печати]=[Методика из ОА|Шаблон печати]'')'#13#10',[Методика из ОА|Выбранное оборудование])    */'
+        Editable = True
+        UpdateTree = False
+      end
+      object dxLabel39: TdxLabel
+        Left = 408
+        Height = 20
+        Top = 256
+        Width = 235
+        Caption = 'Заполнение оборудования'
+        ParentColor = False
+        Expression = 'BLOCK(IIF([Принял исполнитель]=1,CLICKBUTTONF(''dxButton4''),''''),''Заполнить оборудование'')'
       end
     end
   end
@@ -1527,7 +1568,6 @@ object Form26: TdxForm
     Height = 28
     Top = 109
     Width = 756
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 13
     Id = 8528
@@ -1552,13 +1592,13 @@ object Form26: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxDateEdit1: TdxDateEdit
     Left = 192
     Height = 28
     Top = 376
     Width = 112
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 14
     HideButton = False
@@ -1589,7 +1629,6 @@ object Form26: TdxForm
     Height = 28
     Top = 24
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 15
     HideButton = False
@@ -1620,7 +1659,6 @@ object Form26: TdxForm
     Height = 28
     Top = 376
     Width = 112
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 16
     HideButton = False
@@ -1643,7 +1681,6 @@ object Form26: TdxForm
     Height = 28
     Top = 68
     Width = 436
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 17
     Id = 8537
@@ -1656,7 +1693,6 @@ object Form26: TdxForm
     Height = 28
     Top = 0
     Width = 92
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 18
     Id = 26078
@@ -1687,7 +1723,6 @@ object Form26: TdxForm
     Height = 28
     Top = 144
     Width = 156
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 21
     Id = 263030
@@ -1804,7 +1839,6 @@ object Form26: TdxForm
     ShowHint = True
     TabOrder = 23
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -2203,7 +2237,6 @@ object Form26: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

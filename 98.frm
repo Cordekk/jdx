@@ -25,7 +25,6 @@ object Form98: TdxForm
     Height = 24
     Top = 36
     Width = 264
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 1813
@@ -44,6 +43,7 @@ object Form98: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel1: TdxLabel
     Left = 28
@@ -66,7 +66,6 @@ object Form98: TdxForm
     Height = 24
     Top = 128
     Width = 444
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 1814
@@ -86,6 +85,7 @@ object Form98: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel3: TdxLabel
     Left = 196
@@ -108,7 +108,6 @@ object Form98: TdxForm
     Height = 24
     Top = 288
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     HideButton = False
@@ -132,7 +131,6 @@ object Form98: TdxForm
     Height = 24
     Top = 288
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     HideButton = False
@@ -156,7 +154,6 @@ object Form98: TdxForm
     Height = 24
     Top = 288
     Width = 48
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 1818
@@ -175,6 +172,7 @@ object Form98: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel5: TdxLabel
     Left = 44
@@ -189,7 +187,6 @@ object Form98: TdxForm
     Height = 24
     Top = 404
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     HideButton = False
@@ -213,7 +210,6 @@ object Form98: TdxForm
     Height = 24
     Top = 404
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     HideButton = False
@@ -245,7 +241,6 @@ object Form98: TdxForm
     Height = 24
     Top = 552
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     HideButton = False
@@ -270,7 +265,6 @@ object Form98: TdxForm
     Height = 24
     Top = 552
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     HideButton = False
@@ -303,7 +297,6 @@ object Form98: TdxForm
     Height = 24
     Top = 76
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 10
     HideButton = False
@@ -335,7 +328,6 @@ object Form98: TdxForm
     Height = 24
     Top = 180
     Width = 344
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 11
     Id = 1883
@@ -376,7 +368,6 @@ object Form98: TdxForm
     Height = 24
     Top = 232
     Width = 312
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 12
     Id = 2457
@@ -401,6 +392,7 @@ object Form98: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel12: TdxLabel
     Left = 440
@@ -423,7 +415,6 @@ object Form98: TdxForm
     Height = 24
     Top = 80
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 13
     HideButton = False
@@ -479,7 +470,6 @@ object Form98: TdxForm
     Height = 24
     Top = 176
     Width = 172
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 14
     Id = 4526
@@ -494,7 +484,6 @@ object Form98: TdxForm
     Height = 24
     Top = 488
     Width = 84
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 15
     HideButton = False
@@ -526,7 +515,6 @@ object Form98: TdxForm
     Height = 24
     Top = 488
     Width = 72
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 16
     HideButton = False
@@ -607,7 +595,6 @@ object Form98: TdxForm
     Height = 24
     Top = 228
     Width = 336
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 18
     Id = 8522
@@ -631,13 +618,13 @@ object Form98: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxCalcEdit11: TdxCalcEdit
     Left = 640
     Height = 24
     Top = 404
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 19
     HideButton = False
@@ -810,7 +797,6 @@ object Form98: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

@@ -26,7 +26,6 @@ object Form90: TdxForm
     Height = 24
     Top = 40
     Width = 288
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 503
@@ -45,13 +44,13 @@ object Form90: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLookupComboBox2: TdxLookupComboBox
     Left = 36
     Height = 24
     Top = 108
     Width = 288
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 504
@@ -70,13 +69,13 @@ object Form90: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLookupComboBox3: TdxLookupComboBox
     Left = 32
     Height = 24
     Top = 180
     Width = 288
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 505
@@ -95,13 +94,13 @@ object Form90: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxObjectField1: TdxObjectField
     Left = 36
     Height = 24
     Top = 240
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 508
@@ -114,7 +113,6 @@ object Form90: TdxForm
     Height = 24
     Top = 240
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     HideButton = False
@@ -138,7 +136,6 @@ object Form90: TdxForm
     Height = 24
     Top = 240
     Width = 68
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 510
@@ -151,7 +148,6 @@ object Form90: TdxForm
     Height = 24
     Top = 272
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     HideButton = False
@@ -229,7 +225,6 @@ object Form90: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

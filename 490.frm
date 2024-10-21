@@ -400,7 +400,6 @@ object Form3490: TdxForm
         Height = 24
         Top = 104
         Width = 220
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 0
         Id = 8183
@@ -423,7 +422,6 @@ object Form3490: TdxForm
         Height = 24
         Top = 132
         Width = 220
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
         Id = 8185
@@ -502,7 +500,6 @@ object Form3490: TdxForm
         Height = 24
         Top = 44
         Width = 80
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
         HideButton = False
@@ -519,7 +516,6 @@ object Form3490: TdxForm
         Height = 24
         Top = 190
         Width = 80
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 4
         HideButton = False
@@ -544,7 +540,6 @@ object Form3490: TdxForm
         Height = 24
         Top = 74
         Width = 80
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 5
         HideButton = False
@@ -672,7 +667,6 @@ object Form3490: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -826,6 +820,7 @@ object Form3490: TdxForm
     Top = 196
     Width = 388
     Caption = 'Событие'
+    ParentBackground = False
     TabOrder = 4
     StopTab = False
     object dxDateEdit1: TdxDateEdit
@@ -833,7 +828,6 @@ object Form3490: TdxForm
       Height = 24
       Top = 8
       Width = 84
-      CharCase = ecNormal
       MaxLength = 0
       TabOrder = 0
       HideButton = False
@@ -865,7 +859,6 @@ object Form3490: TdxForm
       Top = 8
       Width = 84
       ReadOnly = True
-      CharCase = ecNormal
       MaxLength = 0
       TabOrder = 1
       Id = 8184
@@ -1035,7 +1028,6 @@ object Form3490: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

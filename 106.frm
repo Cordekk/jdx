@@ -26,7 +26,6 @@ object Form106: TdxForm
     Height = 24
     Top = 64
     Width = 728
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 1825
@@ -40,7 +39,6 @@ object Form106: TdxForm
     Height = 24
     Top = 124
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 1826
@@ -59,6 +57,7 @@ object Form106: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel1: TdxLabel
     Left = 24
@@ -115,6 +114,7 @@ object Form106: TdxForm
       'Реактив'
       'Материал'
       'СИЗ'
+      'ПО'
       'Не материальные'
     )
     MaxLength = 0
@@ -141,7 +141,6 @@ object Form106: TdxForm
     Top = 12
     Width = 80
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 2554
@@ -153,7 +152,6 @@ object Form106: TdxForm
     Height = 24
     Top = 124
     Width = 236
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 262310
@@ -173,6 +171,19 @@ object Form106: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
+  end
+  object dxRecordId1: TdxRecordId
+    Left = 748
+    Height = 24
+    Top = 4
+    Width = 100
+    ReadOnly = True
+    MaxLength = 0
+    TabOrder = 6
+    FieldName = 'ID записи'
+    StopTab = False
+    Id = 263227
   end
   object Grid: TdxGrid
     Left = 0
@@ -217,6 +228,12 @@ object Form106: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f1828'
+      end    
+      item
+        Tag = 263227
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263227'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
@@ -227,7 +244,6 @@ object Form106: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

@@ -21,12 +21,12 @@ object Form8: TdxForm
   Tree = Tree.Owner
   Index = 11
   SoftCheck = False
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' |   ROLE=''Администратор'' | Newrec = 1" grid="cmp;ve_prop|DxEdit1;Редактирование|dxEdit2;Редактирование|dxEdit3;Редактирование" stateevents="1" /></actions>'
   object DxEdit1: TdxEdit
     Left = 104
     Height = 28
     Top = 8
     Width = 240
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 30
@@ -56,7 +56,6 @@ object Form8: TdxForm
     Height = 28
     Top = 48
     Width = 244
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 7371
@@ -78,7 +77,6 @@ object Form8: TdxForm
     Height = 28
     Top = 96
     Width = 240
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 7372
@@ -102,7 +100,6 @@ object Form8: TdxForm
     ShowHint = True
     TabOrder = 3
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -156,7 +153,6 @@ object Form8: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

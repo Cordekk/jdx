@@ -33,7 +33,6 @@ object Form298: TdxForm
     Height = 24
     Top = 124
     Width = 412
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 7286
@@ -90,25 +89,24 @@ object Form298: TdxForm
       item
         Tag = 7285
         Title.Caption = ' '
-        Width = 100
+        Width = 178
         FieldName = 'f7285'
       end    
       item
         Tag = 7286
         Title.Caption = ' '
-        Width = 100
+        Width = 425
         FieldName = 'f7286'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
     Font.Height = -13
     Font.Name = 'Verdana'
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
     ParentDoubleBuffered = False
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

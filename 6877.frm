@@ -98,7 +98,7 @@ object Form55: TdxForm
     TabOrder = 3
     Id = 263110
     FieldName = 'Формула'
-    FieldSize = 300
+    FieldSize = 1000
     Required = False
     SourceTId = 0
     SourceFId = 0
@@ -120,7 +120,6 @@ object Form55: TdxForm
     Height = 24
     Top = 53
     Width = 472
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 263112
@@ -139,6 +138,7 @@ object Form55: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel6: TdxLabel
     Left = 27
@@ -254,7 +254,6 @@ object Form55: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

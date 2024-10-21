@@ -26,7 +26,6 @@ object Form301: TdxForm
     Height = 24
     Top = 152
     Width = 404
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 7310
@@ -46,6 +45,7 @@ object Form301: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel1: TdxLabel
     Left = 16
@@ -60,7 +60,6 @@ object Form301: TdxForm
     Height = 24
     Top = 184
     Width = 404
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 7311
@@ -81,6 +80,7 @@ object Form301: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel2: TdxLabel
     Left = 20
@@ -95,7 +95,6 @@ object Form301: TdxForm
     Height = 24
     Top = 216
     Width = 404
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 7312
@@ -116,7 +115,6 @@ object Form301: TdxForm
     Height = 24
     Top = 248
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     HideButton = False
@@ -180,7 +178,6 @@ object Form301: TdxForm
     Height = 24
     Top = 40
     Width = 396
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 7331
@@ -201,6 +198,7 @@ object Form301: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel6: TdxLabel
     Left = 16
@@ -215,7 +213,6 @@ object Form301: TdxForm
     Height = 24
     Top = 72
     Width = 396
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 7332
@@ -236,6 +233,7 @@ object Form301: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel7: TdxLabel
     Left = 16
@@ -258,7 +256,6 @@ object Form301: TdxForm
     Height = 24
     Top = 324
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     HideButton = False
@@ -298,7 +295,6 @@ object Form301: TdxForm
     Height = 24
     Top = 356
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     HideButton = False
@@ -331,7 +327,6 @@ object Form301: TdxForm
     Height = 24
     Top = 108
     Width = 244
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     Id = 8465
@@ -352,6 +347,7 @@ object Form301: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object Grid: TdxGrid
     Left = 0
@@ -430,7 +426,6 @@ object Form301: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

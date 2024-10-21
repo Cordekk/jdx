@@ -26,7 +26,6 @@ object Form93: TdxForm
     Height = 24
     Top = 312
     Width = 308
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 10
     Id = 2430
@@ -49,7 +48,6 @@ object Form93: TdxForm
     Height = 24
     Top = 36
     Width = 172
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 524
@@ -74,13 +72,13 @@ object Form93: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxDateEdit1: TdxDateEdit
     Left = 124
     Height = 24
     Top = 152
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     HideButton = False
@@ -102,7 +100,6 @@ object Form93: TdxForm
     Height = 24
     Top = 152
     Width = 96
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 526
@@ -116,7 +113,6 @@ object Form93: TdxForm
     Height = 24
     Top = 152
     Width = 200
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     HideButton = False
@@ -164,7 +160,6 @@ object Form93: TdxForm
     Height = 24
     Top = 100
     Width = 216
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 530
@@ -189,6 +184,7 @@ object Form93: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel5: TdxLabel
     Left = 20
@@ -203,7 +199,6 @@ object Form93: TdxForm
     Height = 24
     Top = 184
     Width = 496
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 1900
@@ -242,7 +237,6 @@ object Form93: TdxForm
     Height = 24
     Top = 4
     Width = 492
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     Id = 1903
@@ -272,7 +266,6 @@ object Form93: TdxForm
     Height = 24
     Top = 36
     Width = 156
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     Id = 1921
@@ -301,7 +294,6 @@ object Form93: TdxForm
     Height = 24
     Top = 216
     Width = 260
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 11
     Id = 7352
@@ -323,7 +315,6 @@ object Form93: TdxForm
     Height = 24
     Top = 100
     Width = 348
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 12
     Id = 7353
@@ -429,7 +420,6 @@ object Form93: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

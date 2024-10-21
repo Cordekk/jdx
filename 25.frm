@@ -26,7 +26,6 @@ object Form25: TdxForm
     Height = 28
     Top = 32
     Width = 568
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 77
@@ -40,7 +39,6 @@ object Form25: TdxForm
     Height = 28
     Top = 68
     Width = 204
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 78
@@ -70,7 +68,6 @@ object Form25: TdxForm
     Height = 28
     Top = 184
     Width = 568
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 202
@@ -89,13 +86,13 @@ object Form25: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxEdit3: TdxEdit
     Left = 232
     Height = 28
     Top = 108
     Width = 200
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 2433
@@ -117,7 +114,6 @@ object Form25: TdxForm
     Height = 28
     Top = 260
     Width = 572
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 7278
@@ -136,6 +132,7 @@ object Form25: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel4: TdxLabel
     Left = 24
@@ -150,7 +147,6 @@ object Form25: TdxForm
     Height = 28
     Top = -4
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     HideButton = False
@@ -193,7 +189,6 @@ object Form25: TdxForm
     ShowHint = True
     TabOrder = 6
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -244,7 +239,6 @@ object Form25: TdxForm
     ShowHint = True
     TabOrder = 7
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -294,7 +288,6 @@ object Form25: TdxForm
     ShowHint = True
     TabOrder = 8
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -366,7 +359,6 @@ object Form25: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

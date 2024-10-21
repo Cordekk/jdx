@@ -31,7 +31,6 @@ object Form231: TdxForm
     Top = 24
     Width = 80
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 28728
@@ -51,7 +50,6 @@ object Form231: TdxForm
     Height = 24
     Top = 24
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     HideButton = False
@@ -82,7 +80,6 @@ object Form231: TdxForm
     Height = 24
     Top = 24
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     HideButton = False
@@ -107,7 +104,6 @@ object Form231: TdxForm
     Height = 24
     Top = 24
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     HideButton = False
@@ -132,7 +128,6 @@ object Form231: TdxForm
     Height = 24
     Top = 24
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     HideButton = False
@@ -175,7 +170,6 @@ object Form231: TdxForm
         Top = 8
         Width = 376
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 0
         Id = 130982
@@ -194,6 +188,7 @@ object Form231: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel16: TdxLabel
         Left = 543
@@ -217,7 +212,6 @@ object Form231: TdxForm
         Height = 24
         Top = 12
         Width = 268
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
         Id = 130984
@@ -232,7 +226,6 @@ object Form231: TdxForm
         Top = 44
         Width = 376
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 2
         Id = 130985
@@ -252,13 +245,13 @@ object Form231: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLookupComboBox14: TdxLookupComboBox
         Left = 88
         Height = 24
         Top = 44
         Width = 280
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
         Id = 130986
@@ -277,6 +270,7 @@ object Form231: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel19: TdxLabel
         Left = 7
@@ -331,7 +325,6 @@ object Form231: TdxForm
         ShowHint = True
         TabOrder = 4
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -365,7 +358,6 @@ object Form231: TdxForm
         ShowHint = True
         TabOrder = 6
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -433,7 +425,6 @@ object Form231: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -468,7 +459,6 @@ object Form231: TdxForm
         ShowHint = True
         TabOrder = 1
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -493,7 +483,6 @@ object Form231: TdxForm
         Top = 28
         Width = 388
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 2
         Id = 52335
@@ -518,6 +507,7 @@ object Form231: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel9: TdxLabel
         Left = 664
@@ -533,7 +523,6 @@ object Form231: TdxForm
         Height = 24
         Top = 0
         Width = 344
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
         Id = 52338
@@ -552,6 +541,7 @@ object Form231: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel10: TdxLabel
         Left = 12
@@ -574,7 +564,6 @@ object Form231: TdxForm
         Height = 24
         Top = 32
         Width = 348
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 4
         Id = 52339
@@ -593,6 +582,7 @@ object Form231: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel12: TdxLabel
         Left = 12
@@ -615,7 +605,6 @@ object Form231: TdxForm
         Height = 24
         Top = 92
         Width = 332
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 5
         Id = 52341
@@ -634,6 +623,7 @@ object Form231: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxButton3: TdxButton
         Left = 628
@@ -678,7 +668,6 @@ object Form231: TdxForm
         ShowHint = True
         TabOrder = 9
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -712,7 +701,6 @@ object Form231: TdxForm
         Top = 284
         Width = 100
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 10
         HideButton = False
@@ -747,7 +735,6 @@ object Form231: TdxForm
         Height = 24
         Top = 60
         Width = 348
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 11
         Id = 131060
@@ -781,7 +768,6 @@ object Form231: TdxForm
         ShowHint = True
         TabOrder = 13
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -819,7 +805,6 @@ object Form231: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -862,7 +847,6 @@ object Form231: TdxForm
         ShowHint = True
         TabOrder = 1
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -936,7 +920,6 @@ object Form231: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -971,7 +954,6 @@ object Form231: TdxForm
         ShowHint = True
         TabOrder = 1
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1014,7 +996,6 @@ object Form231: TdxForm
         Top = 108
         Width = 392
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
         Id = 131011
@@ -1033,6 +1014,7 @@ object Form231: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel26: TdxLabel
         Left = 562
@@ -1058,7 +1040,6 @@ object Form231: TdxForm
         Top = 144
         Width = 68
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 4
         HideButton = False
@@ -1110,7 +1091,6 @@ object Form231: TdxForm
         Top = 292
         Width = 272
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 6
         Id = 131014
@@ -1134,7 +1114,6 @@ object Form231: TdxForm
         Top = 328
         Width = 212
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 7
         Id = 131015
@@ -1175,7 +1154,6 @@ object Form231: TdxForm
         Top = 368
         Width = 136
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 9
         HideButton = False
@@ -1226,7 +1204,6 @@ object Form231: TdxForm
         Top = 400
         Width = 136
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 11
         Id = 131019
@@ -1245,6 +1222,7 @@ object Form231: TdxForm
         HideList = False
         HideButton = True
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel32: TdxLabel
         Left = 562
@@ -1261,7 +1239,6 @@ object Form231: TdxForm
         Top = 436
         Width = 100
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 12
         HideButton = False
@@ -1295,7 +1272,6 @@ object Form231: TdxForm
         Top = 292
         Width = 200
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 13
         Id = 131023
@@ -1326,6 +1302,7 @@ object Form231: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxCheckBox8: TdxCheckBox
         Left = 566
@@ -1359,7 +1336,6 @@ object Form231: TdxForm
         Top = 76
         Width = 392
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 15
         Id = 131027
@@ -1384,6 +1360,7 @@ object Form231: TdxForm
         HideList = True
         HideButton = True
         UpdateTree = False
+        ListSource = 0
       end
       object dxButton13: TdxButton
         Left = 570
@@ -1487,7 +1464,6 @@ object Form231: TdxForm
         Height = 24
         Top = 324
         Width = 84
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 25
         HideButton = False
@@ -1512,7 +1488,6 @@ object Form231: TdxForm
         Height = 24
         Top = 324
         Width = 60
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 26
         HideButton = False
@@ -1537,7 +1512,6 @@ object Form231: TdxForm
         Height = 24
         Top = 364
         Width = 148
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 27
         HideButton = False
@@ -1602,7 +1576,6 @@ object Form231: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1636,7 +1609,6 @@ object Form231: TdxForm
         ShowHint = True
         TabOrder = 1
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1674,7 +1646,6 @@ object Form231: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1734,7 +1705,6 @@ object Form231: TdxForm
         Top = 12
         Width = 320
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
         Id = 131083
@@ -1753,6 +1723,7 @@ object Form231: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel40: TdxLabel
         Left = 620
@@ -1778,7 +1749,6 @@ object Form231: TdxForm
         Top = 80
         Width = 172
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 4
         HideButton = False
@@ -1812,7 +1782,6 @@ object Form231: TdxForm
         Top = 112
         Width = 100
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 5
         Id = 131086
@@ -1832,6 +1801,7 @@ object Form231: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel43: TdxLabel
         Left = 620
@@ -1848,7 +1818,6 @@ object Form231: TdxForm
         Top = 140
         Width = 156
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 6
         Id = 131087
@@ -1873,7 +1842,6 @@ object Form231: TdxForm
         Top = 168
         Width = 104
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 7
         HideButton = False
@@ -1899,7 +1867,6 @@ object Form231: TdxForm
         Top = 196
         Width = 100
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 8
         HideButton = False
@@ -1959,7 +1926,6 @@ object Form231: TdxForm
         Top = 272
         Width = 296
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 10
         Id = 131091
@@ -1978,6 +1944,7 @@ object Form231: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxCheckBox12: TdxCheckBox
         Left = 620
@@ -2089,7 +2056,6 @@ object Form231: TdxForm
         Top = 388
         Width = 88
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 15
         HideButton = False
@@ -2123,7 +2089,6 @@ object Form231: TdxForm
         Top = 388
         Width = 88
         Anchors = [akTop, akRight]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 16
         HideButton = False
@@ -2184,7 +2149,6 @@ object Form231: TdxForm
         ShowHint = True
         TabOrder = 18
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -2311,7 +2275,6 @@ object Form231: TdxForm
         Top = 573
         Width = 228
         Anchors = [akRight, akBottom]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 2
         Id = 52388
@@ -2331,6 +2294,7 @@ object Form231: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLookupComboBox10: TdxLookupComboBox
         Left = 549
@@ -2338,7 +2302,6 @@ object Form231: TdxForm
         Top = 577
         Width = 228
         Anchors = [akRight, akBottom]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
         Id = 52389
@@ -2358,6 +2321,7 @@ object Form231: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxButton6: TdxButton
         Left = 17
@@ -2393,7 +2357,6 @@ object Form231: TdxForm
         ShowHint = True
         TabOrder = 6
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -2436,7 +2399,6 @@ object Form231: TdxForm
         ShowHint = True
         TabOrder = 7
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -2519,7 +2481,6 @@ object Form231: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -2592,17 +2553,16 @@ object Form231: TdxForm
       end
       object dxLookupComboBox3: TdxLookupComboBox
         Left = 104
-        Height = 0
-        Top = 681
+        Height = 21
+        Top = 660
         Width = 166
         Anchors = [akTop, akLeft, akRight, akBottom]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 4
         Id = 34824
         FieldName = 'Архив'
         SourceTId = 530
-        SourceFId = 0
+        SourceFId = 8613
         Required = False
         SourceTable = 0
         DestTable = 0
@@ -2615,6 +2575,7 @@ object Form231: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
     end
   end
@@ -2631,7 +2592,6 @@ object Form231: TdxForm
     Height = 24
     Top = 48
     Width = 336
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 52285
@@ -2652,6 +2612,7 @@ object Form231: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel7: TdxLabel
     Left = 20
@@ -2666,7 +2627,6 @@ object Form231: TdxForm
     Height = 24
     Top = 76
     Width = 336
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     Id = 52286
@@ -2686,6 +2646,7 @@ object Form231: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxButton1: TdxButton
     Left = 688
@@ -2701,7 +2662,6 @@ object Form231: TdxForm
     Height = 24
     Top = 12
     Width = 128
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     Id = 52344
@@ -2735,7 +2695,6 @@ object Form231: TdxForm
     Top = 60
     Width = 232
     Anchors = [akTop, akRight]
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 11
     Id = 52337
@@ -3188,7 +3147,6 @@ object Form231: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

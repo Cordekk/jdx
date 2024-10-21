@@ -2,7 +2,7 @@ object Form1607: TdxForm
   Left = 10
   Height = 518
   Top = 10
-  Width = 747
+  Width = 806
   Id = 1607
   PId = 3
   FormCaption = 'Показатель42'
@@ -37,7 +37,6 @@ object Form1607: TdxForm
     Height = 24
     Top = 132
     Width = 496
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 26158
@@ -61,6 +60,7 @@ object Form1607: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel2: TdxLabel
     Left = 24
@@ -75,7 +75,6 @@ object Form1607: TdxForm
     Height = 24
     Top = 372
     Width = 532
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 26159
@@ -97,7 +96,6 @@ object Form1607: TdxForm
     Height = 24
     Top = 432
     Width = 536
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 26160
@@ -122,6 +120,7 @@ object Form1607: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel4: TdxLabel
     Left = 20
@@ -136,7 +135,6 @@ object Form1607: TdxForm
     Height = 24
     Top = 316
     Width = 532
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 131009
@@ -194,7 +192,6 @@ object Form1607: TdxForm
     Height = 24
     Top = 188
     Width = 396
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 262626
@@ -229,6 +226,7 @@ object Form1607: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel6: TdxLabel
     Left = 20
@@ -243,7 +241,6 @@ object Form1607: TdxForm
     Height = 24
     Top = 32
     Width = 504
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 262630
@@ -263,13 +260,13 @@ object Form1607: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLookupComboBox5: TdxLookupComboBox
     Left = 148
     Height = 24
     Top = 80
     Width = 512
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     Id = 262631
@@ -289,6 +286,7 @@ object Form1607: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel7: TdxLabel
     Left = 24
@@ -328,7 +326,6 @@ object Form1607: TdxForm
     Height = 24
     Top = 221
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     HideButton = False
@@ -352,7 +349,6 @@ object Form1607: TdxForm
     Height = 24
     Top = 189
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 10
     Id = 263027
@@ -373,7 +369,6 @@ object Form1607: TdxForm
     Height = 24
     Top = 188
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 11
     Id = 263028
@@ -386,13 +381,25 @@ object Form1607: TdxForm
     Height = 24
     Top = 484
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 12
     Id = 263118
     FieldName = 'ИД_показателя_методики'
     ObjId = 26158
     FieldId = 263116
+    StopTab = False
+  end
+  object dxObjectField4: TdxObjectField
+    Left = 694
+    Height = 24
+    Top = 136
+    Width = 100
+    MaxLength = 0
+    TabOrder = 13
+    Id = 263241
+    FieldName = 'Ед.изм'
+    ObjId = 26158
+    FieldId = 262705
     StopTab = False
   end
   object Grid: TdxGrid
@@ -408,6 +415,12 @@ object Form1607: TdxForm
         Title.Caption = ' '
         Width = 274
         FieldName = 'f26158l'
+      end    
+      item
+        Tag = 263241
+        Title.Caption = ' '
+        Width = 58
+        FieldName = 'f263241'
       end    
       item
         Tag = 131009
@@ -491,7 +504,6 @@ object Form1607: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

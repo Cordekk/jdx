@@ -34,13 +34,12 @@ object Form7: TdxForm
   Tree = Tree.Owner
   Index = 42
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' | ROLE=''Администратор''" grid="cmp;ve_prop|dxLookupComboBox3;Редактирование|dxButton1;Доступность|dxButton2;Доступность" stateevents="1" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' | ROLE=''Администратор'''#13#10'| COUNT(''Пробы продукции'')=0" grid="cmp;ve_prop|DxEdit1;Редактирование|DxLookupComboBox1;Редактирование|DxLookupComboBox2;Редактирование|dxEdit3;Редактирование|dxEdit4;Редактирование" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' | ROLE=''Администратор''" grid="cmp;ve_prop|dxLookupComboBox3;Редактирование|dxButton1;Доступность|dxButton2;Доступность" stateevents="1" /></actions>'
   object DxEdit1: TdxEdit
     Left = 104
     Height = 28
     Top = 8
     Width = 576
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 28
@@ -63,7 +62,6 @@ object Form7: TdxForm
     Height = 28
     Top = 40
     Width = 104
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 29
@@ -87,6 +85,7 @@ object Form7: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel2: TdxLabel
     Left = 8
@@ -101,7 +100,6 @@ object Form7: TdxForm
     Height = 28
     Top = 72
     Width = 564
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 48
@@ -120,6 +118,7 @@ object Form7: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel3: TdxLabel
     Left = 8
@@ -142,7 +141,6 @@ object Form7: TdxForm
     Height = 28
     Top = 120
     Width = 504
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 2628
@@ -160,11 +158,10 @@ object Form7: TdxForm
     ParentColor = False
   end
   object dxEdit4: TdxEdit
-    Left = 232
+    Left = 231
     Height = 28
     Top = 156
     Width = 504
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 262703
@@ -179,7 +176,6 @@ object Form7: TdxForm
     Top = 4
     Width = 100
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     FieldName = 'ID'
@@ -213,7 +209,6 @@ object Form7: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -252,7 +247,6 @@ object Form7: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -291,7 +285,6 @@ object Form7: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -324,7 +317,6 @@ object Form7: TdxForm
         Height = 28
         Top = 50
         Width = 141
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 2
         Id = 263076
@@ -348,6 +340,7 @@ object Form7: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxButton2: TdxButton
         Left = 572
@@ -377,7 +370,6 @@ object Form7: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -403,7 +395,6 @@ object Form7: TdxForm
     Height = 28
     Top = 476
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     HideButton = False
@@ -489,7 +480,6 @@ object Form7: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

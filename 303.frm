@@ -29,7 +29,6 @@ object Form303: TdxForm
     Height = 24
     Top = 12
     Width = 56
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 7346
@@ -45,7 +44,6 @@ object Form303: TdxForm
     Top = 16
     Width = 112
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 7345
@@ -158,7 +156,6 @@ object Form303: TdxForm
     Height = 24
     Top = 60
     Width = 304
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 7347
@@ -180,13 +177,13 @@ object Form303: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLookupComboBox2: TdxLookupComboBox
     Left = 983
     Height = 24
     Top = 12
     Width = 296
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 7348
@@ -206,13 +203,13 @@ object Form303: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxDateEdit1: TdxDateEdit
     Left = 234
     Height = 24
     Top = 16
     Width = 116
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     HideButton = False
@@ -255,7 +252,6 @@ object Form303: TdxForm
     ShowHint = True
     TabOrder = 6
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -290,7 +286,6 @@ object Form303: TdxForm
     ShowHint = True
     TabOrder = 7
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -325,7 +320,7 @@ object Form303: TdxForm
     Width = 48
     Caption = '<'
     TabOrder = 9
-    ActionOnClick = '<actions><action type="7" expression="Block('#13#10'SETVAR(''S'', GET(''Запрос_Пробы2'', ''Идентификатор'')),'#13#10'EDITINGREC(''Пробы'', GETVAR(''S''), ''Акт списания'', NULL),'#13#10'QUERYUPDATE(''Запрос_Пробы2''), '''''#13#10')"/><action disabled="1" type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" qry="Запрос_Пробы2" keeppos="1" /></actions>'
+    ActionOnClick = '<actions><action type="7" expression="Block('#13#10'SETVAR(''S'', GET(''Запрос_Пробы2'', ''Идентификатор'')),'#13#10'EDITINGREC(''Пробы'', GETVAR(''S''), ''Акт списания'', NULL),'#13#10'QUERYUPDATE(''Запрос_Пробы2''), '''''#13#10')"/><action disabled="1" type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" qry="Запрос_Пробы2" keeppos="1" /></actions>'
   end
   object dxButton4: TdxButton
     Left = 894
@@ -358,7 +353,6 @@ object Form303: TdxForm
     Height = 24
     Top = 80
     Width = 336
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 11
     Id = 7351
@@ -377,6 +371,7 @@ object Form303: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel6: TdxLabel
     Left = 24
@@ -402,7 +397,6 @@ object Form303: TdxForm
     ShowHint = True
     TabOrder = 12
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -443,7 +437,6 @@ object Form303: TdxForm
     Height = 24
     Top = 112
     Width = 200
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 14
     Id = 8568
@@ -463,6 +456,7 @@ object Form303: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel8: TdxLabel
     Left = 24
@@ -477,7 +471,6 @@ object Form303: TdxForm
     Height = 24
     Top = 144
     Width = 116
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 15
     HideButton = False
@@ -501,7 +494,6 @@ object Form303: TdxForm
     Height = 24
     Top = 144
     Width = 116
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 16
     HideButton = False
@@ -602,7 +594,6 @@ object Form303: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

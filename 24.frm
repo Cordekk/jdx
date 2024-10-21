@@ -26,13 +26,12 @@ object Form24: TdxForm
   Tree = Tree.Owner
   Index = 47
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' " grid="cmp;ve_prop|dxEdit5;Редактирование" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' | ROLE = ''Администратор''" grid="cmp;ve_prop|dxLookupComboBox1;Редактирование|dxCheckBox4;Редактирование|dxCheckBox5;Редактирование|dxCheckBox2;Редактирование|dxCheckBox3;Редактирование|dxCheckBox1;Редактирование|dxCheckBox8;Редактирование" stateevents="1" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' " grid="cmp;ve_prop|dxEdit5;Редактирование" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' | ROLE = ''Администратор''" grid="cmp;ve_prop|dxLookupComboBox1;Редактирование|dxCheckBox4;Редактирование|dxCheckBox5;Редактирование|dxCheckBox2;Редактирование|dxCheckBox3;Редактирование|dxCheckBox1;Редактирование|dxCheckBox8;Редактирование|dxCheckBox9;Редактирование" stateevents="1" /></actions>'
   object dxEdit1: TdxEdit
     Left = 180
     Height = 28
     Top = 16
     Width = 340
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 71
@@ -46,7 +45,6 @@ object Form24: TdxForm
     Height = 28
     Top = 52
     Width = 340
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 72
@@ -60,7 +58,6 @@ object Form24: TdxForm
     Height = 28
     Top = 88
     Width = 340
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 74
@@ -74,7 +71,6 @@ object Form24: TdxForm
     Height = 28
     Top = 228
     Width = 980
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 76
@@ -94,13 +90,13 @@ object Form24: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxObjectField1: TdxObjectField
     Left = 180
     Height = 28
     Top = 196
     Width = 88
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 79
@@ -113,7 +109,6 @@ object Form24: TdxForm
     Height = 28
     Top = 164
     Width = 244
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 80
@@ -128,7 +123,6 @@ object Form24: TdxForm
     Height = 28
     Top = 128
     Width = 344
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 87
@@ -209,7 +203,6 @@ object Form24: TdxForm
     Height = 28
     Top = 12
     Width = 64
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     Id = 1896
@@ -290,7 +283,6 @@ object Form24: TdxForm
         Height = 28
         Top = 16
         Width = 364
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 0
         Id = 7264
@@ -320,7 +312,6 @@ object Form24: TdxForm
         Height = 28
         Top = 56
         Width = 364
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
         Id = 7265
@@ -350,7 +341,6 @@ object Form24: TdxForm
         Height = 28
         Top = 152
         Width = 736
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 2
         Id = 7267
@@ -364,7 +354,6 @@ object Form24: TdxForm
         Height = 28
         Top = 104
         Width = 364
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
         Id = 7269
@@ -386,7 +375,6 @@ object Form24: TdxForm
         Height = 28
         Top = 208
         Width = 732
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 4
         Id = 7270
@@ -424,7 +412,6 @@ object Form24: TdxForm
         Height = 28
         Top = 244
         Width = 732
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 6
         Id = 8463
@@ -438,7 +425,6 @@ object Form24: TdxForm
         Height = 28
         Top = 292
         Width = 188
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 7
         HideButton = False
@@ -483,7 +469,6 @@ object Form24: TdxForm
         Height = 28
         Top = 292
         Width = 196
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 8
         Id = 262409
@@ -511,7 +496,6 @@ object Form24: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -549,7 +533,6 @@ object Form24: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -589,7 +572,6 @@ object Form24: TdxForm
         Height = 28
         Top = 291
         Width = 112
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
         HideButton = False
@@ -614,7 +596,6 @@ object Form24: TdxForm
         Height = 28
         Top = 291
         Width = 112
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 2
         HideButton = False
@@ -662,7 +643,6 @@ object Form24: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -708,7 +688,6 @@ object Form24: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -746,7 +725,6 @@ object Form24: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -819,7 +797,6 @@ object Form24: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -960,7 +937,6 @@ object Form24: TdxForm
         Top = 288
         Width = 348
         Anchors = [akTop, akLeft, akRight, akBottom]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
         Id = 8617
@@ -979,6 +955,7 @@ object Form24: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxQueryGrid6: TdxQueryGrid
         Left = 8
@@ -995,7 +972,6 @@ object Form24: TdxForm
         ShowHint = True
         TabOrder = 2
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1066,7 +1042,6 @@ object Form24: TdxForm
     Height = 28
     Top = 292
     Width = 408
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 12
     Id = 8591
@@ -1088,7 +1063,6 @@ object Form24: TdxForm
     Height = 28
     Top = 196
     Width = 592
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 13
     Id = 262463
@@ -1108,6 +1082,7 @@ object Form24: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel21: TdxLabel
     Left = 500
@@ -1347,7 +1322,6 @@ object Form24: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

@@ -7,9 +7,6 @@ object Form84: TdxForm
   PId = 0
   FormCaption = 'Почта'
   FormGroup = 'Приемка'
-  Templates.Strings = (
-    'Почта.odt'
-  )
   Font.Height = -13
   Font.Name = 'Verdana'
   AutoOpen = True
@@ -37,7 +34,6 @@ object Form84: TdxForm
     Height = 24
     Top = 8
     Width = 76
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 427
@@ -59,7 +55,6 @@ object Form84: TdxForm
     ShowHint = True
     TabOrder = 1
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -197,7 +192,6 @@ object Form84: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

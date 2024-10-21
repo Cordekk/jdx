@@ -27,7 +27,6 @@ object Form97: TdxForm
     Top = 12
     Width = 80
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 1802
@@ -47,7 +46,6 @@ object Form97: TdxForm
     Height = 24
     Top = 44
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     HideButton = False
@@ -79,7 +77,6 @@ object Form97: TdxForm
     Height = 24
     Top = 44
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     HideButton = False
@@ -95,7 +92,6 @@ object Form97: TdxForm
     Height = 24
     Top = 12
     Width = 124
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 1805
@@ -110,7 +106,6 @@ object Form97: TdxForm
     Height = 24
     Top = 0
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 1806
@@ -134,7 +129,6 @@ object Form97: TdxForm
     Height = 24
     Top = 36
     Width = 240
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 1807
@@ -156,6 +150,7 @@ object Form97: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxMemo1: TdxMemo
     Left = 498
@@ -203,7 +198,6 @@ object Form97: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -240,7 +234,6 @@ object Form97: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -316,7 +309,6 @@ object Form97: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -363,7 +355,6 @@ object Form97: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -546,7 +537,6 @@ object Form97: TdxForm
     Height = 24
     Top = 136
     Width = 368
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 10
     Id = 1882
@@ -565,6 +555,7 @@ object Form97: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxCheckBox1: TdxCheckBox
     Left = 37
@@ -590,7 +581,6 @@ object Form97: TdxForm
     Top = 529
     Width = 280
     Anchors = []
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 12
     Id = 8631
@@ -609,13 +599,13 @@ object Form97: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxCalcEdit1: TdxCalcEdit
     Left = 184
     Height = 24
     Top = 12
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 13
     HideButton = True
@@ -756,7 +746,6 @@ object Form97: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

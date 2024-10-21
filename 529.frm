@@ -21,12 +21,12 @@ object Form529: TdxForm
   Tree = Tree.Owner
   Index = 80
   SoftCheck = False
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' |   ROLE=''Администратор'' | Newrec = 1" grid="cmp;ve_prop|dxEdit1;Редактирование" stateevents="1" /></actions>'
   object dxEdit1: TdxEdit
     Left = 16
     Height = 24
     Top = 64
     Width = 312
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 8608
@@ -66,7 +66,6 @@ object Form529: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

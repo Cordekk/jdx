@@ -26,7 +26,6 @@ object Form299: TdxForm
     Height = 24
     Top = 92
     Width = 312
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 7287
@@ -45,6 +44,7 @@ object Form299: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel1: TdxLabel
     Left = 20
@@ -59,7 +59,6 @@ object Form299: TdxForm
     Height = 24
     Top = 124
     Width = 312
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 7288
@@ -79,6 +78,7 @@ object Form299: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel2: TdxLabel
     Left = 20
@@ -93,7 +93,6 @@ object Form299: TdxForm
     Height = 24
     Top = 184
     Width = 316
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 7289
@@ -114,7 +113,6 @@ object Form299: TdxForm
     Height = 24
     Top = 216
     Width = 116
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     HideButton = False
@@ -186,7 +184,6 @@ object Form299: TdxForm
     Height = 24
     Top = 56
     Width = 312
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 7329
@@ -206,6 +203,7 @@ object Form299: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel7: TdxLabel
     Left = 20
@@ -220,7 +218,6 @@ object Form299: TdxForm
     Height = 24
     Top = 16
     Width = 312
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 7330
@@ -240,6 +237,7 @@ object Form299: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel8: TdxLabel
     Left = 24
@@ -262,7 +260,6 @@ object Form299: TdxForm
     Height = 24
     Top = 288
     Width = 244
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     Id = 8263
@@ -283,13 +280,13 @@ object Form299: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxCalcEdit2: TdxCalcEdit
     Left = 144
     Height = 24
     Top = 152
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     HideButton = False
@@ -321,7 +318,6 @@ object Form299: TdxForm
     Height = 24
     Top = 328
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     HideButton = False
@@ -388,7 +384,6 @@ object Form299: TdxForm
     Height = 24
     Top = 148
     Width = 348
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 11
     Id = 262282
@@ -411,7 +406,6 @@ object Form299: TdxForm
     Height = 24
     Top = 176
     Width = 316
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 12
     Id = 262283
@@ -431,6 +425,7 @@ object Form299: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel15: TdxLabel
     Left = 584
@@ -445,7 +440,6 @@ object Form299: TdxForm
     Height = 24
     Top = 238
     Width = 336
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 13
     Id = 262284
@@ -460,7 +454,6 @@ object Form299: TdxForm
     Height = 24
     Top = 212
     Width = 336
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 14
     Id = 262285
@@ -491,7 +484,6 @@ object Form299: TdxForm
     Height = 24
     Top = 124
     Width = 348
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 15
     Id = 262286
@@ -514,7 +506,6 @@ object Form299: TdxForm
     Height = 24
     Top = 268
     Width = 112
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 16
     HideButton = False
@@ -545,7 +536,6 @@ object Form299: TdxForm
     Height = 24
     Top = 298
     Width = 112
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 17
     HideButton = False
@@ -706,7 +696,6 @@ object Form299: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

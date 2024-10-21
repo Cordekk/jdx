@@ -26,7 +26,6 @@ object Form118: TdxForm
     Height = 24
     Top = 96
     Width = 700
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 1938
@@ -55,6 +54,7 @@ object Form118: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel1: TdxLabel
     Left = 8
@@ -69,7 +69,6 @@ object Form118: TdxForm
     Height = 24
     Top = 204
     Width = 488
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 1944
@@ -88,6 +87,7 @@ object Form118: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxCounter1: TdxCounter
     Left = 632
@@ -95,7 +95,6 @@ object Form118: TdxForm
     Top = 0
     Width = 64
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 1945
@@ -139,7 +138,6 @@ object Form118: TdxForm
     Height = 24
     Top = 0
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 8515
@@ -162,7 +160,6 @@ object Form118: TdxForm
     Height = 24
     Top = 28
     Width = 300
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 8516
@@ -183,13 +180,13 @@ object Form118: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLookupComboBox4: TdxLookupComboBox
     Left = 458
     Height = 24
     Top = 52
     Width = 304
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 8517
@@ -214,13 +211,13 @@ object Form118: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxCalcEdit1: TdxCalcEdit
     Left = 120
     Height = 24
     Top = 16
     Width = 88
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     HideButton = False
@@ -269,7 +266,6 @@ object Form118: TdxForm
     Height = 24
     Top = 140
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     HideButton = False
@@ -366,7 +362,6 @@ object Form118: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

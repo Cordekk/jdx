@@ -25,7 +25,6 @@ object Form39: TdxForm
     Height = 24
     Top = 32
     Width = 448
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 262777
@@ -56,13 +55,13 @@ object Form39: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxEdit1: TdxEdit
     Left = 8
     Height = 24
     Top = 96
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 262780
@@ -83,7 +82,7 @@ object Form39: TdxForm
       item
         Tag = 262777
         Title.Caption = ' '
-        Width = 449
+        Width = 479
         FieldName = 'f262777l'
       end    
       item
@@ -100,7 +99,6 @@ object Form39: TdxForm
     ParentDoubleBuffered = False
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

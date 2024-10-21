@@ -21,6 +21,7 @@ object Form19: TdxForm
   Tree = Tree.Owner
   Index = 101
   SoftCheck = False
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' |   ROLE=''Администратор'' | Newrec = 1" grid="cmp;ve_prop|dxEdit1;Редактирование|dxComboBox1;Редактирование|dxLookupComboBox1;Редактирование" stateevents="1" /></actions>'
   object dxComboBox1: TdxComboBox
     Left = 81
     Height = 24
@@ -55,7 +56,6 @@ object Form19: TdxForm
     Height = 24
     Top = 40
     Width = 396
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 262615
@@ -77,7 +77,6 @@ object Form19: TdxForm
     Height = 24
     Top = 104
     Width = 464
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 262616
@@ -96,6 +95,7 @@ object Form19: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel3: TdxLabel
     Left = 20
@@ -140,7 +140,6 @@ object Form19: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

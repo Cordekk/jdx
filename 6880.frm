@@ -79,6 +79,7 @@ object Form58: TdxForm
     Top = 168
     Width = 656
     Caption = 'Скрытые поля'
+    ParentBackground = False
     TabOrder = 2
     StopTab = False
     object dxEdit2: TdxEdit
@@ -86,7 +87,6 @@ object Form58: TdxForm
       Height = 24
       Top = 0
       Width = 476
-      CharCase = ecNormal
       MaxLength = 0
       TabOrder = 0
       Id = 263175
@@ -137,7 +137,7 @@ object Form58: TdxForm
       TabOrder = 2
       Id = 263177
       FieldName = 'Формула'
-      FieldSize = 300
+      FieldSize = 1000
       Required = False
       SourceTId = 0
       SourceFId = 0
@@ -229,7 +229,6 @@ object Form58: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

@@ -7,9 +7,6 @@ object Form82: TdxForm
   PId = 0
   FormCaption = 'Реестр актов'
   FormGroup = 'Приемка'
-  Templates.Strings = (
-    'Реестр актов.odt'
-  )
   Font.Height = -13
   Font.Name = 'Verdana'
   CalcFields.Strings = (
@@ -40,7 +37,6 @@ object Form82: TdxForm
     Height = 24
     Top = 44
     Width = 188
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 419
@@ -62,13 +58,13 @@ object Form82: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxDateEdit1: TdxDateEdit
     Left = 152
     Height = 24
     Top = 48
     Width = 96
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     HideButton = False
@@ -100,7 +96,6 @@ object Form82: TdxForm
     Height = 24
     Top = 8
     Width = 96
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 421
@@ -130,7 +125,6 @@ object Form82: TdxForm
     ShowHint = True
     TabOrder = 3
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -266,7 +260,6 @@ object Form82: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

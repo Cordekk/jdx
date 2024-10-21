@@ -21,12 +21,12 @@ object Form60: TdxForm
   Tree = Tree.Owner
   Index = 112
   SoftCheck = False
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' |   ROLE=''Администратор'' | Newrec = 1" grid="cmp;ve_prop|dxEdit2;Редактирование" stateevents="1" /></actions>'
   object dxEdit2: TdxEdit
     Left = 4
     Height = 24
     Top = 52
     Width = 476
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 263190
@@ -66,7 +66,6 @@ object Form60: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

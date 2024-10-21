@@ -26,13 +26,12 @@ object Form22: TdxForm
   Tree = Tree.Owner
   Index = 40
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="D310819C-2BA6-4F44-88C5-C13057BEA0FD" allfields="1" logfields="Field" users="User" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="role = '''' | role = ''Администратор''" grid="cmp;ve_prop|dxCalcEdit1;Доступность|dxLookupComboBox2;Доступность|dxLookupComboBox7;Доступность|dxEdit6;Доступность|dxLabel22;Доступность|dxTabSheet6;Видимость|dxTabSheet7;Видимость" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Контроль]=null" grid="cmp;ve_prop|dxLabel2;Видимость|dxLookupComboBox2;Видимость|dxEdit6;Видимость|dxLabel22;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="'#13#10'[Заявка клиента2] = null" grid="cmp;ve_prop|dxLabel16;Видимость|dxLookupComboBox7;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="NEWREC=0" grid="cmp;ve_prop|dxButton1;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Отбор проб]=null" grid="cmp;ve_prop|dxLookupComboBox13;Видимость|dxLabel32;Видимость" stateevents="0" /><action disabled="1" type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" condition="[Заявка клиента2] = GetVar(''g'') | GetVar(''g'') = Null  /* надо чтобы не редактировали пробы к старым заявкам из новых */" grid="cmp;ve_prop|dxLookupComboBox1;Доступность|dxMemo1;Редактирование|dxEdit6;Редактирование|dxCalcEdit6;Доступность|dxEdit2;Редактирование|dxLookupComboBox5;Доступность|dxEdit3;Редактирование|dxEdit5;Редактирование|dxLookupComboBox2;Редактирование" stateevents="1" /><action type="9" id="0D75186F-C6BB-4B69-BCF9-092FD2C316A3" fields="field|Продукция|Примечание|Объем партии1|Место происхождения|Шифр_Аргус_Меркурий|Срок годности" queries="query" /><comment text="Заполнение и пересчет дополнительных полей"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton32" fields="fl|Направление" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="D310819C-2BA6-4F44-88C5-C13057BEA0FD" allfields="1" logfields="Field" users="User" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="role = '''' | role = ''Администратор''" grid="cmp;ve_prop|dxCalcEdit1;Доступность|dxLookupComboBox2;Доступность|dxLookupComboBox7;Доступность|dxEdit6;Доступность|dxLabel22;Доступность|dxTabSheet6;Видимость|dxTabSheet7;Видимость" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Контроль]=null" grid="cmp;ve_prop|dxLabel2;Видимость|dxLookupComboBox2;Видимость|dxEdit6;Видимость|dxLabel22;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="'#13#10'[Заявка клиента2] = null" grid="cmp;ve_prop|dxLabel16;Видимость|dxLookupComboBox7;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="NEWREC=0" grid="cmp;ve_prop|dxButton1;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Отбор проб]=null" grid="cmp;ve_prop|dxLookupComboBox13;Видимость|dxLabel32;Видимость" stateevents="0" /><action disabled="1" type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" condition="[Заявка клиента2] = GetVar(''g'') | GetVar(''g'') = Null  /* надо чтобы не редактировали пробы к старым заявкам из новых */" grid="cmp;ve_prop|dxLookupComboBox1;Доступность|dxMemo1;Редактирование|dxEdit6;Редактирование|dxCalcEdit6;Доступность|dxEdit2;Редактирование|dxLookupComboBox5;Доступность|dxEdit3;Редактирование|dxEdit5;Редактирование|dxLookupComboBox2;Редактирование" stateevents="1" /><action type="9" id="0D75186F-C6BB-4B69-BCF9-092FD2C316A3" fields="field|Продукция|Примечание|Объем партии1|Место происхождения|Шифр_Аргус_Меркурий|Срок годности" queries="query" /><comment text="Заполнение и пересчет дополнительных полей"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton32" fields="fl|Направление" /><comment text="Обновить шифр образцов"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="CountSample" fields="fl|Шифр_пробы" /></actions>'
   object dxTimeEdit2: TdxTimeEdit
     Left = 896
     Height = 24
     Top = 0
     Width = 80
-    CharCase = ecNormal
     Font.Height = -13
     Font.Name = 'Verdana'
     MaxLength = 0
@@ -53,7 +52,6 @@ object Form22: TdxForm
     Height = 24
     Top = 0
     Width = 132
-    CharCase = ecNormal
     Font.Height = -13
     Font.Name = 'Verdana'
     MaxLength = 0
@@ -80,7 +78,6 @@ object Form22: TdxForm
     Height = 28
     Top = 192
     Width = 564
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 60
@@ -104,6 +101,7 @@ object Form22: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel3: TdxLabel
     Left = 604
@@ -154,7 +152,6 @@ object Form22: TdxForm
     Height = 28
     Top = 28
     Width = 300
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 188
@@ -175,13 +172,13 @@ object Form22: TdxForm
     HideList = True
     HideButton = True
     UpdateTree = False
+    ListSource = 0
   end
   object dxEdit1: TdxEdit
     Left = 148
     Height = 28
     Top = 100
     Width = 260
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 192
@@ -197,7 +194,6 @@ object Form22: TdxForm
     Height = 28
     Top = 310
     Width = 584
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 441
@@ -222,6 +218,7 @@ object Form22: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel12: TdxLabel
     Left = 16
@@ -236,7 +233,6 @@ object Form22: TdxForm
     Height = 28
     Top = 0
     Width = 56
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 449
@@ -312,7 +308,6 @@ object Form22: TdxForm
         Height = 28
         Top = 50
         Width = 160
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 0
         Id = 439
@@ -333,6 +328,7 @@ object Form22: TdxForm
         HideList = False
         HideButton = True
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel11: TdxLabel
         Left = 352
@@ -435,7 +431,6 @@ object Form22: TdxForm
         Height = 28
         Top = 140
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 4
         HideButton = False
@@ -467,7 +462,6 @@ object Form22: TdxForm
         Height = 28
         Top = 136
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 5
         HideButton = False
@@ -491,7 +485,6 @@ object Form22: TdxForm
         Height = 28
         Top = 136
         Width = 84
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 6
         Id = 471
@@ -515,6 +508,7 @@ object Form22: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel14: TdxLabel
         Left = 160
@@ -529,7 +523,6 @@ object Form22: TdxForm
         Height = 28
         Top = 208
         Width = 132
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 7
         HideButton = False
@@ -553,7 +546,6 @@ object Form22: TdxForm
         Height = 28
         Top = 208
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 8
         HideButton = False
@@ -600,7 +592,6 @@ object Form22: TdxForm
         Height = 28
         Top = 16
         Width = 172
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 11
         Id = 262644
@@ -619,6 +610,7 @@ object Form22: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel32: TdxLabel
         Left = 28
@@ -676,7 +668,6 @@ object Form22: TdxForm
         Height = 28
         Top = 284
         Width = 352
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 13
         Id = 262884
@@ -697,6 +688,7 @@ object Form22: TdxForm
         HideList = True
         HideButton = True
         UpdateTree = False
+        ListSource = 0
       end
     end
     object dxTabSheet5: TdxTabSheet
@@ -707,7 +699,6 @@ object Form22: TdxForm
         Height = 28
         Top = 16
         Width = 264
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 0
         Id = 262649
@@ -732,6 +723,7 @@ object Form22: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel34: TdxLabel
         Left = 24
@@ -810,7 +802,6 @@ object Form22: TdxForm
         Height = 28
         Top = 56
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
         HideButton = False
@@ -821,7 +812,7 @@ object Form22: TdxForm
         Flat = True
         Id = 262712
         FieldName = 'Сортовая чистота'
-        Precission = 0
+        Precission = 2
         Required = False
         DefaultValue = '0'
         Editable = False
@@ -948,7 +939,6 @@ object Form22: TdxForm
         Height = 28
         Top = 88
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 8
         HideButton = False
@@ -1001,7 +991,6 @@ object Form22: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1075,7 +1064,6 @@ object Form22: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1099,7 +1087,6 @@ object Form22: TdxForm
         Height = 28
         Top = 147
         Width = 80
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
         HideButton = False
@@ -1135,7 +1122,6 @@ object Form22: TdxForm
         ShowHint = True
         TabOrder = 2
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1165,6 +1151,15 @@ object Form22: TdxForm
         ParentFont = False
         TabOrder = 4
         ActionOnClick = '<actions><action type="9" id="DAB4A991-055D-466F-A13B-A462C2BE964E" initfolder="" filename="" charset="UTF-8" skipfirstrow="1" form="Образцы" fields="formfield;update|Номер_образца;1|Примечание;0|Вид упаковки;0" values="field;expr|Проба;RECID(''Пробы'')" /></actions>'
+      end
+      object CountSample: TdxButton
+        Left = 8
+        Height = 19
+        Top = 308
+        Width = 196
+        Caption = 'Пересчитать образцы'
+        TabOrder = 5
+        ActionOnClick = '<actions><action type="3" form="Образцы" filter="[Проба]=RECID(''Пробы'')" table="" field="Шифр_образца" expression="NZ([Проба|Шифр_пробы],&quot;&quot;)+ IIF([Номер_образца]=0 |DBCOUNT(&quot;Образцы&quot;, &quot;[!Проба]=[Проба]&quot;)=1,&quot;&quot;,&quot;/&quot; + CSTR([Номер_образца]))"/><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Образцы на исследование" keeppos="0" /><action type="3" form="Исследование" filter="[Образец] in MERGE(''Образцы на исследование'', ''ID'', '';'')" table="" field="Исследование" expression=""/><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Исследования" keeppos="0" /></actions>'
       end
     end
     object dxTabSheet2: TdxTabSheet
@@ -1203,7 +1198,6 @@ object Form22: TdxForm
         ShowHint = True
         TabOrder = 1
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1244,7 +1238,6 @@ object Form22: TdxForm
         Height = 28
         Top = 256
         Width = 140
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 2
         Id = 7344
@@ -1263,13 +1256,13 @@ object Form22: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxEdit9: TdxEdit
         Left = 474
         Height = 28
         Top = 272
         Width = 144
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
         Id = 262462
@@ -1301,7 +1294,6 @@ object Form22: TdxForm
         Height = 28
         Top = 272
         Width = 108
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 4
         HideButton = False
@@ -1313,7 +1305,7 @@ object Form22: TdxForm
         Id = 70
         FieldName = 'Номер_пробы'
         Precission = 0
-        Expression = '// [Заявка клиента2] [Контроль]'#13#10'nz(DBMAX(''Пробы'', ''Номер_пробы'', ''[!Нумератор]=[Нумератор]''), 0) + 1'
+        Expression = '// [Заявка клиента2] [Контроль]'#13#10'IIF(NEWREC=1,nz(DBMAX(''Пробы'', ''Номер_пробы'', ''[!Нумератор]=[Нумератор]''), 0) + 1, 0)'
         Required = True
         DefaultValue = '1'
         CheckExpression = 'IIF(DBUNIQUE(''Номер_пробы;Нумератор'')=0,'#13#10'setfield(''Номер_пробы'',  nz(DBMAX(''Пробы'', ''Номер_пробы'', ''[!Нумератор]=[Нумератор]''), 0) + 1),'#13#10''''')'
@@ -1335,7 +1327,6 @@ object Form22: TdxForm
         Height = 28
         Top = 196
         Width = 168
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 5
         Id = 1801
@@ -1355,6 +1346,7 @@ object Form22: TdxForm
         HideList = True
         HideButton = True
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel2: TdxLabel
         Left = 20
@@ -1369,7 +1361,6 @@ object Form22: TdxForm
         Height = 28
         Top = 200
         Width = 196
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 6
         Id = 61
@@ -1389,6 +1380,7 @@ object Form22: TdxForm
         HideList = False
         HideButton = True
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel51: TdxLabel
         Left = 568
@@ -1423,7 +1415,6 @@ object Form22: TdxForm
         Height = 28
         Top = 40
         Width = 164
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 0
         Id = 2520
@@ -1450,6 +1441,7 @@ object Form22: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxCheckBox2: TdxCheckBox
         Left = 15
@@ -1473,7 +1465,6 @@ object Form22: TdxForm
         Height = 28
         Top = 125
         Width = 140
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 2
         HideButton = False
@@ -1507,7 +1498,6 @@ object Form22: TdxForm
         ShowHint = True
         TabOrder = 3
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1531,7 +1521,6 @@ object Form22: TdxForm
         Height = 28
         Top = 0
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 5
         HideButton = False
@@ -1581,7 +1570,6 @@ object Form22: TdxForm
         Height = 28
         Top = 36
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 7
         HideButton = False
@@ -1622,7 +1610,6 @@ object Form22: TdxForm
         Height = 28
         Top = 37
         Width = 140
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 8
         HideButton = False
@@ -1645,7 +1632,6 @@ object Form22: TdxForm
         Height = 28
         Top = 72
         Width = 120
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 9
         Id = 26089
@@ -1658,7 +1644,6 @@ object Form22: TdxForm
         Height = 28
         Top = 156
         Width = 156
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 10
         Id = 131111
@@ -1683,7 +1668,6 @@ object Form22: TdxForm
         Height = 28
         Top = 16
         Width = 480
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 0
         Id = 2428
@@ -1697,7 +1681,6 @@ object Form22: TdxForm
         Height = 28
         Top = 52
         Width = 164
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
         HideButton = False
@@ -1722,7 +1705,6 @@ object Form22: TdxForm
         Height = 28
         Top = 84
         Width = 88
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 2
         Id = 93
@@ -1735,7 +1717,6 @@ object Form22: TdxForm
         Height = 28
         Top = 52
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
         HideButton = False
@@ -1823,7 +1804,6 @@ object Form22: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1866,7 +1846,6 @@ object Form22: TdxForm
         ShowHint = True
         TabOrder = 2
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1922,7 +1901,6 @@ object Form22: TdxForm
     Height = 28
     Top = 428
     Width = 156
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     HideButton = False
@@ -1953,7 +1931,6 @@ object Form22: TdxForm
     Height = 28
     Top = 344
     Width = 456
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     Id = 7366
@@ -1978,13 +1955,13 @@ object Form22: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxCalcEdit6: TdxCalcEdit
     Left = 652
     Height = 28
     Top = 245
     Width = 156
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 10
     HideButton = False
@@ -2008,7 +1985,6 @@ object Form22: TdxForm
     Height = 28
     Top = 245
     Width = 76
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 11
     Id = 7369
@@ -2033,13 +2009,13 @@ object Form22: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLookupComboBox12: TdxLookupComboBox
     Left = 752
     Height = 28
     Top = 340
     Width = 200
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 12
     Id = 7378
@@ -2059,6 +2035,7 @@ object Form22: TdxForm
     HideList = True
     HideButton = True
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel25: TdxLabel
     Left = 708
@@ -2073,7 +2050,6 @@ object Form22: TdxForm
     Height = 28
     Top = 152
     Width = 432
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 15
     Id = 8559
@@ -2098,7 +2074,6 @@ object Form22: TdxForm
     Height = 28
     Top = 64
     Width = 300
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 17
     Id = 262654
@@ -2118,6 +2093,7 @@ object Form22: TdxForm
     HideList = True
     HideButton = True
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel37: TdxLabel
     Left = 16
@@ -2132,7 +2108,6 @@ object Form22: TdxForm
     Height = 28
     Top = 60
     Width = 348
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 18
     Id = 262655
@@ -2152,13 +2127,13 @@ object Form22: TdxForm
     HideList = False
     HideButton = True
     UpdateTree = False
+    ListSource = 0
   end
   object dxEdit7: TdxEdit
     Left = 128
     Height = 28
     Top = 428
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 19
     Id = 262682
@@ -2188,7 +2163,6 @@ object Form22: TdxForm
     Height = 28
     Top = 276
     Width = 152
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 20
     Id = 262683
@@ -2202,7 +2176,6 @@ object Form22: TdxForm
     Height = 28
     Top = 428
     Width = 144
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 21
     Id = 262684
@@ -2658,7 +2631,6 @@ object Form22: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

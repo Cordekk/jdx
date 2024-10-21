@@ -27,7 +27,7 @@ object Form112: TdxForm
   Tree = Tree.Owner
   Index = 9
   SoftCheck = False
-  ActionOnCreate = '<actions><action disabled="1" type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" condition="[Сотрудник|user] = USER &amp; NZ([Вид документа|Редактирует сотрудник],1)=1 | NewRec()=1 // | ROLE=''''" grid="cmp;ve_prop|dxLookupComboBox4;Редактирование|dxLookupComboBox2;Редактирование|dxLookupComboBox3;Редактирование|dxEdit1;Редактирование|dxMemo3;Редактирование|dxMemo5;Редактирование|dxLookupComboBox1;Редактирование" stateevents="1" /><action disabled="1" type="9" id="65D407B7-2CFE-4F4D-9BE4-800461F09FE4" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" numerator="Номер" allow_edit_number="1" dependfields="DependField|Нумератор" /><comment text="Для утверждения документа"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Утверждающий|user]= user &amp; [Согласовано] = 1" grid="cmp;ve_prop|dxButton10;Доступность|dxMemo4;Доступность|dxCheckBox2;Доступность" stateevents="0" /><comment text="Логирование изменений"/><action type="9" id="86F3AAEF-2807-46C4-8344-8E2521947747" allfields="1" logfields="Field" users="User" /><comment text="Для опредления доступа к редактированию"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="IIF(NZ([Вид документа|Редактирует сотрудник],1)=1, [Сотрудник|user]=USER, 1=0) |'#13#10'IIF(NZ([Вид документа|Редактирует ответственный],1)=1, [Ответственный|user] = USER, 1=0)'#13#10'| NewRec()=1 // | ROLE=''''" grid="cmp;ve_prop|dxLookupComboBox4;Редактирование|dxLookupComboBox2;Редактирование|dxLookupComboBox3;Редактирование|dxEdit1;Редактирование|dxMemo3;Редактирование|dxMemo5;Редактирование|dxLookupComboBox1;Редактирование" stateevents="1" /></actions>'
+  ActionOnCreate = '<actions><comment text="Для утверждения документа"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Утверждающий|user]= user &amp; [Согласовано] = 1" grid="cmp;ve_prop|dxButton10;Доступность|dxMemo4;Доступность|dxCheckBox2;Доступность" stateevents="0" /><comment text="Логирование изменений"/><action type="9" id="86F3AAEF-2807-46C4-8344-8E2521947747" allfields="1" logfields="Field" users="User" /><comment text="Для опредления доступа к редактированию"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="IIF(NZ([Вид документа|Редактирует сотрудник],1)=1, [Сотрудник|user]=USER, 1=0) |'#13#10'IIF(NZ([Вид документа|Редактирует ответственный],1)=1, [Ответственный|user] = USER, 1=0)'#13#10'| NewRec()=1 // | ROLE=''''" grid="cmp;ve_prop|dxLookupComboBox4;Редактирование|dxLookupComboBox2;Редактирование|dxLookupComboBox3;Редактирование|dxEdit1;Редактирование|dxMemo3;Редактирование|dxMemo5;Редактирование|dxLookupComboBox1;Редактирование" stateevents="1" /><action disabled="1" type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" condition="[Сотрудник|user] = USER &amp; NZ([Вид документа|Редактирует сотрудник],1)=1 | NewRec()=1 // | ROLE=''''" grid="cmp;ve_prop|dxLookupComboBox4;Редактирование|dxLookupComboBox2;Редактирование|dxLookupComboBox3;Редактирование|dxEdit1;Редактирование|dxMemo3;Редактирование|dxMemo5;Редактирование|dxLookupComboBox1;Редактирование" stateevents="1" /><action disabled="1" type="9" id="65D407B7-2CFE-4F4D-9BE4-800461F09FE4" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" numerator="Номер" allow_edit_number="1" dependfields="DependField|Нумератор" /></actions>'
   object dxButton13: TdxButton
     Left = 788
     Height = 30
@@ -42,7 +42,6 @@ object Form112: TdxForm
     Top = 8
     Width = 84
     ReadOnly = True
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 1884
@@ -62,7 +61,6 @@ object Form112: TdxForm
     Height = 24
     Top = 40
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     HideButton = True
@@ -94,7 +92,6 @@ object Form112: TdxForm
     Height = 24
     Top = 40
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     HideButton = True
@@ -111,7 +108,6 @@ object Form112: TdxForm
     Height = 24
     Top = 0
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 1888
@@ -135,7 +131,6 @@ object Form112: TdxForm
     Height = 24
     Top = 8
     Width = 304
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 1889
@@ -156,6 +151,7 @@ object Form112: TdxForm
     HideList = False
     HideButton = True
     UpdateTree = False
+    ListSource = 0
   end
   object dxPageControl1: TdxPageControl
     Left = 8
@@ -205,7 +201,6 @@ object Form112: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -269,7 +264,6 @@ object Form112: TdxForm
         Height = 24
         Top = 20
         Width = 128
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 2
         HideButton = False
@@ -320,7 +314,7 @@ object Form112: TdxForm
         Width = 140
         Caption = 'Назначить одному'
         TabOrder = 4
-        ActionOnClick = '<actions><action type="7" expression="// Block(  SETVAR(''Id'',[Идентификатор]),'#13#10'// SETVAR(''S'',[Тип задачи2]),'#13#10'// SETVAR(''D'',[Исполнитель]),'#13#10'// SETVAR(''M'',[Описание задачи]),'#13#10'// SETVAR(''T'',[Срок задачи]),'#13#10'// CreateRec(''Задачи'', ''Документ1$~GETVAR(&quot;Id&quot;) # Тип задачи$~GETVAR(&quot;S&quot;) # Исполнитель$~GETVAR(&quot;D&quot;) # Описание$~GETVAR(&quot;M&quot;) # Срок задачи$~GETVAR(&quot;T&quot;) ''))"/></actions>'
+        ActionOnClick = '<actions><comment text="настроено через скрипт формы"/><action disabled="1" type="7" expression=" Block(  SETVAR(''Id'',[Идентификатор]),'#13#10' SETVAR(''S'',[Тип задачи2]),'#13#10' SETVAR(''D'',[Исполнитель]),'#13#10' SETVAR(''M'',[Описание задачи]),'#13#10' SETVAR(''T'',[Срок задачи]),'#13#10' CreateRec(''Задачи'', ''Документ1$~GETVAR(&quot;Id&quot;) # Тип задачи$~GETVAR(&quot;S&quot;) # Исполнитель$~GETVAR(&quot;D&quot;) # Описание задачи$~GETVAR(&quot;M&quot;) # Срок задачи$~GETVAR(&quot;T&quot;) ''))"/><action disabled="1" type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" qry="Задачи1" keeppos="0" /></actions>'
       end
       object dxLabel20: TdxLabel
         Left = 18
@@ -335,7 +329,6 @@ object Form112: TdxForm
         Height = 24
         Top = 84
         Width = 280
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 5
         Id = 7325
@@ -354,6 +347,7 @@ object Form112: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel27: TdxLabel
         Left = 16
@@ -368,7 +362,6 @@ object Form112: TdxForm
         Height = 24
         Top = 152
         Width = 396
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 6
         Id = 8420
@@ -395,6 +388,7 @@ object Form112: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxButton11: TdxButton
         Left = 448
@@ -458,7 +452,6 @@ object Form112: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -537,7 +530,6 @@ object Form112: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -569,7 +561,6 @@ object Form112: TdxForm
         Height = 24
         Top = 56
         Width = 308
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 2
         Id = 8401
@@ -588,6 +579,7 @@ object Form112: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxCheckBox2: TdxCheckBox
         Left = 156
@@ -678,7 +670,6 @@ object Form112: TdxForm
         Height = 24
         Top = 152
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 7
         HideButton = False
@@ -740,7 +731,6 @@ object Form112: TdxForm
         ShowHint = True
         TabOrder = 1
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -795,7 +785,6 @@ object Form112: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -829,7 +818,6 @@ object Form112: TdxForm
         ShowHint = True
         TabOrder = 2
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -878,7 +866,6 @@ object Form112: TdxForm
         Height = 24
         Top = 39
         Width = 120
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 5
         HideButton = False
@@ -909,7 +896,6 @@ object Form112: TdxForm
         Height = 24
         Top = 39
         Width = 124
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 6
         HideButton = False
@@ -940,7 +926,6 @@ object Form112: TdxForm
         Height = 24
         Top = 39
         Width = 124
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 7
         HideButton = False
@@ -972,7 +957,6 @@ object Form112: TdxForm
         Height = 24
         Top = 44
         Width = 376
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 9
         Id = 4524
@@ -996,6 +980,7 @@ object Form112: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel14: TdxLabel
         Left = 492
@@ -1077,7 +1062,6 @@ object Form112: TdxForm
         Top = 164
         Width = 280
         Anchors = [akTop, akLeft, akRight, akBottom]
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 14
         Id = 8615
@@ -1096,6 +1080,7 @@ object Form112: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
     end
     object dxTabSheet8: TdxTabSheet
@@ -1135,7 +1120,6 @@ object Form112: TdxForm
         ShowHint = True
         TabOrder = 2
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1174,7 +1158,6 @@ object Form112: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1213,7 +1196,6 @@ object Form112: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1246,7 +1228,6 @@ object Form112: TdxForm
         Height = 24
         Top = 312
         Width = 100
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
         Id = 262452
@@ -1364,7 +1345,6 @@ object Form112: TdxForm
     Height = 24
     Top = 132
     Width = 404
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     Id = 1893
@@ -1388,13 +1368,13 @@ object Form112: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxEdit1: TdxEdit
     Left = 12
     Height = 24
     Top = 244
     Width = 888
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     Id = 1894
@@ -1442,7 +1422,6 @@ object Form112: TdxForm
     Height = 24
     Top = 76
     Width = 548
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 10
     Id = 1948
@@ -1466,13 +1445,13 @@ object Form112: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLookupComboBox4: TdxLookupComboBox
     Left = 460
     Height = 24
     Top = 160
     Width = 404
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 11
     Id = 1964
@@ -1491,13 +1470,13 @@ object Form112: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLookupComboBox5: TdxLookupComboBox
     Left = 500
     Height = 24
     Top = 40
     Width = 304
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 12
     Id = 4522
@@ -1522,6 +1501,7 @@ object Form112: TdxForm
     HideList = False
     HideButton = True
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel24: TdxLabel
     Left = 24
@@ -1536,7 +1516,6 @@ object Form112: TdxForm
     Height = 24
     Top = 128
     Width = 404
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 13
     Id = 8405
@@ -1565,13 +1544,13 @@ object Form112: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLookupComboBox10: TdxLookupComboBox
     Left = 16
     Height = 24
     Top = 156
     Width = 404
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 14
     Id = 8406
@@ -1595,13 +1574,13 @@ object Form112: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxCalcEdit2: TdxCalcEdit
     Left = 148
     Height = 24
     Top = 8
     Width = 96
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 15
     HideButton = True
@@ -1634,7 +1613,6 @@ object Form112: TdxForm
     Height = 24
     Top = 216
     Width = 280
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 16
     Id = 8410
@@ -1906,7 +1884,6 @@ object Form112: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

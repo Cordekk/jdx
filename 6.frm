@@ -31,7 +31,6 @@ object Form6: TdxForm
     Height = 28
     Top = 8
     Width = 332
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 19
@@ -53,7 +52,6 @@ object Form6: TdxForm
     Height = 28
     Top = 264
     Width = 516
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 20
@@ -83,7 +81,6 @@ object Form6: TdxForm
     Height = 28
     Top = 204
     Width = 520
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 111
@@ -105,7 +102,6 @@ object Form6: TdxForm
     Height = 28
     Top = 208
     Width = 436
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 112
@@ -127,7 +123,6 @@ object Form6: TdxForm
     Height = 28
     Top = 264
     Width = 468
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     Id = 113
@@ -165,7 +160,6 @@ object Form6: TdxForm
     Height = 28
     Top = 48
     Width = 196
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     Id = 138
@@ -185,6 +179,7 @@ object Form6: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel13: TdxLabel
     Left = 748
@@ -199,7 +194,6 @@ object Form6: TdxForm
     Height = 28
     Top = 48
     Width = 172
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 173
@@ -214,7 +208,6 @@ object Form6: TdxForm
     Height = 28
     Top = 8
     Width = 260
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 174
@@ -229,7 +222,6 @@ object Form6: TdxForm
     Height = 28
     Top = 84
     Width = 116
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     Id = 448
@@ -264,7 +256,6 @@ object Form6: TdxForm
         Height = 28
         Top = 175
         Width = 276
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 0
         Id = 145
@@ -288,7 +279,6 @@ object Form6: TdxForm
         Height = 28
         Top = 39
         Width = 692
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
         Id = 1843
@@ -359,7 +349,6 @@ object Form6: TdxForm
         Height = 28
         Top = 175
         Width = 652
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 3
         Id = 1904
@@ -373,7 +362,6 @@ object Form6: TdxForm
         Height = 28
         Top = 8
         Width = 408
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 4
         Id = 1916
@@ -449,7 +437,6 @@ object Form6: TdxForm
         Height = 28
         Top = 339
         Width = 216
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 0
         Id = 121
@@ -468,6 +455,7 @@ object Form6: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxLabel16: TdxLabel
         Left = 260
@@ -482,7 +470,6 @@ object Form6: TdxForm
         Height = 28
         Top = 339
         Width = 160
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 1
         Id = 144
@@ -505,7 +492,6 @@ object Form6: TdxForm
         Height = 28
         Top = 335
         Width = 420
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 2
         Id = 1842
@@ -530,7 +516,6 @@ object Form6: TdxForm
         ShowHint = True
         TabOrder = 3
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -576,7 +561,6 @@ object Form6: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -605,6 +589,7 @@ object Form6: TdxForm
         Top = 3
         Width = 969
         Caption = 'Задолженность'
+        ParentBackground = False
         TabOrder = 0
         StopTab = False
         object dxQueryGrid1: TdxQueryGrid
@@ -624,7 +609,6 @@ object Form6: TdxForm
           TitleFont.Height = -13
           TitleFont.Name = 'Verdana'
           SelectedColor = clHighlight
-          GridLineStyle = psSolid
           SelectedTextColor = clHighlightText
           InactiveSelectedColor = clSilver
           InactiveSelectedTextColor = clBlack
@@ -660,7 +644,6 @@ object Form6: TdxForm
           Height = 28
           Top = 51
           Width = 156
-          CharCase = ecNormal
           MaxLength = 0
           TabOrder = 1
           HideButton = False
@@ -697,7 +680,6 @@ object Form6: TdxForm
           TitleFont.Height = -13
           TitleFont.Name = 'Verdana'
           SelectedColor = clHighlight
-          GridLineStyle = psSolid
           SelectedTextColor = clHighlightText
           InactiveSelectedColor = clSilver
           InactiveSelectedTextColor = clBlack
@@ -745,7 +727,6 @@ object Form6: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -779,7 +760,6 @@ object Form6: TdxForm
         ShowHint = True
         TabOrder = 1
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -813,7 +793,6 @@ object Form6: TdxForm
         ShowHint = True
         TabOrder = 2
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -847,7 +826,6 @@ object Form6: TdxForm
         ShowHint = True
         TabOrder = 3
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -881,7 +859,6 @@ object Form6: TdxForm
         ShowHint = True
         TabOrder = 4
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -905,7 +882,6 @@ object Form6: TdxForm
         Height = 28
         Top = 4
         Width = 80
-        CharCase = ecNormal
         MaxLength = 0
         TabOrder = 5
         Id = 262365
@@ -934,6 +910,7 @@ object Form6: TdxForm
         HideList = False
         HideButton = False
         UpdateTree = False
+        ListSource = 0
       end
       object dxButton6: TdxButton
         Left = 860
@@ -963,7 +940,6 @@ object Form6: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1010,7 +986,6 @@ object Form6: TdxForm
         ShowHint = True
         TabOrder = 0
         SelectedColor = clHighlight
-        GridLineStyle = psSolid
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
@@ -1046,7 +1021,6 @@ object Form6: TdxForm
     ShowHint = True
     TabOrder = 11
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -1087,7 +1061,6 @@ object Form6: TdxForm
     Height = 28
     Top = 92
     Width = 376
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 13
     Id = 1914
@@ -1119,7 +1092,6 @@ object Form6: TdxForm
     Height = 28
     Top = 136
     Width = 488
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 16
     Id = 1915
@@ -1151,7 +1123,6 @@ object Form6: TdxForm
     Height = 28
     Top = 128
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 19
     Id = 7354
@@ -1174,7 +1145,6 @@ object Form6: TdxForm
     Height = 28
     Top = 320
     Width = 372
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 20
     Id = 262363
@@ -1419,7 +1389,6 @@ object Form6: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

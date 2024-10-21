@@ -25,7 +25,6 @@ object Form46: TdxForm
     Height = 24
     Top = 32
     Width = 448
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 262886
@@ -56,13 +55,13 @@ object Form46: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxEdit1: TdxEdit
     Left = 4
     Height = 24
     Top = 96
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 262887
@@ -102,7 +101,6 @@ object Form46: TdxForm
     TitleFont.Height = -13
     TitleFont.Name = 'Verdana'
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

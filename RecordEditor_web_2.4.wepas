@@ -1,0 +1,560 @@
+{@module
+Author=jurist23rus
+Version=2.4
+Description=В этом модуле содержатся функции:
+OpenRec - открывает для редактирования (в отдельном окне) указанную запись
+указанной родительской формы.<br>
+AddRec - добавляет новую запись в указанной родительской форме.<br>
+EditingRec - вносит изменения, согласно заданным параметрам, в указанное поле,
+указанной записи, указанной родительской формы.<br>
+TAddRec - добавляет новую запись в таблицу.<br>
+TDeleteRec - удаляет записи в таблице согласно заданному фильтру.<br>
+DeleteRec - удаляет записи родительской формы согласно заданному фильтру.<br>
+DbMergeA - cоединяет значения нескольких полей в одну строку.<br>
+CreateRec - создаёт запись в родительской форме и заполняет поля формы заданными значениями.<br>
+UpdateQuery - обновляет запрос.<br>
+ModuleID=A0BB843F-D34A-410B-A6B2-D325A5317814
+
+cordek сделал   веб-версию
+Действие закрытие формы убрал, в веб-версии не работает
+@}
+
+{@function
+Name=OpenRec
+@}
+
+function CheckError2 (FormName: String; id: variant) : String;
+begin
+  Result := ''
+  if FormName='' then
+    Result := 'Параметр "Имя формы" не может быть пустым'
+  else if Vartype(Id) = varNull then
+    Result := 'Id записи не может быть Null.'
+  else if not(vartype(Id) in [varDouble, varInteger]) then
+    Result := 'Неверный Id записи. Id может быть только число.';
+end;
+
+procedure OpenRec (FormName: String; Id: variant);
+var Fm: TdxForm;
+    errmsg : string;
+begin
+  errmsg := CheckError2 (FormName, Id);
+  if errmsg <> '' then RaiseException (ErCustomError, errmsg);
+  try
+    Fm := Session.CreateForm(FormName);
+    { Fm.EditWindow.Caption := 'Редактирование записи '+
+      'ID:'+IntToStr(Id)+ ' формы ' +'"'+ FormName+'"'; } // такое в вебе не поддерживается
+    Fm.OpenRecord(Id);
+    if Fm.RecordCount = 0 then
+    begin
+      Session.Debug ('Записи с ID:'+VarToStr(Id)+' не обнаружено.');
+      if Fm<>nil then Fm.Free;
+      exit;
+    end;
+    Fm.Edit;
+    {if Fm.EditWindow.ShowModal = mrOk then Fm.Post // в веб-версии не поддерживается, сохраняется нормально ручками
+     else Fm.Cancel;  }
+  except
+    RaiseException (ErCustomError, 'Ошибка создания формы. Проверьте правильность имени формы.');
+  finally
+    if Fm<>nil then Fm.Free;
+  end;
+end;
+
+{@function
+Name=UpdateQuery
+@}
+function CheckError4 (FormName: String) : String;
+begin
+  Result := ''
+  if FormName='' then
+    Result := 'Параметр "Имя запроса" не может быть пустым'
+end;
+
+procedure UpdateQuery (QName: String);
+var q: TdxQueryGrid;
+    errmsg : string;
+begin
+  errmsg := CheckError4 (QName);
+  if errmsg <> '' then
+  begin
+    RaiseException (ErCustomError, errmsg);
+  end;
+  q := Self.Queries[QName];
+  q.Refresh;
+end;
+
+
+{@function
+Name=AddRec
+@}
+function CheckError3 (FormName: String) : String;
+begin
+  Result := ''
+  if FormName='' then
+    Result := 'Параметр "Имя формы" не может быть пустым'
+end;
+
+procedure AddRec (FormName: String);
+var Fm: TdxForm;
+    errmsg : string;
+begin
+  errmsg := CheckError3 (FormName);
+  if errmsg <> '' then
+  begin
+    RaiseException (ErCustomError, errmsg);
+  end;
+  try
+    Fm := Session.CreateForm(FormName);
+   { Fm.EditWindow.Caption := 'Новая запись формы ' +'"'+ FormName+'"'; }  // в веб-версии не поддерживается,
+    Fm.Open;
+    Fm.Append;
+    {if Fm.EditWindow.ShowModal = mrOk then Fm.Post; // в веб-версии не поддерживается, сохраняется нормально ручками
+    Fm.Close;}
+  except
+    RaiseException (ErCustomError, 'Ошибка создания записи. Проверьте правильность имени формы.');
+  finally
+    if Fm<>nil then Fm.Free;
+  end;
+end;
+
+{@function
+Name=EditingRec
+@}
+
+procedure EditingRec (FormName: String; IDRec: integer; FieldName: string; Value: variant);
+var Fm: TdxForm;
+begin
+  try
+    try
+      Fm := Session.CreateForm(FormName);
+    except
+      RaiseException(erCustomError, 'Нет доступа к форме!'+#13+
+      'Проверьте правильность имени формы!');
+    end;
+    Fm.OpenRecord(IDRec);
+    try
+      if Fm[FieldName] <> value then
+      begin
+      end;
+    except
+      RaiseException(erCustomError, 'Замена невозможна!'+#13+
+      'Несоответствие типов данных или неверно указан Параметр №3.');
+    end;
+    if Fm[FieldName] <> value then
+    begin
+      If (Fm.State <> dsInsert) and (Fm.State <> dsEdit) and (Fm.CanEdit = asOk)
+        then Fm.Edit
+      else RaiseException(erCustomError, 'Замена невозможна!'+#13+
+        'Нет доступа к вызываемой записи или запись редактируется другим пользователем!');
+      Fm[FieldName] := value;
+      Fm.Post;
+    end;
+  finally
+    if (Fm <> nil) and (Fm.State = dsEdit) then Fm.Cancel;
+    if Fm <> nil then Fm.Free;
+  end;
+end;
+
+
+{@function
+Name=TAddRec
+@}
+function CheckErrorT (FormName: String) : String;
+begin
+  Result := ''
+  if FormName='' then
+    Result := 'Параметр "Имя таблицы" не может быть пустым';
+end;
+
+procedure TAddRec (FormName: String);
+var errmsg : string;
+begin
+  If (Self.State <> dsInsert) and (Self.State <> dsEdit) and (Self.CanEdit = asOk) then
+    RaiseException (ErCustomError, 'Переведите запись в режим редактирования.');
+  errmsg := CheckErrorT (FormName);
+  if errmsg <> '' then RaiseException (ErCustomError, errmsg);
+  try
+    with self.forms[FormName] do
+    begin
+      {EditWindow.Caption := 'Новая запись таблицы ' +'"'+ FormName+'"'; }  // в веб-версии не поддерживается,
+      Append;
+      {if EditWindow.ShowModal = mrOk then Post // в веб-версии не поддерживается, сохраняется нормально ручками
+        else Cancel;}
+    end;
+  except
+    RaiseException (ErCustomError, 'Ошибка создания записи. Проверьте правильность имени формы.');
+  end;
+end;
+
+{@function
+Name=TDeleteRec
+@}
+var
+ dlg: boolean;
+
+ procedure DeleteRecordsMsgDlg(Sender: TObject; Bn: TMsgDlgBtn);
+begin
+  if Bn = mbYes then dlg := True
+  else dlg := False;
+end;
+
+
+function DeleteErrorT (FormName, Accept, EndMsg: String) : String;
+begin
+  Result := ''
+  if FormName='' then
+    Result := 'Параметр "Имя таблицы" не может быть пустым'
+  else if self.forms[FormName] = nil then
+    Result := 'Таблица с именем '+'"'+FormName+'"'+' не найдена'
+  else if (Accept <> 'yesaccept') and (Accept <> 'noaccept') then
+    Result := 'Неверный формат параметра "Показывать окно подтверждения".'
+  else if (EndMsg <> 'yesmsg') and (EndMsg <> 'nomsg') then
+    Result := 'Неверный формат параметра "Сообщение о выполнении функции".'
+end;
+
+procedure TDeleteRec (NameT, Fltr, Acpt, EndM: String);
+var errmsg, Accept, NameTable, EndMsg : string;
+    bool: boolean;
+    i: integer;
+begin
+  Accept := LowerCase (Acpt);
+  EndMsg := LowerCase (EndM);
+  If (Self.State <> dsInsert) and (Self.State <> dsEdit) and (Self.CanEdit = asOk) then
+    RaiseException (ErCustomError, 'Переведите запись в режим редактирования.');
+  NameTable := NameT;
+  errmsg := DeleteErrorT (NameTable, Accept, EndMsg);
+  if errmsg <> '' then RaiseException (ErCustomError, errmsg);
+  if Accept = 'yesaccept' then
+    Self.MessageDlg('Удаление записей', 'Вы действительно хотите удалить записи?', mtConfirmation, [mbYes,mbNo], @DeleteRecordsMsgDlg); // отправляет в событие
+  if (Accept = 'noaccept') or (dlg) then
+  begin
+    with self.forms[NameTable] do
+    begin
+      i := 0;
+      MoveLast;
+      while BOF <> true do
+      begin
+        if Fltr = '' then bool := true
+          else  bool := Session.EvalExpr (Fltr, self.forms[NameTable]);
+        if bool then
+        begin
+          i := i+1;
+          delete;
+        end
+        else
+        MovePrior;
+      end;
+    end;
+    if EndMsg = 'yesmsg' then
+       Self.MessageDlg ('Результат удаления записей', 'Из таблицы '+'"'+NameTable+'"'+
+        ' удалено записей: '+IntToStr(i), mtInformation, [mbOk], nil)
+  end;
+end;
+
+{@function
+Name=DeleteRec
+@}
+
+function DeleteError (FormName, Accept, EndMsg: String) : String;
+begin
+  Result := ''
+  if FormName='' then
+    Result := 'Параметр "Имя формы" не может быть пустым'
+  else if (Accept <> 'yesaccept') and (Accept <> 'noaccept') then
+    Result := 'Неверный формат параметра "Показывать окно подтверждения".'
+  else if (EndMsg <> 'yesmsg') and (EndMsg <> 'nomsg') then
+    Result := 'Неверный формат параметра "Сообщение о выполнении функции".'
+end;
+
+procedure DeleteRec (NameF, Fltr, Acpt, EndM: String);
+var errmsg, Accept, EndMsg: string;
+    Fm: TdxForm;
+    i, cnt: integer;
+begin
+  Accept := LowerCase (Acpt);
+  EndMsg := LowerCase (EndM);
+  errmsg := DeleteError (NameF, Accept, EndMsg);
+  if errmsg <> '' then RaiseException (ErCustomError, errmsg);
+    Fm := Session.CreateForm(NameF);
+    try
+      if Fltr = '' then
+        Fm.Open
+      else
+        Fm.OpenRecords(Fltr, Fm, true);
+      Fm.MoveLast;
+      cnt := Fm.RecordCount;
+      if (cnt > 0) then
+      begin
+        if (Accept = 'yesaccept') then
+          Self.MessageDlg ('Удаление записей', 'Вы действительно хотите удалить записей: '+
+          IntToStr(cnt)+' ?', mtConfirmation, [mbYes,mbNo], @DeleteRecordsMsgDlg)
+          else dlg := True;
+        if (dlg) then
+        begin
+          while Fm.BoF <> true do
+          begin
+            Fm.Delete;
+            inc(i);
+          end;
+          if EndMsg = 'yesmsg' then
+             Self.MessageDlg ('Результат удаления записей', 'Из формы '+'"'+NameF+'"'+
+                        ' удалено записей: '+IntToStr(i), mtInformation, [mbOk], nil);
+        end
+        else exit;
+      end
+      else if (EndMsg = 'yesmsg') then
+      begin
+         Self.MessageDlg ('Удаление записей', 'Не найдено записей соответствующих фильтру!',
+                    mtInformation, [mbOk], nil);
+      end;
+    finally
+      Fm.Free;
+    end;
+end;
+
+{@function
+Name=DBMERGEA
+@}
+
+type TFilterRecord = record
+  Left,
+  Right: string;
+end;
+
+var
+  CurrFm: TdxForm;
+
+function CreateFList (FieldsList: string): TStringList;
+begin
+  Result := TstringList.Create;
+  Result.DelimitedText := FieldsList;
+end;
+
+function GetObjectValue (Cmp: TComponent; Aft: string): string;
+var
+  FormName, FieldName: string;
+  Fm: TdxForm;
+begin
+  FormName := TdxLookupComboBox (Cmp).SourceFormName;
+  FieldName := TdxLookupComboBox (Cmp).SourceFieldName;
+  Fm := Session.CreateForm(FormName);
+  try
+    Fm.Open;
+    Result := Fm.AsS[FieldName]
+  finally
+    Fm.Free;
+  end;
+end;
+
+function ParseFilter (FFilter: string): string;
+var
+  FL: TStringList;
+  i: integer;
+  Fltr: TFilterRecord;
+  Res: variant;
+  Dlmtr: char;
+begin
+  if pos ('=', FFilter) > 0 then
+    Dlmtr := '='
+  else if pos ('>', FFilter) > 0 then
+    Dlmtr := '>'
+  else if pos ('<', FFilter) > 0 then
+    Dlmtr := '<'
+  else
+    RaiseException (erCustomError, 'Пропущен знак сравнения частей фильтра.');
+  FL := TStringList.Create;
+  try
+    with FL do
+    begin
+      Delimiter := Dlmtr;
+      DelimitedText := FFilter;
+      if Count <> 2 then
+        RaiseException (erCustomError, 'Ошибка при составлении фильтра.');
+      for i:=0 to Count-1 do
+      begin
+        if i=0 then
+          Fltr.Left := Trim(FL[i])
+        else if i = 1 then
+          Fltr.Right := Trim(FL[i])
+      end;
+    end;
+    Res := Session.EvalExpr (Fltr.Right, CurrFm)
+    Result := Fltr.Left + Dlmtr + '"'+VarToStr (Res)+'"';
+  finally
+    if Assigned (FL) then FL.Free;
+  end;
+end;
+
+function  DBMERGEA (FormName, FFilter, Tablename, FieldsList: string; UniqueRecord: byte): variant;
+var
+  Fm: TdxForm;
+  FL, ResLine : TStringList;
+  ChPos: cardinal;
+  i: integer;
+  s, Bef, Aft, Fltr: string;
+
+begin
+  Result := null;
+  if (FormName = '') or (FieldsList = '') then
+    RaiseException (erCustomError, 'Параметра 1 и 3 не могут быть пустыми!');
+  CurrFm := Self;
+  Fltr := ParseFilter (FFilter);
+  Fm := Session.CreateForm(FormName);
+  try
+    with Fm do
+    begin
+      OpenRecords (Fltr, nil, false);
+      if TableName <> '' then
+        Fm := Forms[TableName];
+      MoveFirst;
+      FL := CreateFList (FieldsList);
+      ResLine := CreateFList ('');
+      ResLine.Delimiter := #13;
+      while not EoF do
+      begin
+        for i:=0 to FL.Count-1 do
+        begin
+          if FL[i] = '' then continue;
+          ChPos := Pos ('|', FL[i]);
+          if ChPos > 0 then
+          begin
+            Bef := Copy (FL[i], 1, ChPos-1);
+            Aft := Copy (FL[i], ChPos+1, Length (FL[i]));
+            s := s + GetObjectValue (FindComponentByFieldName (Bef), Aft) + ' ';
+          end
+          else
+            s := s + AsS [FL[i]] + ' ';
+        end;
+          if (UniqueRecord = 1) then
+          begin
+            if (ResLine.IndexOf (S) = -1) then
+              ResLine.Add (S)
+          end
+          else
+            ResLine.Add (S);
+        s := '';
+        MoveNext;
+      end;
+    end;
+    Result := ResLine.DelimitedText;
+  finally
+    Fm.Free;
+    if FL <> nil then FL.Free;
+    if ResLine <> nil then ResLine.Free;
+  end;
+end;
+
+{@function
+Name=CreateRec
+@}
+
+Type TFieldsAndValues = record
+  FldName,
+  ClsName: string;
+  FldValue: Variant;
+end;
+
+var
+  FV: array of TFieldsAndValues;
+
+function FloatNormalize(val: variant):double;
+var
+  res: variant;
+begin
+  if VarType(val) = varstring then
+    Result := StrToFloat (StringReplace (val, ',', '.', [rfReplaceAll]))
+  else
+    VarCast(res, val, 5);
+
+  Result := res;
+end;
+
+procedure FillMassiveValue (var Fm: TdxForm; RecStr: string);
+var
+  VL: TStringList;
+  n: integer;
+  p: cardinal;
+  Cmp: TComponent;
+  RightStr: String;
+  ValRes: variant;
+begin
+  n := Length (FV)+1;
+  SetLength (FV, n);
+  n := n - 1;
+  VL := TStringList.Create;
+  try
+    VL.Delimiter := '$';
+    VL.DelimitedText := RecStr;
+    if VL.Count <> 2 then
+     RaiseException (erCustomError, 'Ошибка разбора списка полей и их значений!');
+    FV[n].FldName := Trim (StringReplace (VL[0], #152, ' ', [rfReplaceAll]));
+    RightStr := Trim (StringReplace (VL[1], #152, ' ', [rfReplaceAll]));
+    p := Pos ('~', RightStr);
+    if p > 0 then
+    begin
+      Delete (RightStr, p, 1);
+      ValRes := Session.EvalExpr (RightStr, Fm);
+    end
+    else
+      ValRes := RightStr;
+    Cmp := Fm.FindComponentByFieldName (FV[n].FldName);
+    if not Assigned (Cmp) then
+     RaiseException (erCustomError, 'Поле "'+FV[n].FldName+'" не найдено!');
+    if ValRes = null then
+      FV[n].FldValue := ValRes
+    else
+    begin
+      FV[n].ClsName := LowerCase (Cmp.ClassName);
+      Case FV[n].ClsName of
+       'tdxedit':           FV[n].FldValue := ValRes;
+       'tdxcombobox':       FV[n].FldValue := ValRes;
+       'tdxmemo':           FV[n].FldValue := ValRes;
+       'tdxcalcedit':       FV[n].FldValue := FloatNormalize(ValRes);
+       'tdxdateedit':       FV[n].FldValue := StrToDate (ValRes);
+       'tdxtimeedit':       FV[n].FldValue := StrToTime (ValRes);
+       'tdxcheckbox':       FV[n].FldValue := StrToInt (ValRes);
+       'tdxlookupcombobox': FV[n].FldValue := ValRes;
+      end;
+    end;
+  finally
+    VL.Free;
+  end;
+end;
+
+function CreateRec (FormName, ValueList: string): byte;
+var
+  Fm: TdxForm;
+  VL: TStringList;
+  i: integer;
+begin
+  Result := 0;
+  VL := TStringList.Create;
+  Fm := Session.CreateForm(FormName);
+  try
+    try
+     VL.Delimiter := '#';
+     VL.DelimitedText := StringReplace (ValueList, ' ', #152, [rfReplaceAll]);
+     for i:=0 to VL.Count-1 do
+     begin
+       FillMassiveValue (Fm, VL[i]);
+     end;
+      Fm.OpenRecord (0);
+      Fm.Append;
+      for i:=0 to Length(FV)-1 do
+      begin
+        Fm[FV[i].FldName] := FV[i].FldValue;
+      end;
+      Fm.Post;
+      Result := Fm.RecId;
+    finally
+      VL.Free;
+      Fm.Free;
+      SetLength (FV, 0);
+    end;
+  except
+    SetLength (FV, 0);
+    RaiseLastException;
+  end;
+end;
+

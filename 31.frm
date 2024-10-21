@@ -21,12 +21,12 @@ object Form31: TdxForm
   Tree = Tree.Owner
   Index = 47
   SoftCheck = False
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' |   ROLE=''Администратор'' | Newrec = 1" grid="cmp;ve_prop|dxEdit1;Редактирование|dxLookupComboBox1;Редактирование|dxCheckBox1;Доступность|dxCheckBox2;Редактирование|dxEdit2;Редактирование|dxButton1;Доступность" stateevents="1" /></actions>'
   object dxEdit1: TdxEdit
     Left = 24
     Height = 28
     Top = 80
     Width = 272
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 108
@@ -40,7 +40,6 @@ object Form31: TdxForm
     Height = 28
     Top = 176
     Width = 580
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 411
@@ -59,6 +58,7 @@ object Form31: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel1: TdxLabel
     Left = 24
@@ -81,7 +81,6 @@ object Form31: TdxForm
     Height = 28
     Top = 16
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 451
@@ -106,7 +105,6 @@ object Form31: TdxForm
     ShowHint = True
     TabOrder = 3
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -140,7 +138,6 @@ object Form31: TdxForm
     ShowHint = True
     TabOrder = 4
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -174,7 +171,6 @@ object Form31: TdxForm
     ShowHint = True
     TabOrder = 5
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -208,7 +204,6 @@ object Form31: TdxForm
     ShowHint = True
     TabOrder = 6
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
@@ -228,11 +223,11 @@ object Form31: TdxForm
     ManualRefresh = False
   end
   object dxButton1: TdxButton
-    Left = 208
+    Left = 20
     Height = 30
-    Top = 224
-    Width = 75
-    Caption = 'dxButton1'
+    Top = 580
+    Width = 236
+    Caption = 'Сменить район  на страну'
     TabOrder = 7
     ActionOnClick = '<actions><action type="7" expression="Block('#13#10'SMART_SETFIELDVALUE(''Заявка клиента'',''Место отбора'',[Место2],''Место отбора''),'#13#10' SMART_SETFIELDVALUE(''Заявка клиента'',''Страна отправления'',[Место2],''Страна отправления''),'#13#10' SMART_SETFIELDVALUE(''Заявка клиента'',''Страна получения'',[Место2],''Страна получения''),'#13#10' SMART_SETFIELDVALUE(''Пробы'',''Страна происхождения'',[Место2],''Страна происхождения''),'#13#10' '''')"/></actions>'
   end
@@ -318,7 +313,6 @@ object Form31: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

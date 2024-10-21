@@ -25,8 +25,7 @@ object Form234: TdxForm
     Left = 20
     Height = 24
     Top = 176
-    Width = 634
-    CharCase = ecNormal
+    Width = 548
     MaxLength = 0
     TabOrder = 0
     Id = 2551
@@ -50,13 +49,13 @@ object Form234: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxEdit1: TdxEdit
     Left = 28
     Height = 24
     Top = 455
     Width = 642
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 1
     Id = 2552
@@ -78,7 +77,6 @@ object Form234: TdxForm
     Height = 24
     Top = 539
     Width = 638
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 2685
@@ -103,6 +101,7 @@ object Form234: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel2: TdxLabel
     Left = 28
@@ -133,7 +132,6 @@ object Form234: TdxForm
     Height = 24
     Top = 391
     Width = 614
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 131008
@@ -148,7 +146,6 @@ object Form234: TdxForm
     Height = 24
     Top = 40
     Width = 544
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 262634
@@ -169,13 +166,13 @@ object Form234: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLookupComboBox4: TdxLookupComboBox
     Left = 24
     Height = 24
     Top = 100
     Width = 544
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 262635
@@ -196,6 +193,7 @@ object Form234: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel5: TdxLabel
     Left = 24
@@ -226,7 +224,6 @@ object Form234: TdxForm
     Height = 24
     Top = 8
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 262770
@@ -248,7 +245,6 @@ object Form234: TdxForm
     Height = 24
     Top = 256
     Width = 396
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     Id = 262771
@@ -283,6 +279,7 @@ object Form234: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel30: TdxLabel
     Left = 24
@@ -324,7 +321,6 @@ object Form234: TdxForm
     Height = 24
     Top = 220
     Width = 80
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     HideButton = False
@@ -343,6 +339,19 @@ object Form234: TdxForm
     GroupDigits = False
     PadZeros = False
   end
+  object dxObjectField1: TdxObjectField
+    Left = 620
+    Height = 24
+    Top = 176
+    Width = 111
+    MaxLength = 0
+    TabOrder = 10
+    Id = 263240
+    FieldName = 'Ед.изм'
+    ObjId = 2551
+    FieldId = 262705
+    StopTab = False
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 100
@@ -356,6 +365,12 @@ object Form234: TdxForm
         Title.Caption = ' '
         Width = 300
         FieldName = 'f2551l'
+      end    
+      item
+        Tag = 263240
+        Title.Caption = ' '
+        Width = 58
+        FieldName = 'f263240'
       end    
       item
         Tag = 131008
@@ -420,7 +435,6 @@ object Form234: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

@@ -34,7 +34,6 @@ object Form17: TdxForm
     Height = 24
     Top = 168
     Width = 428
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 0
     Id = 262550
@@ -53,6 +52,7 @@ object Form17: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel2: TdxLabel
     Left = 16
@@ -92,7 +92,6 @@ object Form17: TdxForm
     Height = 24
     Top = 364
     Width = 288
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 2
     Id = 262552
@@ -114,7 +113,6 @@ object Form17: TdxForm
     Height = 24
     Top = 400
     Width = 144
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 3
     Id = 262553
@@ -144,7 +142,6 @@ object Form17: TdxForm
     Height = 24
     Top = 80
     Width = 128
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 4
     Id = 262556
@@ -163,6 +160,7 @@ object Form17: TdxForm
     HideList = True
     HideButton = True
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel8: TdxLabel
     Left = 16
@@ -177,7 +175,6 @@ object Form17: TdxForm
     Height = 24
     Top = 80
     Width = 156
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 5
     Id = 262557
@@ -206,7 +203,6 @@ object Form17: TdxForm
     Height = 24
     Top = 48
     Width = 128
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 6
     Id = 262558
@@ -225,13 +221,13 @@ object Form17: TdxForm
     HideList = True
     HideButton = True
     UpdateTree = False
+    ListSource = 0
   end
   object dxObjectField2: TdxObjectField
     Left = 288
     Height = 24
     Top = 48
     Width = 280
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 7
     Id = 262559
@@ -244,7 +240,6 @@ object Form17: TdxForm
     Height = 24
     Top = 108
     Width = 432
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 8
     Id = 262560
@@ -263,6 +258,7 @@ object Form17: TdxForm
     HideList = True
     HideButton = True
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel11: TdxLabel
     Left = 16
@@ -277,7 +273,6 @@ object Form17: TdxForm
     Height = 24
     Top = 400
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 9
     Id = 262562
@@ -296,6 +291,7 @@ object Form17: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel12: TdxLabel
     Left = 324
@@ -310,7 +306,6 @@ object Form17: TdxForm
     Height = 24
     Top = 544
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 10
     HideButton = False
@@ -334,7 +329,6 @@ object Form17: TdxForm
     Height = 24
     Top = 544
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 11
     HideButton = False
@@ -436,7 +430,6 @@ object Form17: TdxForm
     Height = 24
     Top = 204
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 16
     HideButton = False
@@ -468,7 +461,6 @@ object Form17: TdxForm
     Height = 24
     Top = 364
     Width = 220
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 17
     Id = 262572
@@ -493,6 +485,7 @@ object Form17: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxCheckBox5: TdxCheckBox
     Left = 612
@@ -531,7 +524,6 @@ object Form17: TdxForm
     Height = 24
     Top = 44
     Width = 196
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 20
     Id = 262575
@@ -550,6 +542,7 @@ object Form17: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxLabel19: TdxLabel
     Left = 668
@@ -564,7 +557,6 @@ object Form17: TdxForm
     Height = 24
     Top = 76
     Width = 192
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 21
     Id = 262576
@@ -586,7 +578,6 @@ object Form17: TdxForm
     Height = 24
     Top = 364
     Width = 148
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 22
     HideButton = False
@@ -626,7 +617,6 @@ object Form17: TdxForm
     Height = 24
     Top = 612
     Width = 636
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 23
     Id = 262579
@@ -665,7 +655,6 @@ object Form17: TdxForm
     Height = 24
     Top = 640
     Width = 296
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 25
     Id = 262581
@@ -684,13 +673,13 @@ object Form17: TdxForm
     HideList = False
     HideButton = False
     UpdateTree = False
+    ListSource = 0
   end
   object dxObjectField3: TdxObjectField
     Left = 356
     Height = 24
     Top = 640
     Width = 304
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 26
     Id = 262582
@@ -735,7 +724,6 @@ object Form17: TdxForm
     Height = 24
     Top = 668
     Width = 304
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 28
     Id = 262584
@@ -805,7 +793,6 @@ object Form17: TdxForm
     Height = 24
     Top = 464
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 32
     Id = 262588
@@ -827,7 +814,6 @@ object Form17: TdxForm
     Height = 24
     Top = 464
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 33
     Id = 262589
@@ -849,7 +835,6 @@ object Form17: TdxForm
     Height = 24
     Top = 464
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 34
     Id = 262590
@@ -871,7 +856,6 @@ object Form17: TdxForm
     Height = 24
     Top = 464
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 35
     Id = 262591
@@ -893,7 +877,6 @@ object Form17: TdxForm
     Height = 24
     Top = 464
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 36
     Id = 262592
@@ -915,7 +898,6 @@ object Form17: TdxForm
     Height = 24
     Top = 504
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 37
     Id = 262593
@@ -937,7 +919,6 @@ object Form17: TdxForm
     Height = 24
     Top = 504
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 38
     Id = 262594
@@ -959,7 +940,6 @@ object Form17: TdxForm
     Height = 24
     Top = 500
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 39
     Id = 262595
@@ -981,7 +961,6 @@ object Form17: TdxForm
     Height = 24
     Top = 500
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 40
     Id = 262596
@@ -1003,7 +982,6 @@ object Form17: TdxForm
     Height = 24
     Top = 500
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 41
     Id = 262597
@@ -1025,7 +1003,6 @@ object Form17: TdxForm
     Height = 24
     Top = 108
     Width = 100
-    CharCase = ecNormal
     MaxLength = 0
     TabOrder = 42
     HideButton = False
@@ -1362,7 +1339,6 @@ object Form17: TdxForm
     ParentDoubleBuffered = False
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack

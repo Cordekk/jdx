@@ -1,6 +1,6 @@
 object Form53: TdxForm
   Left = 10
-  Height = 143
+  Height = 150
   Top = 10
   Width = 721
   Id = 6875
@@ -62,6 +62,7 @@ object Form53: TdxForm
     Top = 168
     Width = 656
     Caption = 'Скрытые поля'
+    ParentBackground = False
     TabOrder = 2
     StopTab = False
     object dxEdit2: TdxEdit
@@ -69,7 +70,6 @@ object Form53: TdxForm
       Height = 24
       Top = 0
       Width = 476
-      CharCase = ecNormal
       MaxLength = 0
       TabOrder = 0
       Id = 263099
@@ -121,7 +121,7 @@ object Form53: TdxForm
       TabOrder = 2
       Id = 263101
       FieldName = 'Формула'
-      FieldSize = 300
+      FieldSize = 1000
       Required = False
       SourceTId = 0
       SourceFId = 0
@@ -201,20 +201,21 @@ object Form53: TdxForm
       item
         Tag = 263097
         Title.Caption = ' '
-        Width = 201
+        Width = 238
         FieldName = 'f263097'
-      end    
-      item
-        Tag = 263099
-        Title.Caption = ' '
-        Width = 136
-        FieldName = 'f263099'
       end    
       item
         Tag = 263098
         Title.Caption = ' '
-        Width = 560
+        Width = 661
         FieldName = 'f263098'
+      end    
+      item
+        Tag = 263099
+        Title.Caption = ' '
+        Width = 0
+        Visible = False
+        FieldName = 'f263099'
       end    
       item
         Tag = 263100
@@ -246,7 +247,6 @@ object Form53: TdxForm
     ReadOnly = True
     ShowHint = True
     SelectedColor = clHighlight
-    GridLineStyle = psSolid
     SelectedTextColor = clHighlightText
     InactiveSelectedColor = clSilver
     InactiveSelectedTextColor = clBlack
