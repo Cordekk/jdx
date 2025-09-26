@@ -3,12 +3,13 @@ object Form39: TdxForm
   Height = 300
   Top = 10
   Width = 650
+  AutoOpen = True
+  Index = 0
   Id = 6859
   PId = 3
   FormCaption = 'НД заявки'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form39: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxLookupComboBox9: TdxLookupComboBox
     Left = 4
@@ -37,7 +37,7 @@ object Form39: TdxForm
     DestTable = 0
     PromptFillTable = False
     ClearTableBeforeFill = False
-    Expression = '//[№]'#13#10'[Нормативный документ2]'
+    Expression = '//[ID]'
     Editable = True
     ListFields = <    
       item

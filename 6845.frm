@@ -3,13 +3,14 @@ object Form13: TdxForm
   Height = 831
   Top = 10
   Width = 933
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 98
   Id = 6845
   PId = 0
   FormCaption = 'Расчет неопределенности'
-  FormGroup = 'Лаборатория'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form13: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 98
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="1=0" grid="cmp;ve_prop|dxQueryGrid2;Доступность" stateevents="0" /></actions>'
   object dxCounter1: TdxCounter

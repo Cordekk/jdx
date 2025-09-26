@@ -1,0 +1,36 @@
+procedure Click(Sender: TObject);
+var fm: tdxForm;
+    s, p, tt: String;
+begin
+  p:= GetCurrentDir + '\templates\'      //Session.GetTemplatesDir;  //GetTempDir
+  fm:=Session.CreateForm('Шаблон печати');
+  fm.Open;
+  fm.MoveFirst;
+  //Session.Debug('Начало обновления файлов');
+  tt:= '';
+  while not fm.Eof do
+  begin
+    s:=fm['Файл'];
+    if s <> nil then
+    begin
+    if (FileExists(p+s)=true) and (StrToDate(DateToStr(FileDateToDateTime(FileAge(p+s)))) >= StrToDate(fm.Ass['Дата']))
+    then tt:=tt+p+s+' - норм'+Chr(13)
+    else begin
+      fm.Files['Файл1'].SaveToFile(p+s);
+      tt:=tt+p+s+' - обновлен'+Chr(13);
+    end;
+    end;
+    fm.MoveNext;
+  end;
+  fm.Free;
+  Self['Обновление шаблонов']:= tt;
+  //Session.Debug(tt);
+end;
+
+
+
+procedure Form_Create;
+begin
+  dxButton2.OnClick := @Click; // копирование шаблонов в папку  по кнопке
+  end;
+

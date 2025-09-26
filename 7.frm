@@ -1,12 +1,14 @@
 object Form7: TdxForm
   Left = 10
-  Height = 532
+  Height = 571
   Top = 10
   Width = 853
+  FormGroup = 'Справочники'
+  AutoOpen = True
+  Index = 42
   Id = 7
   PId = 0
   FormCaption = 'Продукция'
-  FormGroup = 'Справочники'
   Templates.Strings = (
     'Товары.docx'
   )
@@ -15,7 +17,6 @@ object Form7: TdxForm
   CalcFields.Strings = (
     '№=recno(''товары'')'
   )
-  AutoOpen = True
   ViewType = vtGridOnly
   HelpText.Strings = (
     '<body bgcolor=#fff8dc>'
@@ -32,7 +33,6 @@ object Form7: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 42
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' | ROLE=''Администратор'''#13#10'| COUNT(''Пробы продукции'')=0" grid="cmp;ve_prop|DxEdit1;Редактирование|DxLookupComboBox1;Редактирование|DxLookupComboBox2;Редактирование|dxEdit3;Редактирование|dxEdit4;Редактирование" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' | ROLE=''Администратор''" grid="cmp;ve_prop|dxLookupComboBox3;Редактирование|dxButton1;Доступность|dxButton2;Доступность" stateevents="1" /></actions>'
   object DxEdit1: TdxEdit
@@ -99,7 +99,7 @@ object Form7: TdxForm
     Left = 108
     Height = 28
     Top = 72
-    Width = 564
+    Width = 616
     MaxLength = 0
     TabOrder = 2
     Id = 48
@@ -158,7 +158,7 @@ object Form7: TdxForm
     ParentColor = False
   end
   object dxEdit4: TdxEdit
-    Left = 231
+    Left = 228
     Height = 28
     Top = 156
     Width = 504
@@ -183,9 +183,9 @@ object Form7: TdxForm
     Id = 263074
   end
   object dxPageControl1: TdxPageControl
-    Left = 4
+    Left = 8
     Height = 288
-    Top = 228
+    Top = 264
     Width = 772
     ActivePage = dxTabSheet1
     TabIndex = 0
@@ -356,10 +356,10 @@ object Form7: TdxForm
       Caption = 'Заявки'
       StopTab = False
       object dxQueryGrid4: TdxQueryGrid
-        Left = 29
-        Height = 208
-        Top = 24
-        Width = 603
+        Left = 12
+        Height = 232
+        Top = 12
+        Width = 720
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -414,6 +414,32 @@ object Form7: TdxForm
     GroupDigits = True
     PadZeros = True
   end
+  object dxLabel6: TdxLabel
+    Left = 27
+    Height = 20
+    Top = 200
+    Width = 180
+    Caption = 'Культура (род, вид)'
+  end
+  object dxEdit2: TdxComboBox
+    Left = 228
+    Height = 28
+    Top = 200
+    Width = 504
+    AutoComplete = True
+    AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+    ItemHeight = 0
+    MaxLength = 0
+    TabOrder = 8
+    Id = 263261
+    FieldName = 'Культура'
+    SourceTId = 7
+    SourceFId = 263261
+    Filter = '[Культура]<>null'
+    FieldSize = 300
+    Required = False
+    Editable = True
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 100
@@ -441,6 +467,12 @@ object Form7: TdxForm
         FieldName = 'f48l'
       end    
       item
+        Tag = 263261
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263261'
+      end    
+      item
         Tag = 2628
         Title.Caption = ' '
         Width = 154
@@ -455,7 +487,8 @@ object Form7: TdxForm
       item
         Tag = 263074
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f263074'
       end    
       item
@@ -513,7 +546,7 @@ object Form7: TdxForm
     Fields = <    
       item
         FieldId = 48
-        FieldSource = tfsForm
+        FieldSource = tfsObject
       end>
     ExpandLevels = 0
   end

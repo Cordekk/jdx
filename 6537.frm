@@ -3,12 +3,13 @@ object Form6537: TdxForm
   Height = 207
   Top = 10
   Width = 720
+  AutoOpen = True
+  Index = 0
   Id = 6537
   PId = 1605
   FormCaption = 'Материалы для испытаний1'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form6537: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 217

@@ -3,12 +3,13 @@ object Form4491: TdxForm
   Height = 116
   Top = 10
   Width = 459
+  AutoOpen = True
+  Index = 0
   Id = 491
   PId = 490
   FormCaption = 'Fields'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form4491: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxEdit1: TdxEdit
     Left = 175

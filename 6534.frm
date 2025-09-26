@@ -3,12 +3,13 @@ object Form6534: TdxForm
   Height = 513
   Top = 10
   Width = 430
+  AutoOpen = True
+  Index = 0
   Id = 6534
   PId = 1839
   FormCaption = 'Результат общий'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form6534: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   Shopping = '130992|1|130991|0|0|0|1'
   object dxLabel1: TdxLabel

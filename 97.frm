@@ -3,13 +3,14 @@ object Form97: TdxForm
   Height = 598
   Top = 10
   Width = 926
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 2
   Id = 97
   PId = 0
   FormCaption = 'Внутренний Контроль'
-  FormGroup = 'Лаборатория'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form97: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 2
   SoftCheck = False
   object dxCounter1: TdxCounter
     Left = 186
@@ -586,7 +586,7 @@ object Form97: TdxForm
     Id = 8631
     FieldName = 'Архив'
     SourceTId = 530
-    SourceFId = 0
+    SourceFId = 8613
     Required = False
     SourceTable = 0
     DestTable = 0

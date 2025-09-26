@@ -3,6 +3,8 @@ object Form92: TdxForm
   Height = 480
   Top = 10
   Width = 841
+  AutoOpen = True
+  Index = 0
   Id = 92
   PId = 23
   FormCaption = 'Услуги'
@@ -11,7 +13,6 @@ object Form92: TdxForm
   CalcFields.Strings = (
     'Наименование=NZ([Краткий_Вид_услуги2|Вид_услуги2|Вид_услуги2|Вид_услуги2|Вид_услуги2|Вид_услуги]+''/'','''')'#13#10'+NZ([Краткий_Вид_услуги2|Вид_услуги2|Вид_услуги2|Вид_услуги2|Вид_услуги]+''/'','''')'#13#10'+NZ([Краткий_Вид_услуги2|Вид_услуги2|Вид_услуги2|Вид_услуги]+''/'','''')'#13#10'+NZ([Краткий_Вид_услуги2|Вид_услуги2|Вид_услуги]+''/'','''')'#13#10'+[Краткий_Вид_услуги2|Вид_услуги]'
   )
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -21,7 +22,6 @@ object Form92: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="ED8AA165-D098-4154-BDC2-E96B7E81EDAB" allfields="1" logfields="Field" users="User" /></actions>'
   Shopping = '496|1|497|0|0|0|1'

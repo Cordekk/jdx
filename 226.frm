@@ -3,13 +3,14 @@ object Form226: TdxForm
   Height = 565
   Top = 10
   Width = 775
+  FormGroup = 'ТМЦ'
+  AutoOpen = True
+  Index = 32
   Id = 226
   PId = 0
   FormCaption = 'Перемещение ТМЦ'
-  FormGroup = 'ТМЦ'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form226: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 32
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="FAD4F5C7-2DD6-4DB8-978B-78F51D055019" reg="Движение ТМЦ" regobj="Перемещение1" formfields="formfield;regfield|Склад 1;Склад|Сотрудник 1;Сотрудник|Дата;Дата|Время;Время" table="Движение2" tablefields="tablefield;regfield2|Номенклатура;Номенклатура ТМЦ|ТМЦ;ТМЦ|Количество;Количество" obj="" objfields="objfield;regobjfield" objtable="" objtablefields="objtablefield;regfield3" calcreg="regfield4;expr|КЭФ;-1|Баланс;-getvar(''Движение2&amp;00A6Количество'')" checkbox="Проведен" progress="Показывать только при сетевом подключении" /><action type="9" id="FAD4F5C7-2DD6-4DB8-978B-78F51D055019" reg="Движение ТМЦ" regobj="Перемещение2" formfields="formfield;regfield|Склад 2;Склад|Сотрудник 2;Сотрудник|Дата;Дата|Время;Время" table="Движение2" tablefields="tablefield;regfield2|Номенклатура;Номенклатура ТМЦ|ТМЦ;ТМЦ|Количество;Количество" obj="" objfields="objfield;regobjfield" objtable="" objtablefields="objtablefield;regfield3" calcreg="regfield4;expr|КЭФ;1|Баланс;getvar(''Движение2&amp;00A6Количество'')" checkbox="Проведен" progress="Показывать только при сетевом подключении" /><action type="9" id="245D2473-2037-483E-8B16-2FA012CBA6DD" reg="Остаток ТМЦ" table="Движение2" fields="regfield;formfield;tblfield;operation|Номенклатура ТМЦ;;Номенклатура;=|ТМЦ;;ТМЦ;=|Сотрудник;Сотрудник 1;;=|Склад;Склад 1;;=|Подразделение;Подразделение1;;=|Остаток;;Количество;-|Стоимость;;Стоимость;-" check="Проведен" checkbalance="1" /><action type="9" id="245D2473-2037-483E-8B16-2FA012CBA6DD" reg="Остаток ТМЦ" table="Движение2" fields="regfield;formfield;tblfield;operation|Номенклатура ТМЦ;;Номенклатура;=|ТМЦ;;ТМЦ;=|Сотрудник;Сотрудник 2;;=|Склад;Склад 2;;=|Подразделение;Подразделение2;;=|Остаток;;Количество;+|Стоимость;;Стоимость;+" check="Проведен" checkbalance="1" /></actions>'
   object dxCounter1: TdxCounter

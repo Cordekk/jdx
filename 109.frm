@@ -3,13 +3,14 @@ object Form109: TdxForm
   Height = 249
   Top = 10
   Width = 401
+  FormGroup = 'Справочники'
+  AutoOpen = True
+  Index = 4
   Id = 109
   PId = 0
   FormCaption = 'Группа показателя'
-  FormGroup = 'Справочники'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 8600
   LevelCount = 3
@@ -19,7 +20,6 @@ object Form109: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 4
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' |   ROLE=''Администратор'' | Newrec = 1" grid="cmp;ve_prop|dxEdit1;Редактирование|dxLookupComboBox1;Редактирование|dxLookupComboBox2;Редактирование" stateevents="1" /></actions>'
   object dxEdit1: TdxEdit

@@ -3,13 +3,14 @@ object Form500: TdxForm
   Height = 760
   Top = 10
   Width = 1034
+  FormGroup = 'ТМЦ'
+  AutoOpen = True
+  Index = 71
   Id = 500
   PId = 0
   FormCaption = 'Производство ТМЦ'
-  FormGroup = 'ТМЦ'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form500: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 71
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="245D2473-2037-483E-8B16-2FA012CBA6DD" reg="Остаток ТМЦ" table="Исходные ТМЦ" fields="regfield;formfield;tblfield;operation|Номенклатура ТМЦ;;Номенклатура;=|ТМЦ;;ТМЦ;=|Сотрудник;Сотрудник 1;;=|Склад;Склад 1;;=|Подразделение;Подразделение1;;=|Остаток;;Количество;-|Стоимость;;Стоимость;-" check="Проведен" checkbalance="1" /><action type="9" id="245D2473-2037-483E-8B16-2FA012CBA6DD" reg="Остаток ТМЦ" table="Исходные ТМЦ" fields="regfield;formfield;tblfield;operation|Номенклатура ТМЦ;Номенклатура;;=|ТМЦ;ТМЦ;;=|Сотрудник;Сотрудник2;;=|Склад;Склад2;;=|Подразделение;Подразделение;;=|Остаток;Количество;;+|Стоимость;Стоимость;;+" check="Проведен" checkbalance="1" /></actions>'
   object dxCounter1: TdxCounter

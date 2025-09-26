@@ -3,12 +3,13 @@ object Form62: TdxForm
   Height = 122
   Top = 10
   Width = 707
+  AutoOpen = True
+  Index = 0
   Id = 6884
   PId = 246
   FormCaption = 'Дополнения Результат'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form62: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE=''''   |  ROLE=''Администратор''" grid="cmp;ve_prop|dxLabel3;Видимость|dxEdit2;Видимость|dxLabel4;Видимость|dxMemo2;Видимость|dxMemo2;Видимость|dxMemo3;Видимость|dxLabel5;Видимость|dxGroupBox1;Видимость" stateevents="1" /></actions>'
   object dxLabel1: TdxLabel
@@ -62,7 +62,6 @@ object Form62: TdxForm
     Top = 168
     Width = 656
     Caption = 'Скрытые поля'
-    ParentBackground = False
     TabOrder = 1
     StopTab = False
     object dxEdit2: TdxEdit

@@ -3,13 +3,14 @@ object Form22: TdxForm
   Height = 833
   Top = 10
   Width = 1161
+  FormGroup = 'Приемка'
+  AutoOpen = True
+  Index = 40
   Id = 22
   PId = 0
   FormCaption = 'Пробы'
-  FormGroup = 'Приемка'
   Font.Height = -17
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   Filters.Strings = (
     'Все='
@@ -24,9 +25,8 @@ object Form22: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 40
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="D310819C-2BA6-4F44-88C5-C13057BEA0FD" allfields="1" logfields="Field" users="User" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="role = '''' | role = ''Администратор''" grid="cmp;ve_prop|dxCalcEdit1;Доступность|dxLookupComboBox2;Доступность|dxLookupComboBox7;Доступность|dxEdit6;Доступность|dxLabel22;Доступность|dxTabSheet6;Видимость|dxTabSheet7;Видимость" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Контроль]=null" grid="cmp;ve_prop|dxLabel2;Видимость|dxLookupComboBox2;Видимость|dxEdit6;Видимость|dxLabel22;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="'#13#10'[Заявка клиента2] = null" grid="cmp;ve_prop|dxLabel16;Видимость|dxLookupComboBox7;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="NEWREC=0" grid="cmp;ve_prop|dxButton1;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Отбор проб]=null" grid="cmp;ve_prop|dxLookupComboBox13;Видимость|dxLabel32;Видимость" stateevents="0" /><action disabled="1" type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" condition="[Заявка клиента2] = GetVar(''g'') | GetVar(''g'') = Null  /* надо чтобы не редактировали пробы к старым заявкам из новых */" grid="cmp;ve_prop|dxLookupComboBox1;Доступность|dxMemo1;Редактирование|dxEdit6;Редактирование|dxCalcEdit6;Доступность|dxEdit2;Редактирование|dxLookupComboBox5;Доступность|dxEdit3;Редактирование|dxEdit5;Редактирование|dxLookupComboBox2;Редактирование" stateevents="1" /><action type="9" id="0D75186F-C6BB-4B69-BCF9-092FD2C316A3" fields="field|Продукция|Примечание|Объем партии1|Место происхождения|Шифр_Аргус_Меркурий|Срок годности" queries="query" /><comment text="Заполнение и пересчет дополнительных полей"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton32" fields="fl|Направление" /><comment text="Обновить шифр образцов"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="CountSample" fields="fl|Шифр_пробы" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="D310819C-2BA6-4F44-88C5-C13057BEA0FD" allfields="1" logfields="Field" users="User" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="role = '''' | role = ''Администратор''" grid="cmp;ve_prop|dxCalcEdit1;Доступность|dxLookupComboBox2;Доступность|dxLookupComboBox7;Доступность|dxEdit6;Доступность|dxLabel22;Доступность|dxTabSheet6;Видимость|dxTabSheet7;Видимость|dxLookupComboBox17;Редактирование" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Контроль]=null" grid="cmp;ve_prop|dxLabel2;Видимость|dxLookupComboBox2;Видимость|dxEdit6;Видимость|dxLabel22;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="'#13#10'[Заявка клиента2] = null" grid="cmp;ve_prop|dxLabel16;Видимость|dxLookupComboBox7;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="NEWREC=0" grid="cmp;ve_prop|dxButton1;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Отбор проб]=null" grid="cmp;ve_prop|dxLookupComboBox13;Видимость|dxLabel32;Видимость" stateevents="0" /><action disabled="1" type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" condition="[Заявка клиента2] = GetVar(''g'') | GetVar(''g'') = Null  /* надо чтобы не редактировали пробы к старым заявкам из новых */" grid="cmp;ve_prop|dxLookupComboBox1;Доступность|dxMemo1;Редактирование|dxEdit6;Редактирование|dxCalcEdit6;Доступность|dxEdit2;Редактирование|dxLookupComboBox5;Доступность|dxEdit3;Редактирование|dxEdit5;Редактирование|dxLookupComboBox2;Редактирование" stateevents="1" /><action type="9" id="0D75186F-C6BB-4B69-BCF9-092FD2C316A3" fields="field|Продукция|Примечание|Объем партии1|Место происхождения|Шифр_Аргус_Меркурий|Срок годности" queries="query" /><comment text="Заполнение и пересчет дополнительных полей"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton32" fields="fl|Направление" /><comment text="Обновить шифр образцов"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="CountSample" fields="fl|Шифр_пробы" /></actions>'
   object dxTimeEdit2: TdxTimeEdit
     Left = 896
     Height = 24
@@ -94,6 +94,11 @@ object Form22: TdxForm
       item
         FieldId = 48
         Width = 500
+        Searchable = True
+      end    
+      item
+        FieldId = 263261
+        Width = 100
         Searchable = True
       end>
     DropDownCount = 8
@@ -164,7 +169,7 @@ object Form22: TdxForm
     DestTable = 0
     PromptFillTable = False
     ClearTableBeforeFill = False
-    Expression = '//[Заявка клиента2] [Контроль]'#13#10'OBJID("Сотрудники", "user", USER)'
+    Expression = '//[Контроль] [Направление]'#13#10'OBJID("Сотрудники", "user", USER)'
     Editable = False
     ListFields = <>
     DropDownCount = 8
@@ -185,7 +190,7 @@ object Form22: TdxForm
     FieldName = 'Шифр_пробы'
     FieldSize = 150
     Required = False
-    Expression = '//NZ([Заявка клиента2|Шифр_заявки],'''')+NZ([Контроль|Шифр_контроль],'''')+ "-" + CSTR(ZEROS([Номер_пробы],2))'#13#10'Block('#13#10'setvar(''ND'',NZ([Заявка клиента2|Направление2|Шаблон_номера_пробы],[Направление|Шаблон_номера_пробы])),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''ZZZZ'',NZ([Заявка клиента2|Шифр_заявки],''''))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''№'',ZEROS([Номер_пробы],NZ([Заявка клиента2|Направление2|Число1],[Направление|Число1])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''KOD'',NZ([Заявка клиента2|Подразделение1|КОД],[Подразделение|КОД]))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''URD'',NZ([Заявка клиента2|Направление2|Префикс_направление],[Направление|Префикс_направление]))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''YYYY'',CSTR(YEAROF([Дата_добавления])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''MM'',CSTR(MONTHOF([Дата_добавления])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''DD'',CSTR(DAYOF([Дата_добавления])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''YY'',CUT(CSTR(YEAROF([Дата_добавления])),3,2))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''VPr1'',CUT([Вид пробы],1,1))), //VPr1 - учитывать Вид пробы (1 буква)'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''VPr1'',CUT([Вид пробы],1,2))),//VPr2 - учитывать Вид пробы (2 буквы)'#13#10'NZ(getvar(''ND''), NZ([Контроль|Шифр_контроль]+ "-"+ CSTR(ZEROS([Номер_пробы],2)),CSTR([Номер_пробы]))) /* учет номеров проб для контроля*/'#13#10')'
+    Expression = '//NZ([Заявка клиента2|Шифр_заявки],'''')+NZ([Контроль|Шифр_контроль],'''')+ "-" + CSTR(ZEROS([Номер_пробы],2))'#13#10'IIF([Направление]<>null|[Контроль]<>null, Block('#13#10'setvar(''ND'',[Направление|Шаблон_номера_пробы]),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''ZZZZ'',NZ([Заявка клиента2|Шифр_заявки],''''))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''№'',ZEROS([Номер_пробы],NZ([Направление|Число1],4)))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''KOD'',NZ([Заявка клиента2|Подразделение1|КОД],[Подразделение|КОД]))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''URD'',NZ([Направление|Префикс_направление],''''))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''YYYY'',CSTR(YEAROF([Дата_добавления])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''MM'',CSTR(MONTHOF([Дата_добавления])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''DD'',CSTR(DAYOF([Дата_добавления])))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''YY'',CUT(CSTR(YEAROF([Дата_добавления])),3,2))),'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''VPr1'',CUT(NZ([Вид пробы],''''),1,1))), //VPr1 - учитывать Вид пробы (1 буква)'#13#10'setvar(''ND'',REPLACE(getvar(''ND''),''VPr1'',CUT(NZ([Вид пробы],''''),1,2))),//VPr2 - учитывать Вид пробы (2 буквы)'#13#10'NZ(getvar(''ND''), NZ([Контроль|Шифр_контроль]+ "-"+ CSTR(ZEROS([Номер_пробы],2)),CSTR([Номер_пробы]))) /* учет номеров проб для контроля*/'#13#10'),'''')'
     CheckExpression = '//IIF(NZ([Заявка клиента2],0)+NZ([Контроль],0) = 0, ''Заявка не сохранена!'', '''')  // убрал проверку, для сохранения проб без заявок'
     Editable = False
   end
@@ -582,7 +587,7 @@ object Form22: TdxForm
         FieldName = 'Пробы приняты'
         CheckedText = 'Да'
         UnCheckedText = 'Нет'
-        CheckExpression = 'Block('#13#10'iif(NZ(COUNT(''Образцы на исследование''), 0)<>[Количество_образцов]&[Пробы приняты]=1,''Количество образцов в пробе не совпадает с принятыми'',''''))'
+        CheckExpression = 'Block('#13#10'//iif(NZ(COUNT(''Образцы на исследование''), 0)<>[Количество_образцов]&[Пробы приняты]=1,''Количество образцов в пробе не совпадает с принятыми'',''''))'#13#10'iif(NZ(COUNT(''Образцы на исследование''), 0)<>[Количество_образцов]&[Пробы приняты]=1,setfield(''Количество_образцов'',NZ(COUNT(''Образцы на исследование''), 0)),''''),'#13#10''''')'
         Expression = '// для запрета редактирования'
         Editable = False
         DefaultValue = '0'
@@ -681,11 +686,11 @@ object Form22: TdxForm
         PromptFillTable = False
         ClearTableBeforeFill = False
         Expression = '//[Пробы приняты] [Cостояние пробы]'#13#10'OBJID("Сотрудники", "user", USER)'
-        Editable = False
+        Editable = True
         ListFields = <>
         DropDownCount = 8
         ListWidthExtra = 0
-        HideList = True
+        HideList = False
         HideButton = True
         UpdateTree = False
         ListSource = 0
@@ -705,7 +710,7 @@ object Form22: TdxForm
         FieldName = 'Сорт'
         SourceTId = 6852
         SourceFId = 262647
-        Filter = '[Культура]=[Продукция]'
+        Filter = '[Культура|Культура]=[Продукция|Культура]'
         Required = False
         SourceTable = 0
         DestTable = 0
@@ -715,11 +720,11 @@ object Form22: TdxForm
         ListFields = <        
           item
             FieldId = 262646
-            Width = 100
+            Width = 200
             Searchable = True
           end>
         DropDownCount = 8
-        ListWidthExtra = 0
+        ListWidthExtra = 200
         HideList = False
         HideButton = False
         UpdateTree = False
@@ -797,29 +802,6 @@ object Form22: TdxForm
         Caption = 'Название, № и дата сортового документа'
         ParentColor = False
       end
-      object dxCalcEdit10: TdxCalcEdit
-        Left = 339
-        Height = 28
-        Top = 56
-        Width = 100
-        MaxLength = 0
-        TabOrder = 3
-        HideButton = False
-        CalculatorLayout = clNormal
-        AsInteger = 0
-        ButtonWidth = 28
-        NumGlyphs = 1
-        Flat = True
-        Id = 262712
-        FieldName = 'Сортовая чистота'
-        Precission = 2
-        Required = False
-        DefaultValue = '0'
-        Editable = False
-        NullToZero = True
-        GroupDigits = True
-        PadZeros = True
-      end
       object dxLabel44: TdxLabel
         Left = 8
         Height = 20
@@ -834,7 +816,7 @@ object Form22: TdxForm
         Top = 284
         Width = 552
         ScrollBars = ssBoth
-        TabOrder = 4
+        TabOrder = 3
         Id = 262713
         FieldName = 'Прошлые испытания'
         FieldSize = 0
@@ -859,7 +841,7 @@ object Form22: TdxForm
         Top = 232
         Width = 552
         ScrollBars = ssBoth
-        TabOrder = 5
+        TabOrder = 4
         Id = 262714
         FieldName = 'Протравливание'
         FieldSize = 0
@@ -892,7 +874,7 @@ object Form22: TdxForm
           'беспересадочный'
         )
         MaxLength = 0
-        TabOrder = 6
+        TabOrder = 5
         Id = 262765
         FieldName = 'Способ выращивания'
         SourceTId = 0
@@ -915,7 +897,7 @@ object Form22: TdxForm
         Top = 140
         Width = 552
         ScrollBars = ssBoth
-        TabOrder = 7
+        TabOrder = 6
         Id = 262766
         FieldName = 'Товарная группа'
         FieldSize = 0
@@ -940,7 +922,7 @@ object Form22: TdxForm
         Top = 88
         Width = 100
         MaxLength = 0
-        TabOrder = 8
+        TabOrder = 7
         HideButton = False
         CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
         OKCaption = 'OK'
@@ -969,8 +951,22 @@ object Form22: TdxForm
         Top = 12
         Width = 248
         Caption = 'Проверить сорт на сайте'
-        TabOrder = 9
+        TabOrder = 8
         ActionOnClick = '<actions><action type="7" expression="EX_EXEC(''https://gossortrf.ru/registry/gosudarstvennyy-reestr-selektsionnykh-dostizheniy-dopushchennykh-k-ispolzovaniyu-tom-1-sorta-rasteni/?arrFilter_pf%5BCULTURE_NAME%5D=&amp;arrFilter_pf%5BSORT_NAME%5D=''+NZ([Сорт|Сорт],'''')+''&amp;arrFilter_pf%5BSORT_ID%5D=''+NZ([Сорт|Код],'''')+''&amp;arrFilter_pf%5BALLOW_SUBJECTS_NAME%5D=&amp;arrFilter_pf%5BALLOW_ORIGINATORS_NAME%5D=&amp;set_filter=Y'','#13#10''' '')"/></actions>'
+      end
+      object dxEdit12: TdxEdit
+        Left = 340
+        Height = 28
+        Top = 56
+        Width = 100
+        MaxLength = 0
+        TabOrder = 9
+        Id = 263255
+        FieldName = 'Сортовая чистота'
+        FieldSize = 50
+        Required = False
+        Editable = True
+        DefaultValue = '''-'''
       end
     end
     object dxTabSheet8: TdxTabSheet
@@ -1033,7 +1029,7 @@ object Form22: TdxForm
         Width = 212
         Caption = 'Обновить дополнения'
         TabOrder = 3
-        ActionOnClick = '<actions><comment text="Нужно объявить переменную, чтобы не мешать заполнению и изменению таблицы"/><action type="7" expression="setvar(''Вычисления дополнительного поля'',1)"/><comment text="Добавим недостающие поля"/><action type="9" id="A971EF36-34CB-4A2C-9007-3A2D140BEDBC" bn="dxButton30" /><comment text="Пересчитаем по формуле"/><action type="9" id="8D8123AE-0A6C-4349-9152-F9399322BE50" tbl="Дополнения Пробы" values="field;expr|Значение;TEXT(''{''+[Формула]+''}'')" filter="[Формула]&lt;&gt;'''' &amp; [Формула]&lt;&gt;null" prompt="" /><action type="7" expression="Setfield(''Дополнительное поле'',MERGE(''Дополнения Пробы'', ''Ключ-значение'', '';''))"/><action type="7" expression="setvar(''Вычисления дополнительного поля'',0)"/></actions>'
+        ActionOnClick = '<actions><comment text="Нужно объявить переменную, чтобы не мешать заполнению и изменению таблицы"/><action type="7" expression="setvar(''Вычисления дополнительного поля'',1)"/><comment text="Добавим недостающие поля"/><action type="9" id="A971EF36-34CB-4A2C-9007-3A2D140BEDBC" bn="dxButton30" /><comment text="Пересчитаем по формуле"/><action type="9" id="8D8123AE-0A6C-4349-9152-F9399322BE50" tbl="Дополнения Пробы" values="field;expr|Значение;TEXT(''{''+[Формула]+''}'')" filter="[Формула]&lt;&gt;'''' &amp; [Формула]&lt;&gt;null" prompt="" /><action type="7" expression="Setfield(''Дополнительное поле'',MERGE(''Дополнения Пробы'', ''Ключ-значение'', '';''))"/><action type="7" expression="setvar(''Вычисления дополнительного поля'',0)"/><if cond="[Продукция]&lt;&gt;null"><action type="5" /></if></actions>'
       end
       object dxLabel62: TdxLabel
         Left = 896
@@ -1042,7 +1038,7 @@ object Form22: TdxForm
         Width = 316
         Caption = 'Вычисления дополнительного поля'
         ParentColor = False
-        Expression = '// данный расчет необходим, поскольку функция мешает при заполнении и пересчете таблицы по кнопке. в кнопке надо добавить объявление переменной'#13#10'Block(IIF(NEWREC=0'#13#10'& nz(getvar(''Вычисления дополнительного поля''),0)=0,'#13#10'IIF( MERGE(''Дополнения Пробы'', ''Ключ-значение'', '';'')<>[Дополнительное поле],'#13#10'CLICKBUTTONF(''dxButton32'')'#13#10'//Setfield(''Дополнительное поле'', MERGE(''Дополнения Пробы'', ''Ключ-значение'', '';''))  // подстановка значений без пересчета'#13#10','''')'#13#10','''')'#13#10',''Дополнительное поле'')'
+        Expression = '//'#13#10'// данный расчет необходим, поскольку функция мешает при заполнении и пересчете таблицы по кнопке. в кнопке надо добавить объявление переменной'#13#10'Block(IIF(NEWREC=0'#13#10'& nz(getvar(''Вычисления дополнительного поля''),0)=0,'#13#10'IIF( MERGE(''Дополнения Пробы'', ''Ключ-значение'', '';'')<>[Дополнительное поле],'#13#10'CLICKBUTTONF(''dxButton32'')'#13#10'//Setfield(''Дополнительное поле'', MERGE(''Дополнения Пробы'', ''Ключ-значение'', '';''))  // подстановка значений без пересчета'#13#10','''')'#13#10','''')'#13#10',''Дополнительное поле'')'
       end
     end
     object dxTabSheet1: TdxTabSheet
@@ -1269,7 +1265,7 @@ object Form22: TdxForm
         FieldName = 'Нумератор'
         FieldSize = 50
         Required = False
-        Expression = 'NZ(IIF([Заявка клиента2]<>null,IIF(NZ([Заявка клиента2|Направление2|ZZZZ1],[Направление|ZZZZ1])=1,[Заявка клиента2|Шифр_заявки],'''') +'#13#10'IIF( NZ([Заявка клиента2|Направление2|URD1],[Направление|URD1])=1,NZ([Заявка клиента2|Направление2|Префикс_направление],[Направление|Префикс_направление]),'''')+'#13#10'IIF( NZ([Заявка клиента2|Направление2|KOD1],[Направление|KOD1])=1, NZ([Заявка клиента2|Подразделение1|КОД],[Подразделение|КОД]),'''')+'#13#10'IIF( NZ([Заявка клиента2|Направление2|YYYY1],[Направление|YYYY1])=1|'#13#10'NZ([Заявка клиента2|Направление2|MM1],[Направление|MM1])=1|'#13#10'NZ([Заявка клиента2|Направление2|DD1],[Направление|DD1])=1,CSTR(YEAROF([Дата_добавления])),'''')+'#13#10'IIF( NZ([Заявка клиента2|Направление2|MM1],[Направление|MM1])=1|'#13#10'NZ([Заявка клиента2|Направление2|DD1],[Направление|DD1])=1, CSTR(MONTHOF([Дата_добавления])),'''')+'#13#10'IIF( NZ([Заявка клиента2|Направление2|DD1],[Направление|DD1])=1,CSTR(DAYOF([Дата_добавления])),'''')'#13#10',NZ([Контроль|Шифр_контроль],'''')'#13#10'),'#13#10'CSTR(YEAROF([Дата_добавления])))'
+        Expression = 'NZ('#13#10'IIF(NZ([Направление|ZZZZ1],0)=1,NZ([Заявка клиента2|Шифр_заявки],''''),'''') +'#13#10'IIF( NZ([Направление|URD1],0)=1,NZ([Направление|Префикс_направление],''''),'''')+'#13#10'IIF( NZ([Направление|KOD1],0)=1, NZ([Заявка клиента2|Подразделение1|КОД],[Подразделение|КОД]),'''')+'#13#10'IIF( NZ([Направление|YYYY1],0)=1|'#13#10'NZ([Направление|MM1],0)=1|'#13#10'NZ([Направление|DD1],0)=1,CSTR(YEAROF([Дата_добавления])),'''')+'#13#10'IIF( NZ([Направление|MM1],0)=1|'#13#10'NZ([Направление|DD1],0)=1, CSTR(MONTHOF([Дата_добавления])),'''')+'#13#10'IIF( NZ([Направление|DD1],0)=1,CSTR(DAYOF([Дата_добавления])),''''),'#13#10'NZ([Контроль|Шифр_контроль],'''')'#13#10')'
         Editable = False
       end
       object dxLabel31: TdxLabel
@@ -1305,7 +1301,7 @@ object Form22: TdxForm
         Id = 70
         FieldName = 'Номер_пробы'
         Precission = 0
-        Expression = '// [Заявка клиента2] [Контроль]'#13#10'IIF(NEWREC=1,nz(DBMAX(''Пробы'', ''Номер_пробы'', ''[!Нумератор]=[Нумератор]''), 0) + 1, 0)'
+        Expression = '//[Нумератор]'#13#10'IIF(NEWREC=1,nz(DBMAX(''Пробы'', ''Номер_пробы'', ''[!Нумератор]=[Нумератор]''), 0) + 1, 1)'
         Required = True
         DefaultValue = '1'
         CheckExpression = 'IIF(DBUNIQUE(''Номер_пробы;Нумератор'')=0,'#13#10'setfield(''Номер_пробы'',  nz(DBMAX(''Пробы'', ''Номер_пробы'', ''[!Нумератор]=[Нумератор]''), 0) + 1),'#13#10''''')'
@@ -1864,6 +1860,18 @@ object Form22: TdxForm
         Id = 3016
         ManualRefresh = False
       end
+      object dxRecordId1: TdxRecordId
+        Left = 835
+        Height = 28
+        Top = 64
+        Width = 100
+        ReadOnly = True
+        MaxLength = 0
+        TabOrder = 3
+        FieldName = 'ID'
+        StopTab = False
+        Id = 263252
+      end
     end
   end
   object dxEdit5: TdxMemo
@@ -2230,13 +2238,13 @@ object Form22: TdxForm
       item
         Tag = 61
         Title.Caption = 'Заявка'
-        Width = 110
+        Width = 125
         FieldName = 'f61l'
       end    
       item
         Tag = 192
         Title.Caption = 'Шифр'
-        Width = 202
+        Width = 266
         FieldName = 'f192'
       end    
       item
@@ -2290,12 +2298,6 @@ object Form22: TdxForm
         FieldName = 'f439l'
       end    
       item
-        Tag = 1800
-        Title.Caption = ' '
-        Width = 112
-        FieldName = 'f1800'
-      end    
-      item
         Tag = 440
         Title.Caption = ' '
         Width = 111
@@ -2314,10 +2316,10 @@ object Form22: TdxForm
         FieldName = 'f1952'
       end    
       item
-        Tag = 188
+        Tag = 1800
         Title.Caption = ' '
-        Width = 100
-        FieldName = 'f188l'
+        Width = 112
+        FieldName = 'f1800'
       end    
       item
         Tag = 95
@@ -2338,6 +2340,12 @@ object Form22: TdxForm
         FieldName = 'f1801l'
       end    
       item
+        Tag = 188
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f188l'
+      end    
+      item
         Tag = 90
         Title.Caption = 'Поступление'
         Width = 101
@@ -2352,38 +2360,44 @@ object Form22: TdxForm
       item
         Tag = 2428
         Title.Caption = ' '
-        Width = 126
+        Width = 0
+        Visible = False
         FieldName = 'f2428'
       end    
       item
         Tag = 449
         Title.Caption = ' '
-        Width = 82
+        Width = 0
+        Visible = False
         FieldName = 'f449'
       end    
       item
         Tag = 1969
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f1969'
       end    
       item
         Tag = 2426
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f2426'
       end    
       item
         Tag = 2520
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f2520l'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
         Tag = 2522
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f2522'
       end    
       item
@@ -2563,10 +2577,10 @@ object Form22: TdxForm
         FieldName = 'f262711'
       end    
       item
-        Tag = 262712
+        Tag = 263255
         Title.Caption = ' '
         Width = 100
-        FieldName = 'f262712'
+        FieldName = 'f263255'
       end    
       item
         Tag = 262713
@@ -2619,8 +2633,15 @@ object Form22: TdxForm
       item
         Tag = 263179
         Title.Caption = ' '
-        Width = 100
+        Width = 1576
         FieldName = 'f263179'
+      end    
+      item
+        Tag = 263252
+        Title.Caption = ' '
+        Width = 0
+        Visible = False
+        FieldName = 'f263252'
       end>
     DefaultRowHeight = 24
     DoubleBuffered = True

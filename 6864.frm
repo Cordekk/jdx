@@ -3,12 +3,13 @@ object Form45: TdxForm
   Height = 300
   Top = 10
   Width = 651
+  AutoOpen = True
+  Index = 0
   Id = 6864
   PId = 6863
   FormCaption = 'Оборудование для отбора1'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form45: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxLabel4: TdxLabel
     Left = 20

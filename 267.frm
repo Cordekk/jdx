@@ -3,16 +3,17 @@ object Form267: TdxForm
   Height = 758
   Top = 10
   Width = 747
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 58
   Id = 267
   PId = 0
   FormCaption = 'Градуировка'
-  FormGroup = 'Лаборатория'
   Templates.Strings = (
     'Линейная регрессия.xls'
   )
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -22,7 +23,6 @@ object Form267: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 58
   SoftCheck = False
   object dxLabel1: TdxLabel
     Left = 40

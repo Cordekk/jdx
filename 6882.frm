@@ -3,13 +3,14 @@ object Form60: TdxForm
   Height = 300
   Top = 10
   Width = 499
+  FormGroup = 'Справочники'
+  AutoOpen = True
+  Index = 112
   Id = 6882
   PId = 0
   FormCaption = 'Источники списка'
-  FormGroup = 'Справочники'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form60: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 112
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' |   ROLE=''Администратор'' | Newrec = 1" grid="cmp;ve_prop|dxEdit2;Редактирование" stateevents="1" /></actions>'
   object dxEdit2: TdxEdit

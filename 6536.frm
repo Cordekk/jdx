@@ -3,13 +3,14 @@ object Form6536: TdxForm
   Height = 621
   Top = 10
   Width = 967
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 91
   Id = 6536
   PId = 0
   FormCaption = 'Аргус'
-  FormGroup = 'Лаборатория'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtSimpleForm
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form6536: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 91
   SoftCheck = False
   object dxEdit1: TdxEdit
     Left = 80

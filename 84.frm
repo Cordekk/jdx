@@ -3,13 +3,14 @@ object Form84: TdxForm
   Height = 407
   Top = 10
   Width = 868
+  FormGroup = 'Приемка'
+  AutoOpen = True
+  Index = 37
   Id = 84
   PId = 0
   FormCaption = 'Почта'
-  FormGroup = 'Приемка'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form84: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 37
   SoftCheck = False
   object dxLabel1: TdxLabel
     Left = 16

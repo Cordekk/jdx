@@ -3,10 +3,12 @@ object Form222: TdxForm
   Height = 789
   Top = 10
   Width = 1040
+  FormGroup = 'Общие'
+  AutoOpen = True
+  Index = 31
   Id = 222
   PId = 0
   FormCaption = 'Отчеты КПД и рисков'
-  FormGroup = 'Общие'
   Templates.Strings = (
     'Отчет КПД.odt'
     'Реестр рисков.odt'
@@ -16,7 +18,6 @@ object Form222: TdxForm
   CalcFields.Strings = (
     '№=RECNO(''Документы_отчет'')'
   )
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -26,7 +27,6 @@ object Form222: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 31
   SoftCheck = False
   object dxQueryGrid1: TdxQueryGrid
     Left = 24

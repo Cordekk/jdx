@@ -3,16 +3,17 @@ object Form231: TdxForm
   Height = 829
   Top = 10
   Width = 1092
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 0
   Id = 1839
   PId = 0
   FormCaption = 'Анализная карта'
-  FormGroup = 'Лаборатория'
   Font.Height = -13
   Font.Name = 'Verdana'
   CalcFields.Strings = (
     'Печать проверки закончена=BLOCK('#13#10'IIF([Проверка оборудования]=1, Setfield(''Проверка оборудования'', 0), ''''),'#13#10''''''#13#10')'
   )
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -22,7 +23,6 @@ object Form231: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Исполнитель|user] = USER &amp; [Подписано] = 0  &amp; [№] &lt;&gt; null" grid="cmp;ve_prop|dxButton6;Доступность|dxButton9;Доступность|dxButton10;Доступность" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="DBGET(''Сотрудники'', ''Подпись исследований'', ''[!user]=USER'')=1 &amp; [Завершено] = 1" grid="cmp;ve_prop|dxButton7;Доступность|dxButton11;Доступность" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Исполнитель|user] = USER &amp; [Редактирование]=1  &amp; [Подписано]=0" grid="cmp;ve_prop|dxButton22;Доступность|dxButton23;Доступность|dxButton24;Доступность" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Исполнитель|user] = USER &amp; [Подписано]=0" grid="cmp;ve_prop|dxButton13;Доступность|dxButton14;Доступность|dxButton19;Доступность|dxButton16;Доступность|dxButton25;Доступность" stateevents="0" /></actions>'
   object dxCounter1: TdxCounter

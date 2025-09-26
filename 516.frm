@@ -3,12 +3,13 @@ object Form516: TdxForm
   Height = 300
   Top = 10
   Width = 572
+  AutoOpen = True
+  Index = 0
   Id = 516
   PId = 112
   FormCaption = 'Риски'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form516: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxLabel1: TdxLabel
     Left = 8

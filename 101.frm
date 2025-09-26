@@ -3,13 +3,14 @@ object Form101: TdxForm
   Height = 557
   Top = 10
   Width = 682
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 45
   Id = 101
   PId = 0
-  FormCaption = 'Результат испытаний'
-  FormGroup = 'Лаборатория'
+  FormCaption = 'Результат испытаний (удалить)'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form101: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 45
   SoftCheck = False
   object dxLabel1: TdxLabel
     Left = 14

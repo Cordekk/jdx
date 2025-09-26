@@ -3,12 +3,13 @@ object Form2: TdxForm
   Height = 480
   Top = 10
   Width = 1111
+  AutoOpen = True
+  Index = 0
   Id = 6838
   PId = 6837
   FormCaption = 'Форма1'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form2: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 124

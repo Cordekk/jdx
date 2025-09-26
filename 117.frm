@@ -3,13 +3,14 @@ object Form117: TdxForm
   Height = 233
   Top = 10
   Width = 918
+  FormGroup = '!Вспомогательные'
+  AutoOpen = True
+  Index = 46
   Id = 117
   PId = 0
   FormCaption = 'Связь документа'
-  FormGroup = '!Вспомогательные'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form117: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 46
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 28

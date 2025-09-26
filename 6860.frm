@@ -3,12 +3,13 @@ object Form41: TdxForm
   Height = 638
   Top = 10
   Width = 469
+  AutoOpen = True
+  Index = 0
   Id = 6860
   PId = 24
   FormCaption = 'Подразделения сотрудника'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form41: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   Shopping = '262783|0|0|0|0|0|0'
   object dxLookupComboBox1: TdxLookupComboBox

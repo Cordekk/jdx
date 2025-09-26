@@ -3,13 +3,14 @@ object Form531: TdxForm
   Height = 865
   Top = 10
   Width = 799
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 82
   Id = 531
   PId = 0
   FormCaption = 'Результаты ВК'
-  FormGroup = 'Лаборатория'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form531: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 82
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 160

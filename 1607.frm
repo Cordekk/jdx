@@ -3,12 +3,13 @@ object Form1607: TdxForm
   Height = 518
   Top = 10
   Width = 806
+  AutoOpen = True
+  Index = 0
   Id = 1607
   PId = 3
   FormCaption = 'Показатель42'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   Coloring.Strings = (
     'clYellow;[ОА]=0'
@@ -21,7 +22,6 @@ object Form1607: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   Shopping = '26158|0|0|0|0|0|0'
   object dxLabel1: TdxLabel

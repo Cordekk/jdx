@@ -3,13 +3,14 @@ object Form106: TdxForm
   Height = 341
   Top = 10
   Width = 822
+  FormGroup = 'ТМЦ'
+  AutoOpen = True
+  Index = 22
   Id = 106
   PId = 0
   FormCaption = 'Номенклатура'
-  FormGroup = 'ТМЦ'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form106: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 22
   SoftCheck = False
   object dxEdit1: TdxEdit
     Left = 24

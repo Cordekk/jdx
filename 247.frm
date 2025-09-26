@@ -3,13 +3,14 @@ object Form247: TdxForm
   Height = 687
   Top = 10
   Width = 772
+  FormGroup = 'ТМЦ'
+  AutoOpen = True
+  Index = 28
   Id = 247
   PId = 0
   FormCaption = 'ТехОбслуживание ТМЦ'
-  FormGroup = 'ТМЦ'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form247: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 28
   SoftCheck = False
   object dxCounter1: TdxCounter
     Left = 32

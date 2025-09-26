@@ -3,13 +3,14 @@ object Form49: TdxForm
   Height = 682
   Top = 10
   Width = 1015
+  FormGroup = 'Приемка'
+  AutoOpen = True
+  Index = 107
   Id = 6868
   PId = 0
   FormCaption = 'Прием заявок от клиентов'
-  FormGroup = 'Приемка'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtSimpleForm
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form49: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 107
   SoftCheck = False
   object dxMemo2: TdxMemo
     Left = 12

@@ -3,12 +3,13 @@ object Form36: TdxForm
   Height = 535
   Top = 10
   Width = 767
+  AutoOpen = True
+  Index = 0
   Id = 6858
   PId = 519
   FormCaption = 'Диапазоны методики'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form36: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxLabel5: TdxLabel
     Left = 24

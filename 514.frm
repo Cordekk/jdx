@@ -3,13 +3,14 @@ object Form514: TdxForm
   Height = 300
   Top = 10
   Width = 350
+  FormGroup = 'Общие'
+  AutoOpen = True
+  Index = 72
   Id = 514
   PId = 0
   FormCaption = 'Оценка риска'
-  FormGroup = 'Общие'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form514: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 72
   SoftCheck = False
   object dxCalcEdit1: TdxCalcEdit
     Left = 85

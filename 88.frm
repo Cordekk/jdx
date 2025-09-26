@@ -3,13 +3,14 @@ object Form88: TdxForm
   Height = 230
   Top = 10
   Width = 860
+  FormGroup = 'Приемка'
+  AutoOpen = True
+  Index = 25
   Id = 88
   PId = 0
   FormCaption = 'Обновление цены'
-  FormGroup = 'Приемка'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form88: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 25
   SoftCheck = False
   object dxCalcEdit1: TdxCalcEdit
     Left = 16

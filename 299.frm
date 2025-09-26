@@ -3,12 +3,13 @@ object Form299: TdxForm
   Height = 370
   Top = 10
   Width = 1259
+  AutoOpen = True
+  Index = 0
   Id = 299
   PId = 225
   FormCaption = 'Движение1'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form299: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   Shopping = '7287|1|7290|0|0|0|1'
   object dxLookupComboBox1: TdxLookupComboBox

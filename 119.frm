@@ -3,13 +3,14 @@ object Form119: TdxForm
   Height = 819
   Top = 10
   Width = 858
+  FormGroup = 'Справочники'
+  AutoOpen = True
+  Index = 0
   Id = 119
   PId = 0
   FormCaption = 'Виды документов'
-  FormGroup = 'Справочники'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 2442
   LevelCount = 3
@@ -19,7 +20,6 @@ object Form119: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxEdit1: TdxEdit
     Left = 24
@@ -499,6 +499,18 @@ object Form119: TdxForm
       end
     end
   end
+  object dxRecordId1: TdxRecordId
+    Left = 756
+    Height = 24
+    Top = 0
+    Width = 100
+    ReadOnly = True
+    MaxLength = 0
+    TabOrder = 9
+    FieldName = 'ID записи'
+    StopTab = False
+    Id = 263312
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 100
@@ -651,6 +663,12 @@ object Form119: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f263185'
+      end    
+      item
+        Tag = 263312
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263312'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

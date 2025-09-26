@@ -1,0 +1,25 @@
+procedure SaveFilesFromQuery (Sender: TObject);
+var
+   F: TdxFile;
+   FS: TFileStream;
+   FMS: TMemoryStream;
+   Buf, FileName: string;
+begin
+   if Self['Имя файла'] <> '' then
+   begin
+     FileName:= Self['Имя файла'];
+     F := Self.Files['Файл'];
+      F.SaveToFile(GetOutputDir + FileName );
+      FS := TFileStream.Create(GetOutputDir + FileName, fmOpenRead);
+      SetLength(Buf, FS.Size);
+		  FS.Read(Buf, FS.Size);
+		  Debug(EncodeBase64(Buf));
+		  FS.Free;
+      DeleteFile(GetOutputDir + FileName);
+      end;
+end;
+
+procedure Form_Create;
+begin
+   dxButton1.OnClick := @SaveFilesFromQuery;
+end;

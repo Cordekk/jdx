@@ -3,12 +3,13 @@ object Form61: TdxForm
   Height = 474
   Top = 10
   Width = 754
+  AutoOpen = True
+  Index = 0
   Id = 6883
   PId = 119
   FormCaption = 'Дополнительные поля документов'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form61: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxLabel1: TdxLabel
     Left = 0

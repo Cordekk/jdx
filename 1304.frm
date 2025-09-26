@@ -3,13 +3,14 @@ object Form1304: TdxForm
   Height = 646
   Top = 10
   Width = 975
+  FormGroup = 'Приемка'
+  AutoOpen = True
+  Index = 12
   Id = 1304
   PId = 0
   FormCaption = 'Задание лаборатории'
-  FormGroup = 'Приемка'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form1304: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 12
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Номер]&lt;&gt;null" grid="cmp;ve_prop|dxButton4;Доступность|dxButton1;Доступность|dxButton3;Доступность" stateevents="1" /></actions>'
   object dxLabel7: TdxLabel

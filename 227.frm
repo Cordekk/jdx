@@ -3,13 +3,14 @@ object Form227: TdxForm
   Height = 860
   Top = 10
   Width = 1139
+  FormGroup = 'Приемка'
+  AutoOpen = True
+  Index = 24
   Id = 227
   PId = 0
   FormCaption = 'Нормативный документ'
-  FormGroup = 'Приемка'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form227: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 24
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 24
@@ -277,6 +277,37 @@ object Form227: TdxForm
     StopTab = False
     Id = 263119
   end
+  object dxLabel6: TdxLabel
+    Left = 808
+    Height = 16
+    Top = 132
+    Width = 69
+    Caption = 'id ФСА НД'
+  end
+  object dxCalcEdit1: TdxCalcEdit
+    Left = 888
+    Height = 24
+    Top = 128
+    Width = 100
+    MaxLength = 0
+    TabOrder = 10
+    HideButton = False
+    CalculatorLayout = clNormal
+    AsInteger = 0
+    ButtonWidth = 24
+    NumGlyphs = 1
+    Flat = True
+    Id = 263308
+    FieldName = 'id ФСА'
+    Precission = 0
+    Expression = 'IIF([id ФСА]=0,DBGET(''НД и методики ФСА'', ''id ФСА'', ''[!Номер документа]==[Документ|Заголовок]''),[id ФСА])'
+    Required = False
+    DefaultValue = '0'
+    Editable = False
+    NullToZero = True
+    GroupDigits = True
+    PadZeros = True
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 100
@@ -314,6 +345,12 @@ object Form227: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f263119'
+      end    
+      item
+        Tag = 263308
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263308'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

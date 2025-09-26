@@ -3,13 +3,14 @@ object Form94: TdxForm
   Height = 300
   Top = 10
   Width = 617
+  FormGroup = '!Вспомогательные'
+  AutoOpen = True
+  Index = 48
   Id = 94
   PId = 0
   FormCaption = 'Сумма прописью'
-  FormGroup = '!Вспомогательные'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form94: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 48
   SoftCheck = False
   object dxCalcEdit1: TdxCalcEdit
     Left = 32

@@ -3,13 +3,14 @@ object Form530: TdxForm
   Height = 743
   Top = 10
   Width = 987
+  FormGroup = 'Общие'
+  AutoOpen = True
+  Index = 81
   Id = 530
   PId = 0
   FormCaption = 'Archiv'
-  FormGroup = 'Общие'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form530: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 81
   SoftCheck = False
   object dxCounter1: TdxCounter
     Left = 48

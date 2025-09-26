@@ -3,16 +3,17 @@ object Form296: TdxForm
   Height = 429
   Top = 10
   Width = 709
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 62
   Id = 296
   PId = 0
   FormCaption = 'Форма помещения'
-  FormGroup = 'Лаборатория'
   Font.Height = -13
   Font.Name = 'Verdana'
   CalcFields.Strings = (
     '№=RECNO(''Помещения1'')'
   )
-  AutoOpen = True
   ViewType = vtSimpleForm
   ParentField = 0
   LevelCount = 5
@@ -22,7 +23,6 @@ object Form296: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 62
   SoftCheck = False
   object dxQueryGrid1: TdxQueryGrid
     Left = 8

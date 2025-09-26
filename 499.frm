@@ -3,13 +3,14 @@ object Form499: TdxForm
   Height = 365
   Top = 10
   Width = 516
+  FormGroup = 'ТМЦ'
+  AutoOpen = True
+  Index = 70
   Id = 499
   PId = 0
   FormCaption = 'Остаток ТМЦ'
-  FormGroup = 'ТМЦ'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form499: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 70
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 152

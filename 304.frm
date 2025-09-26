@@ -3,13 +3,14 @@ object Form304: TdxForm
   Height = 218
   Top = 10
   Width = 668
+  FormGroup = 'Справочники'
+  AutoOpen = True
+  Index = 65
   Id = 304
   PId = 0
   FormCaption = 'Пересчет единиц'
-  FormGroup = 'Справочники'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form304: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 65
   SoftCheck = False
   object dxLabel1: TdxLabel
     Left = 24

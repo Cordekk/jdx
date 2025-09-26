@@ -3,12 +3,13 @@ object Form1606: TdxForm
   Height = 912
   Top = 10
   Width = 562
+  AutoOpen = True
+  Index = 0
   Id = 1606
   PId = 1605
   FormCaption = 'Шаблон хода испытаний'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form1606: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxLabel1: TdxLabel
     Left = 4

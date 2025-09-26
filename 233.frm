@@ -3,13 +3,14 @@ object Form233: TdxForm
   Height = 697
   Top = 10
   Width = 1396
+  FormGroup = 'Приемка'
+  AutoOpen = True
+  Index = 54
   Id = 233
   PId = 0
   FormCaption = 'Шаблон показателей'
-  FormGroup = 'Приемка'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form233: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 54
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 8

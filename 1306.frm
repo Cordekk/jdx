@@ -3,12 +3,13 @@ object Form1306: TdxForm
   Height = 581
   Top = 10
   Width = 716
+  AutoOpen = True
+  Index = 0
   Id = 1306
   PId = 1304
   FormCaption = 'Показатель41'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form1306: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   Shopping = '19977|0|0|0|0|0|0'
   object dxLookupComboBox1: TdxLookupComboBox

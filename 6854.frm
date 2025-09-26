@@ -3,12 +3,13 @@ object Form30: TdxForm
   Height = 300
   Top = 10
   Width = 350
+  AutoOpen = True
+  Index = 0
   Id = 6854
   PId = 28
   FormCaption = 'Подразделения для направления'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form30: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 24

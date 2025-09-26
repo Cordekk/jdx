@@ -3,12 +3,13 @@ object Form40: TdxForm
   Height = 597
   Top = 10
   Width = 866
+  AutoOpen = True
+  Index = 0
   Id = 79
   PId = 0
   FormCaption = 'БагТрекер'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   Filters.Strings = (
     'Нерешенные проблемы=FILTER:404|0|0|0'
@@ -22,7 +23,6 @@ object Form40: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxEdit1: TdxEdit
     Left = 12

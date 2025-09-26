@@ -3,13 +3,14 @@ object Form236: TdxForm
   Height = 303
   Top = 10
   Width = 553
+  FormGroup = 'ТМЦ'
+  AutoOpen = True
+  Index = 10
   Id = 236
   PId = 0
   FormCaption = 'Допуск к оборудованию'
-  FormGroup = 'ТМЦ'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form236: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 10
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 132

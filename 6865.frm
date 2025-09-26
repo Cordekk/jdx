@@ -3,12 +3,13 @@ object Form46: TdxForm
   Height = 300
   Top = 10
   Width = 520
+  AutoOpen = True
+  Index = 0
   Id = 6865
   PId = 6863
   FormCaption = 'НД для заявки'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form46: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxLookupComboBox9: TdxLookupComboBox
     Left = 0

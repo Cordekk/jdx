@@ -3,16 +3,17 @@ object Form243: TdxForm
   Height = 654
   Top = 10
   Width = 1022
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 52
   Id = 243
   PId = 0
   FormCaption = 'Формы ТМЦ'
-  FormGroup = 'Лаборатория'
   Font.Height = -13
   Font.Name = 'Verdana'
   CalcFields.Strings = (
     '№=RECNO(''ТМЦ1'')'
   )
-  AutoOpen = True
   ViewType = vtSimpleForm
   ParentField = 0
   LevelCount = 5
@@ -22,7 +23,6 @@ object Form243: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 52
   SoftCheck = False
   object dxQueryGrid1: TdxQueryGrid
     Left = 12

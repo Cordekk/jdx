@@ -1,0 +1,372 @@
+{@module
+Author=Cordek
+Version=1.0
+Description=Математические функции:
+ вычисления натурального логарифма - Ln, Cos, Sin и т.д.
+ а также извлечение числа из строки с лишними знаками (пробелы, тире и т.д)
+ Часть функций использует возможности сервера базы данных Firebird, и не будет работать при подключении к базе данных напрямую через SQLlite
+@}
+
+
+
+{@function
+OrigName=Ln
+Name=Ln
+Args=n
+Result=n
+Group=Математика
+Description=Возвращает натуральный логарифм числа x.<br>
+<center><code>Ln([x])</code></center><br>
+<b>Параметры:</b> x > 0 <button class="citation-flag" data-index="2"><button class="citation-flag" data-index="7">.<br><br>
+<b>Результат:</b> вещественное число.<br><br>
+<font color="#FF0000"><b>Примечание:</b> x должен быть положительным.</font>
+@}
+function Ln(x: Extended): Extended;
+var qSQL: TdxSQLQuery;
+begin
+  qSQL := sqlSelect('SELECT LN(' + FloatToStr(x) + ') FROM RDB$DATABASE'); // <button class="citation-flag" data-index="7"><button class="citation-flag" data-index="9">
+  Result := qSQL.AsF['LN'];
+  qSQL.Free;
+end;
+
+
+{@function
+OrigName=LOG10
+Name=LOG10
+Args=n
+Result=n
+Group=Математика
+Description=Возвращает десятичный логарифм числа x.<br>
+<center><code>LOG10([x])</code></center><br>
+<b>Параметры:</b> x > 0 <button class="citation-flag" data-index="2"><button class="citation-flag" data-index="4">.<br><br>
+<b>Результат:</b> вещественное число.<br><br>
+<font color="#FF0000"><b>Примечание:</b> x должен быть положительным.</font>
+@}
+function LOG10(x: Extended): Extended;
+var qSQL: TdxSQLQuery;
+begin
+  qSQL := sqlSelect('SELECT LOG10(' + FloatToStr(x) + ') FROM RDB$DATABASE');
+  Result := qSQL.AsF['LOG10'];
+  qSQL.Free;
+end;
+
+
+{@function
+OrigName=LOG
+Name=LOG
+Args=nn
+Result=n
+Group=Математика
+Description=Возвращает логарифм числа x по основанию base.<br>
+<center><code>LOG([base], [x])</code></center><br>
+<b>Параметры:</b> base > 0, base ≠ 1; x > 0 <button class="citation-flag" data-index="2"><button class="citation-flag" data-index="3"><button class="citation-flag" data-index="7">.<br><br>
+<b>Результат:</b> вещественное число.<br><br>
+<font color="#FF0000"><b>Примечание:</b> Оба аргумента должны быть положительными, основание не равно 1.</font>
+@}
+function LOG(base, x: Extended): Extended;
+var qSQL: TdxSQLQuery;
+begin
+  qSQL := sqlSelect('SELECT LOG(' + FloatToStr(base) + ', ' + FloatToStr(x) + ') FROM RDB$DATABASE');
+  Result := qSQL.AsF['LOG'];
+  qSQL.Free;
+end;
+
+{@function
+OrigName=Exp
+Name=Exp
+Args=n
+Result=n
+Group=Математика
+Description=Возвращает экспоненту числа x (e^x).<br>
+<center><code>Exp([x])</code></center><br>
+<b>Параметры:</b> x — любое число <button class="citation-flag" data-index="4"><button class="citation-flag" data-index="9">.<br><br>
+<b>Результат:</b> вещественное число.
+@}
+function Exp(x: Extended): Extended;
+var qSQL: TdxSQLQuery;
+begin
+  qSQL := sqlSelect('SELECT EXP(' + FloatToStr(x) + ') FROM RDB$DATABASE'); // <button class="citation-flag" data-index="7"><button class="citation-flag" data-index="9">
+  Result := qSQL.AsF['EXP'];
+  qSQL.Free;
+end;
+
+
+
+
+
+{@function
+OrigName=Cosr
+Name=Cosr
+Args=n
+Result=n
+Group=Математика
+Description=Функция вычисляет косинус числа a (в радианах).
+Пример: Cosr([a])
+@}
+function Cosr(a: Extended): Extended;
+begin
+  Result := Cos(a);
+end;
+
+{@function
+OrigName=Sinr
+Name=Sinr
+Args=n
+Result=n
+Group=Математика
+Description=Функция вычисляет синус числа a (в радианах).
+Пример: Sinr([a])
+@}
+function Sinr(a: Extended): Extended;
+begin
+  Result := Sin(a);
+end;
+
+{@function
+OrigName=Tgr
+Name=Tgr
+Args=n
+Result=n
+Group=Математика
+Description=Функция вычисляет тангенс числа a (в радианах). Tgr(a) = Sin(a)/Cos(a)
+Пример: Tgr([a])
+@}
+function Tgr(a: Extended): Extended;
+begin
+  Result := Sin(a) / Cos(a);
+end;
+
+{@function
+OrigName=Ctr
+Name=Ctr
+Args=n
+Result=n
+Group=Математика
+Description=Функция вычисляет котангенс числа a (в радианах). Ctr(a) = Cos(a)/Sin(a)
+Пример: Ctr([a])
+@}
+function Ctr(a: Extended): Extended;
+begin
+  Result := Cos(a) / Sin(a);
+end;
+
+{@function
+OrigName=Cosd
+Name=Cosd
+Args=n
+Result=n
+Group=Математика
+Description=Функция вычисляет косинус угла a (в градусах). 1 градус = π/180 радиан.
+Пример: Cosd([a])
+@}
+function Cosd(a: Extended): Extended;
+begin
+  Result := Cos(a * Pi / 180);
+end;
+
+{@function
+OrigName=Sind
+Name=Sind
+Args=n
+Result=n
+Group=Математика
+Description=Функция вычисляет синус угла a (в градусах). 1 градус = π/180 радиан.
+Пример: Sind([a])
+@}
+function Sind(a: Extended): Extended;
+begin
+  Result := Sin(a * Pi / 180);
+end;
+
+{@function
+OrigName=Tgd
+Name=Tgd
+Args=n
+Result=n
+Group=Математика
+Description=Функция вычисляет тангенс угла a (в градусах). Tgd(a) = Sind(a)/Cosd(a)
+Пример: Tgd([a])
+@}
+function Tgd(a: Extended): Extended;
+begin
+  Result := Sind(a) / Cosd(a);
+end;
+
+{@function
+OrigName=Ctd
+Name=Ctd
+Args=n
+Result=n
+Group=Математика
+Description=Функция вычисляет котангенс угла a (в градусах). Ctd(a) = Cosd(a)/Sind(a)
+Пример: Ctd([a])
+@}
+function Ctd(a: Extended): Extended;
+begin
+  Result := Cosd(a) / Sind(a);
+end;
+
+{@function
+OrigName=Pif
+Name=Pif
+Args=
+Result=n
+Group=Математика
+Description=Функция возвращает значение числа π (3.1415926535897932385).
+Пример: Pif()
+@}
+function Pif: Extended;
+begin
+  Result := Pi;
+end;
+
+
+{@function
+OrigName=Asin
+Name=Asin
+Args=n
+Result=n
+Group=Математика
+Description=Возвращает арксинус числа x (в радианах).<br>
+<center><code>Asin([x])</code></center><br>
+<b>Параметры:</b> x ∈ [-1, 1] <button class="citation-flag" data-index="5"><button class="citation-flag" data-index="9">.<br><br>
+<b>Результат:</b> угол в радианах.<br><br>
+<font color="#FF0000"><b>Примечание:</b> x должен быть в диапазоне от -1 до 1.</font>
+@}
+function Asin(x: Extended): Extended;
+var qSQL: TdxSQLQuery;
+begin
+  qSQL := sqlSelect('SELECT ASIN(' + FloatToStr(x) + ') FROM RDB$DATABASE'); // <button class="citation-flag" data-index="7"><button class="citation-flag" data-index="9">
+  Result := qSQL.AsF['ASIN'];
+  qSQL.Free;
+end;
+
+
+{@function
+OrigName=ACOS
+Name=ACOS
+Args=n
+Result=n
+Group=Математика
+Description=Возвращает арккосинус числа x (в радианах).<br>
+<center><code>ACOS([x])</code></center><br>
+<b>Параметры:</b> x ∈ [-1, 1] <button class="citation-flag" data-index="3"><button class="citation-flag" data-index="2">.<br><br>
+<b>Результат:</b> угол в радианах.<br><br>
+<font color="#FF0000"><b>Примечание:</b> x должен быть в диапазоне от -1 до 1.</font>
+@}
+function ACOS(x: Extended): Extended;
+var qSQL: TdxSQLQuery;
+begin
+  qSQL := sqlSelect('SELECT ACOS(' + FloatToStr(x) + ') FROM RDB$DATABASE');
+  Result := qSQL.AsF['ACOS'];
+  qSQL.Free;
+end;
+
+
+
+{@function
+OrigName=ATAN
+Name=ATAN
+Args=n
+Result=n
+Group=Математика
+Description=Возвращает арктангенс числа x (в радианах).<br>
+<center><code>ATAN([x])</code></center><br>
+<b>Параметры:</b> x — любое число <button class="citation-flag" data-index="3"><button class="citation-flag" data-index="5">.<br><br>
+<b>Результат:</b> угол в радианах.
+@}
+function ATAN(x: Extended): Extended;
+var qSQL: TdxSQLQuery;
+begin
+  qSQL := sqlSelect('SELECT ATAN(' + FloatToStr(x) + ') FROM RDB$DATABASE');
+  Result := qSQL.AsF['ATAN'];
+  qSQL.Free;
+end;
+
+
+{@function
+OrigName=ATAN2
+Name=ATAN2
+Args=nn
+Result=n
+Group=Математика
+Description=Возвращает арктангенс y/x с учетом квадранта (в радианах).<br>
+<center><code>ATAN2([y], [x])</code></center><br>
+<b>Параметры:</b> x и y не равны нулю одновременно <button class="citation-flag" data-index="5"><button class="citation-flag" data-index="6">.<br><br>
+<b>Результат:</b> угол в радианах.
+@}
+function ATAN2(y, x: Extended): Extended;
+var qSQL: TdxSQLQuery;
+begin
+  qSQL := sqlSelect('SELECT ATAN2(' + FloatToStr(y) + ', ' + FloatToStr(x) + ') FROM RDB$DATABASE');
+  Result := qSQL.AsF['ATAN2'];
+  qSQL.Free;
+end;
+
+
+{@function
+OrigName=ACTAN
+Name=ACTAN
+Args=n
+Result=n
+Group=Математика
+Description=Возвращает арккотангенс числа x (в радианах).<br>
+<center><code>ACTAN([x])</code></center><br>
+<b>Параметры:</b> x — любое число <button class="citation-flag" data-index="1"><button class="citation-flag" data-index="5">.<br><br>
+<b>Результат:</b> угол в радианах.<br><br>
+<font color="#FF0000"><b>Примечание:</b> Реализовано через ATAN2 для корректного определения квадранта.</font>
+@}
+function ACTAN(x: Extended): Extended;
+var qSQL: TdxSQLQuery;
+begin
+  qSQL := sqlSelect('SELECT ATAN2(1, ' + FloatToStr(x) + ') FROM RDB$DATABASE'); // Арккотангенс = ATAN2(1, x)
+  Result := qSQL.AsF['ATAN2'];
+  qSQL.Free;
+end;
+
+
+{@function
+OrigName=FLOATFROMSTR
+Name=FLOATFROMSTR
+Args=v
+Result=n
+Group=Текст
+Description=Извлекает число из из текста. <p>
+<b>Пример:</p>
+<code>FLOATFROMSTR([Поле_Число_Строкой])</code> <p>
+<i>вернет из поля с содержимым вида: <b>1-234,567б89?01</b> значение,
+содержащее только числа но с точкой или запятой: <b>1234,5678901</b></i>
+@}
+
+function FLOATFROMSTR(v:variant):Extended;
+var r,s: String; i,p,m,d:integer;
+begin
+s:=VarToStr(v);
+r := '';
+p := 0;
+d := 0;
+m := 0;
+if Length(s)<>0 then
+for i := 1 to Length(s)
+do
+if s[i] in ['0','1','2','3','4','5','6','7','8','9']
+then
+begin
+r := r + s[i]
+p :=1;
+end
+else if (s[i] in [',','.']) and (d=0) and (p=1)  // если d больше 0, то значит запятую уже записали, и это больше делать не надо, если p не равно 1, значит число пока не записывали, поэтому запятую рано ставить
+then
+	begin
+	r := r + s[i];
+	d :=d+1;
+	end
+else if (s[i] in ['-','-']) and (m=0) and (p=0)  // если d больше 0, то значит знак минус уже записали, и это больше делать не надо, если p не равно 1, значит число пока не записывали, поэтому запятую рано ставить
+then
+	begin
+	r := r + s[i];
+	m :=1;
+	end;
+
+result:=StrToFloat(r); // пытаемся записать число
+end;

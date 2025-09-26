@@ -3,13 +3,14 @@ object Form18: TdxForm
   Height = 507
   Top = 10
   Width = 795
+  FormGroup = '!Вспомогательные'
+  AutoOpen = True
+  Index = 4
   Id = 265
   PId = 0
   FormCaption = 'FileStore2'
-  FormGroup = '!Вспомогательные'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridRight
   ParentField = 0
   LevelCount = 5
@@ -19,8 +20,8 @@ object Form18: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 4
   SoftCheck = False
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="NEWREC=1" grid="cmp;ve_prop|dxFile1;Редактирование|dxFile2;Редактирование" stateevents="1" /></actions>'
   object dxLabel1: TdxLabel
     Left = 32
     Height = 16
@@ -52,7 +53,7 @@ object Form18: TdxForm
     ParentColor = False
   end
   object dxEdit2: TdxEdit
-    Left = 124
+    Left = 118
     Height = 24
     Top = 148
     Width = 180
@@ -134,7 +135,7 @@ object Form18: TdxForm
     FieldName = 'Имя файла'
     FieldSize = 50
     Required = False
-    Expression = '//'
+    Expression = '//'#13#10'GET_FILE_DESCRIPTION([Файл])'
     Editable = False
   end
   object dxGroupBox1: TdxGroupBox
@@ -143,7 +144,6 @@ object Form18: TdxForm
     Top = 308
     Width = 248
     Caption = 'Запись создана'
-    ParentBackground = False
     TabOrder = 5
     StopTab = False
     object dxLabel8: TdxLabel
@@ -172,7 +172,7 @@ object Form18: TdxForm
       Id = 4515
       FieldName = 'Дата записи'
       DateNow = True
-      Expression = '//'
+      Expression = '// [Файл]'#13#10'SRV_DATE'
       Required = False
       Editable = False
     end
@@ -196,7 +196,7 @@ object Form18: TdxForm
       FieldName = 'Время записи'
       CurTime = True
       TimeFormat = ttHHMM
-      Expression = '//'
+      Expression = '//  [Файл]'#13#10'SRV_TIME'
       Editable = False
       Required = False
     end
@@ -227,7 +227,7 @@ object Form18: TdxForm
     DestTable = 0
     PromptFillTable = False
     ClearTableBeforeFill = False
-    Expression = '// [Номер]'#13#10'OBJID("Сотрудники", "user", USER)'
+    Expression = '// [Файл]'#13#10'OBJID("Сотрудники", "user", USER)'
     Editable = False
     ListFields = <>
     DropDownCount = 8
@@ -257,8 +257,8 @@ object Form18: TdxForm
     Left = 48
     Height = 24
     Top = 36
-    Width = 483
-    Caption = 'Хранилище файлов 2.0. авторы cordek & develop-soft'
+    Width = 188
+    Caption = 'Хранилище файлов'
     Font.Color = 12615680
     Font.Height = -21
     Font.Name = 'Times New Roman'
@@ -267,17 +267,17 @@ object Form18: TdxForm
     ParentFont = False
   end
   object dxLabel11: TdxLabel
-    Left = 320
+    Left = 316
     Height = 16
-    Top = 312
+    Top = 340
     Width = 31
     Caption = 'ХЭШ'
     ParentColor = False
   end
   object dxMemo2: TdxMemo
     Left = 316
-    Height = 68
-    Top = 332
+    Height = 40
+    Top = 360
     Width = 428
     ScrollBars = ssBoth
     TabOrder = 8
@@ -323,6 +323,14 @@ object Form18: TdxForm
     FieldSize = 100
     Required = False
     ButtonWidth = 23
+  end
+  object dxButton1: TdxButton
+    Left = 782
+    Height = 30
+    Top = 34
+    Width = 100
+    Caption = 'dxButton1'
+    TabOrder = 11
   end
   object Grid: TdxGrid
     Left = 0

@@ -3,10 +3,12 @@ object Form38: TdxForm
   Height = 721
   Top = 10
   Width = 618
+  FormGroup = 'Клиенты'
+  AutoOpen = True
+  Index = 7
   Id = 38
   PId = 0
   FormCaption = 'Договора'
-  FormGroup = 'Клиенты'
   Templates.Strings = (
     'Договор по карантину 2018.doc'
   )
@@ -25,7 +27,6 @@ object Form38: TdxForm
     'Клиент_1=NZ([Клиент2|Наименование_полное],''_______________________________________'')'
     'Должность=NZ([Клиент2|Должность_руководителя],'''')'
   )
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -35,7 +36,6 @@ object Form38: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 7
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 16

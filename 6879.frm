@@ -3,12 +3,13 @@ object Form57: TdxForm
   Height = 676
   Top = 10
   Width = 650
+  AutoOpen = True
+  Index = 0
   Id = 6879
   PId = 28
   FormCaption = 'Видимость полей'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form57: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="84374B19-2B7F-46DF-BA15-5AD5A015DA80" cmp="Заявка клиента" cbx1="dxEdit1" cbx2="dxComboBox1" /></actions>'
   object dxComboBox1: TdxComboBox

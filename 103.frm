@@ -3,13 +3,14 @@ object Form103: TdxForm
   Height = 602
   Top = 10
   Width = 506
+  FormGroup = 'ТМЦ'
+  AutoOpen = True
+  Index = 41
   Id = 103
   PId = 0
   FormCaption = 'Проверка ТМЦ'
-  FormGroup = 'ТМЦ'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form103: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 41
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE=''''| ROLE=''Администратор''" grid="cmp;ve_prop|dxLookupComboBox3;Редактирование" stateevents="1" /></actions>'
   object dxCounter1: TdxCounter

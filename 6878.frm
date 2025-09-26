@@ -3,12 +3,13 @@ object Form56: TdxForm
   Height = 337
   Top = 10
   Width = 870
+  AutoOpen = True
+  Index = 0
   Id = 6878
   PId = 28
   FormCaption = 'Статусы'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   Coloring.Strings = (
     '$008080FF;[Цвет]=''розовый'''
@@ -27,7 +28,6 @@ object Form56: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxComboBox1: TdxComboBox
     Left = 88

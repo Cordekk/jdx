@@ -3,12 +3,13 @@ object Form533: TdxForm
   Height = 525
   Top = 10
   Width = 500
+  AutoOpen = True
+  Index = 0
   Id = 1599
   PId = 1304
   FormCaption = 'Таблица'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form533: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   Shopping = '26054|0|0|0|0|0|0'
   object dxLookupComboBox1: TdxLookupComboBox

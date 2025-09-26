@@ -2,11 +2,13 @@ object Form1603: TdxForm
   Left = 10
   Height = 786
   Top = 10
-  Width = 1665
+  Width = 1673
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 87
   Id = 3211
   PId = 0
   FormCaption = 'Просмотр исследований'
-  FormGroup = 'Лаборатория'
   Font.Height = -13
   Font.Name = 'Verdana'
   CalcFields.Strings = (
@@ -14,7 +16,6 @@ object Form1603: TdxForm
     'Должность2=DBGET(''Сотрудники'', ''Должность'', ''[!user]=USER'')'
     'Сегодня=DATE()'
   )
-  AutoOpen = True
   ViewType = vtSimpleForm
   HelpText.Strings = (
     '<body bgcolor=#fff8dc>'
@@ -29,15 +30,14 @@ object Form1603: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 87
   SoftCheck = False
   ActionOnCreate = '<actions><comment text="только для разработчика"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="role=''''" grid="cmp;ve_prop|dxLookupComboBox2;Редактирование|dxEdit2;Видимость|dxLabel10;Видимость|dxEdit5;Видимость|dxEdit6;Видимость|dxLabel13;Видимость|dxLabel15;Видимость|dxQueryGrid11;Видимость|dxCheckBox3;Видимость" stateevents="1" /><comment text="только для руководителя (настраиваетс в форме Сотрудники"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="DBGET(''Сотрудники'', ''Назначение исследований'', ''[!user]=user'')=1" grid="cmp;ve_prop|dxTabSheet1;Доступность" stateevents="0" /><comment text="Если нет исполнителя, то кнопки назначения не активны"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Исполнитель]&lt;&gt;null" grid="cmp;ve_prop|dxButton1;Доступность|dxButton2;Доступность|dxButton4;Доступность|dxButton3;Доступность" stateevents="0" /><comment text="непонятно зачем, всё равно каждый видит свои исследования"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="DBGET(''Сотрудники'', ''Исследования'', ''[!user]=user'')=1" grid="cmp;ve_prop|dxTabSheet3;Доступность" stateevents="0" /><comment text="видимость кнопки печать документ (кнопка 7), только при наличии шаблонов"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="0&lt;COUNT(''Шаблоны6'')" grid="cmp;ve_prop|dxButton7;Доступность" stateevents="0" /><comment text="видимость кнопки печать документ (кнопка 8), только при наличии шаблонов"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="0&lt;COUNT(''Шаблоны10'')" grid="cmp;ve_prop|dxButton8;Доступность" stateevents="0" /><comment text="чтобы редактировались исследования по кнопке"/><action type="9" id="AFB9DFCF-7996-43A1-A83A-BBCFC5A19928" queries="qry;fld;bn|Исследования принятые;;dxButton9" defact="0" /></actions>'
   AllowResizeWindow = True
   object dxPageControl1: TdxPageControl
     Left = 4
-    Height = 772
-    Top = 12
-    Width = 1656
+    Height = 780
+    Top = 4
+    Width = 1660
     ActivePage = dxTabSheet1
     Anchors = [akTop, akLeft, akRight, akBottom]
     TabIndex = 0
@@ -519,7 +519,7 @@ object Form1603: TdxForm
           00000000000000000000
         }
         TabOrder = 19
-        ActionOnClick = '<actions><action type="7" expression="BLOCK(setvar(''текущие образцы'',MERGE(''Исследования7'', ''Образец_Идентификатор'', '';'')),'#13#10'setfield(''Печать направления'',1)'#13#10')"/><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Пробы для направления" keeppos="0" /><action type="2" template="" expression="GET(''Шаблоны6'', ''Файл'')" outfile="" fileaction="1" saverecord="1"/><action type="7" expression="BLOCK(setvar(''текущие образцы'',null),'#13#10'setfield(''Печать направления'',0)'#13#10')"/></actions>'
+        ActionOnClick = '<actions><action type="7" expression="BLOCK(setvar(''текущие образцы'',MERGE(''Исследования7'', ''Образец_Идентификатор'', '';'')),'#13#10'setfield(''Печать направления'',1)'#13#10')"/><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Пробы для направления" keeppos="0" /><action type="9" id="08951CB2-B27A-4BCF-B714-F0B209F0D7AF" formname="" form_exp="" id_exp="" file_open="" path_template="GET(''Шаблоны6'', ''Файл'')" path_doc="" fileaction="0" /><action disabled="1" type="2" template="" expression="GET(''Шаблоны6'', ''Файл'')" outfile="" fileaction="1" saverecord="1"/><action type="7" expression="BLOCK(setvar(''текущие образцы'',null),'#13#10'setfield(''Печать направления'',0)'#13#10')"/></actions>'
       end
       object dxQueryGrid11: TdxQueryGrid
         Left = 1316
@@ -560,7 +560,7 @@ object Form1603: TdxForm
         Top = 248
         Width = 176
         Caption = 'Печать направления'
-        TabOrder = 22
+        TabOrder = 21
         ValueChecked = '1'
         ValueUnchecked = '0'
         Id = 263043
@@ -570,10 +570,29 @@ object Form1603: TdxForm
         Editable = False
         DefaultValue = '0'
       end
+      object dxComboBox1: TdxComboBox
+        Left = 155
+        Height = 24
+        Top = 94
+        Width = 437
+        AutoComplete = True
+        AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+        ItemHeight = 16
+        MaxLength = 0
+        TabOrder = 23
+        Id = 263201
+        FieldName = 'Показатель'
+        SourceTId = 27
+        SourceFId = 100
+        FieldSize = 50
+        Required = False
+        DefaultValue = 'null'
+        Editable = False
+      end
       object dxQueryGrid2: TdxQueryGrid
         Left = 556
-        Height = 432
-        Top = 224
+        Height = 425
+        Top = 227
         Width = 1080
         AutoAdvance = aaNone
         Color = clWindow
@@ -602,25 +621,6 @@ object Form1603: TdxForm
         AllowChangeSort = False
         Id = 1219
         ManualRefresh = False
-      end
-      object dxComboBox1: TdxComboBox
-        Left = 155
-        Height = 24
-        Top = 94
-        Width = 437
-        AutoComplete = True
-        AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
-        ItemHeight = 16
-        MaxLength = 0
-        TabOrder = 23
-        Id = 263201
-        FieldName = 'Показатель'
-        SourceTId = 27
-        SourceFId = 100
-        FieldSize = 50
-        Required = False
-        DefaultValue = 'null'
-        Editable = False
       end
     end
     object dxTabSheet4: TdxTabSheet
@@ -764,7 +764,7 @@ object Form1603: TdxForm
           00000000000000000000
         }
         TabOrder = 3
-        ActionOnClick = '<actions><action disabled="1" type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" qry="Пробы для направления1" keeppos="0" /><action type="2" template="" expression="GET(''Шаблоны10'', ''Файл'')" outfile="" fileaction="1" saverecord="0"/><action disabled="1" type="7" expression="Setfield(''Дата завершения'', null)"/></actions>'
+        ActionOnClick = '<actions><action disabled="1" type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" qry="Пробы для направления1" keeppos="0" /><action type="9" id="08951CB2-B27A-4BCF-B714-F0B209F0D7AF" formname="" form_exp="" id_exp="" file_open="" path_template="GET(''Шаблоны10'', ''Файл'')" path_doc="" fileaction="1" /><action disabled="1" type="2" template="" expression="GET(''Шаблоны10'', ''Файл'')" outfile="" fileaction="1" saverecord="0"/><action disabled="1" type="7" expression="Setfield(''Дата завершения'', null)"/></actions>'
       end
       object dxQueryGrid15: TdxQueryGrid
         Left = 760

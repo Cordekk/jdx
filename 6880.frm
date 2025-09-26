@@ -1,14 +1,15 @@
 object Form58: TdxForm
   Left = 10
-  Height = 696
+  Height = 96
   Top = 10
-  Width = 688
+  Width = 733
+  AutoOpen = True
+  Index = 0
   Id = 6880
   PId = 22
   FormCaption = 'Дополнения Пробы'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,8 +19,9 @@ object Form58: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE=''''   |  ROLE=''Администратор''" grid="cmp;ve_prop|dxLabel3;Видимость|dxEdit2;Видимость|dxLabel4;Видимость|dxMemo2;Видимость|dxMemo2;Видимость|dxMemo3;Видимость|dxLabel5;Видимость|dxGroupBox1;Видимость" stateevents="1" /></actions>'
+  AllowResizeWindow = True
   object dxLabel1: TdxLabel
     Left = 24
     Height = 16
@@ -27,24 +29,6 @@ object Form58: TdxForm
     Width = 135
     Caption = 'Наименование поля'
     ParentColor = False
-  end
-  object dxMemo1: TdxMemo
-    Left = 164
-    Height = 100
-    Top = 52
-    Width = 480
-    ScrollBars = ssBoth
-    TabOrder = 0
-    Id = 263173
-    FieldName = 'Значение'
-    FieldSize = 300
-    Required = False
-    SourceTId = 37
-    SourceFId = 168
-    Delimiter = ', '
-    Filter = '[Список]=[Источник] &'#13#10'[Фильтр]==[Фильтр]'
-    Editable = False
-    UpdateTree = False
   end
   object dxLabel2: TdxLabel
     Left = 24
@@ -68,18 +52,17 @@ object Form58: TdxForm
     FieldName = 'Наименование поля'
     SourceTId = 6876
     SourceFId = 263106
-    Filter = '[Наименование поля] in REPLACEALL(DBMERGE(''Дополнения направления'', ''Наименование поля|Наименование поля'', ''[!ИД]=[!Направление2|ИД]''), ''; '','';'')'
+    Filter = '[Наименование поля] in REPLACEALL(DBMERGE(''Дополнения направления'', ''Наименование поля|Наименование поля'', ''[!ИД]=[!Направление|ИД]''), ''; '','';'')'
     FieldSize = 150
     Required = True
     Editable = False
   end
   object dxGroupBox1: TdxGroupBox
-    Left = 20
+    Left = 48
     Height = 328
-    Top = 168
+    Top = 112
     Width = 656
     Caption = 'Скрытые поля'
-    ParentBackground = False
     TabOrder = 2
     StopTab = False
     object dxEdit2: TdxEdit
@@ -167,10 +150,42 @@ object Form58: TdxForm
       SourceTId = 0
       SourceFId = 0
       Delimiter = ', '
-      Expression = 'NZ([Наименование поля],'''')+''+''+NZ([Значение],'''')'
+      Expression = 'NZ([Наименование поля],'''')+''=''+NZ([Значение],'''')'
       Editable = False
       UpdateTree = False
     end
+  end
+  object dxButton1: TdxButton
+    Left = 672
+    Height = 28
+    Top = 48
+    Width = 40
+    Caption = '+'
+    Font.Color = clRed
+    Font.Height = -21
+    Font.Name = 'Verdana'
+    ParentFont = False
+    TabOrder = 3
+    ActionOnClick = '<actions><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Данные списков" values="field;expr|Список;[Источник]|Значение;[Значение]|Фильтр;[Фильтр]" ignoreaccess="0" obj="" qry="" /><action type="7" expression="Setfield(''Значение'',getvar(''Значение''))"/></actions>'
+  end
+  object dxMemo1: TdxComboBox
+    Left = 164
+    Height = 24
+    Top = 52
+    Width = 480
+    AutoComplete = True
+    AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+    ItemHeight = 16
+    MaxLength = 0
+    TabOrder = 0
+    Id = 263173
+    FieldName = 'Значение'
+    SourceTId = 37
+    SourceFId = 168
+    Filter = '[Список]=[Источник]'#13#10'&[Фильтр]==[Фильтр]'
+    FieldSize = 300
+    Required = False
+    Editable = False
   end
   object Grid: TdxGrid
     Left = 0

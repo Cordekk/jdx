@@ -1,0 +1,632 @@
+{@module
+Author=Cordek
+Version=2.0
+Description=Модуль для работы с API Dadata. Веб-версия
+@}
+
+
+function GetVar(s:string):variant;
+begin
+result:=Session.EvalExpr('iif(varexists('''+s+''')=1,getvar('''+s+'''),block ( setvar('''+s+''',null), getvar('''+s+''') ))',Self);
+end;
+
+function ReplaceSpecialChars(const Value: string): string;
+var
+  i: Integer;
+  ResultValue: string;
+begin
+  ResultValue := '';
+  for i := 1 to Length(Value) do
+  begin
+    case Value[i] of
+      '"': ResultValue := ResultValue + '';
+      '\': ResultValue := ResultValue + '';
+      '/': ResultValue := ResultValue + '';
+      #8: ResultValue := ResultValue + '';
+      #9: ResultValue := ResultValue + '';
+      #10: ResultValue := ResultValue + '';
+      #12: ResultValue := ResultValue + '';
+      #13: ResultValue := ResultValue + '';
+    else
+      ResultValue := ResultValue + Value[i];
+    end;
+  end;
+  Result := ResultValue;
+end;
+
+function UnixToDateTime(const AValue: variant): TDateTime;
+var
+  R: variant;
+  Dt: TDateTime;
+begin
+  if VarIsNull(AValue) or VarIsEmpty(AValue) then
+    Result := 0
+  else
+  begin
+    R := AddSecond(StrToDateTime('01.01.1970'), AValue);
+    if TryStrToDateTime(FloatToStr(R), Dt) then
+      Result := TDateTime(R)
+    else
+      Result := 0;
+  end;
+end;
+
+function DateFromDateTime(const AValue: variant): string;
+begin
+  if VarIsNull(AValue) or VarIsEmpty(AValue) then
+    Result := ''
+  else
+    Result := FormatDateTime('dd.mm.yyyy', UnixToDateTime(AValue));
+end;
+
+function DDT_Date(const Dt: string): string;
+begin
+  if Dt = '' then
+    Result := ''
+  else
+    Result := DateFromDateTime(StrToInt64(Dt) div 1000);
+end;
+
+function CheckNReplace(p, s: string): string;
+var
+  r: string;
+begin
+  if s = '' then
+    Exit;
+
+  if (POS('ogrn_date',p)>0) or
+     (POS('data.state.actuality_date',p)>0) or
+      (POS('data.state.registration_date',p)>0) or
+      (POS('data.state.liquidation_date',p)>0) then
+  begin
+    r := DDT_Date(s);
+    Result := r;
+  end
+  else if p = 'data.state.status' then
+  begin
+    if s = 'ACTIVE' then
+      r := 'Действующая'
+    else if s = 'LIQUIDATING' then
+      r := 'Ликвидируется'
+    else if s = 'LIQUIDATED' then
+      r := 'Ликвидирована';
+    Result := r;
+  end
+  else if p = 'data.type' then
+  begin
+    if s = 'LEGAL' then
+      r := 'Юридическое лицо'
+    else if s = 'INDIVIDUAL' then
+      r := 'Индивидуальный предприниматель';
+    Result := r;
+  end
+  else if p = 'data.branch_type' then
+  begin
+    if s = 'MAIN' then
+      r := 'Головная организация'
+    else if s = 'BRANCH' then
+      r := 'Филиал';
+    Result := r;
+  end
+  else if p = 'data.opf.type' then
+  begin
+    if s = 'BANK' then
+      r := 'Банк'
+    else if s = 'BANK_BRANCH' then
+      r := 'Филиал банка'
+    else if s = 'NKO' then
+      r := 'Небанковская кредитная организация (НКО)'
+    else if s = 'NKO_BRANCH' then
+      r := 'Филиал НКО'
+    else if s = 'RKC' then
+      r := 'Расчетно-кассовый центр'
+    else if s = 'OTHER' then
+      r := 'Другой';
+    Result := r;
+  end
+  else
+    Result := s;
+end;
+
+function ProcessJsonElement(const Element: TJSONData; const Prefix: string): string;
+var
+  JsonObject: TJSONObject;
+  JsonArray: TJSONArray;
+  I, Index: Integer;
+  Key: String;
+  NewPrefix: string;
+  Value: string;
+  CurrentResult: string;
+  ResultString: string;
+begin
+  Result := ''; // Инициализируем результат пустой строкой
+
+  if Element is TJSONObject then
+  begin
+    JsonObject := TJSONObject(Element);
+    for Index := 0 to JsonObject.Count - 1 do
+    begin
+      Key := JsonObject.Names[Index];
+      if Prefix = '' then
+        NewPrefix := Key
+      else
+        NewPrefix := Prefix + '.' + Key;
+      CurrentResult := ProcessJsonElement(JsonObject.Items[Index], NewPrefix);
+      if (CurrentResult <> '') and (Result <> '') then
+        Result := Result + ';' + CurrentResult
+      else
+        Result := Result + CurrentResult;
+    end;
+  end
+  else if Element is TJSONArray then
+  begin
+    JsonArray := TJSONArray(Element);
+    for I := 0 to JsonArray.Count - 1 do
+    begin
+      if Prefix = 'suggestions' then
+        begin
+        NewPrefix := IIF(I=0,'',IntToStr(I))
+        Session.EvalExpr('setvar("Count_suggestions", ' + IntToStr(I) + ')', Self);
+        end
+        else NewPrefix := Format('%s_%d', [Prefix, I]);
+      CurrentResult := ProcessJsonElement(JsonArray.Items[I], NewPrefix);
+      if (CurrentResult <> '') and (Result <> '') then
+        Result := Result + ';' + CurrentResult
+      else
+        Result := Result + CurrentResult;
+    end;
+  end
+  else if Element.JSONType = jtString then
+  begin
+    Value := Element.AsString;
+    if Value <> '' then
+    begin
+      Value := ReplaceSpecialChars(Value); // Заменяем специальные символы на пробелы
+      Value := CheckNReplace(Prefix, Value); // Проверяем и заменяем значения по необходимости
+      Session.EvalExpr('setvar("' + Prefix + '", "' + Value + '")', Self);
+      Result := Result + Format('%s=%s', [Prefix, Value]);
+    end;
+  end
+  else if Element.JSONType = jtNumber then
+  begin
+    Value := Element.AsString;
+    if Value <> '' then
+    begin
+      Value := CheckNReplace(Prefix, Value); // Проверяем и заменяем значения по необходимости
+      Session.EvalExpr('setvar("' + Prefix + '", "' + Value + '")', Self);
+      Result := Result + Format('%s=%s', [Prefix, Value]);
+    end;
+  end
+  else if Element.JSONType = jtBoolean then
+  begin
+    if Element.AsBoolean then
+      Value := 'True'
+    else
+      Value := 'False';
+    Session.EvalExpr('setvar("' + Prefix + '", "' + Value + '")', Self);
+    Result := Result + Format('%s=%s', [Prefix, Value]);
+  end
+  else if Element.JSONType = jtNull then
+  begin
+    Session.EvalExpr('setvar("' + Prefix + '", "null")', Self);
+    Result := Result + Format('%s=null', [Prefix]);
+  end;
+end;
+
+
+{@function
+Name=PostAndGetJsonResponse
+@}
+function PostAndGetJsonResponse(const ApiKey: string; const SearchQuery: string; const AURL: string): string;
+var
+  HttpClient: THTTPClient;
+  JsonResponse: string;
+  JsonObject: TJSONObject;
+  SuggestionsArray: TJSONArray;
+  FirstSuggestion: TJSONObject;
+  Data: TJSONObject;
+  BodyStream: TStringStream;
+  ParsedJson: TJSONData;
+  SuggestionsIndex: Integer;
+begin
+  Result := '';
+  HttpClient := THTTPClient.Create; // Создаем объект THTTPClient без параметров
+  try
+    // Устанавливаем заголовок Content-Type
+    HttpClient.AddHeader('Content-Type', 'application/json');
+
+    // Устанавливаем заголовок Authorization
+    HttpClient.AddHeader('Authorization', 'Token ' + ApiKey);
+
+    // Формируем тело запроса
+    BodyStream := TStringStream.Create(SearchQuery);
+    try
+      // Устанавливаем тело запроса
+      HttpClient.RequestBody := BodyStream;
+
+      // Отправляем POST-запрос на сервер и получаем ответ
+      HttpClient.Send('POST', AURL);
+      JsonResponse := HttpClient.Content;
+       // debug(  JsonResponse)
+      if Pos('200', IntToStr(HttpClient.ResponseStatusCode)) > 0 then
+      begin
+        // Парсим JSON данные из строки
+        ParsedJson := ReadJSONFromString(JsonResponse);
+        try
+          if ParsedJson is TJSONObject then
+          begin
+            JsonObject := TJSONObject(ParsedJson);
+            Result := ProcessJsonElement(JsonObject, '');
+              if Result <> '' then
+              Result := Copy(Result, 1, Length(Result) - 1); // Убираем последний ';'
+          end
+          else
+          begin
+            Result := 'Ошибка парсинга JSON';
+          end;
+        finally
+          ParsedJson.Free;
+        end;
+      end
+      else
+      begin
+        Result := 'Ошибка при выполнении запроса: ' + IntToStr(HttpClient.ResponseStatusCode);
+      end;
+    finally
+      BodyStream.Free;
+    end;
+  finally
+    HttpClient.Free;
+  end;
+end;
+
+
+{@function
+Name=DA_ORGGET
+@}
+
+function DA_ORGGET(const ApiKey: string; const Query: string): string;
+begin
+  Result := PostAndGetJsonResponse(ApiKey, Format('{"query": "%s"}', [query]), 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party');
+end;
+
+
+{@function
+Name=DA_FIRMGET
+@}
+
+function DA_FIRMGET(const ApiKey: string; const INN: string): string;
+begin
+  Result := PostAndGetJsonResponse(ApiKey, Format('{"query": "%s"}', [INN]), 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/party');
+end;
+
+{@function
+
+Name=DA_BANK_GET
+
+@}
+
+function DA_BANK_GET(const ApiKey: string; const SearchQuery: string): string;
+begin
+  Result := PostAndGetJsonResponse(ApiKey, Format('{"query": "%s"}', [SearchQuery]), 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/bank');
+end;
+
+{@function
+
+Name=DA_ADDR_GET
+
+@}
+
+function DA_ADDR_GET(const ApiKey: string; const SearchQuery: string): string;
+begin
+  Result := PostAndGetJsonResponse(ApiKey, Format('{"query": "%s"}', [SearchQuery]), 'http://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address');
+end;
+
+
+{@action
+ID=0145BC0A-F521-4FBA-9933-2653831D580A
+@}
+
+procedure GetOrganizationInfoAction(const ExprINN: string; const ExprApiKey: string);
+var
+  INN: string;
+  ApiKey: string;
+begin
+  INN := VarToStr(Session.EvalExpr(ExprINN, Self));
+  ApiKey := VarToStr(Session.EvalExpr(ExprApiKey, Self));
+
+  if (INN = '') or (ApiKey = '') then Exit;
+
+  DA_FIRMGET(ApiKey, INN);
+end;
+
+{@action
+ID=EFC95C73-45C3-4EC7-ADEC-DE1CB4066BAB
+@}
+
+procedure GetBankInfoAction(const ExprSearchQuery: string; const ExprApiKey: string);
+var
+  SearchQuery: string;
+  ApiKey: string;
+begin
+  SearchQuery := VarToStr(Session.EvalExpr(ExprSearchQuery, Self));
+  ApiKey := VarToStr(Session.EvalExpr(ExprApiKey, Self));
+
+  if (SearchQuery = '') or (ApiKey = '') then Exit;
+
+  DA_BANK_GET(ApiKey, SearchQuery);
+end;
+
+{@action
+ID=6E07DEC9-AB14-431E-8B4D-1EFF04693549
+@}
+
+procedure GetAddressInfoAction(const ExprSearchQuery: string; const ExprApiKey: string);
+var
+  SearchQuery: string;
+  ApiKey: string;
+begin
+  SearchQuery := VarToStr(Session.EvalExpr(ExprSearchQuery, Self));
+  ApiKey := VarToStr(Session.EvalExpr(ExprApiKey, Self));
+
+  if (SearchQuery = '') or (ApiKey = '') then Exit;
+
+  DA_ADDR_GET(ApiKey, SearchQuery);
+end;
+
+
+
+
+
+// Примеры функций для извлечения конкретных полей
+{@function
+
+Name=DA_FIRMNAME
+
+@}
+
+function DA_FIRMNAME:variant;
+begin
+result:=getvar('data.name.short');
+end;
+
+{@function
+
+Name=DA_FIRMFULL_NAME
+
+@}
+
+function DA_FIRMFULL_NAME:variant;
+begin
+result:=getvar('data.name.full');
+end;
+
+{@function
+
+Name=DA_FIRMNAME_LATIN
+
+@}
+
+function DA_FIRMNAME_LATIN:variant;
+begin
+result:=getvar('data.name.latin')
+end;
+
+{@function
+
+Name=DA_FIRMADDR
+
+@}
+
+function DA_FIRMADDR:variant;
+begin
+result:=getvar('data.address.value')
+end;
+
+{@function
+
+Name=DA_FIRMINN
+
+@}
+
+function DA_FIRMINN:variant;
+begin
+result:=getvar('data.inn');
+end;
+
+{@function
+
+Name=DA_FIRMKPP
+
+@}
+
+function DA_FIRMKPP:variant;
+begin
+result:=getvar('data.kpp');
+end;
+
+
+{@function
+
+Name=DA_FIRMOGRN
+
+@}
+
+function DA_FIRMOGRN:variant;
+begin
+result:=getvar('data.ogrn');
+end;
+
+
+{@function
+Name=DA_FIRMOKPO
+
+@}
+
+function DA_FIRMOKPO:variant;
+begin
+result:=getvar('data.okpo');
+end;
+
+
+{@function
+
+Name=DA_FIRMOKVED
+
+@}
+
+function DA_FIRMOKVED:variant;
+begin
+result:=getvar('data.okved');
+end;
+
+{@function
+
+Name=DA_MANAGER_FIO
+
+@}
+
+function DA_MANAGER_FIO:variant;
+begin
+result:=getvar('data.management.name');
+end;
+
+{@function
+Name=DA_MANAGER_POST
+@}
+
+function DA_MANAGER_POST:variant;
+begin
+result:=getvar('data.management.post');
+end;
+
+{@function
+Name=DA_FIRMSTATUS
+@}
+
+function DA_FIRMSTATUS:variant;
+begin
+result:=getvar('data.state.status');
+end;
+
+{@function
+Name=DA_BRANCH_TYPE
+@}
+
+function DA_BRANCH_TYPE:variant;
+begin
+result:=getvar('data.branch_type');
+end;
+
+{@function
+Name=DA_FIRMACTUAL_DATE
+@}
+
+function DA_FIRMACTUAL_DATE:variant;
+var v:variant;
+begin
+v:=getvar('data.state.actuality_date');
+if v='' then v:=null;
+result:=v;
+end;
+
+
+
+{@function
+Name=DA_FIRMREG_DATE
+@}
+
+function DA_FIRMREG_DATE:variant;
+var v:variant;
+begin
+v:=getvar('data.state.registration_date');
+if v='' then v:=null;
+result:=v;
+end;
+
+
+{@function
+Name=DA_FIRMLIQUID_DATE
+@}
+
+function DA_FIRMLIQUID_DATE:variant;
+var v:variant;
+begin
+v:=getvar('data.state.liquidation_date');
+if v='' then v:=null;
+result:=v;
+end;
+
+
+{@function
+Name=DA_FIRMTYPE
+@}
+
+function DA_FIRMTYPE:variant;
+begin
+result:=getvar('data.type');
+end;
+
+{@function
+Name=DA_FIRMNAME_OPF
+@}
+
+function DA_FIRMNAME_OPF:variant;
+begin
+result:=getvar('data.name.short_with_opf');
+end;
+
+{@function
+Name=DA_FIRMFULL_NAME_OPF
+@}
+
+function DA_FIRMFULL_NAME_OPF:variant;
+begin
+result:=getvar('data.name.full_with_opf');
+end;
+
+{@function
+Name=DA_BRANCH_COUNT
+@}
+
+function DA_BRANCH_COUNT:variant;
+begin
+result:=getvar('data.branch_count');
+end;
+
+{@function
+Name=DA_FIRMOKOPF
+@}
+
+function DA_FIRMOKOPF:variant;
+begin
+result:=getvar('data.opf.code');
+end;
+{@function
+Name=DA_BANK_FIELD
+@}
+
+function DA_BANK_FIELD(s:string):string;
+begin
+result:=getvar(s)
+//result:=GetDDTValue(s,
+//EvalExpr('getvar("DA_BANK_GET")',Self));  //getvar('data.address.value')//
+end;
+
+
+
+
+
+{@function
+Name=DA_ADDRFIELD
+@}
+
+function DA_ADDRFIELD(s:string):string;
+begin
+result:=getvar(s)
+//result:=GetDDTValue(s,
+//EvalExpr('getvar("DA_ADDRFIELD")',Self));
+end;
+
+
+

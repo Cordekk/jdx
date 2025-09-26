@@ -3,13 +3,14 @@ object Form1: TdxForm
   Height = 834
   Top = 10
   Width = 839
+  FormGroup = 'ТМЦ'
+  AutoOpen = True
+  Index = 92
   Id = 6837
   PId = 0
   FormCaption = 'Инвентаризация'
-  FormGroup = 'ТМЦ'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form1: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 92
   SoftCheck = False
   object dxCounter1: TdxCounter
     Left = 16

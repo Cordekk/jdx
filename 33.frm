@@ -3,13 +3,14 @@ object Form33: TdxForm
   Height = 655
   Top = 10
   Width = 429
+  FormGroup = 'Клиенты'
+  AutoOpen = True
+  Index = 17
   Id = 33
   PId = 0
   FormCaption = 'Контактные лица'
-  FormGroup = 'Клиенты'
   Font.Height = -17
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form33: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 17
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Флажок]=0" grid="cmp;ve_prop|dxEdit7;Видимость|dxEdit6;Редактирование" stateevents="1" /></actions>'
   object dxCheckBox1: TdxCheckBox

@@ -3,13 +3,14 @@ object Form224: TdxForm
   Height = 640
   Top = 10
   Width = 1186
+  FormGroup = 'Справочники'
+  AutoOpen = True
+  Index = 53
   Id = 224
   PId = 0
   FormCaption = 'Шаблон печати'
-  FormGroup = 'Справочники'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form224: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 53
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="650D0CBE-8511-4666-AB7A-1D5DA01F4FDE" cbx="dxEdit3" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE=''''| ROLE=''Администратор'' | Newrec = 1" grid="cmp;ve_prop|dxEdit2;Редактирование|dxEdit5;Редактирование|dxFile1;Видимость|dxEdit3;Редактирование|dxEdit6;Редактирование|dxLookupComboBox3;Редактирование|dxLookupComboBox2;Редактирование|dxLookupComboBox4;Редактирование|dxLookupComboBox1;Редактирование|dxEdit4;Редактирование" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE=''''| ROLE=''Администратор'' " grid="cmp;ve_prop|dxTabSheet2;Видимость" stateevents="1" /></actions>'
   object dxEdit1: TdxEdit

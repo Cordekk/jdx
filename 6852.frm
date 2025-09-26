@@ -1,15 +1,16 @@
 object Form21: TdxForm
   Left = 10
-  Height = 365
+  Height = 697
   Top = 10
   Width = 829
+  FormGroup = 'Справочники'
+  AutoOpen = True
+  Index = 103
   Id = 6852
   PId = 0
   FormCaption = 'Реестр сортов'
-  FormGroup = 'Справочники'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form21: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 103
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Код]&lt;&gt;null|[Сорт]&lt;&gt;null" grid="cmp;ve_prop|dxButton1;Видимость" stateevents="1" /></actions>'
   object dxLookupComboBox1: TdxLookupComboBox
@@ -65,7 +65,7 @@ object Form21: TdxForm
     Id = 262646
     FieldName = 'Культура'
     SourceTId = 7
-    SourceFId = 28
+    SourceFId = 263261
     Filter = '[?Группа продукции2]=[Группа]'
     Required = False
     SourceTable = 0
@@ -73,9 +73,19 @@ object Form21: TdxForm
     PromptFillTable = False
     ClearTableBeforeFill = False
     Editable = False
-    ListFields = <>
+    ListFields = <    
+      item
+        FieldId = 28
+        Width = 100
+        Searchable = True
+      end    
+      item
+        FieldId = 48
+        Width = 100
+        Searchable = False
+      end>
     DropDownCount = 8
-    ListWidthExtra = 0
+    ListWidthExtra = 200
     HideList = False
     HideButton = False
     UpdateTree = False
@@ -138,7 +148,123 @@ object Form21: TdxForm
     Width = 155
     Caption = 'Проверить на сайте'
     TabOrder = 4
-    ActionOnClick = '<actions><action type="7" expression="EX_EXEC(''https://gossortrf.ru/registry/gosudarstvennyy-reestr-selektsionnykh-dostizheniy-dopushchennykh-k-ispolzovaniyu-tom-1-sorta-rasteni/?arrFilter_pf%5BCULTURE_NAME%5D=&amp;arrFilter_pf%5BSORT_NAME%5D=''+NZ([Сорт],'''')+''&amp;arrFilter_pf%5BSORT_ID%5D=''+NZ([Код],'''')+''&amp;arrFilter_pf%5BALLOW_SUBJECTS_NAME%5D=&amp;arrFilter_pf%5BALLOW_ORIGINATORS_NAME%5D=&amp;set_filter=Y'','#13#10''' '')"/></actions>'
+    ActionOnClick = '<actions><action type="9" id="B408C9BC-DFF7-4DE2-9661-149CDA1E4C90" _expr_run="''https://gossortrf.ru/registry/gosudarstvennyy-reestr-selektsionnykh-dostizheniy-dopushchennykh-k-ispolzovaniyu-tom-1-sorta-rasteni/?arrFilter_pf%5BCULTURE_NAME%5D=&amp;arrFilter_pf%5BSORT_NAME%5D=''+NZ([Сорт],'''')+''&amp;arrFilter_pf%5BSORT_ID%5D=''+NZ([Код],'''')+''&amp;arrFilter_pf%5BALLOW_SUBJECTS_NAME%5D=&amp;arrFilter_pf%5BALLOW_ORIGINATORS_NAME%5D=&amp;set_filter=Y''" /></actions>'
+  end
+  object dxMemo1: TdxMemo
+    Left = 84
+    Height = 104
+    Top = 220
+    Width = 720
+    ScrollBars = ssBoth
+    TabOrder = 5
+    Id = 263262
+    FieldName = 'Описание'
+    FieldSize = 0
+    Required = False
+    SourceTId = 0
+    SourceFId = 0
+    Delimiter = ', '
+    Editable = False
+    UpdateTree = False
+  end
+  object dxLabel5: TdxLabel
+    Left = 4
+    Height = 16
+    Top = 204
+    Width = 66
+    Caption = 'Описание'
+  end
+  object dxMemo2: TdxMemo
+    Left = 87
+    Height = 76
+    Top = 344
+    Width = 713
+    ScrollBars = ssBoth
+    TabOrder = 6
+    Id = 263264
+    FieldName = 'Характеристики'
+    FieldSize = 0
+    Required = False
+    SourceTId = 0
+    SourceFId = 0
+    Delimiter = ', '
+    Editable = False
+    UpdateTree = False
+  end
+  object dxLabel6: TdxLabel
+    Left = 0
+    Height = 16
+    Top = 328
+    Width = 111
+    Caption = 'Характеристики'
+  end
+  object dxLabel7: TdxLabel
+    Left = 11
+    Height = 16
+    Top = 435
+    Width = 257
+    Caption = 'Год включения в реестр допущенных'
+  end
+  object dxEdit3: TdxEdit
+    Left = 90
+    Height = 24
+    Top = 460
+    Width = 202
+    MaxLength = 0
+    TabOrder = 7
+    Id = 263265
+    FieldName = 'Год включения'
+    FieldSize = 5
+    Required = False
+    Editable = False
+  end
+  object dxMemo3: TdxMemo
+    Left = 91
+    Height = 42
+    Top = 498
+    Width = 705
+    ScrollBars = ssBoth
+    TabOrder = 8
+    Id = 263266
+    FieldName = 'Регионы'
+    FieldSize = 0
+    Required = False
+    SourceTId = 0
+    SourceFId = 0
+    Delimiter = ', '
+    Editable = False
+    UpdateTree = False
+  end
+  object dxLabel8: TdxLabel
+    Left = 16
+    Height = 16
+    Top = 500
+    Width = 67
+    Caption = 'Регион(ы)'
+  end
+  object dxMemo4: TdxMemo
+    Left = 91
+    Height = 58
+    Top = 587
+    Width = 701
+    ScrollBars = ssBoth
+    TabOrder = 9
+    Id = 263267
+    FieldName = 'Оригинаторы'
+    FieldSize = 0
+    Required = False
+    SourceTId = 0
+    SourceFId = 0
+    Delimiter = ', '
+    Editable = False
+    UpdateTree = False
+  end
+  object dxLabel9: TdxLabel
+    Left = 17
+    Height = 16
+    Top = 565
+    Width = 100
+    Caption = 'Оригинатор(ы)'
   end
   object Grid: TdxGrid
     Left = 0
@@ -171,6 +297,36 @@ object Form21: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262648'
+      end    
+      item
+        Tag = 263262
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263262'
+      end    
+      item
+        Tag = 263264
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263264'
+      end    
+      item
+        Tag = 263265
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263265'
+      end    
+      item
+        Tag = 263266
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263266'
+      end    
+      item
+        Tag = 263267
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263267'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

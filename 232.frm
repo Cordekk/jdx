@@ -3,12 +3,13 @@ object Form232: TdxForm
   Height = 752
   Top = 10
   Width = 678
+  AutoOpen = True
+  Index = 0
   Id = 232
   PId = 227
   FormCaption = 'Показатель2'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form232: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 36

@@ -3,13 +3,14 @@ object Form102: TdxForm
   Height = 813
   Top = 10
   Width = 1078
+  FormGroup = 'ТМЦ'
+  AutoOpen = True
+  Index = 51
   Id = 102
   PId = 0
   FormCaption = 'ТМЦ'
-  FormGroup = 'ТМЦ'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   Filters.Strings = (
     'По умолчанию='
@@ -27,7 +28,6 @@ object Form102: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 51
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="EC0C82EA-BF3A-4EEA-99CF-DC41D1A36B75" allfields="1" logfields="Field" users="User" /></actions>'
   object dxComboBox1: TdxComboBox

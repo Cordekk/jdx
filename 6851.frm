@@ -3,13 +3,14 @@ object Form20: TdxForm
   Height = 279
   Top = 10
   Width = 763
+  FormGroup = 'Приемка'
+  AutoOpen = True
+  Index = 102
   Id = 6851
   PId = 0
   FormCaption = 'Консервация пробы'
-  FormGroup = 'Приемка'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form20: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 102
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 105

@@ -3,12 +3,13 @@ object Form42: TdxForm
   Height = 390
   Top = 10
   Width = 461
+  AutoOpen = True
+  Index = 0
   Id = 6861
   PId = 6
   FormCaption = 'Сотрудники клиента'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form42: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   Shopping = '262793|0|0|0|0|0|0'
   object dxLabel11: TdxLabel

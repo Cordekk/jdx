@@ -3,13 +3,14 @@ object Form43: TdxForm
   Height = 782
   Top = 10
   Width = 1249
+  FormGroup = 'Клиенты'
+  AutoOpen = True
+  Index = 105
   Id = 6862
   PId = 0
   FormCaption = 'Работа с заявками'
-  FormGroup = 'Клиенты'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtSimpleForm
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form43: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 105
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE  = ''''" grid="cmp;ve_prop|dxCheckBox1;Видимость" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Флажок]=1" grid="cmp;ve_prop|dxLabel1;Видимость|dxQueryGrid1;Видимость|dxLabel2;Видимость|dxQueryGrid2;Видимость|dxLabel6;Видимость|dxQueryGrid3;Видимость|dxLabel8;Видимость|dxButton4;Видимость" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Флажок]&lt;&gt;1" grid="cmp;ve_prop|dxButton5;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="IIF(WEBVIEW,1=0,1=1) &amp; [Флажок]=1" grid="cmp;ve_prop|dxButton3;Видимость" stateevents="1" /></actions>'
   object dxQueryGrid1: TdxQueryGrid

@@ -3,13 +3,14 @@ object Form90: TdxForm
   Height = 300
   Top = 10
   Width = 350
+  FormGroup = 'Приемка'
+  AutoOpen = True
+  Index = 46
   Id = 90
   PId = 0
   FormCaption = 'Связь прейскурант'
-  FormGroup = 'Приемка'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form90: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 46
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 32

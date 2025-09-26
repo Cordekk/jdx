@@ -2,14 +2,15 @@ object Form522: TdxForm
   Left = 10
   Height = 422
   Top = 10
-  Width = 612
+  Width = 637
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 75
   Id = 522
   PId = 0
   FormCaption = 'Валидация'
-  FormGroup = 'Лаборатория'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form522: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 75
   SoftCheck = False
   object dxCounter1: TdxCounter
     Left = 20
@@ -54,17 +54,59 @@ object Form522: TdxForm
     Required = False
     Editable = False
   end
-  object dxLookupComboBox1: TdxLookupComboBox
-    Left = 136
-    Height = 24
-    Top = 68
-    Width = 444
-    MaxLength = 0
+  object dxQueryGrid1: TdxQueryGrid
+    Left = 20
+    Height = 170
+    Top = 196
+    Width = 570
+    AutoAdvance = aaNone
+    Color = clWindow
+    Columns = <>
+    DefaultRowHeight = 20
+    DoubleBuffered = True
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+    ParentDoubleBuffered = False
+    ShowHint = True
     TabOrder = 2
-    Id = 8507
-    FieldName = 'Показатель'
+    SelectedColor = clHighlight
+    SelectedTextColor = clHighlightText
+    InactiveSelectedColor = clSilver
+    InactiveSelectedTextColor = clBlack
+    ShowButtons = False
+    VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
+    VisibleCaptions = []
+    FlatButtons = True
+    ButtonsColor = clBtnFace
+    ButtonSize = 25
+    ButtonFont.Height = -13
+    ButtonFont.Name = 'Verdana'
+    AlignmentButtons = taLeftJustify
+    HideButtonsWhenLostFocus = False
+    WordWrap = False
+    AllowChangeSort = False
+    Id = 3041
+    ManualRefresh = False
+  end
+  object dxLabel7: TdxLabel
+    Left = 28
+    Height = 16
+    Top = 60
+    Width = 103
+    Caption = 'Методика в ОА'
+    ParentColor = False
+  end
+  object dxLookupComboBox8: TdxLookupComboBox
+    Left = 139
+    Height = 24
+    Top = 56
+    Width = 364
+    MaxLength = 0
+    TabOrder = 3
+    Id = 263279
+    FieldName = 'Методика в ОА'
     SourceTId = 519
-    SourceFId = 8508
+    SourceFId = 8523
+    Filter = '[?Методика]=[Методика] & [?Показатель]=[Показатель]'
     Required = False
     SourceTable = 0
     DestTable = 0
@@ -73,7 +115,7 @@ object Form522: TdxForm
     Editable = False
     ListFields = <    
       item
-        FieldId = 8492
+        FieldId = 8489
         Width = 100
         Searchable = True
       end>
@@ -84,13 +126,73 @@ object Form522: TdxForm
     UpdateTree = False
     ListSource = 0
   end
-  object dxLabel1: TdxLabel
-    Left = 24
+  object dxLabel8: TdxLabel
+    Left = 28
     Height = 16
-    Top = 72
+    Top = 92
     Width = 78
     Caption = 'Показатель'
     ParentColor = False
+  end
+  object dxLookupComboBox7: TdxLookupComboBox
+    Left = 139
+    Height = 24
+    Top = 88
+    Width = 364
+    MaxLength = 0
+    TabOrder = 4
+    Id = 263280
+    FieldName = 'Показатель'
+    SourceTId = 27
+    SourceFId = 100
+    Required = False
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Expression = '[Методика в ОА|Показатель]'
+    Editable = True
+    ListFields = <>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = False
+    UpdateTree = False
+    ListSource = 0
+  end
+  object dxLabel9: TdxLabel
+    Left = 28
+    Height = 16
+    Top = 124
+    Width = 66
+    Caption = 'Методика'
+    ParentColor = False
+  end
+  object dxLookupComboBox6: TdxLookupComboBox
+    Left = 139
+    Height = 24
+    Top = 120
+    Width = 364
+    MaxLength = 0
+    TabOrder = 5
+    Id = 263281
+    FieldName = 'Методика'
+    SourceTId = 112
+    SourceFId = 1894
+    Required = False
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Expression = '[Методика в ОА|Методика]'
+    Editable = True
+    ListFields = <>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = False
+    UpdateTree = False
+    ListSource = 0
   end
   object Grid: TdxGrid
     Left = 0
@@ -113,10 +215,22 @@ object Form522: TdxForm
         FieldName = 'f8506'
       end    
       item
-        Tag = 8507
+        Tag = 263279
         Title.Caption = ' '
         Width = 100
-        FieldName = 'f8507l'
+        FieldName = 'f263279l'
+      end    
+      item
+        Tag = 263280
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263280l'
+      end    
+      item
+        Tag = 263281
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263281l'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

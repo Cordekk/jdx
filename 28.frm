@@ -3,13 +3,14 @@ object Form28: TdxForm
   Height = 861
   Top = 10
   Width = 1379
+  FormGroup = 'Справочники'
+  AutoOpen = True
+  Index = 21
   Id = 28
   PId = 0
   FormCaption = 'Направление деятельности'
-  FormGroup = 'Справочники'
   Font.Height = -17
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form28: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 21
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="role='''' | role=''Администратор''" grid="cmp;ve_prop|dxTabSheet1;Доступность|dxTabSheet5;Доступность|dxTabSheet2;Доступность|dxTabSheet3;Доступность|dxTabSheet4;Доступность|dxTabSheet6;Доступность" stateevents="1" /></actions>'
   object dxEdit1: TdxEdit
@@ -628,8 +628,8 @@ object Form28: TdxForm
       StopTab = False
       object dxGrid2: TdxGrid
         Left = 6
-        Height = 652
-        Top = 24
+        Height = 648
+        Top = 28
         Width = 1154
         AutoAdvance = aaNone
         Color = clWindow
@@ -666,6 +666,30 @@ object Form28: TdxForm
         Caption = 'Импорт'
         TabOrder = 2
         ActionOnClick = '<actions><action type="9" id="3495F0CA-B40A-4D26-9E2D-91CF364BF2A3" initfolder="" filename="" charset="UTF-8" skipfirstrow="1" table="Дополнения направления" fields="tablefield|Форма|Наименование поля|Значение|Источник|Фильтр|Формула" /></actions>'
+      end
+      object dxButton4: TdxButton
+        Left = 428
+        Height = 20
+        Top = 0
+        Width = 184
+        Caption = 'Обновить в заявках'
+        Font.Height = -16
+        Font.Name = 'Verdana'
+        ParentFont = False
+        TabOrder = 3
+        ActionOnClick = '<actions><action type="3" form="Заявка клиента" filter="[Направление2]=RECID(''Направление деятельности'')" table="" field="Дополнительное поле" expression="BLOCK(CLICKBUTTONF(''dxButton31''),[Дополнительное поле])"/></actions>'
+      end
+      object dxButton5: TdxButton
+        Left = 640
+        Height = 20
+        Top = 0
+        Width = 184
+        Caption = 'Обновить в пробах'
+        Font.Height = -16
+        Font.Name = 'Verdana'
+        ParentFont = False
+        TabOrder = 4
+        ActionOnClick = '<actions><action type="3" form="Пробы" filter="[Направление]=RECID(''Направление деятельности'')" table="" field="Дополнительное поле" expression="BLOCK(CLICKBUTTONF(''dxButton32''),MERGE(''Дополнения Пробы'', ''Ключ-значение'', '';''))"/></actions>'
       end
     end
     object dxTabSheet4: TdxTabSheet

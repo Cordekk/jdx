@@ -3,13 +3,14 @@ object Form100: TdxForm
   Height = 356
   Top = 10
   Width = 674
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 20
   Id = 100
   PId = 0
   FormCaption = 'Микроклимат'
-  FormGroup = 'Лаборатория'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   Filters.Strings = (
     'Все записи='
@@ -27,7 +28,6 @@ object Form100: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 20
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="86F3AAEF-2807-46C4-8344-8E2521947747" allfields="0" logfields="Field|Влажн|Давл|Напряжение|Частота|Темп" users="User" /></actions>'
   object dxPageControl1: TdxPageControl

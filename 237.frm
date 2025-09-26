@@ -3,13 +3,14 @@ object Form237: TdxForm
   Height = 611
   Top = 10
   Width = 876
+  FormGroup = 'Общие'
+  AutoOpen = True
+  Index = 18
   Id = 237
   PId = 0
   FormCaption = 'Контроль'
-  FormGroup = 'Общие'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtSimpleForm
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form237: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 18
   SoftCheck = False
   object dxLabel1: TdxLabel
     Left = 16

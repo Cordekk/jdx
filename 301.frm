@@ -3,12 +3,13 @@ object Form301: TdxForm
   Height = 447
   Top = 10
   Width = 596
+  AutoOpen = True
+  Index = 0
   Id = 301
   PId = 297
   FormCaption = 'Движение3'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form301: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   Shopping = '7311|1|7313|0|0|0|1'
   object dxLookupComboBox1: TdxLookupComboBox

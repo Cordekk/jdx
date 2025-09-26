@@ -181,7 +181,7 @@ end;
  if QG.RecordCount>0 then
  s := ' ('+IntToStr(QG.RecordCount)+' шт.)' else
  s := '';
- dxPageControl1.Pages[6].Caption:= 'Файлы'+s;  // Указать номер закладки (нумерация начинатеся с 0)
+ dxTabSheet5.Caption:= 'Файлы'+s;  // Указать номер закладки (нумерация начинатеся с 0)
 end;
 
 procedure CreateReseach(Sender: TObject);

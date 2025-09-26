@@ -1,0 +1,224 @@
+{@module
+Author=Cordek
+Version=1.0
+Description=Математические функции:
+ вычисления натурального логарифма - Ln, Cos, Sin и т.д. 
+ а также извлечение числа из строки с лишними знаками (пробелы, тире и т.д) 
+ Часть функций использует возможности сервера базы данных Firebird, и не будет работать при подключении к базе данных напрямую через SQLlite
+ Веб-версия
+@}
+
+
+{@function
+Name=Ln
+@}
+function Ln(x: Extended): Extended;
+var qSQL: TdxSQLQuery;
+begin
+  qSQL := Session.sqlSelect('SELECT LN(' + FloatToStr(x) + ') FROM RDB$DATABASE'); // <button class="citation-flag" data-index="7"><button class="citation-flag" data-index="9">
+  Result := qSQL.AsF['LN'];
+  qSQL.Free;
+end;
+
+
+{@function
+Name=LOG10
+@}
+function LOG10(x: Extended): Extended;
+var qSQL: TdxSQLQuery;
+begin
+  qSQL := Session.sqlSelect('SELECT LOG10(' + FloatToStr(x) + ') FROM RDB$DATABASE');
+  Result := qSQL.AsF['LOG10'];
+  qSQL.Free;
+end;
+
+
+{@function
+Name=LOG
+@}
+function LOG(base, x: Extended): Extended;
+var qSQL: TdxSQLQuery;
+begin
+  qSQL := Session.sqlSelect('SELECT LOG(' + FloatToStr(base) + ', ' + FloatToStr(x) + ') FROM RDB$DATABASE');
+  Result := qSQL.AsF['LOG'];
+  qSQL.Free;
+end;
+
+{@function
+Name=Exp
+@}
+function Exp(x: Extended): Extended;
+var qSQL: TdxSQLQuery;
+begin
+  qSQL := Session.sqlSelect('SELECT EXP(' + FloatToStr(x) + ') FROM RDB$DATABASE'); // <button class="citation-flag" data-index="7"><button class="citation-flag" data-index="9">
+  Result := qSQL.AsF['EXP'];
+  qSQL.Free;
+end;
+
+
+
+
+
+{@function
+Name=Cosr
+@}
+function Cosr(a: Extended): Extended;
+begin
+  Result := Cos(a);
+end;
+
+{@function
+Name=Sinr
+@}
+function Sinr(a: Extended): Extended;
+begin
+  Result := Sin(a);
+end;
+
+{@function
+Name=Tgr
+@}
+function Tgr(a: Extended): Extended;
+begin
+  Result := Sin(a) / Cos(a);
+end;
+
+{@function
+Name=Ctr
+@}
+function Ctr(a: Extended): Extended;
+begin
+  Result := Cos(a) / Sin(a);
+end;
+
+{@function
+Name=Cosd
+@}
+function Cosd(a: Extended): Extended;
+begin
+  Result := Cos(a * Pi / 180);
+end;
+
+{@function
+Name=Sind
+@}
+function Sind(a: Extended): Extended;
+begin
+  Result := Sin(a * Pi / 180);
+end;
+
+{@function
+Name=Tgd
+@}
+function Tgd(a: Extended): Extended;
+begin
+  Result := Sind(a) / Cosd(a);
+end;
+
+{@function
+Name=Ctd
+@}
+function Ctd(a: Extended): Extended;
+begin
+  Result := Cosd(a) / Sind(a);
+end;
+
+{@function
+Name=Pif
+@}
+function Pif: Extended;
+begin
+  Result := Pi;
+end;
+
+
+{@function
+Name=Asin
+@}
+function Asin(x: Extended): Extended;
+var qSQL: TdxSQLQuery;
+begin
+  qSQL := Session.sqlSelect('SELECT ASIN(' + FloatToStr(x) + ') FROM RDB$DATABASE'); // <button class="citation-flag" data-index="7"><button class="citation-flag" data-index="9">
+  Result := qSQL.AsF['ASIN'];
+  qSQL.Free;
+end;
+
+
+{@function
+Name=ACOS
+@}
+function ACOS(x: Extended): Extended;
+var qSQL: TdxSQLQuery;
+begin
+  qSQL := Session.sqlSelect('SELECT ACOS(' + FloatToStr(x) + ') FROM RDB$DATABASE');
+  Result := qSQL.AsF['ACOS'];
+  qSQL.Free;
+end;
+
+
+
+{@function
+Name=ATAN
+@}
+function ATAN(x: Extended): Extended;
+var qSQL: TdxSQLQuery;
+begin
+  qSQL := Session.sqlSelect('SELECT ATAN(' + FloatToStr(x) + ') FROM RDB$DATABASE');
+  Result := qSQL.AsF['ATAN'];
+  qSQL.Free;
+end;
+
+
+{@function
+Name=ATAN2
+@}
+function ATAN2(y, x: Extended): Extended;
+var qSQL: TdxSQLQuery;
+begin
+  qSQL := Session.sqlSelect('SELECT ATAN2(' + FloatToStr(y) + ', ' + FloatToStr(x) + ') FROM RDB$DATABASE');
+  Result := qSQL.AsF['ATAN2'];
+  qSQL.Free;
+end;
+
+
+{@function
+Name=ACTAN
+@}
+function ACTAN(x: Extended): Extended;
+var qSQL: TdxSQLQuery;
+begin
+  qSQL := Session.sqlSelect('SELECT ATAN2(1, ' + FloatToStr(x) + ') FROM RDB$DATABASE'); // Арккотангенс = ATAN2(1, x)
+  Result := qSQL.AsF['ATAN2'];
+  qSQL.Free;
+end;
+
+
+{@function
+Name=FLOATFROMSTR
+@}
+
+function FLOATFROMSTR(v:variant):Extended;
+var r,s: String; i,p, d:integer;
+begin
+s:=VarToStr(v);
+r := '';
+p := 0;
+d := 0;
+if Length(s)<>0 then
+for i := 1 to Length(s)
+do 
+if s[i] in ['0','1','2','3','4','5','6','7','8','9']
+then 
+begin
+r := r + s[i]
+p :=1;
+end
+else if (s[i] in [',','.']) and (d=0) and (p=1)  // если d больше 0, то значит запятую уже записали, и это больше делать не надо, если p не равно 1, значит число пока не записывали, поэтому запятую рано ставить
+then
+	begin
+	r := r + s[i];
+	d :=d+1;
+	end;
+	
+result:=StrToFloat(r); // пытаемся записать число
+end;

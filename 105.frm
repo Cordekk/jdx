@@ -3,13 +3,14 @@ object Form105: TdxForm
   Height = 462
   Top = 10
   Width = 648
+  FormGroup = 'ТМЦ'
+  AutoOpen = True
+  Index = 6
   Id = 105
   PId = 0
   FormCaption = 'Движение ТМЦ'
-  FormGroup = 'ТМЦ'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form105: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 6
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 184
@@ -165,7 +165,6 @@ object Form105: TdxForm
     Top = 256
     Width = 617
     Caption = 'Назначение'
-    ParentBackground = False
     TabOrder = 5
     StopTab = False
     object dxLookupComboBox3: TdxLookupComboBox

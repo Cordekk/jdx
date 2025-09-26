@@ -3,13 +3,14 @@ object Form34: TdxForm
   Height = 300
   Top = 10
   Width = 350
+  FormGroup = 'Справочники'
+  AutoOpen = False
+  Index = 0
   Id = 34
   PId = 0
   FormCaption = 'Вид транспорта'
-  FormGroup = 'Справочники'
   Font.Height = -17
   Font.Name = 'Verdana'
-  AutoOpen = False
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form34: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxEdit1: TdxEdit
     Left = 24

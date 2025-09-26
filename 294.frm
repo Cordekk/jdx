@@ -3,13 +3,14 @@ object Form294: TdxForm
   Height = 423
   Top = 10
   Width = 651
+  FormGroup = 'Общие'
+  AutoOpen = True
+  Index = 60
   Id = 294
   PId = 0
   FormCaption = 'Адрес'
-  FormGroup = 'Общие'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form294: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 60
   SoftCheck = False
   object dxLabel1: TdxLabel
     Left = 32
@@ -95,6 +95,26 @@ object Form294: TdxForm
     Editable = False
     UpdateTree = False
   end
+  object dxLabel3: TdxLabel
+    Left = 24
+    Height = 16
+    Top = 326
+    Width = 208
+    Caption = 'Номер ФГИС Росаккредитации'
+  end
+  object dxEdit2: TdxEdit
+    Left = 26
+    Height = 24
+    Top = 355
+    Width = 206
+    MaxLength = 0
+    TabOrder = 3
+    Id = 263283
+    FieldName = 'ФГИС РА'
+    FieldSize = 50
+    Required = False
+    Editable = False
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 150
@@ -120,6 +140,12 @@ object Form294: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f7339'
+      end    
+      item
+        Tag = 263283
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263283'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

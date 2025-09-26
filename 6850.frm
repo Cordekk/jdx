@@ -3,13 +3,14 @@ object Form19: TdxForm
   Height = 456
   Top = 10
   Width = 563
+  FormGroup = 'Справочники'
+  AutoOpen = True
+  Index = 101
   Id = 6850
   PId = 0
   FormCaption = 'Настройки'
-  FormGroup = 'Справочники'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form19: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 101
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' |   ROLE=''Администратор'' | Newrec = 1" grid="cmp;ve_prop|dxEdit1;Редактирование|dxComboBox1;Редактирование|dxLookupComboBox1;Редактирование" stateevents="1" /></actions>'
   object dxComboBox1: TdxComboBox

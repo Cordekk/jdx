@@ -1,15 +1,16 @@
 object Form27: TdxForm
   Left = 10
-  Height = 311
+  Height = 354
   Top = 10
   Width = 600
+  FormGroup = 'Справочники'
+  AutoOpen = True
+  Index = 34
   Id = 27
   PId = 0
   FormCaption = 'Показатели'
-  FormGroup = 'Справочники'
   Font.Height = -17
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form27: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 34
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' |   ROLE=''Администратор'' | Newrec = 1" grid="cmp;ve_prop|dxEdit1;Редактирование|dxLookupComboBox1;Редактирование|dxEdit3;Редактирование|dxEdit4;Редактирование" stateevents="1" /></actions>'
   object dxEdit1: TdxEdit
@@ -116,9 +116,9 @@ object Form27: TdxForm
     Editable = False
   end
   object dxRecordId1: TdxRecordId
-    Left = 12
+    Left = 516
     Height = 28
-    Top = 280
+    Top = 320
     Width = 79
     ReadOnly = True
     MaxLength = 0
@@ -126,6 +126,36 @@ object Form27: TdxForm
     FieldName = 'ID'
     StopTab = False
     Id = 263113
+  end
+  object dxLabel4: TdxLabel
+    Left = 16
+    Height = 20
+    Top = 268
+    Width = 60
+    Caption = 'id ФСА'
+  end
+  object dxCalcEdit1: TdxCalcEdit
+    Left = 96
+    Height = 28
+    Top = 264
+    Width = 100
+    MaxLength = 0
+    TabOrder = 5
+    HideButton = False
+    CalculatorLayout = clNormal
+    AsInteger = 0
+    ButtonWidth = 28
+    NumGlyphs = 1
+    Flat = True
+    Id = 263304
+    FieldName = 'id ФСА'
+    Precission = 0
+    Required = False
+    DefaultValue = '0'
+    Editable = False
+    NullToZero = True
+    GroupDigits = True
+    PadZeros = True
   end
   object Grid: TdxGrid
     Left = 0
@@ -164,6 +194,12 @@ object Form27: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f263113'
+      end    
+      item
+        Tag = 263304
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263304'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

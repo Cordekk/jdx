@@ -1,0 +1,43 @@
+{@module
+  Author=cordek
+  Version=1.0
+  Description=ADDWORKDAY5 - Функция для поиска даты, которая наступит через n рабочих дней (не включены выходные дния для пятидневной рабочей недели и праздничные дни).
+  для работы нужно завести отдельную форму с таблицей, в которой содержатся не рабочие дни (выходные суббота и воскресенье и праздничные дни).
+  Веб-версия
+@}
+
+{@function
+  Name=ADDWORKDAY5
+@}
+
+
+
+function ADDWORKDAY5(myDATE:TDateTime; myDAYadd:integer):TDateTime;
+var
+  nD:TDateTime;
+  i: integer;
+  work_day : integer;
+
+
+begin
+    if  ( myDAYadd>0 ) then
+    begin
+    work_day :=0;
+    myDATE :=  AddDay(myDATE,1);  // со следующего дня
+    i := 0;
+
+    while work_day < myDAYadd do
+    begin
+    nD:= AddDay(myDATE,i);
+
+   // здесь добавить поиск выходного дня
+   //debug('DBCOUNT("calendar", "[!date]=CDATE('''+DATETOSTR(nD)+''')")');
+   if Session.Evalexpr('DBCOUNT("calendar", "[!date]=CDATE('''+DATETOSTR(nD)+''')")',Self)=0 then work_day := work_day + 1;
+   i := i + 1;
+    end;
+
+    result := AddDay(myDATE,i-1)
+    end
+end;
+
+

@@ -3,13 +3,14 @@ object Form6: TdxForm
   Height = 905
   Top = 10
   Width = 1020
+  FormGroup = 'Клиенты'
+  AutoOpen = True
+  Index = 16
   Id = 6
   PId = 0
   FormCaption = 'Клиенты'
-  FormGroup = 'Клиенты'
   Font.Height = -17
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   Filters.Strings = (
     'Все записи='
@@ -23,9 +24,8 @@ object Form6: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 16
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="DC4A2A06-F7FF-4A5E-89FF-025F21121D22" allfields="1" logfields="Field" users="User" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' | ROLE=''Администратор''" grid="cmp;ve_prop|dxButton6;Доступность|dxLookupComboBox3;Доступность" stateevents="0" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="DC4A2A06-F7FF-4A5E-89FF-025F21121D22" allfields="1" logfields="Field" users="User" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' | ROLE=''Администратор''" grid="cmp;ve_prop|dxButton6;Доступность|dxLookupComboBox3;Доступность" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Результат]&lt;&gt;null" grid="cmp;ve_prop|dxButton4;Доступность" stateevents="1" /></actions>'
   object DxEdit1: TdxEdit
     Left = 124
     Height = 28
@@ -589,7 +589,6 @@ object Form6: TdxForm
         Top = 3
         Width = 969
         Caption = 'Задолженность'
-        ParentBackground = False
         TabOrder = 0
         StopTab = False
         object dxQueryGrid1: TdxQueryGrid
@@ -1098,6 +1097,7 @@ object Form6: TdxForm
     FieldName = 'Результат'
     FieldSize = 50
     Required = False
+    CheckExpression = 'IIF([Результат]<>'''',Setfield( ''Результат'',''''),'''')'
     Editable = False
   end
   object dxButton4: TdxButton
@@ -1107,7 +1107,7 @@ object Form6: TdxForm
     Width = 127
     Caption = 'Заполнить'
     TabOrder = 17
-    ActionOnClick = '<actions><action type="7" expression="block('#13#10'      setfield(''ИНН'',DA_FIRMINN),'#13#10'      setfield(''КПП'',DA_FIRMKPP),'#13#10'      setfield(''Наименование_полное'',DA_FIRMFULLNAMEOPF),'#13#10'      setfield(''Наименование_сокращенное'',DA_FIRMNAMEOPF),'#13#10'      setfield(''Юр.Адрес'',DA_FIRMADDR),'#13#10'      setfield(''Руководитель'',DA_MANAGER),'#13#10'      setfield(''Должность_руководителя'',DA_MANAGERPOST),'#13#10'      setfield(''Страна_клиента'',DBGETID(''Страны и регионы'', ''[!Место1]==&quot;Российская&quot;'')),'#13#10'      setfield(''ОГРН'',DA_FIRMOGRN)'#13#10'      )"/></actions>'
+    ActionOnClick = '<actions><action type="7" expression="block('#13#10'      setfield(''ИНН'',DA_FIRMINN),'#13#10'      setfield(''КПП'',DA_FIRMKPP),'#13#10'      setfield(''Наименование_полное'',DA_FIRMFULL_NAME_OPF),'#13#10'      setfield(''Наименование_сокращенное'',DA_FIRMNAME_OPF),'#13#10'      setfield(''Юр.Адрес'',DA_FIRMADDR),'#13#10'      setfield(''Руководитель'',DA_MANAGER_FIO),'#13#10'      setfield(''Должность_руководителя'',DA_MANAGER_POST),'#13#10'      setfield(''Страна_клиента'',DBGETID(''Страны и регионы'', ''[!Место1]==&quot;Российская&quot;'')),'#13#10'      setfield(''ОГРН'',DA_FIRMOGRN)'#13#10'      )"/></actions>'
   end
   object dxButton5: TdxButton
     Left = 516
@@ -1116,7 +1116,7 @@ object Form6: TdxForm
     Width = 151
     Caption = 'Проверить ИНН'
     TabOrder = 18
-    ActionOnClick = '<actions><action type="7" expression=" block('#13#10'    setvar(''a'', DA_FIRMGET(getvar(''dadata''), NZ([ИНН],''''))),'#13#10'      iif(getvar(''a'')=''По запросу ничего не найдено'','#13#10'        msgbox(''DaData'',''По запросу: &quot;''+NZ([ИНН],'''')+''&quot; ничего не найдено''),'#13#10'        setfield(''Результат'', DA_FIRMNAME))'#13#10'      )"/></actions>'
+    ActionOnClick = '<actions><action type="7" expression=" block('#13#10'    setvar(''a'', DA_ORGGET(getvar(''dadata''), NZ([ИНН],''''))),'#13#10'      iif(getvar(''a'')=''По запросу ничего не найдено'','#13#10'        msgbox(''DaData'',''По запросу: &quot;''+NZ([ИНН],'''')+''&quot; ничего не найдено''),'#13#10'        setfield(''Результат'', getvar(''value'')+getvar(''data.inn'')))'#13#10'      )"/></actions>'
   end
   object dxEdit18: TdxEdit
     Left = 920

@@ -1,7 +1,7 @@
 {@module
 Author=Cordek
-Version=1.0
-Description=Переход по ссылке для веб версии.
+Version=1.1
+Description=Переход по ссылке для веб версии. Добавлен переход на новую вкладку.
 @}
 
 
@@ -14,6 +14,6 @@ S:string;
 begin
 S:=VarToStr(Session.EvalExpr(ExprRun,Self));
 if (S = '')  then  Exit;
-   Self.GotoUrl(S, False);
+   Self.GotoUrl(S, gtoNewTab);
 end;
 

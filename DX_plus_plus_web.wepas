@@ -1,6 +1,6 @@
 {@module
 Author=Cordek
-Version=1
+Version=1.1
 
 Description=некоторые изменения в модуле DX plus (веб-версия)
 @}
@@ -77,7 +77,7 @@ id=53B8D7C6-1DBB-4135-A8C5-F95314559221
 function AddRecordToFormQuietly(const FormName: String; Values: TVariantArray2d;
   IgnoreAccess: Boolean; const ObjName, QueryName: String): Boolean;
 var
-  i, n: Integer;
+  i, FmRecId: Integer;
   FlNm, Expr: String;
   Vl: Variant;
   Fm: TdxForm;
@@ -105,25 +105,24 @@ begin
       DoSetFieldError('Вставить значения', i+1, Vl);
     end;
   end;
-
-  if ObjName <> '' then
-  begin
-    Self[ObjName] := Fm.RecId;
-  end;
-   if QueryName <> '' then
-      begin
-        Q := Self.Queries[QueryName];
-        Q.Refresh;
-        if Q.Editable then Q.GotoRecord(Fm.RecId);
-      end;
-   try
+  try
+      FmRecId := Fm.RecId;
       Fm.Post;
       Result := True;
     except
       Fm.Free;
       DoError('Добавление записи в форму', 0, 'Не удалось сохранить запись');
     end;
-
+  if (ObjName <> '') and (FmRecId > 0) then
+  begin
+    Self[ObjName] := FmRecId;
+  end;
+   if (QueryName <> '') and (FmRecId > 0) then
+      begin
+        Q := Self.Queries[QueryName];
+        Q.Refresh;
+        if Q.Editable then Q.GotoRecord(FmRecId);
+      end;
 end;
 
 

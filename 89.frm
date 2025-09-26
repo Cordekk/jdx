@@ -3,13 +3,14 @@ object Form89: TdxForm
   Height = 763
   Top = 10
   Width = 622
+  FormGroup = 'Приемка'
+  AutoOpen = True
+  Index = 23
   Id = 89
   PId = 0
   FormCaption = 'Норматив продукции'
-  FormGroup = 'Приемка'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form89: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 23
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 28
@@ -115,7 +115,7 @@ object Form89: TdxForm
   object dxEdit1: TdxEdit
     Left = 28
     Height = 24
-    Top = 364
+    Top = 404
     Width = 548
     MaxLength = 0
     TabOrder = 3
@@ -136,7 +136,7 @@ object Form89: TdxForm
   object dxLabel4: TdxLabel
     Left = 28
     Height = 16
-    Top = 344
+    Top = 384
     Width = 300
     Caption = 'Норматив для протокола (вывод на печать)'
     ParentColor = False
@@ -144,7 +144,7 @@ object Form89: TdxForm
   object dxLabel31: TdxLabel
     Left = 24
     Height = 16
-    Top = 575
+    Top = 615
     Width = 158
     Caption = 'вычисление норматива'
     ParentColor = False
@@ -152,7 +152,7 @@ object Form89: TdxForm
   object dxEdit7: TdxMemo
     Left = 28
     Height = 48
-    Top = 599
+    Top = 639
     Width = 544
     ScrollBars = ssBoth
     TabOrder = 4
@@ -170,7 +170,7 @@ object Form89: TdxForm
   object dxCalcEdit1: TdxCalcEdit
     Left = 160
     Height = 24
-    Top = 396
+    Top = 436
     Width = 100
     MaxLength = 0
     TabOrder = 5
@@ -193,7 +193,7 @@ object Form89: TdxForm
   object dxLabel5: TdxLabel
     Left = 28
     Height = 16
-    Top = 400
+    Top = 440
     Width = 89
     Caption = 'минимальное'
     ParentColor = False
@@ -201,7 +201,7 @@ object Form89: TdxForm
   object dxCalcEdit2: TdxCalcEdit
     Left = 160
     Height = 24
-    Top = 428
+    Top = 468
     Width = 100
     MaxLength = 0
     TabOrder = 6
@@ -224,7 +224,7 @@ object Form89: TdxForm
   object dxLabel6: TdxLabel
     Left = 28
     Height = 16
-    Top = 432
+    Top = 472
     Width = 97
     Caption = 'максимальное'
     ParentColor = False
@@ -232,7 +232,7 @@ object Form89: TdxForm
   object dxMemo1: TdxMemo
     Left = 160
     Height = 64
-    Top = 496
+    Top = 536
     Width = 420
     ScrollBars = ssBoth
     TabOrder = 7
@@ -250,7 +250,7 @@ object Form89: TdxForm
   object dxLabel7: TdxLabel
     Left = 16
     Height = 64
-    Top = 495
+    Top = 535
     Width = 146
     Caption = 'Значение норматива '#13#10'в виде текста '#13#10'(содержит или'#13#10' одно из значений)'
     ParentColor = False
@@ -258,7 +258,7 @@ object Form89: TdxForm
   object dxLabel8: TdxLabel
     Left = 32
     Height = 16
-    Top = 468
+    Top = 508
     Width = 95
     Caption = 'выбор оценки'
     ParentColor = False
@@ -266,7 +266,7 @@ object Form89: TdxForm
   object dxComboBox1: TdxComboBox
     Left = 156
     Height = 24
-    Top = 464
+    Top = 504
     Width = 288
     AutoComplete = True
     AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
@@ -292,7 +292,7 @@ object Form89: TdxForm
   object dxLabel9: TdxLabel
     Left = 304
     Height = 48
-    Top = 400
+    Top = 440
     Width = 270
     Caption = 'Если в нормативе задан только один '#13#10'из пределов, то указываем только его,'#13#10' второе поле оставляем пустым'
     ParentColor = False
@@ -400,6 +400,43 @@ object Form89: TdxForm
     Required = False
     Editable = False
   end
+  object dxLabel12: TdxLabel
+    Left = 28
+    Height = 16
+    Top = 332
+    Width = 134
+    Caption = 'Единица измерения'
+  end
+  object dxLookupComboBox5: TdxLookupComboBox
+    Left = 29
+    Height = 24
+    Top = 356
+    Width = 131
+    MaxLength = 0
+    TabOrder = 12
+    Id = 263268
+    FieldName = 'Ед.изм'
+    SourceTId = 8
+    SourceFId = 7371
+    Required = False
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Editable = False
+    ListFields = <    
+      item
+        FieldId = 30
+        Width = 100
+        Searchable = True
+      end>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = True
+    UpdateTree = False
+    ListSource = 0
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 100
@@ -421,6 +458,18 @@ object Form89: TdxForm
         FieldName = 'f1854l'
       end    
       item
+        Tag = 262737
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f262737l'
+      end    
+      item
+        Tag = 263268
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263268l'
+      end    
+      item
         Tag = 1855
         Title.Caption = ' '
         Width = 100
@@ -429,7 +478,7 @@ object Form89: TdxForm
       item
         Tag = 1856
         Title.Caption = ' '
-        Width = 100
+        Width = 181
         FieldName = 'f1856'
       end    
       item
@@ -469,12 +518,6 @@ object Form89: TdxForm
         FieldName = 'f262736'
       end    
       item
-        Tag = 262737
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f262737l'
-      end    
-      item
         Tag = 262738
         Title.Caption = ' '
         Width = 100
@@ -484,7 +527,7 @@ object Form89: TdxForm
     DoubleBuffered = True
     Font.Height = -13
     Font.Name = 'Verdana'
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgDisplayMemoText]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgDisplayMemoText]
     ParentDoubleBuffered = False
     ReadOnly = True
     ShowHint = True

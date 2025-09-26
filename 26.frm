@@ -3,10 +3,12 @@ object Form26: TdxForm
   Height = 877
   Top = 10
   Width = 1303
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 15
   Id = 26
   PId = 0
   FormCaption = 'Исследование'
-  FormGroup = 'Лаборатория'
   Font.Height = -17
   Font.Name = 'Verdana'
   CalcFields.Strings = (
@@ -15,7 +17,6 @@ object Form26: TdxForm
     'Включить в один шаблон=Block(Setfield(''Один шаблон'',1),'#13#10'QUERYUPDATE(''Смежные исследования''),'#13#10'REPEATREMR(MERGE(''Смежные исследования'', ''Методика'', ''; ''), ''; '')'#13#10')'
     'NE=RECNO(''Оборудование в протоколе1'')'
   )
-  AutoOpen = True
   ViewType = vtGridOnly
   Filters.Strings = (
     'Последние=FILTER:8634|0|0|0'
@@ -32,9 +33,8 @@ object Form26: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 15
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="F5587D26-710A-4F6E-AF8B-ACAF9034982F" allfields="0" logfields="Field|Выбранное оборудование|Дата завершения|Дата изменения|Дата поступления|Дата принятия|Дополнения|Доработка|Анализная карта|Значение|U|X|Archiv|Исполнитель|Контроль|Нормативный документ|Норматив|Принял исполнитель|Сотрудник" users="User" /><action disabled="1" type="9" id="0D75186F-C6BB-4B69-BCF9-092FD2C316A3" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" fields="field|Значение|Положительное|Ед.изм|U|Постинфекционное|Нет вакциональных антител" queries="query" /><comment text="Настройки видимости зависят от настроек ролей"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''Администратор'' |  ROLE = ''''" grid="cmp;ve_prop|dxLookupComboBox10;Редактирование|dxLookupComboBox5;Редактирование|dxLookupComboBox8;Редактирование|dxCalcEdit3;Редактирование|dxLookupComboBox13;Редактирование|dxCalcEdit1;Редактирование|dxLookupComboBox12;Редактирование|dxTabSheet5;Видимость|dxTabSheet4;Видимость" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''Администратор'' |  ROLE = '''' | ROLE = ''Приемка''" grid="cmp;ve_prop|dxCheckBox1;Редактирование|dxCheckBox3;Редактирование|dxCheckBox2;Редактирование|dxLookupComboBox9;Редактирование|dxEdit5;Редактирование" stateevents="1" /><comment text="Дальше настройки видимости зависят от прав пользователя (форма сотрудники)"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Исполнитель|user]=user &amp; [Контроль]=0'#13#10'&amp; IIF([Методика из ОА|Приемка обязательна]=1,[Принял исполнитель]=1,1=1)  //если приемка обязательна, надо сначала принять" grid="cmp;ve_prop|dxEdit3;Редактирование|dxLookupComboBox7;Редактирование|dxEdit4;Редактирование|dxCalcEdit5;Редактирование|dxCheckBox1;Редактирование|dxLookupComboBox16;Редактирование|dxMemo2;Редактирование|dxEdit10;Редактирование" stateevents="1" /><comment text="дает возможность подписать, только тем, кто имеет право"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition=" IIF([Контроль]=0  &amp;[Исполнитель|user]=user,1,0)&gt;0  /* если текущий пользователь исполнитель и исследование не закрыто */'#13#10'| IIF([Дата завершения]&lt;&gt;null &amp;[Контроль]=0  &amp; [Исполнитель|Подпись исследований]=0 &amp;  DBGET(''Сотрудники'', ''Подпись исследований'', ''[!user]=user'')=1,1,0)&gt;0'#13#10'     /* и если исследование не закрыто, дата завершения стоит и исполнитель не может подписать, а текущий пользователь может подписать  */'#13#10'     &amp; IIF([Методика из ОА|Приемка обязательна]=1,[Принял исполнитель]=1,1=1)  //если приемка обязательна, надо сначала принять" grid="cmp;ve_prop|dxButton2;Доступность" stateevents="1" /><comment text="Добавляет оборудование в выбранное оборудование"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton1" fields="fl|Оборудование" /><comment text="если шаблон выбран, то выбор для печати не отображается"/><action disabled="1" type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" condition="[Методика из ОА|Шаблон печати]=null" grid="cmp;ve_prop|dxQueryGrid6;Видимость" stateevents="0" /><comment text="Чтобы открыть ТМЦ, а не ход испытаний по клику на оборудование в запросе"/><action type="9" id="AFB9DFCF-7996-43A1-A83A-BBCFC5A19928" queries="qry;fld;bn|Оборудование в протоколе1;;dxButton8" defact="0" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="F5587D26-710A-4F6E-AF8B-ACAF9034982F" allfields="0" logfields="Field|Выбранное оборудование|Дата завершения|Дата изменения|Дата поступления|Дата принятия|Дополнения|Доработка|Анализная карта|Значение|U|X|Archiv|Исполнитель|Контроль|Нормативный документ|Норматив|Принял исполнитель|Сотрудник" users="User" /><action disabled="1" type="9" id="0D75186F-C6BB-4B69-BCF9-092FD2C316A3" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" fields="field|Значение|Положительное|Ед.изм|U|Постинфекционное|Нет вакциональных антител" queries="query" /><comment text="Настройки видимости зависят от настроек ролей"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''Администратор'' |  ROLE = ''''" grid="cmp;ve_prop|dxLookupComboBox10;Редактирование|dxLookupComboBox5;Редактирование|dxLookupComboBox8;Редактирование|dxCalcEdit3;Редактирование|dxLookupComboBox13;Редактирование|dxCalcEdit1;Редактирование|dxLookupComboBox12;Редактирование|dxTabSheet5;Видимость|dxTabSheet4;Видимость" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''Администратор'' |  ROLE = '''' | ROLE = ''Приемка''" grid="cmp;ve_prop|dxCheckBox1;Редактирование|dxCheckBox3;Редактирование|dxCheckBox2;Редактирование|dxLookupComboBox9;Редактирование|dxEdit5;Редактирование" stateevents="1" /><comment text="Дальше настройки видимости зависят от прав пользователя (форма сотрудники)"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Исполнитель|user]=user &amp; [Контроль]=0'#13#10'&amp; IIF([Методика из ОА|Приемка обязательна]=1,[Принял исполнитель]=1,1=1)  //если приемка обязательна, надо сначала принять" grid="cmp;ve_prop|dxEdit3;Редактирование|dxLookupComboBox7;Редактирование|dxEdit4;Редактирование|dxCalcEdit5;Редактирование|dxCheckBox1;Редактирование|dxLookupComboBox16;Редактирование|dxMemo2;Редактирование|dxEdit10;Редактирование" stateevents="1" /><comment text="дает возможность подписать, только тем, кто имеет право"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition=" IIF([Контроль]=0  &amp;[Исполнитель|user]=user,1,0)&gt;0  /* если текущий пользователь исполнитель и исследование не закрыто */'#13#10'| IIF([Дата завершения]&lt;&gt;null &amp;[Контроль]=0  &amp; [Исполнитель|Подпись исследований]=0 &amp;  DBGET(''Сотрудники'', ''Подпись исследований'', ''[!user]=user'')=1,1,0)&gt;0'#13#10'     /* и если исследование не закрыто, дата завершения стоит и исполнитель не может подписать, а текущий пользователь может подписать  */'#13#10'     &amp; IIF([Методика из ОА|Приемка обязательна]=1,[Принял исполнитель]=1,1=1)  //если приемка обязательна, надо сначала принять" grid="cmp;ve_prop|dxButton2;Доступность" stateevents="1" /><comment text="Добавляет оборудование в выбранное оборудование"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton1" fields="fl|Оборудование" /><comment text="если шаблон выбран, то выбор для печати не отображается"/><action disabled="1" type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" condition="[Методика из ОА|Шаблон печати]=null" grid="cmp;ve_prop|dxQueryGrid6;Видимость" stateevents="0" /><comment text="Чтобы открыть ТМЦ, а не ход испытаний по клику на оборудование в запросе"/><action type="9" id="AFB9DFCF-7996-43A1-A83A-BBCFC5A19928" queries="qry;fld;bn|Оборудование в протоколе1;;dxButton8" defact="0" /></actions>'
   object dxLabel1: TdxLabel
     Left = 16
     Height = 20
@@ -1707,7 +1707,7 @@ object Form26: TdxForm
     Width = 116
     Caption = 'Подписать'
     TabOrder = 19
-    ActionOnClick = '<actions><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Контроль;DBGET(''Сотрудники'', ''Подпись исследований'', ''[!user]=user'')|Дата изменения;SRV_DATE|История;''Подписал ''+user+'' ''+  CSTR(SRV_DATE)+'' ''+ CSTR(SRV_TIME)+newline+ NZ([История],'''')|Доработка;0" ignoreaccess="1" saverec="0" /><action type="5" /><action type="3" form="Заявка клиента" filter="[Идентификатор]=[Образец|Проба|Заявка клиента2|Идентификатор]" table="" field="Статус" expression=""/></actions>'
+    ActionOnClick = '<actions><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Контроль;DBGET(''Сотрудники'', ''Подпись исследований'', ''[!user]=user'')|Дата изменения;SRV_DATE|История;''Подписал ''+user+'' ''+  CSTR(SRV_DATE)+'' ''+ CSTR(SRV_TIME)+newline+ NZ([История],'''')|Доработка;0" ignoreaccess="1" saverec="0" /><action type="5" /><action type="3" form="Заявка клиента" filter="[Идентификатор]=[Образец|Проба|Заявка клиента2|Идентификатор]" table="" field="Статус" expression="Block(COUNT(''Исследования1''),'#13#10'TEXT(''{''+NZ([Направление2|Статусы заявки],''[Статус]'')+''}'') )"/></actions>'
   end
   object dxButton3: TdxButton
     Left = 724
@@ -1897,6 +1897,18 @@ object Form26: TdxForm
     Width = 137
     Caption = 'Идентификатор'
     ParentColor = False
+  end
+  object dxRecordId1: TdxRecordId
+    Left = 780
+    Height = 28
+    Top = 24
+    Width = 100
+    ReadOnly = True
+    MaxLength = 0
+    TabOrder = 26
+    FieldName = 'ID'
+    StopTab = False
+    Id = 263254
   end
   object Grid: TdxGrid
     Left = 0
@@ -2227,6 +2239,12 @@ object Form26: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f263183'
+      end    
+      item
+        Tag = 263254
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263254'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

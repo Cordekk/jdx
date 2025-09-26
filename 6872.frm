@@ -3,12 +3,13 @@ object Form51: TdxForm
   Height = 300
   Top = 10
   Width = 350
+  AutoOpen = True
+  Index = 0
   Id = 6872
   PId = 6839
   FormCaption = 'Планируемые проверки'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form51: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object Grid: TdxGrid
     Left = 0

@@ -3,13 +3,14 @@ object Form10: TdxForm
   Height = 149
   Top = 10
   Width = 822
+  FormGroup = 'Общие'
+  AutoOpen = True
+  Index = 96
   Id = 6842
   PId = 0
   FormCaption = 'Реквизиты предприятий'
-  FormGroup = 'Общие'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form10: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 96
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 252

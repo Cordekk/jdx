@@ -3,12 +3,13 @@ object Form48: TdxForm
   Height = 306
   Top = 10
   Width = 720
+  AutoOpen = True
+  Index = 0
   Id = 6871
   PId = 519
   FormCaption = 'Потребность в помещениях'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form48: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   Shopping = '263032|0|0|0|0|0|0'
   object dxLookupComboBox1: TdxLookupComboBox

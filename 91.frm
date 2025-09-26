@@ -3,13 +3,14 @@ object Form91: TdxForm
   Height = 765
   Top = 10
   Width = 741
+  FormGroup = 'Приемка'
+  AutoOpen = True
+  Index = 38
   Id = 91
   PId = 0
   FormCaption = 'Прейскуранты'
-  FormGroup = 'Приемка'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form91: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 38
   SoftCheck = False
   object dxEdit1: TdxEdit
     Left = 28

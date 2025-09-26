@@ -3,13 +3,14 @@ object Form525: TdxForm
   Height = 665
   Top = 10
   Width = 1134
+  FormGroup = 'Приемка'
+  AutoOpen = True
+  Index = 78
   Id = 525
   PId = 0
   FormCaption = 'Импорт'
-  FormGroup = 'Приемка'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtSimpleForm
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form525: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 78
   SoftCheck = False
   object dxDateEdit1: TdxDateEdit
     Left = 88

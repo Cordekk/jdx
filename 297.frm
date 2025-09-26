@@ -3,13 +3,14 @@ object Form297: TdxForm
   Height = 566
   Top = 10
   Width = 709
+  FormGroup = 'ТМЦ'
+  AutoOpen = True
+  Index = 63
   Id = 297
   PId = 0
   FormCaption = 'Списание ТМЦ'
-  FormGroup = 'ТМЦ'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form297: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 63
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="FAD4F5C7-2DD6-4DB8-978B-78F51D055019" reg="Движение ТМЦ" regobj="Списание" formfields="formfield;regfield|Склад 1;Склад|Сотрудник 1;Сотрудник|Дата;Дата|Время;Время" table="Движение3" tablefields="tablefield;regfield2|Номенклатура;Номенклатура ТМЦ|ТМЦ;ТМЦ|Количество;Количество" obj="" objfields="objfield;regobjfield" objtable="" objtablefields="objtablefield;regfield3" calcreg="regfield4;expr|КЭФ;-1|Баланс;-getvar(''Движение3&amp;00A6Количество'')" checkbox="Проведен" progress="Показывать только при сетевом подключении" /><action type="9" id="245D2473-2037-483E-8B16-2FA012CBA6DD" reg="Остаток ТМЦ" table="Движение3" fields="regfield;formfield;tblfield;operation|Номенклатура ТМЦ;;Номенклатура;=|ТМЦ;;ТМЦ;=|Склад;;Склад 1;=|Сотрудник;;Сотрудник 1;=|Подразделение;;Подразделение;=|Остаток;;Количество;-|Стоимость;;Стоимость;-" check="Проведен" checkbalance="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[ИД]&lt;&gt;null" grid="cmp;ve_prop|dxGrid1;Редактирование|dxButton3;Видимость" stateevents="0" /></actions>'
   object dxCounter1: TdxCounter

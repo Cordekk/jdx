@@ -3,6 +3,8 @@ object Form83: TdxForm
   Height = 300
   Top = 10
   Width = 350
+  AutoOpen = True
+  Index = 0
   Id = 83
   PId = 82
   FormCaption = 'реестр'
@@ -11,7 +13,6 @@ object Form83: TdxForm
   CalcFields.Strings = (
     'Клиент3=[Клиент2|Наименование_сокращенное]'
   )
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -21,7 +22,6 @@ object Form83: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxLabel1: TdxLabel
     Left = 8

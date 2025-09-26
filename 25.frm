@@ -3,13 +3,14 @@ object Form25: TdxForm
   Height = 648
   Top = 10
   Width = 1077
+  FormGroup = 'Общие'
+  AutoOpen = True
+  Index = 33
   Id = 25
   PId = 0
   FormCaption = 'Подразделения'
-  FormGroup = 'Общие'
   Font.Height = -17
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 202
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form25: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 33
   SoftCheck = False
   object dxEdit1: TdxEdit
     Left = 24

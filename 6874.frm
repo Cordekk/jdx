@@ -3,13 +3,14 @@ object Form52: TdxForm
   Height = 453
   Top = 10
   Width = 526
+  FormGroup = 'Клиенты'
+  AutoOpen = True
+  Index = 109
   Id = 6874
   PId = 0
   FormCaption = 'Места отбора'
-  FormGroup = 'Клиенты'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form52: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 109
   SoftCheck = False
   object dxRecordId1: TdxRecordId
     Left = 448

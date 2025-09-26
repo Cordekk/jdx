@@ -3,13 +3,14 @@ object Form4: TdxForm
   Height = 831
   Top = 10
   Width = 1270
+  FormGroup = 'ТМЦ'
+  AutoOpen = True
+  Index = 93
   Id = 6839
   PId = 0
   FormCaption = 'План проверки'
-  FormGroup = 'ТМЦ'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form4: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 93
   SoftCheck = False
   object dxRecordId1: TdxRecordId
     Left = 1184

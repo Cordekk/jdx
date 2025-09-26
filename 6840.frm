@@ -3,13 +3,14 @@ object Form5: TdxForm
   Height = 827
   Top = 10
   Width = 1272
+  FormGroup = 'ТМЦ'
+  AutoOpen = True
+  Index = 94
   Id = 6840
   PId = 0
   FormCaption = 'План Техобслуживания'
-  FormGroup = 'ТМЦ'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form5: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 94
   SoftCheck = False
   object dxRecordId1: TdxRecordId
     Left = 1184

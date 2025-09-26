@@ -1,15 +1,16 @@
 object Form8: TdxForm
   Left = 10
-  Height = 411
+  Height = 471
   Top = 10
   Width = 411
+  FormGroup = 'Справочники'
+  AutoOpen = True
+  Index = 11
   Id = 8
   PId = 0
   FormCaption = 'Единицы'
-  FormGroup = 'Справочники'
   Font.Height = -17
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form8: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 11
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' |   ROLE=''Администратор'' | Newrec = 1" grid="cmp;ve_prop|DxEdit1;Редактирование|dxEdit2;Редактирование|dxEdit3;Редактирование" stateevents="1" /></actions>'
   object DxEdit1: TdxEdit
@@ -88,7 +88,7 @@ object Form8: TdxForm
   object dxQueryGrid1: TdxQueryGrid
     Left = 16
     Height = 254
-    Top = 152
+    Top = 204
     Width = 392
     AutoAdvance = aaNone
     Color = clWindow
@@ -118,6 +118,36 @@ object Form8: TdxForm
     Id = 366
     ManualRefresh = False
   end
+  object dxCalcEdit1: TdxCalcEdit
+    Left = 106
+    Height = 28
+    Top = 144
+    Width = 100
+    MaxLength = 0
+    TabOrder = 4
+    HideButton = False
+    CalculatorLayout = clNormal
+    AsInteger = 0
+    ButtonWidth = 28
+    NumGlyphs = 1
+    Flat = True
+    Id = 263305
+    FieldName = 'id ФСА'
+    Precission = 0
+    Required = False
+    DefaultValue = '0'
+    Editable = False
+    NullToZero = True
+    GroupDigits = True
+    PadZeros = True
+  end
+  object dxLabel4: TdxLabel
+    Left = 17
+    Height = 20
+    Top = 150
+    Width = 60
+    Caption = 'id ФСА'
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 100
@@ -143,6 +173,12 @@ object Form8: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f7372'
+      end    
+      item
+        Tag = 263305
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263305'
       end>
     DefaultRowHeight = 22
     DoubleBuffered = True

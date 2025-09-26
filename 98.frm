@@ -3,12 +3,13 @@ object Form98: TdxForm
   Height = 676
   Top = 10
   Width = 812
+  AutoOpen = True
+  Index = 0
   Id = 98
   PId = 97
   FormCaption = 'Пробы контроля'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form98: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 28

@@ -3,13 +3,14 @@ object Form24: TdxForm
   Height = 767
   Top = 10
   Width = 1078
+  FormGroup = 'Общие'
+  AutoOpen = True
+  Index = 47
   Id = 24
   PId = 0
   FormCaption = 'Сотрудники'
-  FormGroup = 'Общие'
   Font.Height = -17
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   HelpText.Strings = (
     '<body bgcolor=#fff8dc>'
@@ -24,7 +25,6 @@ object Form24: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 47
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' " grid="cmp;ve_prop|dxEdit5;Редактирование" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' | ROLE = ''Администратор''" grid="cmp;ve_prop|dxLookupComboBox1;Редактирование|dxCheckBox4;Редактирование|dxCheckBox5;Редактирование|dxCheckBox2;Редактирование|dxCheckBox3;Редактирование|dxCheckBox1;Редактирование|dxCheckBox8;Редактирование|dxCheckBox9;Редактирование" stateevents="1" /></actions>'
   object dxEdit1: TdxEdit

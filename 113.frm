@@ -3,13 +3,14 @@ object Form113: TdxForm
   Height = 745
   Top = 10
   Width = 970
+  FormGroup = 'Общие'
+  AutoOpen = True
+  Index = 13
   Id = 113
   PId = 0
   FormCaption = 'Задачи'
-  FormGroup = 'Общие'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form113: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 13
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="C648A6AF-7C32-4AAA-AD19-7864AB61208C" allfields="1" logfields="Field" users="User" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Исполнитель|user] = user    &amp;  [Выполнено]=0" grid="cmp;ve_prop|dxButton2;Доступность|dxMemo2;Редактирование|dxCheckBox1;Доступность" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Сотрудник|user] = user" grid="cmp;ve_prop|dxDateEdit1;Доступность|dxDateEdit2;Доступность|dxMemo1;Редактирование|dxComboBox1;Доступность|dxButton7;Видимость" stateevents="0" /></actions>'
   object dxLabel1: TdxLabel

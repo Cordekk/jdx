@@ -1,8 +1,10 @@
 {@module
 Author=Cordek
-Version=1
+Version=1.1
 
 Description=некоторые изменения в модуле DX plus
+тихое добавление записи
+добавил изменения в изменения группы записей
 @}
 
 function VarIsInteger(V: Variant): Boolean;
@@ -155,7 +157,7 @@ description=Добавление новой записи в указанную �
 После сохранения идентификатор записи можно вставить в объект текущей формы или обновить
 связанный с формой запрос с позиционированием на новой записи.
 @}
-function AddRecordToForm(const FormName: String; Values: TVariantArray2d;
+function AddRecordToFormQuietly(const FormName: String; Values: TVariantArray2d;
   IgnoreAccess: Boolean; const ObjName, QueryName: String): Boolean;
 var
   i: Integer;

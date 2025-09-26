@@ -3,13 +3,14 @@ object Form63: TdxForm
   Height = 758
   Top = 10
   Width = 1171
+  FormGroup = 'ТМЦ'
+  AutoOpen = True
+  Index = 113
   Id = 6885
   PId = 0
   FormCaption = 'Журнал ПО'
-  FormGroup = 'ТМЦ'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtSimpleForm
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form63: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 113
   SoftCheck = False
   object dxLabel1: TdxLabel
     Left = 36

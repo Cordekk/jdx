@@ -3,12 +3,13 @@ object Form17: TdxForm
   Height = 814
   Top = 10
   Width = 1138
+  AutoOpen = True
+  Index = 0
   Id = 6849
   PId = 1839
   FormCaption = 'Ход работы2'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form17: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="NZ([Количество параллелей],0)&gt;1" grid="cmp;ve_prop|dxEdit6;Редактирование|dxEdit7;Редактирование|dxEdit8;Редактирование|dxEdit9;Редактирование|dxEdit10;Редактирование|dxEdit11;Редактирование|dxEdit12;Редактирование|dxEdit13;Редактирование|dxEdit14;Редактирование" stateevents="0" /></actions>'
   object dxLabel1: TdxLabel

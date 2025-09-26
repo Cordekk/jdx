@@ -3,13 +3,14 @@ object Form110: TdxForm
   Height = 384
   Top = 10
   Width = 537
+  FormGroup = 'Справочники'
+  AutoOpen = True
+  Index = 0
   Id = 110
   PId = 0
   FormCaption = 'Виды болезней и вредителей'
-  FormGroup = 'Справочники'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form110: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE=''''| ROLE=''Администратор'' | Newrec =1" grid="cmp;ve_prop|dxEdit3;Редактирование|dxEdit1;Редактирование|dxEdit2;Редактирование|dxCheckBox1;Редактирование|dxComboBox1;Редактирование" stateevents="1" /></actions>'
   object dxEdit1: TdxEdit

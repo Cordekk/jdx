@@ -3,13 +3,14 @@ object Form1605: TdxForm
   Height = 786
   Top = 10
   Width = 864
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 87
   Id = 1605
   PId = 0
   FormCaption = 'Шаблон анализной карты'
-  FormGroup = 'Лаборатория'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form1605: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 87
   SoftCheck = False
   object dxLabel1: TdxLabel
     Left = 8

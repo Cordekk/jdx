@@ -3,13 +3,14 @@ object Form523: TdxForm
   Height = 850
   Top = 10
   Width = 1367
+  FormGroup = 'Общие'
+  AutoOpen = True
+  Index = 76
   Id = 523
   PId = 0
   FormCaption = 'Отчет ОИ'
-  FormGroup = 'Общие'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtSimpleForm
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form523: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 76
   SoftCheck = False
   object dxLookupComboBox1: TdxLookupComboBox
     Left = 12

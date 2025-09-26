@@ -3,10 +3,12 @@ object Form12: TdxForm
   Height = 792
   Top = 10
   Width = 1119
+  FormGroup = 'Приемка'
+  AutoOpen = True
+  Index = 97
   Id = 6844
   PId = 0
   FormCaption = 'Отбор проб'
-  FormGroup = 'Приемка'
   Templates.Strings = (
     'акт отбора зерно.docx'
   )
@@ -18,7 +20,6 @@ object Form12: TdxForm
     'Упаковка образцов=TAKE(''Пробы отобранные'', ''Вид упаковки'', '''') +'' ''+MERGE(''Пробы отобранные'', ''Сейф-пакет'', ''; '')'
     'Испытания для отбора=MERGE(''План испытаний1'', ''Показатель'', ''; '')'
   )
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -28,7 +29,6 @@ object Form12: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 97
   SoftCheck = False
   object dxEdit1: TdxEdit
     Left = 1008
@@ -129,9 +129,9 @@ object Form12: TdxForm
     Height = 542
     Top = 160
     Width = 1104
-    ActivePage = dxTabSheet1
+    ActivePage = dxTabSheet3
     Anchors = [akTop, akLeft, akRight]
-    TabIndex = 0
+    TabIndex = 3
     TabOrder = 4
     object dxTabSheet1: TdxTabSheet
       Caption = 'Задание на отбор'

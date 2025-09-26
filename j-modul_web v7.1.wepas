@@ -1,0 +1,150 @@
+{@module
+Author=jurist23rus
+Version=7.1
+Description=В этом модуле содержатся веб-версии функций:
+MergeIf - объединяет в одну строку значения столбца таблицы.
+QueryUpdate - обновляет запрос расположенный на форме.
+ABC - возвращает модуль числа.
+@}
+
+{@function
+Name=MERGEIF
+@}
+
+function MergIf_getFldName(Obj:TComponent):String;
+var
+  s:string;
+begin
+  s:=LowerCase(Obj.Classname);
+  if s='tdxedit' then
+    result:=tdxedit(Obj).Fieldname
+  else if s='tdxcalcedit' then
+    result:=tdxcalcedit(Obj).Fieldname
+  else if s='tdxdateedit' then
+    result:=tdxdateedit(Obj).Fieldname
+  else if s='tdxtimeedit' then
+    result:=tdxtimeedit(Obj).Fieldname
+  else if s='tdxcombobox' then
+    result:=tdxcombobox(Obj).Fieldname
+  else if s='tdxlookupcombobox' then
+    result:=tdxlookupcombobox(Obj).Fieldname
+  else if s='tdxmemo' then
+    result:=tdxmemo(Obj).Fieldname
+  else if s='tdxcounter' then
+    result:=tdxcounter(Obj).Fieldname
+  else if s='tdxobjectfield' then
+    result:=tdxobjectfield(Obj).Fieldname
+  else if s='tdxfile'then
+    result:=tdxfile(Obj).Fieldname
+  else
+    result:='';
+end;
+
+function FindObj(NameTable, NameField:String): String;
+var
+  i: Integer;
+  fn: string;
+begin
+  result:='';
+  for i := 0 to Self.Forms[NameTable].ComponentCount - 1 do
+  begin
+    fn:=LowerCase(Mergif_getFldName(Self.Forms[NameTable].Components[i]));
+    if fn=LowerCase(NameField) then
+      begin
+        Result:=Self.Forms[NameTable].Components[i].name;
+        exit;
+      end;
+  end;
+end;
+
+function CheckError (NameTable, NameField, Fltr: String) : String;
+begin
+  Result := ''
+  if (NameTable='') or (NameField='') then
+    Result := 'Параметр 1 и параметр 2 не могут быть пустыми'
+  else if self.Forms[NameTable] = nil then
+    Result := 'Таблица с именем ''' + NameTable + ''' не найдена'
+  else if FindObj(NameTable, NameField) = '' then
+    Result := 'Поле с именем ''' + NameField + ''' не найдено'
+  else if (Fltr <> '') and (vartype(Session.EvalExpr (Fltr, self.forms[NameTable])) <> varBoolean) then
+    Result := 'Неверно задан фильтр';
+end;
+
+function MergeIf (NameTable, NameField, Separator, Fltr: String): string;
+var i : integer;
+    errmsg : string;
+    bool: boolean;
+    res: variant;
+begin
+  Result := '';
+  errmsg := CheckError (NameTable, NameField, Fltr);
+  if errmsg <> '' then RaiseException (ErCustomError, errmsg);
+  with self.forms[NameTable] do
+    begin
+      i := 0;
+      MoveFirst;
+      while EOF <> true do
+      begin
+        if Fltr = '' then bool := true
+          else  bool := Session.EvalExpr (Fltr, self.forms[NameTable]);
+        if bool then
+        begin
+          res := fields[NameField];
+          i := i+1;
+          if i >1 then Result := Result + Separator  + VarToStr(res)
+          else
+          Result := Result + VarToStr(res);
+        end;
+      MoveNext;
+      end;
+    end;
+end;
+
+{@function
+Name=QueryUpdate
+@}
+
+function CheckErrorQU (QueryName: String) : String;
+begin
+  Result := ''
+  if QueryName='' then
+    Result := 'Аргумент "Имя запроса" не может быть пустым'
+end;
+
+procedure QueryUpdate (QueryName: String);
+var errmsg : string;
+    Q : TdxQueryGrid;
+begin
+  errmsg := CheckErrorQU (QueryName);
+  if errmsg <> '' then RaiseException (ErCustomError, errmsg);
+  Q := Self.Queries[QueryName];
+  q.Refresh;
+end;
+
+{@function
+Name=ABC
+@}
+
+function CheckErrorABC (num: variant) : String;
+begin
+  Result := '';
+  if not (vartype(num) in [varString, varDouble, varNull]) then
+    Result := 'Аргументом может быть только строка, число или null';
+end;
+
+
+function ABC (num: variant): variant;
+var errmsg: string;
+begin
+  errmsg := CheckErrorABC (num);
+  if errmsg <> '' then RaiseException (ErCustomError, errmsg);
+  if vartype(num) = varNull then
+  begin
+    Result := 0
+    exit;
+  end;
+  if vartype(num) = varString then num := StrToInt (num);
+  Result := sqrt (num*num);
+end;
+
+

@@ -3,12 +3,13 @@ object Form50: TdxForm
   Height = 776
   Top = 10
   Width = 994
+  AutoOpen = True
+  Index = 0
   Id = 6869
   PId = 6863
   FormCaption = 'Пробы от клиента'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form50: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxCounter1: TdxCounter
     Left = 160
@@ -518,29 +518,6 @@ object Form50: TdxForm
         Caption = 'Название, № и дата сортового документа'
         ParentColor = False
       end
-      object dxCalcEdit10: TdxCalcEdit
-        Left = 339
-        Height = 24
-        Top = 56
-        Width = 100
-        MaxLength = 0
-        TabOrder = 3
-        HideButton = False
-        CalculatorLayout = clNormal
-        AsInteger = 0
-        ButtonWidth = 24
-        NumGlyphs = 1
-        Flat = True
-        Id = 262994
-        FieldName = 'Сортовая чистота'
-        Precission = 0
-        Required = False
-        DefaultValue = '0'
-        Editable = False
-        NullToZero = True
-        GroupDigits = True
-        PadZeros = True
-      end
       object dxLabel44: TdxLabel
         Left = 8
         Height = 16
@@ -555,7 +532,7 @@ object Form50: TdxForm
         Top = 284
         Width = 552
         ScrollBars = ssBoth
-        TabOrder = 4
+        TabOrder = 3
         Id = 262995
         FieldName = 'Прошлые испытания'
         FieldSize = 0
@@ -580,7 +557,7 @@ object Form50: TdxForm
         Top = 232
         Width = 552
         ScrollBars = ssBoth
-        TabOrder = 5
+        TabOrder = 4
         Id = 262996
         FieldName = 'Протравливание'
         FieldSize = 0
@@ -613,7 +590,7 @@ object Form50: TdxForm
           'беспересадочный'
         )
         MaxLength = 0
-        TabOrder = 6
+        TabOrder = 5
         Id = 262997
         FieldName = 'Способ выращивания'
         SourceTId = 0
@@ -636,7 +613,7 @@ object Form50: TdxForm
         Top = 140
         Width = 552
         ScrollBars = ssBoth
-        TabOrder = 7
+        TabOrder = 6
         Id = 262998
         FieldName = 'Товарная группа'
         FieldSize = 0
@@ -661,7 +638,7 @@ object Form50: TdxForm
         Top = 88
         Width = 100
         MaxLength = 0
-        TabOrder = 8
+        TabOrder = 7
         HideButton = False
         CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
         OKCaption = 'OK'
@@ -683,6 +660,19 @@ object Form50: TdxForm
         Width = 156
         Caption = 'Дата получения семян'
         ParentColor = False
+      end
+      object dxEdit1: TdxEdit
+        Left = 340
+        Height = 24
+        Top = 56
+        Width = 100
+        MaxLength = 0
+        TabOrder = 8
+        Id = 263256
+        FieldName = 'Сортовая чистота'
+        FieldSize = 50
+        Required = False
+        Editable = False
       end
     end
   end
@@ -1074,12 +1064,6 @@ object Form50: TdxForm
         FieldName = 'f262993'
       end    
       item
-        Tag = 262994
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f262994'
-      end    
-      item
         Tag = 262995
         Title.Caption = ' '
         Width = 100
@@ -1180,6 +1164,12 @@ object Form50: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f263011'
+      end    
+      item
+        Tag = 263256
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263256'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

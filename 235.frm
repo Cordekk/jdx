@@ -3,13 +3,14 @@ object Form235: TdxForm
   Height = 300
   Top = 10
   Width = 324
+  FormGroup = 'ТМЦ'
+  AutoOpen = True
+  Index = 50
   Id = 235
   PId = 0
   FormCaption = 'Тип ТМЦ'
-  FormGroup = 'ТМЦ'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form235: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 50
   SoftCheck = False
   object dxComboBox1: TdxComboBox
     Left = 56

@@ -3,13 +3,14 @@ object Form524: TdxForm
   Height = 689
   Top = 10
   Width = 887
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 77
   Id = 524
   PId = 0
   FormCaption = 'План ВК'
-  FormGroup = 'Лаборатория'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form524: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 77
   SoftCheck = False
   object dxLabel1: TdxLabel
     Left = 12

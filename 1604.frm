@@ -3,13 +3,14 @@ object Form1604: TdxForm
   Height = 933
   Top = 10
   Width = 704
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 86
   Id = 1604
   PId = 0
   FormCaption = 'Ход испытаний'
-  FormGroup = 'Лаборатория'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form1604: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 86
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="role=''''" grid="cmp;ve_prop|dxCalcEdit2;Видимость|dxLabel6;Видимость|dxLookupComboBox2;Видимость|dxLabel10;Видимость|dxObjectField1;Видимость|dxLabel24;Видимость|dxLookupComboBox10;Видимость|dxLabel13;Видимость|dxTimeEdit1;Видимость|dxDateEdit1;Видимость|dxLabel14;Видимость|dxLookupComboBox7;Видимость|dxLabel12;Видимость|dxEdit4;Видимость|dxLabel11;Видимость|dxLabel23;Видимость|dxEdit1;Видимость|dxLabel7;Видимость|dxLookupComboBox6;Видимость|dxObjectField4;Видимость|dxLabel16;Видимость|dxObjectField3;Видимость|dxCheckBox8;Видимость|dxCalcEdit3;Видимость|dxLabel17;Видимость|dxCalcEdit6;Видимость|dxLabel26;Видимость|dxLabel8;Видимость|dxLookupComboBox4;Видимость|dxCheckBox4;Видимость|dxCheckBox2;Видимость|dxCheckBox9;Видимость|dxLabel15;Видимость|dxCheckBox7;Видимость|dxCheckBox1;Видимость|dxLabel25;Видимость|dxMemo3;Видимость|dxLabel9;Видимость|dxLookupComboBox5;Видимость|dxCheckBox3;Видимость|dxLabel3;Видимость|dxMemo1;Видимость|dxCheckBox5;Видимость|dxCheckBox6;Видимость|dxObjectField2;Видимость|dxEdit5;Видимость|dxLabel22;Видимость|dxComboBox1;Видимость|dxEdit2;Видимость|dxLabel5;Видимость|dxCalcEdit1;Видимость|dxLabel1;Видимость|dxLabel19;Видимость|dxLookupComboBox9;Видимость|dxEdit3;Видимость|dxLabel20;Видимость" stateevents="1" /></actions>'
   object dxLabel1: TdxLabel

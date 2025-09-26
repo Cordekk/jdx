@@ -3,10 +3,12 @@ object Form44: TdxForm
   Height = 844
   Top = 10
   Width = 1187
+  FormGroup = 'Клиенты'
+  AutoOpen = True
+  Index = 106
   Id = 6863
   PId = 0
   FormCaption = 'Заявка от клиента'
-  FormGroup = 'Клиенты'
   Font.Height = -13
   Font.Name = 'Verdana'
   CalcFields.Strings = (
@@ -22,7 +24,6 @@ object Form44: TdxForm
     'Дополнительные сведения=''нет'''
     'Должность пробоотборщика=DBGET(''Сотрудники клиента'', ''Должность'', ''[Контактное_лицо]=[Проботборщик]&[!Идентификатор]=[Клиент|Идентификатор]'')'
   )
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -32,7 +33,6 @@ object Form44: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 106
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Отправлено]=0" grid="cmp;ve_prop|DxLookupComboBox1;Редактирование|dxTabSheet9;Доступность|dxGrid5;Доступность|dxTabSheet10;Доступность" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE &lt;&gt; ''Клиент''" grid="cmp;ve_prop|dxButton5;Видимость|dxLabel23;Видимость|dxLookupComboBox12;Видимость" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Направление2] &lt;&gt; null &amp; [Заявка в лаборатории] = null  &amp; ROLE &lt;&gt; ''Клиент''" grid="cmp;ve_prop|dxButton5;Доступность" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Заявка в лаборатории] &lt;&gt; null   &amp; ROLE &lt;&gt; ''Клиент''" grid="cmp;ve_prop|dxButton8;Видимость" stateevents="1" /><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton7" fields="fl|Нормативный документ|Нормативный документ2" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="1=0" grid="cmp;ve_prop|dxTabSheet1;Видимость" stateevents="1" /><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton9" fields="fl|Нормативный документ2|Шаблон показателей" /></actions>'
   object dxCalcEdit5: TdxCalcEdit

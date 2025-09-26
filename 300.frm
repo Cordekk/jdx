@@ -3,12 +3,13 @@ object Form300: TdxForm
   Height = 327
   Top = 10
   Width = 565
+  AutoOpen = True
+  Index = 0
   Id = 300
   PId = 226
   FormCaption = 'Движение2'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form300: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[!Проведен]=0" grid="cmp;ve_prop|dxCalcEdit4;Редактирование|dxLookupComboBox4;Редактирование|dxLookupComboBox5;Редактирование|dxCalcEdit5;Редактирование|dxCalcEdit1;Редактирование" stateevents="0" /></actions>'
   object dxLookupComboBox4: TdxLookupComboBox

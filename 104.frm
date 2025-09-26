@@ -3,13 +3,14 @@ object Form104: TdxForm
   Height = 863
   Top = 10
   Width = 871
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 35
   Id = 104
   PId = 0
   FormCaption = 'Помещения'
-  FormGroup = 'Лаборатория'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 7236
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form104: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 35
   SoftCheck = False
   object dxEdit1: TdxEdit
     Left = 8

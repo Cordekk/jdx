@@ -3,13 +3,14 @@ object Form97498: TdxForm
   Height = 481
   Top = 10
   Width = 511
+  FormGroup = '!Вспомогательные'
+  AutoOpen = False
+  Index = 0
   Id = 498
   PId = 0
   FormCaption = 'Log_Config'
-  FormGroup = '!Вспомогательные'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = False
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form97498: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxLabel3: TdxLabel
     Left = 48
@@ -84,7 +84,6 @@ object Form97498: TdxForm
         Top = 16
         Width = 432
         Caption = 'Случаи регистрации событий в логе:'
-        ParentBackground = False
         TabOrder = 0
         StopTab = False
         object dxCheckBox2: TdxCheckBox
@@ -169,7 +168,6 @@ object Form97498: TdxForm
         Top = 211
         Width = 432
         Caption = 'Автоочистка'
-        ParentBackground = False
         TabOrder = 1
         StopTab = False
         object dxDateEdit1: TdxDateEdit
@@ -245,7 +243,6 @@ object Form97498: TdxForm
         Top = 12
         Width = 432
         Caption = 'Доступ к форме параметров'
-        ParentBackground = False
         TabOrder = 0
         StopTab = False
         object dxLabel4: TdxLabel

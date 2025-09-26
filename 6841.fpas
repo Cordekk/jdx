@@ -1,11 +1,396 @@
-procedure SaveFilesFromQuery (Sender: TObject);
+     function EscapeXML(const S: String): String;
+begin
+   Result := S;
+   Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
+   Result := StringReplace(Result, '<', '&lt', [rfReplaceAll]);
+   Result := StringReplace(Result, '>', '&gt', [rfReplaceAll]);
+   Result := StringReplace(Result, '"', '&quot;', [rfReplaceAll]);
+   Result := StringReplace(Result, '''', '&apos;', [rfReplaceAll]);
+end;
+
+function FormatDateForXML(const DateStr: String): String;
+var
+   Parts: TStringList;
+begin
+   Result := DateStr;
+   if Length(DateStr) >= 10 then
+   begin
+       Parts:= TStringList.Create;
+      SplitStr(DateStr, '.', Parts);
+      if Parts.Count = 3 then
+         Result := Parts[2] + '-' + Parts[1] + '-' + Parts[0];
+   end;
+end;
+
+function ShowSaveDialog: String;
+begin
+  Result := '';
+  with TSaveDialog.Create(nil) do
+  begin
+    Title := 'Экспорт в XML';
+    Filter := 'Файлы XML|*.xml';
+    if Execute then
+      Result := FileName;
+    Free;
+  end;
+end;
+
+procedure SaveXMLFromQuery(Sender: TObject);
+var
+   Qprotocol, Qobject, Qresearch, Qequip, QUser, Fq: TdxQueryGrid;
+   Fm: TdxForm;
+   File: TdxFile;
+   FS, FS2: TFileStream;
+   Buf, Base64Str, XML, FileName, FileExt, OutputFileName: String;
+   i: Integer;
+begin
+   // Проверка на наличие данных
+   Qprotocol := Self.Queries['Запрос_протоколы_экспорт'];
+   if Qprotocol.RecordCount = 0 then
+   begin
+      MsgBox('Ошибка', 'Нет данных для экспорта!');
+      Exit;
+   end
+   else if Qprotocol.RecordCount >100 then
+   begin
+      MsgBox('Ошибка', 'Нельзя экспортировать больше 100 протоколов!');
+      Exit;
+   end;
+
+   // Открываем стандартный диалог сохранения файла
+   OutputFileName := ShowSaveDialog;
+   if OutputFileName = '' then Exit;
+
+   // Создаем файловый поток
+   try
+      FS := TFileStream.Create(OutputFileName, fmCreate);
+   except
+      //MsgBox('Ошибка', ExceptionToString(ExceptionType, ''));
+      Exit;
+   end;
+
+   // Создаем XML заголовок
+   XML := '<?xml version="1.0" encoding="utf-8"?>' + #13#10 + '<root>' + #13#10;
+	// Сохраняем XML в файл
+   FS.Write(XML, Length(XML));
+   XML := ''
+   // Получаем ссылки на запросы
+   Qobject   := Self.Queries['Запрос_пробы_экспорт'];
+   Qresearch := Self.Queries['Запрос_показатели_экспорт'];
+   Qequip    := Self.Queries['Запрос_оборудование_экспорт'];
+   QUser     := Self.Queries['Запрос_сотрудники_экспорт'];
+   Fq        := Self.Queries['Запрос_файлы_экспорт'];
+
+   // Отключаем обновление для производительности
+   Qprotocol.DisableControls;
+   Qobject.DisableControls;
+   Qresearch.DisableControls;
+   Qequip.DisableControls;
+   QUser.DisableControls;
+   Fq.DisableControls;
+
+   // Создаем форму для работы с файлами
+   Fm := TdxForm.Create('FileStore2');
+
+   // Начинаем цикл по протоколам
+   Qprotocol.MoveFirst;
+   while not Qprotocol.Eof do
+   begin
+      // Обновляем связанные запросы
+      Qobject.Refresh;
+      Qresearch.Refresh;
+      Qequip.Refresh;
+      QUser.Refresh;
+      Fq.Refresh;
+
+      // Открываем тег <protocol>
+      XML :=XML + #13#10 + '<protocol>' + #13#10;
+
+      // 1. Основные поля протокола (с форматированием дат)
+      XML := XML + '    <DocId>' + EscapeXML(Qprotocol['Номер_протокола']) + '</DocId>' + #13#10;
+      XML := XML + '    <DocCreationDate>' + FormatDateForXML(Qprotocol['Дата протокола']) + '</DocCreationDate>' + #13#10;
+      XML := XML + '    <DocStartDate>' + FormatDateForXML(Self['Дата поступления']) + '</DocStartDate>' + #13#10;
+      XML := XML + '    <DocValidityDate>' + FormatDateForXML(Self['Дата завершения']) + '</DocValidityDate>' + #13#10;
+      XML := XML + '    <DataStatusId>20</DataStatusId>' + #13#10;
+      XML := XML + '    <ProtocolStatusId>6</ProtocolStatusId>' + #13#10;
+      //debug(XML); //закомментировать
+
+      // 2. Блок ProtocolScan (файл)
+      Fq.MoveFirst;
+      //if (Fq.RecordCount > 0) and (Fq['Файл'] <> '') then
+      if 1=0 then // ЗАГЛУШКА:
+      begin
+         try
+            Fm.OpenRecord(Fq.RecId);
+            FileName := Fm['Имя файла'];
+            FileExt := ExtractFileExt(FileName);
+            if FileExt <> '' then
+               FileExt := Copy(FileExt, 2, Length(FileExt));
+            File := Fm.Files['Файл'];
+            File.SaveToFile(GetOutputDir + FileName);
+            FS2 := TFileStream.Create(GetOutputDir + FileName, fmOpenRead);
+            SetLength(Buf, FS2.Size);
+            FS2.Read(Buf[1], FS2.Size); //считываем файловый поток побитно
+            FS2.Free;
+            Base64Str := EncodeBase64(Buf); //кодируем в Base64
+			      //Buf:=''; //зануляем переменную, после этого падает
+            //debug(Base64Str); //закомментировать
+            XML := XML + '    <ProtocolScan>' + #13#10;
+            XML := XML + '        <Extension>' + EscapeXML(FileExt) + '</Extension>' + #13#10;
+            XML := XML + '        <FileName>' + ExtractFileNameOnly(FileName) + '</FileName>' + #13#10;
+            XML := XML + '        <Content>' + Base64Str + '</Content>' + #13#10;
+            XML := XML + '    </ProtocolScan>' + #13#10;
+			      //Base64Str:=''; //зануляем переменную, после этого падает
+        // except
+        // debug(ExceptionParam);
+         finally
+		        //удаляем этот файл из временной папки
+            if FileExists(GetOutputDir + FileName) then
+               DeleteFile(GetOutputDir + FileName);
+			      Fm.Close; //закрываем запись формы
+			      // Сохраняем XML в файл
+            //debug(XML); //закомментировать
+			      FS.Write(XML, Length(XML));
+            //SetLength(XML, 0); //попробуем установить меньшую длину
+            //Delete(XML, 1, Length(XML));  //попробуем удалить символы из строки по одному
+            XML := '';	//зануляем переменную, после этого падает
+         end;
+      end;
+
+      // 3. Адрес лаборатории
+      XML := XML + '    <AddressID>' + EscapeXML(Self['Адрес_лаборатории']) + '</AddressID>' + #13#10;
+
+      // 4. TerritoryFeature и Address (если true)
+      XML := XML + '    <TerritoryFeature>' + EscapeXML(Qobject['Не по адресу лаборатории']) + '</TerritoryFeature>' + #13#10;
+      if Qobject['Не по адресу лаборатории'] = 'true' then
+      begin
+         XML := XML + '    <Address>' + #13#10;
+         XML := XML + '        <AddressDetails>' + #13#10;
+         XML := XML + '            <idCodeOksm>643</idCodeOksm>' + #13#10;
+         XML := XML + '            <IdAddrType>1</IdAddrType>' + #13#10;
+         XML := XML + '            <UniqueAddress>true</UniqueAddress>' + #13#10;
+         XML := XML + '            <UniqueAddressText>' + EscapeXML(Qobject['UniqueAddressText']) + '</UniqueAddressText>' + #13#10;
+         XML := XML + '        </AddressDetails>' + #13#10;
+         XML := XML + '    </Address>' + #13#10;
+      end;
+
+      // 5. Дата заявки
+      XML := XML + '    <ApplicationDate>' + FormatDateForXML(Qprotocol['Дата заявки']) + '</ApplicationDate>' + #13#10;
+
+      // 6. Блок Customer
+      XML := XML + '    <Customer>' + #13#10;
+
+      // Тип клиента
+      XML := XML + '        <CustomerKindId>' + EscapeXML(Qprotocol['ТИП КЛИЕНТА']) + '</CustomerKindId>' + #13#10;
+
+      // ИНН (должен быть ПЕРВЫМ из этих двух)
+      if Qprotocol['ИНН1'] <> '' then
+         XML := XML + '        <InnId>' + EscapeXML(Qprotocol['ИНН1']) + '</InnId>' + #13#10;
+
+      // ОГРН/ОГРНИП (должен быть ВТОРЫМ)
+      if Qprotocol['ОГРН1'] <> '' then
+         XML := XML + '        <OgrnId>' + EscapeXML(Qprotocol['ОГРН1']) + '</OgrnId>' + #13#10;
+
+      // FullNameDetails для ЮЛ (ТИП КЛИЕНТА = 1) или иностранца (ТИП КЛИЕНТА = 3)
+      if (Qprotocol['ТИП КЛИЕНТА'] = '1') or (Qprotocol['ТИП КЛИЕНТА'] = '3') then
+         XML := XML + '        <FullNameDetails>' + EscapeXML(Qprotocol['Наименование полное']) + '</FullNameDetails>' + #13#10;
+
+      // FioFl для ФЛ (ТИП КЛИЕНТА = 4) или ИП (ТИП КЛИЕНТА = 2), если нужно
+      if (Qprotocol['ТИП КЛИЕНТА'] = '4') or (Qprotocol['ТИП КЛИЕНТА'] = '2') then
+         XML := XML + '        <FioFl>' + EscapeXML(Qprotocol['Наименование полное']) + '</FioFl>' + #13#10;
+
+      // Телефон (без Annex)
+      if (Qprotocol['Телефон'] <> null) and (Qprotocol['Телефон'] <> '') then
+      begin
+         XML := XML + '        <Phones>' + #13#10;
+         XML := XML + '            <PhoneDetails>' + #13#10;
+         XML := XML + '                <Number>' + EscapeXML(Qprotocol['Телефон']) + '</Number>' + #13#10;
+         XML := XML + '                <IsRf>true</IsRf>' + #13#10;
+         XML := XML + '            </PhoneDetails>' + #13#10;
+         XML := XML + '        </Phones>' + #13#10;
+      end;
+
+      // Email
+      if (Qprotocol['Email'] = null) or (Qprotocol['Email'] = '') then
+      begin
+         XML := XML + #13#10;
+      end
+      else
+      begin
+         XML := XML + '        <Emails>' + #13#10;
+         XML := XML + '            <Email>' + EscapeXML(Qprotocol['Email']) + '</Email>' + #13#10;
+         XML := XML + '        </Emails>' + #13#10;
+      end;
+
+      // Юр. адрес заказчика (с idCodeOksm и IdAddrType)
+      XML := XML + '        <Address>' + #13#10;
+      XML := XML + '            <AddressDetails>' + #13#10;
+      XML := XML + '                <idCodeOksm>643</idCodeOksm>' + #13#10;
+      XML := XML + '                <IdAddrType>1</IdAddrType>' + #13#10;
+      XML := XML + '                <UniqueAddress>true</UniqueAddress>' + #13#10;
+      XML := XML + '                <UniqueAddressText>' + EscapeXML(Qprotocol['Юр.Адрес']) + '</UniqueAddressText>' + #13#10;
+      XML := XML + '            </AddressDetails>' + #13#10;
+      XML := XML + '        </Address>' + #13#10;
+
+      XML := XML + '    </Customer>' + #13#10;
+
+      // 7. Если указывать оборудование требуется или есть в протоколе (добавить условие и запрос Запрос_оборудование_экспорт), прописываем список,
+      //если нет, то ставим  <NoEquipmentInfo>true
+
+      if (Qequip.RecordCount > 0) and (Qequip['Оборудование ФГИС РА'] > 0) then
+      begin
+	 // Сведения об оборудовании, использованном при проведении испытаний (исследований), измерений
+      XML := XML + '<Equipment>' + #13#10;
+      Qequip.MoveFirst;
+      while not Qequip.Eof do
+      begin
+          XML := XML + '    <EquipmentDetails>' + #13#10;
+          XML := XML + '        <EquipmentId>' + EscapeXML(Qequip['Оборудование ФГИС РА']) + '</EquipmentId>' + #13#10;
+          XML := XML + '    </EquipmentDetails>' + #13#10;
+         Qequip.MoveNext;
+      end;
+
+      XML := XML + '</Equipment>' + #13#10;
+      end
+      else
+          XML := XML + '    <NoEquipmentInfo>true</NoEquipmentInfo>' + #13#10;
+
+
+      // 8. Блок ApprovedUser (должен быть ПЕРЕД ObjectInfo!)
+      XML := XML + '    <ApprovedUser>' + #13#10;
+
+      // Исполнители (роль 1)
+      QUser.MoveFirst;
+      while not QUser.Eof do
+      begin
+         XML := XML + '        <ApprovedUserDetails>' + #13#10;
+         XML := XML + '            <idFullName>' + EscapeXML(QUser['ФГИС РА1']) + '</idFullName>' + #13#10;
+         XML := XML + '            <PostName>' + EscapeXML('Испытатель') + '</PostName>' + #13#10;
+         XML := XML + '            <idRoleName>1</idRoleName>' + #13#10;
+         XML := XML + '        </ApprovedUserDetails>' + #13#10;
+         QUser.MoveNext;
+      end;
+{   // тут должен быть утверждающий, пока закомментировал, потому что не понятно с должностью и ролью
+      // Утвердивший (роль 2)
+      XML := XML + '        <ApprovedUserDetails>' + #13#10;
+      XML := XML + '            <idFullName>' + EscapeXML(Qprotocol['Утвердивший_ФГИС РА']) + '</idFullName>' + #13#10;
+      XML := XML + '            <PostName>' + EscapeXML('Руководитель') + '</PostName>' + #13#10;
+      XML := XML + '            <idRoleName>2</idRoleName>' + #13#10;
+      XML := XML + '        </ApprovedUserDetails>' + #13#10;
+	  }
+
+      XML := XML + '    </ApprovedUser>' + #13#10;
+
+      // 9. Блок ObjectInfo
+      XML := XML + '    <ObjectInfo>' + #13#10;
+
+      // Тип объекта
+      XML := XML + '        <TypeObjectId>' + EscapeXML(Qobject['Тип объекта']) + '</TypeObjectId>' + #13#10;
+
+      //Нормативный документ на объект испытаний, пока закомментировал
+      //if  (Qobject['id ФСА НД']<>null) or (Qobject['id ФСА НД']<>'') then
+      //XML := XML + '        <MethodDocId>' + EscapeXML(Qobject['id ФСА НД']) + '</MethodDocId>' + #13#10;
+
+      // Дата получения образца
+      XML := XML + '        <ModelGetDate>' + FormatDateForXML(Qobject['Дата_поступления']) + '</ModelGetDate>' + #13#10;
+
+      // Наименование объекта
+      XML := XML + '        <FullNameObject>' + EscapeXML(Qobject['Продукция']) + '</FullNameObject>' + #13#10;
+
+      // Количество образцов
+      XML := XML + '        <SamplesCount>' + EscapeXML(Qobject['Количество_образцов']) + '</SamplesCount>' + #13#10;
+
+      // Блок ResearchObject — цикл по показателям
+      XML := XML + '        <ResearchObject>' + #13#10;
+      Qresearch.MoveFirst;
+      while not Qresearch.Eof do
+      begin
+         XML := XML + '            <ResearchObjectInfo>' + #13#10;
+         XML := XML + '                <UniqueIndicator>' + EscapeXML(Qresearch['Показатель']) + '</UniqueIndicator>' + #13#10;
+         XML := XML + '                <FactValue>' + EscapeXML(Qresearch['Значение']) + '</FactValue>' + #13#10;
+         XML := XML + '                <UniqueMeasurement>' + EscapeXML(Qresearch['Ед.изм']) + '</UniqueMeasurement>' + #13#10;
+         XML := XML + '                <UniqueMethod>' + EscapeXML(Qresearch['Методика из ОА']) + '</UniqueMethod>' + #13#10;
+         XML := XML + '                <UniqueMethodik>' + EscapeXML(Qresearch['Метод']) + '</UniqueMethodik>' + #13#10;
+         XML := XML + '            </ResearchObjectInfo>' + #13#10;
+         Qresearch.MoveNext;
+      end;
+      XML := XML + '        </ResearchObject>' + #13#10;
+
+      // IsLab и связанные поля (должны быть ПОСЛЕ ResearchObject)
+      XML := XML + '        <IsLab>' + EscapeXML(Qobject['IsLab']) + '</IsLab>' + #13#10;
+
+      if Qobject['IsLab'] = 'true' then
+      begin
+         // Дата отбора
+         XML := XML + '        <LabSelectionDate>' + FormatDateForXML(Qobject['LabSelectionDate']) + '</LabSelectionDate>' + #13#10;
+
+         // Адрес отбора (с idCodeOksm и IdAddrType)
+         XML := XML + '        <LabSelectionAddress>' + #13#10;
+         XML := XML + '            <AddressDetails>' + #13#10;
+         XML := XML + '                <idCodeOksm>643</idCodeOksm>' + #13#10;
+         XML := XML + '                <IdAddrType>1</IdAddrType>' + #13#10;
+         XML := XML + '                <UniqueAddress>true</UniqueAddress>' + #13#10;
+         XML := XML + '                <UniqueAddressText>' + EscapeXML(Qobject['UniqueAddressText']) + '</UniqueAddressText>' + #13#10;
+         XML := XML + '            </AddressDetails>' + #13#10;
+         XML := XML + '        </LabSelectionAddress>' + #13#10;
+      end;
+
+      // Иной нормативный документ (должен быть в самом конце ObjectInfo)
+      XML := XML + '        <IsAnotherDoc>true</IsAnotherDoc>' + #13#10;
+      XML := XML + '        <AnotherDoc>' + #13#10;
+      XML := XML + '            <AnotherDocDetails>' + #13#10;
+      XML := XML + '                <AnotherDocName>' + EscapeXML(Qprotocol['Задание_НД_текст']) + '</AnotherDocName>' + #13#10;
+      XML := XML + '                <AnotherDocNumber>' + EscapeXML(Qprotocol['Задание_НД_текст']) + '</AnotherDocNumber>' + #13#10;
+      XML := XML + '            </AnotherDocDetails>' + #13#10;
+      XML := XML + '        </AnotherDoc>' + #13#10;
+
+      XML := XML + '    </ObjectInfo>' + #13#10;
+
+      // Закрываем тег протокола
+      XML := XML + '</protocol>' + #13#10;
+		// Сохраняем XML в файл
+		FS.Write(XML, Length(XML));
+		XML := '';
+      // Переходим к следующему протоколу
+      Qprotocol.MoveNext;
+   end;
+
+   // Закрываем корневой тег
+   XML := XML + '</root>';
+
+    // Сохраняем XML в файл
+   FS.Write(XML, Length(XML));
+   XML :='';
+   FS.Free;
+
+   // Включаем обратно обновление
+   Qprotocol.EnableControls;
+   Qobject.EnableControls;
+   Qresearch.EnableControls;
+   QUser.EnableControls;
+   Fq.EnableControls;
+   Fm.Free;
+
+   MsgBox('Успешно', 'XML файл успешно сгенерирован: ' + OutputFileName);
+end;
+
+procedure Form_Create;
+begin
+   dxButton3.OnClick := @SaveXMLFromQuery;
+end;
+
+
+
+// раньше было сохранение файлов, надо оставить для примера
+{procedure SaveFilesFromQuery (Sender: TObject);
 var
    Q: TdxQueryGrid;
    Fm: TdxForm;
    F: TdxFile;
-   FileName: string;
+   FS: TFileStream;
+   Buf, FileName: string;
 begin
-    Q := Self.Queries['Запрос3'];
+    Q := dxQueryGrid1;
    Fm := TdxForm.Create('FileStore2');
    Q.DisableControls;
    dxQueryGrid4.DisableControls;
@@ -14,14 +399,22 @@ begin
     begin
     dxQueryGrid4.refresh;
     dxQueryGrid4.MoveLast;
+    if (dxQueryGrid4.RecordCount > 0) then
+    begin
     Fm.OpenRecord(dxQueryGrid4.RecId);
-    if (Fm.RecordCount > 0) and (Self['Имя файла'] <> '') then
+    if (Fm.RecordCount > 0) and (Fm['Имя файла'] <> '') then
       begin
-         FileName:= Self['Имя файла'];
+         FileName:= Fm['Имя файла'];
          F := Fm.Files['Файл'];
-         F.SaveToFile(GetOutputDir + FileName);
+         F.SaveToFile(GetOutputDir + FileName );
+         F.SaveToStream(FS);
+		  SetLength(Buf, FS.Size);
+		  FS.Read(Buf, FS.Size);
+		  Debug(EncodeBase64(Buf));
+		  FS.Free;
       end;
     Fm.Close;
+    end;
     Q.MoveNext;
    end;
    dxQueryGrid4.EnableControls;
@@ -32,4 +425,4 @@ end;
 procedure Form_Create;
 begin
    dxButton3.OnClick := @SaveFilesFromQuery;
-end;
+end;       }

@@ -3,13 +3,14 @@ object Form16: TdxForm
   Height = 300
   Top = 10
   Width = 563
+  FormGroup = '!Вспомогательные'
+  AutoOpen = True
+  Index = 100
   Id = 6848
   PId = 0
   FormCaption = 'Т-критерий'
-  FormGroup = '!Вспомогательные'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form16: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 100
   SoftCheck = False
   object dxCalcEdit1: TdxCalcEdit
     Left = 63

@@ -3,10 +3,12 @@ object Form3: TdxForm
   Height = 891
   Top = 10
   Width = 1273
+  FormGroup = 'Приемка'
+  AutoOpen = True
+  Index = 14
   Id = 3
   PId = 0
   FormCaption = 'Заявка клиента'
-  FormGroup = 'Приемка'
   Font.Height = -17
   Font.Name = 'Verdana'
   CalcFields.Strings = (
@@ -27,7 +29,6 @@ object Form3: TdxForm
     'Должность пробоотборщика=DBGET(''Сотрудники клиента'', ''Должность'', ''[Контактное_лицо]=[Проботборщик]&[!Идентификатор]=[Клиент|Идентификатор]'')'
     'В присутствии=NZ(TAKE(''Дополнения Заявка клиента'', ''Значение'', ''[Наименование поля]="В присутствии"''), [Контактное лицо|ФамилияИО])'
   )
-  AutoOpen = True
   ViewType = vtGridOnly
   Filters.Strings = (
     'Последние=FILTER:531|0|0|0'
@@ -75,7 +76,6 @@ object Form3: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 14
   SoftCheck = False
   ActionOnCreate = '<actions><comment text="Нужен для отслеживания изменений на форме"/><action type="9" id="9A42E20C-39FB-403A-B04A-CA5904B07376" allfields="1" logfields="Field" users="User" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Клиент]&lt;&gt;null &amp;  [Направление2]&lt;&gt;null" grid="cmp;ve_prop|dxButton4;Доступность|dxButton11;Доступность|dxButton12;Доступность|dxButton9;Доступность|dxButton8;Доступность|DuplicateBn;Доступность|dxLookupComboBox14;Доступность|DuplicateBn1;Доступность|dxLookupComboBox20;Доступность|dxButton29;Видимость" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''''  | ROLE = ''Администратор''" grid="cmp;ve_prop|dxLookupComboBox21;Редактирование|dxCheckBox4;Редактирование|dxCheckBox5;Редактирование|dxCheckBox6;Редактирование|dxCalcEdit7;Редактирование|dxCheckBox14;Редактирование" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Аргус-лаборатория]=1 | [Госзадание]=1" grid="cmp;ve_prop|dxEdit7;Видимость|dxEdit10;Видимость|dxLabel42;Видимость|dxLabel43;Видимость|dxButton5;Видимость|dxLabel44;Видимость|dxEdit11;Видимость|dxButton23;Видимость|DxLookupComboBox11;Видимость|dxLabel21;Видимость" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' //  | ROLE = ''Администратор''" grid="cmp;ve_prop|DxDateEdit1;Доступность|dxLookupComboBox3;Доступность|dxLookupComboBox13;Доступность|dxTabSheet12;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Только проба]=1" grid="cmp;ve_prop|dxLabel52;Видимость|dxMemo8;Видимость" stateevents="0" /><comment text="Если отбор не требуется, то эти поля не отображаются"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Отбор проб]=1" grid="cmp;ve_prop|dxQueryGrid11;Видимость|dxLabel31;Видимость|dxLookupComboBox15;Видимость|dxButton26;Видимость|dxButton27;Видимость|dxLabel46;Видимость" stateevents="1" /><action type="9" id="49BDDFC2-FD4C-4945-9382-E70E33F37FE2" bn="dxButton31" when="После сохранения" /><action type="9" id="49BDDFC2-FD4C-4945-9382-E70E33F37FE2" bn="dxButton29" when="После сохранения" /><comment text="Добавить НД в таблицу"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton7" fields="fl|Нормативный документ|Нормативный документ2" /><action type="9" id="AFB9DFCF-7996-43A1-A83A-BBCFC5A19928" queries="qry;fld;bn|Отборы проб заявки;;dxButton27|Пробы1;;dxButton28|Образцы1;;dxButton33" defact="0" /><comment text="Добавить методики из шаблона показателей"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton29" fields="fl|Шаблон показателей" /><comment text="добавить дополнительные поля в таблицу из направления"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton31" fields="fl|Направление2" /><comment text="Добавление проб при добавлении заявки клиента из заявки от клиента"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton25" fields="fl|Направление2" /><comment text="Изменения шифра, после изменения шифра заявки"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="CountSample" fields="fl|Шифр_заявки" /></actions>'
   object dxButton20: TdxButton
@@ -509,7 +509,7 @@ object Form3: TdxForm
         Font.Name = 'Verdana'
         ParentFont = False
         TabOrder = 3
-        ActionOnClick = '<actions><action type="5" /><if cond="result"><if cond="COUNT(''Пробы1'')&gt;0"><action disabled="1" type="9" id="62900B52-9BF5-4E72-833F-9B47AB4F4399" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" _qg="Пробы1" _fm="Пробы" _ls="Форма+Подчиненные таблицы" /><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Пробы" values="field;expr|Дополнительное поле;GET(''Пробы1'', ''Дополнительное поле'')|Заявка клиента2;RECID(''Заявка клиента'')|Направление;[Направление2]|Продукция;GET(''Пробы1'', ''Продукция_id'')|Примечание;GET(''Пробы1'', ''Примечание'')|Категория;GET(''Пробы1'', ''Категория'')|Сорт;GET(''Пробы1'', ''Сорт_id'')|Репродукция;GET(''Пробы1'', ''Репродукция'')|Сортовая чистота;GET(''Пробы1'', ''Сортовая чистота'')|Ед.изм.1;GET(''Пробы1'', ''Ед.изм.1_id'')|Ед.изм.2;GET(''Пробы1'', ''Ед.изм.2_id'')     |Объем партии1;GET(''Пробы1'', ''Объем партии'')|Число мест;GET(''Пробы1'', ''Число мест'')     |Производитель;GET(''Пробы1'', ''Производитель_id'')|Место происхождения;GET(''Пробы1'', ''Место происхождения'')|Страна происхождения;GET(''Пробы1'', ''Страна происхождения_id'')|Год урожая;GET(''Пробы1'', ''Год урожая'')|Срок годности;GET(''Пробы1'', ''Срок годности'')|Место хранения;GET(''Пробы1'', ''Место хранения'')|Вид упаковки;GET(''Пробы1'', ''Вид упаковки'')|Количество_образцов;GET(''Пробы1'', ''Количество образцов'')|Объем_пробы;GET(''Пробы1'', ''Объем пробы'')|Транспорт;GET(''Пробы1'', ''Транспорт_id'')|Номер транспорта;GET(''Пробы1'', ''Номер партии (транспорт)'')|Дата получения семян;GET(''Пробы1'', ''Дата получения семян'')|Способ выращивания;GET(''Пробы1'', ''Способ выращивания'')|Товарная группа;GET(''Пробы1'', ''Товарная группа'')|Сортовой документ;GET(''Пробы1'', ''Сортовой документ'')|Протравливание;GET(''Пробы1'', ''Протравливание'')|Прошлые испытания;GET(''Пробы1'', ''Прошлые испытания'')" ignoreaccess="0" obj="" qry="Пробы1" /></if><else><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Пробы" values="field;expr|Заявка клиента2;RECID(''Заявка клиента'')|Направление;[Направление2]" ignoreaccess="0" obj="" qry="Пробы1" /></else></if><else><action type="10" title="Внимание" message="Заполните Клиента и Направление!" msgtype="0" exprmsg="" buttons="1;0;0;0;0;0;0;0;0;0;0"/></else><action type="7" expression="BLOCK('#13#10'Setfield(''Дубль'',RECID(''Заявка клиента'')))"/></actions>'
+        ActionOnClick = '<actions><action type="5" /><if cond="result"><if cond="COUNT(''Пробы1'')&gt;0"><action disabled="1" type="9" id="62900B52-9BF5-4E72-833F-9B47AB4F4399" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" _qg="Пробы1" _fm="Пробы" _ls="Форма+Подчиненные таблицы" /><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Пробы" values="field;expr|Заявка клиента2;RECID(''Заявка клиента'')|Направление;[Направление2]|Дополнительное поле;REPLACEALL(GET(''Пробы1'', ''Дополнительное поле''),''Акт отбора'','''')|Продукция;GET(''Пробы1'', ''Продукция_id'')|Примечание;GET(''Пробы1'', ''Примечание'')|Категория;GET(''Пробы1'', ''Категория'')|Сорт;GET(''Пробы1'', ''Сорт_id'')|Репродукция;GET(''Пробы1'', ''Репродукция'')|Сортовая чистота;GET(''Пробы1'', ''Сортовая чистота'')|Ед.изм.1;GET(''Пробы1'', ''Ед.изм.1_id'')|Ед.изм.2;GET(''Пробы1'', ''Ед.изм.2_id'')     |Объем партии1;GET(''Пробы1'', ''Объем партии'')|Число мест;GET(''Пробы1'', ''Число мест'')     |Производитель;GET(''Пробы1'', ''Производитель_id'')|Место происхождения;GET(''Пробы1'', ''Место происхождения'')|Страна происхождения;GET(''Пробы1'', ''Страна происхождения_id'')|Год урожая;GET(''Пробы1'', ''Год урожая'')|Срок годности;GET(''Пробы1'', ''Срок годности'')|Место хранения;GET(''Пробы1'', ''Место хранения'')|Вид упаковки;GET(''Пробы1'', ''Вид упаковки'')|Количество_образцов;GET(''Пробы1'', ''Количество образцов'')|Объем_пробы;GET(''Пробы1'', ''Объем пробы'')|Транспорт;GET(''Пробы1'', ''Транспорт_id'')|Номер транспорта;GET(''Пробы1'', ''Номер партии (транспорт)'')|Дата получения семян;GET(''Пробы1'', ''Дата получения семян'')|Способ выращивания;GET(''Пробы1'', ''Способ выращивания'')|Товарная группа;GET(''Пробы1'', ''Товарная группа'')|Сортовой документ;GET(''Пробы1'', ''Сортовой документ'')|Протравливание;GET(''Пробы1'', ''Протравливание'')|Прошлые испытания;GET(''Пробы1'', ''Прошлые испытания'')" ignoreaccess="0" obj="" qry="Пробы1" /></if><else><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Пробы" values="field;expr|Заявка клиента2;RECID(''Заявка клиента'')|Направление;[Направление2]" ignoreaccess="0" obj="" qry="Пробы1" /></else></if><else><action type="10" title="Внимание" message="Заполните Клиента и Направление!" msgtype="0" exprmsg="" buttons="1;0;0;0;0;0;0;0;0;0;0"/></else><action type="7" expression="BLOCK('#13#10'Setfield(''Дубль'',RECID(''Заявка клиента'')))"/></actions>'
       end
       object dxButton3: TdxButton
         Left = 4
@@ -651,7 +651,7 @@ object Form3: TdxForm
         Font.Name = 'Verdana'
         ParentFont = False
         TabOrder = 9
-        ActionOnClick = '<actions><action type="5" /><if cond="result"><comment text="если пробы несколько и из другой заявки, то копируем все"/><if cond="COUNT(''Пробы1'')&gt;1 &amp;[Дубль]&lt;&gt;RECID(''Заявка клиента'')"><comment text="заполним пробы из запроса Пробы1, таким образом скопируются все пробы"/><action type="9" id="35B8560B-A110-4BF9-B886-635E7BED9058" fm="Пробы" qry="Пробы1" fields="fl;qfl;expr|Дополнительное поле;Дополнительное поле;|Заявка клиента2;;RECID(''Заявка клиента'')|Направление;;[Направление2]|Продукция;Продукция_id;|Примечание;Примечание;|Категория;Категория;|Сорт;Сорт_id;|Репродукция;Репродукция;|Сортовая чистота;Сортовая чистота;|Дата получения семян;Дата получения семян;|Способ выращивания;Способ выращивания;|Товарная группа;Товарная группа;|Сортовой документ;Сортовой документ;|Прошлые испытания;Прошлые испытания;|Протравливание;Протравливание;|Ед.изм.1;Ед.изм.1_id;|Объем партии1;Объем партии;|Число мест;Число мест;|Производитель;Производитель_id;|Место происхождения;Место происхождения;|Страна происхождения;Страна происхождения_id;|Год урожая;Год урожая;|Срок годности;Срок годности;|Место хранения;Место хранения;|Вид упаковки;Вид упаковки;|Количество_образцов;Количество образцов;|Объем_пробы;Объем пробы;|Ед.изм.2;Ед.изм.2_id;|Транспорт;Транспорт_id;|Номер транспорта;Номер партии (транспорт);" msg="Вы хотите скопировать все пробы из предыдущей заявки?" /></if><elseif cond="COUNT(''Пробы1'')&gt;0"><comment text="если проба одна, то добавляем её копию"/><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Пробы" values="field;expr|Дополнительное поле;GET(''Пробы1'', ''Дополнительное поле'')|Заявка клиента2;RECID(''Заявка клиента'')|Направление;[Направление2]|Продукция;GET(''Пробы1'', ''Продукция_id'')|Примечание;GET(''Пробы1'', ''Примечание'')|Категория;GET(''Пробы1'', ''Категория'')|Сорт;GET(''Пробы1'', ''Сорт_id'')|Репродукция;GET(''Пробы1'', ''Репродукция'')|Сортовая чистота;GET(''Пробы1'', ''Сортовая чистота'')|Ед.изм.1;GET(''Пробы1'', ''Ед.изм.1_id'')|Ед.изм.2;GET(''Пробы1'', ''Ед.изм.2_id'')     |Объем партии1;GET(''Пробы1'', ''Объем партии'')|Число мест;GET(''Пробы1'', ''Число мест'')     |Производитель;GET(''Пробы1'', ''Производитель_id'')|Место происхождения;GET(''Пробы1'', ''Место происхождения'')|Страна происхождения;GET(''Пробы1'', ''Страна происхождения_id'')|Год урожая;GET(''Пробы1'', ''Год урожая'')|Срок годности;GET(''Пробы1'', ''Срок годности'')|Место хранения;GET(''Пробы1'', ''Место хранения'')|Вид упаковки;GET(''Пробы1'', ''Вид упаковки'')|Количество_образцов;GET(''Пробы1'', ''Количество образцов'')|Объем_пробы;GET(''Пробы1'', ''Объем пробы'')|Транспорт;GET(''Пробы1'', ''Транспорт_id'')|Номер транспорта;GET(''Пробы1'', ''Номер партии (транспорт)'')|Дата получения семян;GET(''Пробы1'', ''Дата получения семян'')|Способ выращивания;GET(''Пробы1'', ''Способ выращивания'')|Товарная группа;GET(''Пробы1'', ''Товарная группа'')|Сортовой документ;GET(''Пробы1'', ''Сортовой документ'')|Протравливание;GET(''Пробы1'', ''Протравливание'')|Прошлые испытания;GET(''Пробы1'', ''Прошлые испытания'')" ignoreaccess="0" obj="" qry="" /></elseif><else><comment text="если проб нет, то добавляем новую"/><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Пробы" values="field;expr|Заявка клиента2;RECID(''Заявка клиента'')|Направление;[Направление2]" ignoreaccess="0" obj="" qry="Пробы1" /></else></if><else><action type="10" title="Внимание" message="Заполните Клиента и Направление!" msgtype="0" exprmsg="" buttons="1;0;0;0;0;0;0;0;0;0;0"/></else><action type="7" expression="BLOCK('#13#10'Setfield(''Дубль'',RECID(''Заявка клиента'')))"/></actions>'
+        ActionOnClick = '<actions><action type="5" /><if cond="result"><comment text="если пробы несколько и из другой заявки, то копируем все"/><if cond="COUNT(''Пробы1'')&gt;1 &amp;[Дубль]&lt;&gt;RECID(''Заявка клиента'')"><comment text="заполним пробы из запроса Пробы1, таким образом скопируются все пробы"/><action type="9" id="35B8560B-A110-4BF9-B886-635E7BED9058" fm="Пробы" qry="Пробы1" fields="fl;qfl;expr|Заявка клиента2;;RECID(''Заявка клиента'')|Направление;;[Направление2]|Дополнительное поле;;REPLACEALL(GET(''Пробы1'', ''Дополнительное поле''),''Акт отбора'','''')|Продукция;Продукция_id;|Примечание;Примечание;|Категория;Категория;|Сорт;Сорт_id;|Репродукция;Репродукция;|Сортовая чистота;Сортовая чистота;|Дата получения семян;Дата получения семян;|Способ выращивания;Способ выращивания;|Товарная группа;Товарная группа;|Сортовой документ;Сортовой документ;|Прошлые испытания;Прошлые испытания;|Протравливание;Протравливание;|Ед.изм.1;Ед.изм.1_id;|Объем партии1;Объем партии;|Число мест;Число мест;|Производитель;Производитель_id;|Место происхождения;Место происхождения;|Страна происхождения;Страна происхождения_id;|Год урожая;Год урожая;|Срок годности;Срок годности;|Место хранения;Место хранения;|Вид упаковки;Вид упаковки;|Количество_образцов;Количество образцов;|Объем_пробы;Объем пробы;|Ед.изм.2;Ед.изм.2_id;|Транспорт;Транспорт_id;|Номер транспорта;Номер партии (транспорт);" msg="Вы хотите скопировать все пробы из предыдущей заявки?" /></if><elseif cond="COUNT(''Пробы1'')&gt;0"><comment text="если проба одна, то добавляем её копию"/><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Пробы" values="field;expr|Заявка клиента2;RECID(''Заявка клиента'')|Направление;[Направление2]|Дополнительное поле;REPLACEALL(GET(''Пробы1'', ''Дополнительное поле''),''Акт отбора'','''')|Продукция;GET(''Пробы1'', ''Продукция_id'')|Примечание;GET(''Пробы1'', ''Примечание'')|Категория;GET(''Пробы1'', ''Категория'')|Сорт;GET(''Пробы1'', ''Сорт_id'')|Репродукция;GET(''Пробы1'', ''Репродукция'')|Сортовая чистота;GET(''Пробы1'', ''Сортовая чистота'')|Ед.изм.1;GET(''Пробы1'', ''Ед.изм.1_id'')|Ед.изм.2;GET(''Пробы1'', ''Ед.изм.2_id'')     |Объем партии1;GET(''Пробы1'', ''Объем партии'')|Число мест;GET(''Пробы1'', ''Число мест'')     |Производитель;GET(''Пробы1'', ''Производитель_id'')|Место происхождения;GET(''Пробы1'', ''Место происхождения'')|Страна происхождения;GET(''Пробы1'', ''Страна происхождения_id'')|Год урожая;GET(''Пробы1'', ''Год урожая'')|Срок годности;GET(''Пробы1'', ''Срок годности'')|Место хранения;GET(''Пробы1'', ''Место хранения'')|Вид упаковки;GET(''Пробы1'', ''Вид упаковки'')|Количество_образцов;GET(''Пробы1'', ''Количество образцов'')|Объем_пробы;GET(''Пробы1'', ''Объем пробы'')|Транспорт;GET(''Пробы1'', ''Транспорт_id'')|Номер транспорта;GET(''Пробы1'', ''Номер партии (транспорт)'')|Дата получения семян;GET(''Пробы1'', ''Дата получения семян'')|Способ выращивания;GET(''Пробы1'', ''Способ выращивания'')|Товарная группа;GET(''Пробы1'', ''Товарная группа'')|Сортовой документ;GET(''Пробы1'', ''Сортовой документ'')|Протравливание;GET(''Пробы1'', ''Протравливание'')|Прошлые испытания;GET(''Пробы1'', ''Прошлые испытания'')" ignoreaccess="0" obj="" qry="" /></elseif><else><comment text="если проб нет, то добавляем новую"/><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Пробы" values="field;expr|Заявка клиента2;RECID(''Заявка клиента'')|Направление;[Направление2]" ignoreaccess="0" obj="" qry="Пробы1" /></else></if><else><action type="10" title="Внимание" message="Заполните Клиента и Направление!" msgtype="0" exprmsg="" buttons="1;0;0;0;0;0;0;0;0;0;0"/></else><action type="7" expression="BLOCK('#13#10'Setfield(''Дубль'',RECID(''Заявка клиента'')))"/></actions>'
       end
     end
     object dxTabSheet11: TdxTabSheet
@@ -1971,7 +1971,7 @@ object Form3: TdxForm
         Width = 123
         Caption = '+Протокол'
         TabOrder = 2
-        ActionOnClick = '<actions><action type="9" id="0AABDA55-EC7B-453E-9ECF-BD99CEB2D42E" _dscrfield="''Протокол''" _formcaption="" _formid="" /><if cond="Result = True"><action type="7" expression="QUERYUPDATE(''Файлы заявки'')"/><action type="7" expression="Setfield(''Результат'', 1)"/><action type="5" /></if></actions>'
+        ActionOnClick = '<actions><action type="9" id="0AABDA55-EC7B-453E-9ECF-BD99CEB2D42E" _dscrfield="''Протокол испытаний''" _formcaption="" _formid="" file_path="" /><if cond="Result = True"><action type="7" expression="QUERYUPDATE(''Файлы заявки'')"/><action type="7" expression="Setfield(''Результат'', 1)"/><action type="5" /></if></actions>'
       end
       object dxCheckBox4: TdxCheckBox
         Left = 996
@@ -2307,7 +2307,7 @@ object Form3: TdxForm
         Width = 232
         Caption = '+ протокол испытаний'
         TabOrder = 3
-        ActionOnClick = '<actions><action type="7" expression="setvar(''Результаты к заявке'', COUNT(''Результаты к заявке''))"/><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Результат" values="field;expr|Вид документа;DBGETID(''Виды документов'', ''[!Вид документа]==&quot;Протокол&quot;'')|Заявка клиента;RECID(''Заявка клиента'')" ignoreaccess="0" obj="" qry="Результаты к заявке" /><action type="5" /><comment text="нужно отправить оповещение по электронной почте, пока отключил"/><action type="7" expression="/*IIF('#13#10'getvar(''Результаты к заявке'')&lt;COUNT(''Результаты к заявке'')  //проверяем, что протоколов стало больше'#13#10'&amp; [Контактное лицо|Эл.почта]&lt;&gt;null //проверяем, что эл. почта есть'#13#10'&amp; [Контактное лицо|Эл.почта]&lt;&gt;'''','#13#10'JS_SEND_EMAIL(&quot;smtp.mail.ru&quot;,''465'', &quot;jdx_lims@mail.ru&quot;, &quot;Z2nLWtHZPy64jA5ncHki&quot;, [Контактное лицо|Эл.почта] ,'#13#10' &quot;Уведомление от ЛИМС&quot; , &quot;По вашей заявке в лабораторию №&quot;+[Шифр_заявки]+&quot; сформирован протокол испытаний&quot;),'#13#10''''')                       */"/></actions>'
+        ActionOnClick = '<actions><action type="7" expression="setvar(''Результаты к заявке'', COUNT(''Результаты к заявке''))"/><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Результат" values="field;expr|Вид документа;DBGETID(''Виды документов'', ''[!Вид документа]==&quot;Протокол&quot;'')|Заявка клиента;RECID(''Заявка клиента'')" ignoreaccess="0" obj="" qry="Результаты к заявке" /><action type="5" /><comment text="нужно отправить оповещение по электронной почте, пока отключил"/><action disabled="1" type="7" expression="IIF('#13#10'getvar(''Результаты к заявке'')&lt;COUNT(''Результаты к заявке'')  //проверяем, что протоколов стало больше'#13#10'&amp; [Контактное лицо|Эл.почта]&lt;&gt;null //проверяем, что эл. почта есть'#13#10'&amp; [Контактное лицо|Эл.почта]&lt;&gt;'''','#13#10'JS_SEND_EMAIL(&quot;smtp.mail.ru&quot;,''465'', &quot;jdx_lims@mail.ru&quot;, &quot;Z2nLWtHZPy64jA5ncHki&quot;, [Контактное лицо|Эл.почта] ,'#13#10' &quot;Уведомление от ЛИМС&quot; , &quot;По вашей заявке в лабораторию №&quot;+[Шифр_заявки]+&quot; сформирован протокол испытаний&quot;),'#13#10''''')"/></actions>'
       end
       object dxButton24: TdxButton
         Left = 404
@@ -2316,7 +2316,41 @@ object Form3: TdxForm
         Width = 232
         Caption = '+ заключение по почве'
         TabOrder = 4
-        ActionOnClick = '<actions><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Результат" values="field;expr|Вид документа;DBGETID(''Виды документов'', ''[!Вид документа]==&quot;Заключение&quot;'')|Сотрудник3;DBGETID(''Сотрудники'', ''[!Фамилия] = &quot;Исламов&quot;'')|Заявка клиента;RECID(''Заявка клиента'')" ignoreaccess="0" obj="" qry="Результаты к заявке" /><action type="5" /></actions>'
+        ActionOnClick = '<actions><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Результат" values="field;expr|Вид документа;DBGETID(''Виды документов'', ''[!Вид документа]==&quot;Заключение&quot;'')|Заявка клиента;RECID(''Заявка клиента'')" ignoreaccess="0" obj="" qry="Результаты к заявке" /><action type="5" /></actions>'
+      end
+      object dxCheckBox15: TdxCheckBox
+        Left = 878
+        Height = 23
+        Top = 92
+        Width = 242
+        Caption = 'Протокол сформирован'
+        TabOrder = 5
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 263269
+        FieldName = 'Протокол сформирован'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Expression = 'IIF(COUNTIF(''Результаты к заявке'', ''[Отменен]=0'')>0,1,0)'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox16: TdxCheckBox
+        Left = 876
+        Height = 23
+        Top = 136
+        Width = 242
+        Caption = 'Протокол утвержден'
+        TabOrder = 6
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 263270
+        FieldName = 'Протокол утвержден'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Expression = 'IIF(COUNTIF(''Результаты к заявке'', ''[Отменен]=0&[Утверждено]=1'')>0,1,0)'
+        Editable = False
+        DefaultValue = '0'
       end
     end
     object dxTabSheet1: TdxTabSheet
@@ -2645,7 +2679,7 @@ object Form3: TdxForm
       end
       object dxQueryGrid10: TdxQueryGrid
         Left = 4
-        Height = 81
+        Height = 165
         Top = 319
         Width = 448
         AutoAdvance = aaNone
@@ -2679,7 +2713,7 @@ object Form3: TdxForm
       object dxQueryGrid13: TdxQueryGrid
         Left = 492
         Height = 223
-        Top = 36
+        Top = 68
         Width = 316
         AutoAdvance = aaNone
         Color = clWindow
@@ -2743,22 +2777,34 @@ object Form3: TdxForm
         ManualRefresh = True
       end
       object dxButton30: TdxButton
-        Left = 500
+        Left = 492
         Height = 30
-        Top = 4
+        Top = 36
         Width = 300
         Caption = 'Добавить дополнительные поля'
         TabOrder = 7
         ActionOnClick = '<actions><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Дополнительные поля для заявки" keeppos="0" /><action type="9" id="A1039C22-88FA-4E7A-A030-FDBCED2E7D61" tbl="Дополнения Заявка клиента" qry="Дополнительные поля для заявки" fields="tf;qf;expr|Наименование поля;Наименование поля;|Источник;Источник;|Фильтр;Фильтр;|Значение;Значение;|Формула;Формула;" noclr="1" prompt="" /></actions>'
       end
       object dxLabel59: TdxLabel
-        Left = 844
+        Left = 904
         Height = 20
         Top = 16
         Width = 113
         Caption = 'Скрыть поля'
         ParentColor = False
         Expression = 'TEXT(''{''+NZ([Направление2|Видимость полей заявки],''null'')+''}'')'
+      end
+      object dxRecordId1: TdxRecordId
+        Left = 876
+        Height = 28
+        Top = 452
+        Width = 100
+        ReadOnly = True
+        MaxLength = 0
+        TabOrder = 8
+        FieldName = 'ID'
+        StopTab = False
+        Id = 263251
       end
     end
   end
@@ -3016,10 +3062,10 @@ object Form3: TdxForm
     ActionOnClick = '<actions><action type="5" /></actions>'
   end
   object dxButton2: TdxButton
-    Left = 698
-    Height = 27
+    Left = 680
+    Height = 40
     Top = 760
-    Width = 189
+    Width = 207
     Anchors = [akRight, akBottom]
     Caption = 'Печать документа'
     Glyph.Data = {
@@ -3088,7 +3134,7 @@ object Form3: TdxForm
       00000000000000000000
     }
     TabOrder = 9
-    ActionOnClick = '<actions><action type="9" id="08951CB2-B27A-4BCF-B714-F0B209F0D7AF" formname="" form_exp="" id_exp="" file_open="" path_template="GET(''Шаблоны'', ''Файл'')" path_doc="" fileaction="1" /><action type="5" /></actions>'
+    ActionOnClick = '<actions><action type="5" /><action type="9" id="08951CB2-B27A-4BCF-B714-F0B209F0D7AF" formname="" form_exp="" id_exp="" file_open="" path_template="GET(''Шаблоны'', ''Файл'')" path_doc="" fileaction="1" /></actions>'
   end
   object dxLookupComboBox3: TdxLookupComboBox
     Left = 904
@@ -3485,7 +3531,7 @@ object Form3: TdxForm
     FieldSize = 50
     Required = False
     CheckExpression = '/*  Block(Setfield(''Статус'', Evalexp(NZ([Направление2|Статусы заявки],''[Статус]''))),'#13#10''''')'#13#10'*/'#13#10'Block(Setfield(''Статус'',  TEXT(''{''+NZ([Направление2|Статусы заявки],''[Статус]'')+''}'')),'#13#10''''')'
-    Expression = '/* Вся логика завязана на таблице статусы в направлениях детялеьности,'#13#10'там они собираются одну большую формулу в поле статусы заявки,'#13#10'а рядом поле цвета заявки, в заявке также есть поле цвета, на основании которого раскрашивается таблица с заявками'#13#10'следующие поля нужн для срабатывания пересчета статуса при их изменнии'#13#10'[Заявка] [Согласовано] [Отбор проб] [Отказ]  [Результат] [Образцы] [Исследования]'#13#10'COUNT(''Исследования1'') COUNT(''Пробы1'') COUNT(''Образцы1'')'#13#10' COUNT(''Результаты к заявке'') COUNT(''Файлы заявки'')*/'#13#10'// Evalexp(NZ([Направление2|Статусы заявки],''[Статус]''))  //не срабатывает нормально в веб-версии'#13#10'TEXT(''{''+NZ([Направление2|Статусы заявки],''[Статус]'')+''}'')'
+    Expression = '/* Вся логика завязана на таблице статусы в направлениях детялеьности,'#13#10'там они собираются одну большую формулу в поле статусы заявки,'#13#10'а рядом поле цвета заявки, в заявке также есть поле цвета, на основании которого раскрашивается таблица с заявками'#13#10'следующие поля нужн для срабатывания пересчета статуса при их изменнии'#13#10'[Заявка] [Согласовано] [Отбор проб] [Отказ]  [Результат] [Образцы] [Исследования]'#13#10'COUNT(''Исследования1'') COUNT(''Пробы1'') COUNT(''Образцы1'')'#13#10' COUNT(''Результаты к заявке'') COUNT(''Файлы заявки'')'#13#10' [Протокол утвержден][Протокол сформирован]*/'#13#10'// Evalexp(NZ([Направление2|Статусы заявки],''[Статус]''))  //не срабатывает нормально в веб-версии'#13#10'TEXT(''{''+NZ([Направление2|Статусы заявки],''[Статус]'')+''}'')'
     Editable = True
   end
   object dxLabel58: TdxLabel
@@ -3512,10 +3558,26 @@ object Form3: TdxForm
       end    
       item
         ButtonStyle = cbsCheckboxColumn
+        Tag = 263270
+        Title.Caption = 'Протокол испытаний'
+        Width = 63
+        FieldName = 'f263270'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
         Tag = 2592
         Title.Caption = ' '
-        Width = 68
+        Width = 0
+        Visible = False
         FieldName = 'f2592'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 263269
+        Title.Caption = 'Протокол испытаний'
+        Width = 0
+        Visible = False
+        FieldName = 'f263269'
       end    
       item
         Tag = 84
@@ -4049,8 +4111,15 @@ object Form3: TdxForm
       item
         Tag = 263155
         Title.Caption = ' '
-        Width = 100
+        Width = 1422
         FieldName = 'f263155'
+      end    
+      item
+        Tag = 263251
+        Title.Caption = ' '
+        Width = 0
+        Visible = False
+        FieldName = 'f263251'
       end>
     DefaultRowHeight = 27
     DoubleBuffered = True
@@ -4077,7 +4146,7 @@ object Form3: TdxForm
     WordWrap = True
     AllowChangeSort = True
     Id = 0
-    SortCols = '4;1|2;1'
+    SortCols = '6;1|4;1'
   end
   object Tree: TdxFormTree
     Left = 0

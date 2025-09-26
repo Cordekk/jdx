@@ -3,16 +3,17 @@ object Form266: TdxForm
   Height = 849
   Top = 10
   Width = 1013
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 57
   Id = 266
   PId = 0
   FormCaption = 'ПО ВЛК'
-  FormGroup = 'Лаборатория'
   Templates.Strings = (
     'Карта Шухарта приведенная.ods'
   )
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -22,7 +23,6 @@ object Form266: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 57
   SoftCheck = False
   object dxCheckBox1: TdxCheckBox
     Left = 316

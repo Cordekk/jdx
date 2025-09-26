@@ -3,13 +3,14 @@ object Form519: TdxForm
   Height = 824
   Top = 10
   Width = 860
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 74
   Id = 519
   PId = 0
   FormCaption = 'Область деятельности'
-  FormGroup = 'Лаборатория'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form519: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 74
   SoftCheck = False
   RecordsCaption = 'Область аккредитации'
   ActionOnCreate = '<actions><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton1" fields="fl|Оборудование" /></actions>'
@@ -638,75 +638,8 @@ object Form519: TdxForm
       end
     end
     object dxTabSheet4: TdxTabSheet
-      Caption = '...'
+      Caption = 'Изменения'
       StopTab = False
-      object dxMemo2: TdxMemo
-        Left = 4
-        Height = 76
-        Top = 4
-        Width = 808
-        ScrollBars = ssBoth
-        TabOrder = 0
-        Id = 262702
-        FieldName = 'Выбранное оборудование'
-        FieldSize = 0
-        Required = False
-        SourceTId = 0
-        SourceFId = 0
-        Delimiter = ', '
-        Editable = True
-        UpdateTree = False
-      end
-      object dxQueryGrid10: TdxQueryGrid
-        Left = 28
-        Height = 116
-        Top = 108
-        Width = 784
-        AutoAdvance = aaNone
-        Color = clWindow
-        Columns = <>
-        DefaultRowHeight = 20
-        DoubleBuffered = True
-        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
-        ParentDoubleBuffered = False
-        ShowHint = True
-        TabOrder = 1
-        SelectedColor = clHighlight
-        SelectedTextColor = clHighlightText
-        InactiveSelectedColor = clSilver
-        InactiveSelectedTextColor = clBlack
-        ShowButtons = False
-        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
-        VisibleCaptions = []
-        FlatButtons = True
-        ButtonsColor = clBtnFace
-        ButtonSize = 25
-        ButtonFont.Height = -17
-        ButtonFont.Name = 'Verdana'
-        AlignmentButtons = taLeftJustify
-        HideButtonsWhenLostFocus = False
-        WordWrap = False
-        AllowChangeSort = False
-        Id = 3023
-        ManualRefresh = True
-      end
-      object dxButton2: TdxButton
-        Left = 604
-        Height = 20
-        Top = 84
-        Width = 188
-        Caption = 'перенести в потребность'
-        TabOrder = 2
-        ActionOnClick = '<actions><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Оборудование в протоколе3" keeppos="0" /><action type="9" id="A1039C22-88FA-4E7A-A030-FDBCED2E7D61" tbl="Потребность ТМЦ" qry="Оборудование в протоколе3" fields="tf;qf;expr|Номенклатура;Номенклатура;|ТМЦ;id;|Обязательно для протокола;;1" noclr="1" prompt="" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Оборудование в протоколе3" keeppos="0" /></actions>'
-      end
-      object dxLabel20: TdxLabel
-        Left = 304
-        Height = 16
-        Top = 88
-        Width = 167
-        Caption = 'Оборудование таблицей'
-        ParentColor = False
-      end
     end
   end
   object dxEdit2: TdxMemo
@@ -861,9 +794,9 @@ object Form519: TdxForm
     ParentColor = False
   end
   object dxLabel15: TdxLabel
-    Left = 16
+    Left = 748
     Height = 16
-    Top = 764
+    Top = 4
     Width = 106
     Caption = 'Идентификатор'
     ParentColor = False
@@ -900,9 +833,9 @@ object Form519: TdxForm
     PadZeros = True
   end
   object dxCheckBox2: TdxCheckBox
-    Left = 264
+    Left = 200
     Height = 23
-    Top = 760
+    Top = 752
     Width = 164
     Caption = 'Приемка обязательна'
     TabOrder = 17
@@ -916,9 +849,9 @@ object Form519: TdxForm
     DefaultValue = '0'
   end
   object dxRecordId1: TdxRecordId
-    Left = 144
+    Left = 748
     Height = 24
-    Top = 762
+    Top = 18
     Width = 112
     ReadOnly = True
     MaxLength = 0
@@ -992,6 +925,86 @@ object Form519: TdxForm
     HideButton = False
     UpdateTree = False
     ListSource = 0
+  end
+  object dxCheckBox4: TdxCheckBox
+    Left = 200
+    Height = 23
+    Top = 786
+    Width = 260
+    Caption = 'Результат с неопределенностью'
+    TabOrder = 21
+    ValueChecked = '1'
+    ValueUnchecked = '0'
+    Id = 263242
+    FieldName = 'Результат с неопределенностью'
+    CheckedText = 'Да'
+    UnCheckedText = 'Нет'
+    Editable = False
+    DefaultValue = '0'
+  end
+  object dxLabel20: TdxLabel
+    Left = 522
+    Height = 16
+    Top = 141
+    Width = 42
+    Caption = 'Метод'
+  end
+  object dxLookupComboBox8: TdxLookupComboBox
+    Left = 578
+    Height = 24
+    Top = 137
+    Width = 246
+    MaxLength = 0
+    TabOrder = 22
+    Id = 263291
+    FieldName = 'Метод'
+    SourceTId = 6890
+    SourceFId = 263293
+    Filter = '[is_actual]=1'
+    Required = False
+    SourceTable = 0
+    DestTable = 0
+    PromptFillTable = False
+    ClearTableBeforeFill = False
+    Editable = False
+    ListFields = <>
+    DropDownCount = 8
+    ListWidthExtra = 0
+    HideList = False
+    HideButton = False
+    UpdateTree = False
+    ListSource = 0
+  end
+  object dxLabel22: TdxLabel
+    Left = 699
+    Height = 16
+    Top = 112
+    Width = 45
+    Caption = 'id ФСА'
+  end
+  object dxCalcEdit2: TdxCalcEdit
+    Left = 755
+    Height = 24
+    Top = 108
+    Width = 100
+    MaxLength = 0
+    TabOrder = 23
+    HideButton = False
+    CalculatorLayout = clNormal
+    AsInteger = 0
+    ButtonWidth = 24
+    NumGlyphs = 1
+    Flat = True
+    Id = 263299
+    FieldName = 'id ФСА'
+    Precission = 0
+    Expression = 'IIF([id ФСА]=0,DBGET(''НД и методики ФСА'', ''id ФСА'', ''[!Номер документа]==[Методика|Заголовок]''),[id ФСА])'
+    Required = False
+    DefaultValue = '0'
+    Editable = False
+    NullToZero = True
+    GroupDigits = True
+    PadZeros = True
   end
   object Grid: TdxGrid
     Left = 0
@@ -1075,12 +1088,6 @@ object Form519: TdxForm
         FieldName = 'f262705l'
       end    
       item
-        Tag = 262702
-        Title.Caption = ' '
-        Width = 179
-        FieldName = 'f262702'
-      end    
-      item
         ButtonStyle = cbsCheckboxColumn
         Tag = 8503
         Title.Caption = ' '
@@ -1155,6 +1162,25 @@ object Form519: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f263204'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 263242
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263242'
+      end    
+      item
+        Tag = 263291
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263291l'
+      end    
+      item
+        Tag = 263299
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263299'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

@@ -3,13 +3,14 @@ object Form11: TdxForm
   Height = 549
   Top = 10
   Width = 649
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 96
   Id = 6843
   PId = 0
   FormCaption = 'Метрология'
-  FormGroup = 'Лаборатория'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,15 +20,14 @@ object Form11: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 96
   SoftCheck = False
   object dxPageControl1: TdxPageControl
     Left = 5
     Height = 390
     Top = 43
     Width = 641
-    ActivePage = dxTabSheet4
-    TabIndex = 3
+    ActivePage = dxTabSheet1
+    TabIndex = 0
     TabOrder = 0
     object dxTabSheet1: TdxTabSheet
       Caption = 'График поверки'

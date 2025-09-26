@@ -3,13 +3,14 @@ object Form120: TdxForm
   Height = 611
   Top = 10
   Width = 752
+  FormGroup = 'Лаборатория'
+  AutoOpen = True
+  Index = 27
   Id = 120
   PId = 0
   FormCaption = 'Образцы'
-  FormGroup = 'Лаборатория'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -19,7 +20,6 @@ object Form120: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 27
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="C4739490-B4C1-4311-B110-A46E5C720F95" allfields="1" logfields="Field" users="User" /><comment text="пересчитать шифр исследований"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton1" fields="fl|Шифр_образца" /></actions>'
   object dxLookupComboBox1: TdxLookupComboBox
@@ -165,9 +165,9 @@ object Form120: TdxForm
     ListSource = 0
   end
   object dxEdit3: TdxEdit
-    Left = 636
+    Left = 812
     Height = 24
-    Top = 44
+    Top = 52
     Width = 80
     MaxLength = 0
     TabOrder = 6
@@ -184,9 +184,9 @@ object Form120: TdxForm
     Height = 216
     Top = 380
     Width = 716
-    ActivePage = dxTabSheet3
+    ActivePage = dxTabSheet1
     Anchors = [akLeft, akBottom]
-    TabIndex = 0
+    TabIndex = 2
     TabOrder = 7
     object dxTabSheet3: TdxTabSheet
       Caption = 'Исследования'
@@ -711,6 +711,18 @@ object Form120: TdxForm
     TabOrder = 13
     ActionOnClick = '<actions><action type="3" form="Исследование" filter="[Образец]=RECID(''Образцы'')" table="" field="Исследование" expression=""/></actions>'
   end
+  object dxRecordId1: TdxRecordId
+    Left = 636
+    Height = 24
+    Top = 44
+    Width = 100
+    ReadOnly = True
+    MaxLength = 0
+    TabOrder = 14
+    FieldName = 'ID'
+    StopTab = False
+    Id = 263253
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 100
@@ -857,6 +869,12 @@ object Form120: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f263026'
+      end    
+      item
+        Tag = 263253
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263253'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

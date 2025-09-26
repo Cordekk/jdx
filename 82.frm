@@ -3,16 +3,17 @@ object Form82: TdxForm
   Height = 328
   Top = 10
   Width = 756
+  FormGroup = 'Приемка'
+  AutoOpen = True
+  Index = 43
   Id = 82
   PId = 0
   FormCaption = 'Реестр актов'
-  FormGroup = 'Приемка'
   Font.Height = -13
   Font.Name = 'Verdana'
   CalcFields.Strings = (
     'Сотрудник2=[Сотрудник1|ФамилияИО]'
   )
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -22,7 +23,6 @@ object Form82: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 43
   SoftCheck = False
   object dxLabel1: TdxLabel
     Left = 318

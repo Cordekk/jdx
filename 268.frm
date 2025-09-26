@@ -3,12 +3,13 @@ object Form268: TdxForm
   Height = 466
   Top = 10
   Width = 550
+  AutoOpen = True
+  Index = 0
   Id = 268
   PId = 267
   FormCaption = 'Значения'
   Font.Height = -13
   Font.Name = 'Verdana'
-  AutoOpen = True
   ViewType = vtGridOnly
   ParentField = 0
   LevelCount = 5
@@ -18,7 +19,6 @@ object Form268: TdxForm
   ConfirmAutoSaveRecord = False
   ConfirmCancelEditing = False
   Tree = Tree.Owner
-  Index = 0
   SoftCheck = False
   object dxCalcEdit1: TdxCalcEdit
     Left = 40
