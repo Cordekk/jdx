@@ -26,7 +26,7 @@ object Form22: TdxForm
   ConfirmCancelEditing = False
   Tree = Tree.Owner
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="D310819C-2BA6-4F44-88C5-C13057BEA0FD" allfields="1" logfields="Field" users="User" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="role = '''' | role = ''Администратор''" grid="cmp;ve_prop|dxCalcEdit1;Доступность|dxLookupComboBox2;Доступность|dxLookupComboBox7;Доступность|dxEdit6;Доступность|dxLabel22;Доступность|dxTabSheet6;Видимость|dxTabSheet7;Видимость|dxLookupComboBox17;Редактирование" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Контроль]=null" grid="cmp;ve_prop|dxLabel2;Видимость|dxLookupComboBox2;Видимость|dxEdit6;Видимость|dxLabel22;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="'#13#10'[Заявка клиента2] = null" grid="cmp;ve_prop|dxLabel16;Видимость|dxLookupComboBox7;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="NEWREC=0" grid="cmp;ve_prop|dxButton1;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Отбор проб]=null" grid="cmp;ve_prop|dxLookupComboBox13;Видимость|dxLabel32;Видимость" stateevents="0" /><action disabled="1" type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" condition="[Заявка клиента2] = GetVar(''g'') | GetVar(''g'') = Null  /* надо чтобы не редактировали пробы к старым заявкам из новых */" grid="cmp;ve_prop|dxLookupComboBox1;Доступность|dxMemo1;Редактирование|dxEdit6;Редактирование|dxCalcEdit6;Доступность|dxEdit2;Редактирование|dxLookupComboBox5;Доступность|dxEdit3;Редактирование|dxEdit5;Редактирование|dxLookupComboBox2;Редактирование" stateevents="1" /><action type="9" id="0D75186F-C6BB-4B69-BCF9-092FD2C316A3" fields="field|Продукция|Примечание|Объем партии1|Место происхождения|Шифр_Аргус_Меркурий|Срок годности" queries="query" /><comment text="Заполнение и пересчет дополнительных полей"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton32" fields="fl|Направление" /><comment text="Обновить шифр образцов"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="CountSample" fields="fl|Шифр_пробы" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="D310819C-2BA6-4F44-88C5-C13057BEA0FD" allfields="1" logfields="Field" users="User" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="role = '''' | role = ''Администратор''" grid="cmp;ve_prop|dxCalcEdit1;Доступность|dxLookupComboBox2;Доступность|dxLookupComboBox7;Доступность|dxEdit6;Доступность|dxLabel22;Доступность|dxTabSheet6;Видимость|dxTabSheet7;Видимость|dxLookupComboBox17;Редактирование" stateevents="1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Контроль]=null" grid="cmp;ve_prop|dxLabel2;Видимость|dxLookupComboBox2;Видимость|dxEdit6;Видимость|dxLabel22;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="'#13#10'[Заявка клиента2] = null" grid="cmp;ve_prop|dxLabel16;Видимость|dxLookupComboBox7;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="NEWREC=0" grid="cmp;ve_prop|dxButton1;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Отбор проб]=null" grid="cmp;ve_prop|dxLookupComboBox13;Видимость|dxLabel32;Видимость" stateevents="0" /><action disabled="1" type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" condition="[Заявка клиента2] = GetVar(''g'') | GetVar(''g'') = Null  /* надо чтобы не редактировали пробы к старым заявкам из новых */" grid="cmp;ve_prop|dxLookupComboBox1;Доступность|dxMemo1;Редактирование|dxEdit6;Редактирование|dxCalcEdit6;Доступность|dxEdit2;Редактирование|dxLookupComboBox5;Доступность|dxEdit3;Редактирование|dxEdit5;Редактирование|dxLookupComboBox2;Редактирование" stateevents="1" /><action type="9" id="0D75186F-C6BB-4B69-BCF9-092FD2C316A3" fields="field|Продукция|Примечание|Объем партии1|Место происхождения|Шифр_Аргус_Меркурий|Срок годности" queries="query" /><comment text="Заполнение и пересчет дополнительных полей"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton32" fields="fl|Направление" /><comment text="Обновить шифр образцов"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="CountSample" fields="fl|Шифр_пробы" /></actions>'
   object dxTimeEdit2: TdxTimeEdit
     Left = 896
     Height = 24
@@ -1787,9 +1787,9 @@ object Form22: TdxForm
       StopTab = False
       object dxQueryGrid5: TdxQueryGrid
         Left = 24
-        Height = 170
+        Height = 248
         Top = 32
-        Width = 318
+        Width = 372
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -1871,6 +1871,13 @@ object Form22: TdxForm
         FieldName = 'ID'
         StopTab = False
         Id = 263252
+      end
+      object dxLabel54: TdxLabel
+        Left = 127
+        Height = 20
+        Top = 12
+        Width = 132
+        Caption = 'План образцов'
       end
     end
   end

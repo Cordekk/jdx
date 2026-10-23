@@ -1092,6 +1092,18 @@ object Form24: TdxForm
     Caption = 'Приказ на подписание актов'
     ParentColor = False
   end
+  object dxRecordId1: TdxRecordId
+    Left = 1020
+    Height = 28
+    Top = 12
+    Width = 100
+    ReadOnly = True
+    MaxLength = 0
+    TabOrder = 14
+    FieldName = 'ID'
+    StopTab = False
+    Id = 263328
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 100
@@ -1139,33 +1151,49 @@ object Form24: TdxForm
       item
         Tag = 87
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f87'
       end    
       item
         Tag = 200
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f200'
       end    
       item
         Tag = 201
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f201'
       end    
       item
         Tag = 1896
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f1896'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
-        Tag = 1898
+        Tag = 7284
         Title.Caption = ' '
         Width = 100
-        FieldName = 'f1898'
+        FieldName = 'f7284'
+      end    
+      item
+        Tag = 262399
+        Title.Caption = ' '
+        Width = 63
+        FieldName = 'f262399'
+      end    
+      item
+        Tag = 262409
+        Title.Caption = ' '
+        Width = 135
+        FieldName = 'f262409'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
@@ -1176,17 +1204,31 @@ object Form24: TdxForm
       end    
       item
         ButtonStyle = cbsCheckboxColumn
-        Tag = 2407
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f2407'
-      end    
-      item
-        ButtonStyle = cbsCheckboxColumn
         Tag = 2664
         Title.Caption = ' '
         Width = 100
         FieldName = 'f2664'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 1898
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f1898'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 263080
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263080'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 2407
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f2407'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
@@ -1196,58 +1238,66 @@ object Form24: TdxForm
         FieldName = 'f2665'
       end    
       item
-        Tag = 7262
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 262317
         Title.Caption = ' '
         Width = 100
+        FieldName = 'f262317'
+      end    
+      item
+        Tag = 7262
+        Title.Caption = ' '
+        Width = 0
+        Visible = False
         FieldName = 'f7262'
       end    
       item
         Tag = 7263
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7263'
       end    
       item
         Tag = 7264
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7264'
       end    
       item
         Tag = 7265
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7265'
       end    
       item
         Tag = 7267
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7267'
       end    
       item
         Tag = 7269
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7269'
       end    
       item
         Tag = 7270
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f7270'
-      end    
-      item
-        ButtonStyle = cbsCheckboxColumn
-        Tag = 7284
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f7284'
       end    
       item
         Tag = 8463
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f8463'
       end    
       item
@@ -1260,58 +1310,43 @@ object Form24: TdxForm
         ButtonStyle = cbsCheckboxColumn
         Tag = 8616
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f8616'
       end    
       item
         Tag = 8617
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f8617l'
-      end    
-      item
-        ButtonStyle = cbsCheckboxColumn
-        Tag = 262317
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f262317'
-      end    
-      item
-        Tag = 262399
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f262399'
-      end    
-      item
-        Tag = 262409
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f262409'
       end    
       item
         Tag = 262463
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262463l'
       end    
       item
         Tag = 262785
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262785'
       end    
       item
         Tag = 262975
         Title.Caption = ' '
-        Width = 100
+        Width = 0
+        Visible = False
         FieldName = 'f262975'
       end    
       item
-        ButtonStyle = cbsCheckboxColumn
-        Tag = 263080
+        Tag = 263328
         Title.Caption = ' '
         Width = 100
-        FieldName = 'f263080'
+        FieldName = 'f263328'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

@@ -44,14 +44,19 @@ object Form106: TdxForm
     Id = 1826
     FieldName = 'Ед.изм'
     SourceTId = 8
-    SourceFId = 30
+    SourceFId = 7371
     Required = False
     SourceTable = 0
     DestTable = 0
     PromptFillTable = False
     ClearTableBeforeFill = False
     Editable = False
-    ListFields = <>
+    ListFields = <    
+      item
+        FieldId = 30
+        Width = 100
+        Searchable = True
+      end>
     DropDownCount = 8
     ListWidthExtra = 0
     HideList = False

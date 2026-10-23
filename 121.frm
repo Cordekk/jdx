@@ -21,7 +21,7 @@ object Form121: TdxForm
   ConfirmCancelEditing = False
   Tree = Tree.Owner
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' | ROLE = ''Администратор''" grid="cmp;ve_prop|dxButton7;Видимость|dxTabSheet3;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''''" grid="cmp;ve_prop|dxButton6;Доступность" stateevents="0" /><action type="9" id="8E1C0618-DC18-4F21-A621-456E55767869" bn="dxButton2" /><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton10" fields="fl|Заметка1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' | ROLE = ''Администратор'' | [Сотрудник|Приемка]=1" grid="cmp;ve_prop|dxButton11;Видимость|dxButton13;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' | ROLE = ''Администратор'' | [Сотрудник|Исследования]=1" grid="cmp;ve_prop|dxButton12;Видимость" stateevents="0" /><action disabled="1" type="9" id="4F540287-EECC-43D2-B0A2-DBDB473DD5CF" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" query="Документооборот1" formname="Документы" shirina="0" otlevogokraya="1" qvar="Вид документа" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' | ROLE = ''Администратор''" grid="cmp;ve_prop|dxButton7;Видимость|dxTabSheet3;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = ''''" grid="cmp;ve_prop|dxButton6;Доступность" stateevents="0" /><action type="9" id="8E1C0618-DC18-4F21-A621-456E55767869" bn="dxButton2" /><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton10" fields="fl|Заметка1" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' | ROLE = ''Администратор'' | [Сотрудник|Приемка]=1" grid="cmp;ve_prop|dxButton11;Видимость|dxButton13;Видимость" stateevents="0" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE = '''' | ROLE = ''Администратор'' | [Сотрудник|Исследования]=1" grid="cmp;ve_prop|dxButton12;Видимость" stateevents="0" /><action disabled="1" type="9" id="4F540287-EECC-43D2-B0A2-DBDB473DD5CF" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" query="Документооборот1" formname="Документы" shirina="0" otlevogokraya="1" qvar="Вид документа" /></actions>'
   object dxPageControl2: TdxPageControl
     Left = 4
     Height = 696
@@ -279,7 +279,7 @@ object Form121: TdxForm
       object dxLabel1: TdxLabel
         Left = 11
         Height = 16
-        Top = 12
+        Top = 13
         Width = 72
         Caption = 'Сотрудник'
         ParentColor = False
@@ -287,7 +287,7 @@ object Form121: TdxForm
       object dxLookupComboBox1: TdxLookupComboBox
         Left = 92
         Height = 24
-        Top = 4
+        Top = 9
         Width = 280
         MaxLength = 0
         TabOrder = 0
@@ -315,7 +315,7 @@ object Form121: TdxForm
       object dxLabel2: TdxLabel
         Left = 468
         Height = 16
-        Top = 12
+        Top = 13
         Width = 75
         Caption = 'Документы'
         ParentColor = False
@@ -357,7 +357,7 @@ object Form121: TdxForm
       object dxCheckBox4: TdxCheckBox
         Left = 560
         Height = 23
-        Top = 5
+        Top = 10
         Width = 154
         Caption = 'На согласовании'
         TabOrder = 3
@@ -373,7 +373,7 @@ object Form121: TdxForm
       object dxCheckBox5: TdxCheckBox
         Left = 736
         Height = 23
-        Top = 5
+        Top = 10
         Width = 122
         Caption = 'Отмененные'
         TabOrder = 4
@@ -428,9 +428,9 @@ object Form121: TdxForm
         ManualRefresh = False
       end
       object dxCheckBox3: TdxCheckBox
-        Left = 8
+        Left = 16
         Height = 23
-        Top = 32
+        Top = 36
         Width = 133
         Caption = 'Все сотрудники'
         TabOrder = 6
@@ -737,9 +737,9 @@ object Form121: TdxForm
       end
       object dxMemo1: TdxMemo
         Left = 404
-        Height = 140
+        Height = 160
         Top = 12
-        Width = 544
+        Width = 620
         ScrollBars = ssBoth
         TabOrder = 1
         Id = 7365
@@ -754,9 +754,9 @@ object Form121: TdxForm
       end
       object dxQueryGrid8: TdxQueryGrid
         Left = 32
-        Height = 418
-        Top = 192
-        Width = 840
+        Height = 452
+        Top = 196
+        Width = 984
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -770,8 +770,8 @@ object Form121: TdxForm
         SelectedTextColor = clHighlightText
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
-        ShowButtons = False
-        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
+        ShowButtons = True
+        VisibleButtons = [gbnAppend, gbnRefresh]
         VisibleCaptions = []
         FlatButtons = True
         ButtonsColor = clBtnFace
@@ -786,9 +786,9 @@ object Form121: TdxForm
         ManualRefresh = False
       end
       object dxMemo2: TdxMemo
-        Left = 36
+        Left = 32
         Height = 32
-        Top = 140
+        Top = 120
         Width = 256
         ScrollBars = ssBoth
         TabOrder = 3
@@ -805,9 +805,9 @@ object Form121: TdxForm
         UpdateTree = False
       end
       object dxLabel5: TdxLabel
-        Left = 32
+        Left = 28
         Height = 16
-        Top = 112
+        Top = 92
         Width = 93
         Caption = 'Пользователь'
         ParentColor = False
@@ -1052,6 +1052,15 @@ object Form121: TdxForm
         Width = 104
         Caption = 'Подразделение'
         ParentColor = False
+      end
+      object dxButton14: TdxButton
+        Left = 404
+        Height = 30
+        Top = 376
+        Width = 244
+        Caption = 'Подгрузка ФГИС id оборудования'
+        TabOrder = 10
+        ActionOnClick = '<actions><action type="9" id="DAB4A991-055D-466F-A13B-A462C2BE964E" initfolder="" filename="" charset="UTF-8" skipfirstrow="1" form="ТМЦ" fields="formfield;update|Номер ФГИС РА;0|Заводской (серийный) №;1" values="field;expr" /></actions>'
       end
     end
   end

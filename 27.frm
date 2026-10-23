@@ -153,7 +153,7 @@ object Form27: TdxForm
     Required = False
     DefaultValue = '0'
     Editable = False
-    NullToZero = True
+    NullToZero = False
     GroupDigits = True
     PadZeros = True
   end

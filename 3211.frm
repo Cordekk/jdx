@@ -249,7 +249,7 @@ object Form1603: TdxForm
       object dxLabel2: TdxLabel
         Left = 30
         Height = 16
-        Top = 0
+        Top = 2
         Width = 89
         Caption = 'Лаборатория'
         ParentColor = False
@@ -283,7 +283,7 @@ object Form1603: TdxForm
       object dxLabel8: TdxLabel
         Left = 426
         Height = 16
-        Top = 4
+        Top = 2
         Width = 286
         Caption = 'Сотрудник для назначения исследований'
         ParentColor = False
@@ -764,7 +764,7 @@ object Form1603: TdxForm
           00000000000000000000
         }
         TabOrder = 3
-        ActionOnClick = '<actions><action disabled="1" type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" qry="Пробы для направления1" keeppos="0" /><action type="9" id="08951CB2-B27A-4BCF-B714-F0B209F0D7AF" formname="" form_exp="" id_exp="" file_open="" path_template="GET(''Шаблоны10'', ''Файл'')" path_doc="" fileaction="1" /><action disabled="1" type="2" template="" expression="GET(''Шаблоны10'', ''Файл'')" outfile="" fileaction="1" saverecord="0"/><action disabled="1" type="7" expression="Setfield(''Дата завершения'', null)"/></actions>'
+        ActionOnClick = '<actions><action disabled="1" type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" qry="Пробы для направления1" keeppos="0" /><action type="9" id="08951CB2-B27A-4BCF-B714-F0B209F0D7AF" formname="" form_exp="" id_exp="" file_open="" path_template="GET(''Шаблоны10'', ''Файл'')" path_doc="" fileaction="1" /><action disabled="1" type="2" template="" expression="GET(''Шаблоны10'', ''Файл'')" outfile="" fileaction="1" saverecord="0"/><action disabled="1" type="7" expression="Setfield(''Дата завершения'', null)"/></actions>'
       end
       object dxQueryGrid15: TdxQueryGrid
         Left = 760

@@ -124,34 +124,34 @@ object Form294: TdxForm
     Color = clWindow
     Columns = <    
       item
-        Tag = 7276
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f7276'
-      end    
-      item
         Tag = 7281
         Title.Caption = ' '
-        Width = 100
+        Width = 55
         FieldName = 'f7281'
-      end    
-      item
-        Tag = 7339
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f7339'
       end    
       item
         Tag = 263283
         Title.Caption = ' '
         Width = 100
         FieldName = 'f263283'
+      end    
+      item
+        Tag = 7276
+        Title.Caption = ' '
+        Width = 679
+        FieldName = 'f7276'
+      end    
+      item
+        Tag = 7339
+        Title.Caption = ' '
+        Width = 316
+        FieldName = 'f7339'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True
     Font.Height = -13
     Font.Name = 'Verdana'
-    Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
     ParentDoubleBuffered = False
     ReadOnly = True
     ShowHint = True

@@ -2,7 +2,7 @@ object Form8: TdxForm
   Left = 10
   Height = 471
   Top = 10
-  Width = 411
+  Width = 415
   FormGroup = 'Справочники'
   AutoOpen = True
   Index = 11
@@ -23,7 +23,7 @@ object Form8: TdxForm
   SoftCheck = False
   ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="ROLE='''' |   ROLE=''Администратор'' | Newrec = 1" grid="cmp;ve_prop|DxEdit1;Редактирование|dxEdit2;Редактирование|dxEdit3;Редактирование" stateevents="1" /></actions>'
   object DxEdit1: TdxEdit
-    Left = 104
+    Left = 100
     Height = 28
     Top = 8
     Width = 240
@@ -73,7 +73,7 @@ object Form8: TdxForm
     ParentColor = False
   end
   object dxEdit3: TdxEdit
-    Left = 104
+    Left = 100
     Height = 28
     Top = 96
     Width = 240
@@ -119,7 +119,7 @@ object Form8: TdxForm
     ManualRefresh = False
   end
   object dxCalcEdit1: TdxCalcEdit
-    Left = 106
+    Left = 100
     Height = 28
     Top = 144
     Width = 100
@@ -137,7 +137,7 @@ object Form8: TdxForm
     Required = False
     DefaultValue = '0'
     Editable = False
-    NullToZero = True
+    NullToZero = False
     GroupDigits = True
     PadZeros = True
   end
@@ -147,6 +147,18 @@ object Form8: TdxForm
     Top = 150
     Width = 60
     Caption = 'id ФСА'
+  end
+  object dxRecordId1: TdxRecordId
+    Left = 316
+    Height = 28
+    Top = 172
+    Width = 100
+    ReadOnly = True
+    MaxLength = 0
+    TabOrder = 5
+    FieldName = 'ID записи'
+    StopTab = False
+    Id = 263330
   end
   object Grid: TdxGrid
     Left = 0
@@ -179,6 +191,12 @@ object Form8: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f263305'
+      end    
+      item
+        Tag = 263330
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263330'
       end>
     DefaultRowHeight = 22
     DoubleBuffered = True

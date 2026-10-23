@@ -509,7 +509,7 @@ object Form3: TdxForm
         Font.Name = 'Verdana'
         ParentFont = False
         TabOrder = 3
-        ActionOnClick = '<actions><action type="5" /><if cond="result"><if cond="COUNT(''Пробы1'')&gt;0"><action disabled="1" type="9" id="62900B52-9BF5-4E72-833F-9B47AB4F4399" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" _qg="Пробы1" _fm="Пробы" _ls="Форма+Подчиненные таблицы" /><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Пробы" values="field;expr|Заявка клиента2;RECID(''Заявка клиента'')|Направление;[Направление2]|Дополнительное поле;REPLACEALL(GET(''Пробы1'', ''Дополнительное поле''),''Акт отбора'','''')|Продукция;GET(''Пробы1'', ''Продукция_id'')|Примечание;GET(''Пробы1'', ''Примечание'')|Категория;GET(''Пробы1'', ''Категория'')|Сорт;GET(''Пробы1'', ''Сорт_id'')|Репродукция;GET(''Пробы1'', ''Репродукция'')|Сортовая чистота;GET(''Пробы1'', ''Сортовая чистота'')|Ед.изм.1;GET(''Пробы1'', ''Ед.изм.1_id'')|Ед.изм.2;GET(''Пробы1'', ''Ед.изм.2_id'')     |Объем партии1;GET(''Пробы1'', ''Объем партии'')|Число мест;GET(''Пробы1'', ''Число мест'')     |Производитель;GET(''Пробы1'', ''Производитель_id'')|Место происхождения;GET(''Пробы1'', ''Место происхождения'')|Страна происхождения;GET(''Пробы1'', ''Страна происхождения_id'')|Год урожая;GET(''Пробы1'', ''Год урожая'')|Срок годности;GET(''Пробы1'', ''Срок годности'')|Место хранения;GET(''Пробы1'', ''Место хранения'')|Вид упаковки;GET(''Пробы1'', ''Вид упаковки'')|Количество_образцов;GET(''Пробы1'', ''Количество образцов'')|Объем_пробы;GET(''Пробы1'', ''Объем пробы'')|Транспорт;GET(''Пробы1'', ''Транспорт_id'')|Номер транспорта;GET(''Пробы1'', ''Номер партии (транспорт)'')|Дата получения семян;GET(''Пробы1'', ''Дата получения семян'')|Способ выращивания;GET(''Пробы1'', ''Способ выращивания'')|Товарная группа;GET(''Пробы1'', ''Товарная группа'')|Сортовой документ;GET(''Пробы1'', ''Сортовой документ'')|Протравливание;GET(''Пробы1'', ''Протравливание'')|Прошлые испытания;GET(''Пробы1'', ''Прошлые испытания'')" ignoreaccess="0" obj="" qry="Пробы1" /></if><else><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Пробы" values="field;expr|Заявка клиента2;RECID(''Заявка клиента'')|Направление;[Направление2]" ignoreaccess="0" obj="" qry="Пробы1" /></else></if><else><action type="10" title="Внимание" message="Заполните Клиента и Направление!" msgtype="0" exprmsg="" buttons="1;0;0;0;0;0;0;0;0;0;0"/></else><action type="7" expression="BLOCK('#13#10'Setfield(''Дубль'',RECID(''Заявка клиента'')))"/></actions>'
+        ActionOnClick = '<actions><action type="5" /><if cond="result"><if cond="COUNT(''Пробы1'')&gt;0"><action disabled="1" type="9" id="62900B52-9BF5-4E72-833F-9B47AB4F4399" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" _qg="Пробы1" _fm="Пробы" _ls="Форма+Подчиненные таблицы" /><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Пробы" values="field;expr|Заявка клиента2;RECID(''Заявка клиента'')|Направление;[Направление2]|Дополнительное поле;REPLACEALL(GET(''Пробы1'', ''Дополнительное поле''),''Акт отбора'','''')|Продукция;GET(''Пробы1'', ''Продукция_id'')|Примечание;GET(''Пробы1'', ''Примечание'')|Категория;GET(''Пробы1'', ''Категория'')|Сорт;GET(''Пробы1'', ''Сорт_id'')|Репродукция;GET(''Пробы1'', ''Репродукция'')|Сортовая чистота;GET(''Пробы1'', ''Сортовая чистота'')|Ед.изм.1;GET(''Пробы1'', ''Ед.изм.1_id'')|Ед.изм.2;GET(''Пробы1'', ''Ед.изм.2_id'')     |Объем партии1;GET(''Пробы1'', ''Объем партии'')|Число мест;GET(''Пробы1'', ''Число мест'')     |Производитель;GET(''Пробы1'', ''Производитель_id'')|Место происхождения;GET(''Пробы1'', ''Место происхождения'')|Страна происхождения;GET(''Пробы1'', ''Страна происхождения_id'')|Год урожая;GET(''Пробы1'', ''Год урожая'')|Срок годности;GET(''Пробы1'', ''Срок годности'')|Место хранения;GET(''Пробы1'', ''Место хранения'')|Вид упаковки;GET(''Пробы1'', ''Вид упаковки'')|Количество_образцов;GET(''Пробы1'', ''Количество образцов'')|Объем_пробы;GET(''Пробы1'', ''Объем пробы'')|Транспорт;GET(''Пробы1'', ''Транспорт_id'')|Номер транспорта;GET(''Пробы1'', ''Номер партии (транспорт)'')|Дата получения семян;GET(''Пробы1'', ''Дата получения семян'')|Способ выращивания;GET(''Пробы1'', ''Способ выращивания'')|Товарная группа;GET(''Пробы1'', ''Товарная группа'')|Сортовой документ;GET(''Пробы1'', ''Сортовой документ'')|Протравливание;GET(''Пробы1'', ''Протравливание'')|Прошлые испытания;GET(''Пробы1'', ''Прошлые испытания'')" ignoreaccess="0" obj="" qry="Пробы1" /></if><else><action type="9" id="ECCE8FF5-BCAB-40B2-8F36-ED002A3A131B" form="Пробы" values="field;expr|Заявка клиента2;RECID(''Заявка клиента'')|Направление;[Направление2]" ignoreaccess="0" obj="" qry="Пробы1" /></else></if><else><action type="10" title="Внимание" message="Заполните Клиента и Направление!" msgtype="0" exprmsg="" buttons="1;0;0;0;0;0;0;0;0;0;0"/></else><action type="7" expression="BLOCK('#13#10'Setfield(''Дубль'',RECID(''Заявка клиента'')))"/></actions>'
       end
       object dxButton3: TdxButton
         Left = 4
@@ -1762,10 +1762,10 @@ object Form3: TdxForm
         ParentColor = False
       end
       object dxLookupComboBox19: TdxLookupComboBox
-        Left = 0
+        Left = 7
         Height = 28
         Top = 24
-        Width = 684
+        Width = 673
         MaxLength = 0
         TabOrder = 0
         Id = 26156
@@ -1796,7 +1796,7 @@ object Form3: TdxForm
         ParentColor = False
       end
       object dxLookupComboBox20: TdxLookupComboBox
-        Left = 4
+        Left = 7
         Height = 28
         Top = 76
         Width = 676
@@ -1922,7 +1922,7 @@ object Form3: TdxForm
         Width = 172
         Caption = 'Добавить в план'
         TabOrder = 6
-        ActionOnClick = '<actions><action type="5" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Показатели и методики для заявки" keeppos="0" /><action type="9" id="A1039C22-88FA-4E7A-A030-FDBCED2E7D61" tbl="Показатель42" qry="Показатели и методики для заявки" fields="tf;qf;expr|Группа продукции;Группа продукции;|Лаборатория;Лаборатория;|Нормативное значение;Нормативное значение;|Показатель;Показатель;|Примечание;Примечание;|Продукция;Продукция;|Консервация;Консервация;|Вид упаковки;Вид упаковки;|Номер_образца;Номер_образца;" noclr="1" prompt="" /><action type="5" /></actions>'
+        ActionOnClick = '<actions><action type="5" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Показатели и методики для заявки" keeppos="0" /><action type="9" id="A1039C22-88FA-4E7A-A030-FDBCED2E7D61" tbl="Показатель42" qry="Показатели и методики для заявки" fields="tf;qf;expr|Продукция;Продукция;|Группа продукции;Группа продукции;|Лаборатория;Лаборатория;|Нормативное значение;Нормативное значение;|Показатель;Показатель;|Примечание;Примечание;|Консервация;Консервация;|Вид упаковки;Вид упаковки;|Номер_образца;Номер_образца;" noclr="1" prompt="" /><action type="5" /></actions>'
       end
       object dxButton34: TdxButton
         Left = 728
@@ -1931,7 +1931,7 @@ object Form3: TdxForm
         Width = 172
         Caption = 'Обновить план'
         TabOrder = 7
-        ActionOnClick = '<actions><action type="5" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Показатели и методики для заявки" keeppos="0" /><action type="9" id="A1039C22-88FA-4E7A-A030-FDBCED2E7D61" tbl="Показатель42" qry="Показатели и методики для заявки" fields="tf;qf;expr|Группа продукции;Группа продукции;|Лаборатория;Лаборатория;|Нормативное значение;Нормативное значение;|Показатель;Показатель;|Примечание;Примечание;|Продукция;Продукция;|Консервация;Консервация;|Вид упаковки;Вид упаковки;|Номер_образца;Номер_образца;" noclr="0" prompt="" /><action type="5" /></actions>'
+        ActionOnClick = '<actions><action type="9" id="68F6220C-C814-4994-8D03-E2D9A95BB50D" table="Показатель42" prompt="" ignoreaccess="0" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Показатели и методики для заявки" keeppos="0" /><action type="9" id="A1039C22-88FA-4E7A-A030-FDBCED2E7D61" tbl="Показатель42" qry="Показатели и методики для заявки" fields="tf;qf;expr|Продукция;Продукция;|Группа продукции;Группа продукции;|Лаборатория;Лаборатория;|Нормативное значение;Нормативное значение;|Показатель;Показатель;|Примечание;Примечание;|Консервация;Консервация;|Вид упаковки;Вид упаковки;|Номер_образца;Номер_образца;" noclr="0" prompt="" /><action type="5" /></actions>'
       end
       object dxButton35: TdxButton
         Left = 728
@@ -2263,7 +2263,7 @@ object Form3: TdxForm
         InactiveSelectedColor = clSilver
         InactiveSelectedTextColor = clBlack
         ShowButtons = True
-        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
+        VisibleButtons = [gbnAppend, gbnEdit, gbnRefresh, gbnGoto]
         VisibleCaptions = []
         FlatButtons = True
         ButtonsColor = clBtnFace
@@ -2712,9 +2712,9 @@ object Form3: TdxForm
       end
       object dxQueryGrid13: TdxQueryGrid
         Left = 492
-        Height = 223
+        Height = 216
         Top = 68
-        Width = 316
+        Width = 332
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -2747,7 +2747,7 @@ object Form3: TdxForm
         Left = 492
         Height = 179
         Top = 309
-        Width = 328
+        Width = 336
         AutoAdvance = aaNone
         Color = clWindow
         Columns = <>
@@ -3430,7 +3430,7 @@ object Form3: TdxForm
     FieldName = 'Договор'
     SourceTId = 38
     SourceFId = 181
-    Filter = '[Клиент2]=[Клиент2]'
+    Filter = '[Клиент2]=[Клиент]'
     Required = False
     CheckExpression = 'IIF([Договор|Дата окончания договора]=null | [Договор|Дата окончания договора]<=[Дата],'''' ,''Не действует'' )'
     SourceTable = 0

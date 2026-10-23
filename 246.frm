@@ -39,7 +39,7 @@ object Form246: TdxForm
   ConfirmCancelEditing = False
   Tree = Tree.Owner
   SoftCheck = False
-  ActionOnCreate = '<actions><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Подписано]&lt;&gt;1 &amp; [Утверждено] &lt;&gt; 1 &amp; [ФГИС] &lt;&gt; 1" grid="cmp;ve_prop|dxDateEdit1;Доступность" stateevents="1" /><comment text="При изменении поля заявка, надо проверить сколько проб в ней, если одна, то выбираем ее /перенес в надпись"/><action disabled="1" type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" bn="dxButton3" fields="fl|Заявка клиента" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="role='''' | role=''Администратор''" grid="cmp;ve_prop|dxCalcEdit1;Редактирование|dxTabSheet8;Видимость" stateevents="0" /><comment text="Клик нужен для заполнения таблицы дополнений"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton31" fields="fl|Вид документа" /></actions>'
+  ActionOnCreate = '<actions><action type="9" id="ED8AA165-D098-4154-BDC2-E96B7E81EDAB" allfields="1" logfields="Field" users="User" /><comment text="Счета и результаты не пересекаются, поэтому проблем не будет"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Подписано]&lt;&gt;1 &amp; [Утверждено] &lt;&gt; 1 &amp; [ФГИС] &lt;&gt; 1" grid="cmp;ve_prop|dxDateEdit1;Доступность" stateevents="1" /><comment text="При изменении поля заявка, надо проверить сколько проб в ней, если одна, то выбираем ее /перенес в надпись"/><action disabled="1" type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" bn="dxButton3" fields="fl|Заявка клиента" /><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="role='''' | role=''Администратор''" grid="cmp;ve_prop|dxCalcEdit1;Редактирование|dxTabSheet8;Видимость" stateevents="0" /><comment text="Клик нужен для заполнения таблицы дополнений"/><action type="9" id="AB1F57AC-16B0-4128-BF70-39EC56063515" bn="dxButton31" fields="fl|Вид документа" /><comment text="Скрытая таблица результатов"/><action type="9" id="BE798939-0563-4DC7-8789-BBB636BD45FA" condition="[Вид документа|Использовать таблицу результатов]=1" grid="cmp;ve_prop|dxTabSheet9;Видимость" stateevents="1" /></actions>'
   object dxQueryGrid4: TdxQueryGrid
     Left = 860
     Height = 82
@@ -371,8 +371,8 @@ object Form246: TdxForm
     Height = 510
     Top = 136
     Width = 1112
-    ActivePage = dxTabSheet6
-    TabIndex = 1
+    ActivePage = dxTabSheet1
+    TabIndex = 0
     TabOrder = 10
     object dxTabSheet1: TdxTabSheet
       Caption = 'Результаты'
@@ -644,9 +644,9 @@ object Form246: TdxForm
       Caption = 'Оборудование'
       StopTab = False
       object dxMemo5: TdxMemo
-        Left = 64
+        Left = 20
         Height = 97
-        Top = 288
+        Top = 280
         Width = 509
         ScrollBars = ssBoth
         TabOrder = 0
@@ -761,9 +761,9 @@ object Form246: TdxForm
       end
       object dxMemo11: TdxMemo
         Left = 28
-        Height = 76
+        Height = 92
         Top = 92
-        Width = 1048
+        Width = 1052
         ScrollBars = ssBoth
         TabOrder = 4
         Id = 263083
@@ -773,7 +773,7 @@ object Form246: TdxForm
         SourceTId = 0
         SourceFId = 0
         Delimiter = ', '
-        Expression = 'MERGE(''Результаты_исследований'', ''Выбранное оборудование'', '';'')'
+        Expression = 'MERGE(''Результаты_исследований'', ''Выбранное оборудование2'', '';'')'
         Editable = True
         DefaultValue = ''''''
         UpdateTree = False
@@ -959,6 +959,122 @@ object Form246: TdxForm
         Expression = '''Акт отбора '' +  IFE(NZ(NZ([Проба|Отбор проб|Шифр_отбора],[Заявка клиента|Акт отбора заказчика]),'#13#10'CASEOF(''Акт отбора'',[Проба|Дополнительное поле])),''-'')'#13#10'//IFE(NZ([Проба|Отбор проб|Шифр_отбора],CASEOF(''Акт отбора'',[Проба|Дополнительное поле])),''-'')'
       end
     end
+    object dxTabSheet9: TdxTabSheet
+      Caption = 'Таблица результатов'
+      StopTab = False
+      object dxGrid2: TdxGrid
+        Left = 0
+        Height = 404
+        Top = 68
+        Width = 1096
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 0
+        SelectedColor = clHighlight
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = True
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnDuplicate, gbnMoveUp, gbnMoveDown]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -13
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 6892
+      end
+      object dxButton13: TdxButton
+        Left = 184
+        Height = 30
+        Top = 20
+        Width = 216
+        Caption = 'Заполнить из исследований'
+        TabOrder = 1
+        ActionOnClick = '<actions><action type="9" id="A1039C22-88FA-4E7A-A030-FDBCED2E7D61" tbl="Результаты в отчете" qry="Результаты_исследований" fields="tf;qf;expr|Методика из ОА;ид_ОА;|Показатель;Проба_id;|Значение;Значение;|Дата завершения;Дата завершения;|Дополнения;Дополнения;|Норматив;Норматив;|Нормативный документ;Нормативный документ_id;|Образец;Образец_id;|Проба;Проба_id;|U;Погрешность;|Ед.изм;Ед.изм_id;|Исполнитель;Исполнитель_id;|Исследование;Идентификатор;" noclr="0" prompt="" /></actions>'
+      end
+      object dxLabel40: TdxLabel
+        Left = 476
+        Height = 16
+        Top = 16
+        Width = 144
+        Caption = 'Шаблон показателей'
+        ParentColor = False
+      end
+      object dxLookupComboBox20: TdxLookupComboBox
+        Left = 460
+        Height = 24
+        Top = 36
+        Width = 425
+        MaxLength = 0
+        TabOrder = 3
+        Id = 263324
+        FieldName = 'Шаблон показателей'
+        SourceTId = 233
+        SourceFId = 2550
+        Filter = '[?Документ]= [Нормативный документ2] | [?Документ] in [ЗаданиеID]'#13#10'&[Направление]=[Направление2]'
+        Required = False
+        SourceTable = 0
+        DestTable = 0
+        PromptFillTable = False
+        ClearTableBeforeFill = False
+        Editable = False
+        ListFields = <        
+          item
+            FieldId = 2545
+            Width = 100
+            Searchable = True
+          end        
+          item
+            FieldId = 2553
+            Width = 100
+            Searchable = True
+          end>
+        DropDownCount = 8
+        ListWidthExtra = 0
+        HideList = False
+        HideButton = False
+        UpdateTree = False
+        ListSource = 0
+      end
+      object dxButton29: TdxButton
+        Left = 932
+        Height = 24
+        Top = 4
+        Width = 172
+        Caption = 'Добавить из шаблона'
+        TabOrder = 4
+        ActionOnClick = '<actions><if cond="[Подписано]&lt;&gt;1 &amp; [Утверждено]&lt;&gt;1"><action type="5" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Показатели и методики для результата по шаблону" keeppos="0" /><action type="9" id="A1039C22-88FA-4E7A-A030-FDBCED2E7D61" tbl="Результаты в отчете" qry="Показатели и методики для результата по шаблону" fields="tf;qf;expr|Лаборатория;Лаборатория;|Методика из ОА;Методика;|Дополнения;Примечание;|Норматив;Нормативное значение;|Нормативный документ;Нормативный документ;" noclr="1" prompt="" /><action type="5" /></if></actions>'
+      end
+      object dxButton34: TdxButton
+        Left = 932
+        Height = 24
+        Top = 36
+        Width = 172
+        Caption = 'Обновить из шаблона'
+        TabOrder = 5
+        ActionOnClick = '<actions><if cond="[Подписано]&lt;&gt;1 &amp; [Утверждено]&lt;&gt;1"><action type="9" id="68F6220C-C814-4994-8D03-E2D9A95BB50D" table="Результаты в отчете" prompt="" ignoreaccess="0" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Показатели и методики для результата по шаблону" keeppos="0" /><action type="9" id="A1039C22-88FA-4E7A-A030-FDBCED2E7D61" tbl="Результаты в отчете" qry="Показатели и методики для результата по шаблону" fields="tf;qf;expr|Лаборатория;Лаборатория;|Норматив;Нормативное значение;|Методика из ОА;Методика;|Дополнения;Примечание;|Нормативный документ;Нормативный документ;" noclr="0" prompt="" /><action type="5" /></if></actions>'
+      end
+      object dxButton35: TdxButton
+        Left = 740
+        Height = 24
+        Top = 8
+        Width = 172
+        Caption = 'Очистить результаты'
+        TabOrder = 6
+        ActionOnClick = '<actions><if cond="[Подписано]&lt;&gt;1 &amp; [Утверждено]&lt;&gt;1"><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Шаблон показателей;null" ignoreaccess="0" saverec="0" /><action type="9" id="68F6220C-C814-4994-8D03-E2D9A95BB50D" table="Результаты в отчете" prompt="" ignoreaccess="0" /><action type="5" /></if></actions>'
+      end
+    end
     object dxTabSheet3: TdxTabSheet
       Caption = 'Изменения Результата'
       StopTab = False
@@ -999,7 +1115,7 @@ object Form246: TdxForm
       object dxCheckBox4: TdxCheckBox
         Left = 804
         Height = 23
-        Top = 416
+        Top = 427
         Width = 194
         Caption = 'Внесено во ФГИС'
         TabOrder = 1
@@ -1116,9 +1232,85 @@ object Form246: TdxForm
         Width = 223
         Caption = 'Причина оформления изменений'
       end
+      object dxCheckBox11: TdxCheckBox
+        Left = 808
+        Height = 23
+        Top = 396
+        Width = 124
+        Caption = 'Сформировано'
+        TabOrder = 7
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 263309
+        FieldName = 'Сформировано'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+    end
+    object dxTabSheet2: TdxTabSheet
+      Caption = 'Файлы'
+      StopTab = False
+      object dxQueryGrid5: TdxQueryGrid
+        Left = 4
+        Height = 326
+        Top = 60
+        Width = 1056
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 0
+        SelectedColor = clHighlight
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = True
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -13
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 2908
+        ManualRefresh = False
+      end
+      object dxButton11: TdxButton
+        Left = 172
+        Height = 30
+        Top = 20
+        Width = 196
+        Caption = 'Добавить файл протокола'
+        TabOrder = 1
+        ActionOnClick = '<actions><action type="9" id="0AABDA55-EC7B-453E-9ECF-BD99CEB2D42E" _dscrfield="[Вид документа|Вид документа]+ '' '' + [Номер_документа]" _formcaption="''Заявка клиента''" _formid="[Заявка клиента]" file_path="" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Файлы результат" keeppos="0" /></actions>'
+      end
+      object dxButton12: TdxButton
+        Left = 460
+        Height = 30
+        Top = 20
+        Width = 256
+        Anchors = [akRight, akBottom]
+        Caption = 'Формировать и добавить файл'
+        Font.Color = clBlack
+        Font.Height = -15
+        Font.Name = 'Verdana'
+        ParentFont = False
+        TabOrder = 3
+        ActionOnClick = '<actions><action type="9" id="08951CB2-B27A-4BCF-B714-F0B209F0D7AF" formname="" form_exp="" id_exp="" file_open="" path_template="GET(''Результаты_шаблон'', ''Файл'')" path_doc="" fileaction="0" /><action type="9" id="0AABDA55-EC7B-453E-9ECF-BD99CEB2D42E" _dscrfield="[Вид документа|Вид документа]+ '' '' + [Номер_документа]" _formcaption="''Заявка клиента''" _formid="[Заявка клиента]" file_path="result" /><action disabled="1" type="5" /><action disabled="1" type="3" form="Заявка клиента" filter="[ID]=[Заявка клиента|ID]" table="" field="Протокол сформирован" expression=""/><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Файлы результат" keeppos="0" /></actions>'
+      end
     end
     object dxTabSheet5: TdxTabSheet
-      Caption = 'Объединение результатов'
+      Caption = 'Объединение'
       StopTab = False
       object dxQueryGrid8: TdxQueryGrid
         Left = 568
@@ -1376,43 +1568,6 @@ object Form246: TdxForm
         Editable = False
       end
     end
-    object dxTabSheet2: TdxTabSheet
-      Caption = 'Файлы'
-      StopTab = False
-      object dxQueryGrid5: TdxQueryGrid
-        Left = 4
-        Height = 370
-        Top = 16
-        Width = 1056
-        AutoAdvance = aaNone
-        Color = clWindow
-        Columns = <>
-        DefaultRowHeight = 20
-        DoubleBuffered = True
-        Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
-        ParentDoubleBuffered = False
-        ShowHint = True
-        TabOrder = 0
-        SelectedColor = clHighlight
-        SelectedTextColor = clHighlightText
-        InactiveSelectedColor = clSilver
-        InactiveSelectedTextColor = clBlack
-        ShowButtons = False
-        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
-        VisibleCaptions = []
-        FlatButtons = True
-        ButtonsColor = clBtnFace
-        ButtonSize = 25
-        ButtonFont.Height = -13
-        ButtonFont.Name = 'Verdana'
-        AlignmentButtons = taLeftJustify
-        HideButtonsWhenLostFocus = False
-        WordWrap = False
-        AllowChangeSort = False
-        Id = 2908
-        ManualRefresh = False
-      end
-    end
     object dxTabSheet4: TdxTabSheet
       Caption = 'Информация'
       StopTab = False
@@ -1436,7 +1591,7 @@ object Form246: TdxForm
         Left = 172
         Height = 24
         Top = 105
-        Width = 100
+        Width = 108
         MaxLength = 0
         TabOrder = 1
         HideButton = False
@@ -1455,10 +1610,10 @@ object Form246: TdxForm
         Editable = False
       end
       object dxEdit4: TdxEdit
-        Left = 360
+        Left = 64
         Height = 24
-        Top = 105
-        Width = 100
+        Top = 185
+        Width = 388
         MaxLength = 0
         TabOrder = 2
         Id = 262406
@@ -1469,9 +1624,9 @@ object Form246: TdxForm
         Editable = False
       end
       object dxLabel16: TdxLabel
-        Left = 324
+        Left = 28
         Height = 16
-        Top = 109
+        Top = 189
         Width = 25
         Caption = 'Тип'
         ParentColor = False
@@ -1496,18 +1651,19 @@ object Form246: TdxForm
       end
       object dxMemo1: TdxMemo
         Left = 24
-        Height = 88
-        Top = 240
-        Width = 440
+        Height = 36
+        Top = 245
+        Width = 436
         ScrollBars = ssBoth
         TabOrder = 3
         Id = 262407
-        FieldName = 'xml'
+        FieldName = 'ID_исследований'
         FieldSize = 0
         Required = False
         SourceTId = 0
         SourceFId = 0
         Delimiter = ', '
+        Expression = '//[Утверждено]'#13#10'IIF([Утверждено]=1&[ID_исследований]<>null,[ID_исследований], MERGE(''Результаты_исследований'', ''Идентификатор'', '';''))'
         Editable = False
         UpdateTree = False
       end
@@ -1630,30 +1786,30 @@ object Form246: TdxForm
         StopTab = False
       end
       object dxEdit5: TdxEdit
-        Left = 172
+        Left = 84
         Height = 24
-        Top = 146
-        Width = 288
+        Top = 214
+        Width = 372
         MaxLength = 0
         TabOrder = 10
         Id = 263285
-        FieldName = 'Пробы'
+        FieldName = 'ID_Пробы'
         FieldSize = 300
         Required = False
         Expression = 'MERGE(''Результаты_пробы'', ''ID1'', '';'')'
         Editable = False
       end
       object dxLabel38: TdxLabel
-        Left = 43
+        Left = 23
         Height = 16
-        Top = 150
+        Top = 218
         Width = 42
         Caption = 'Пробы'
       end
       object dxLabel39: TdxLabel
         Left = 32
         Height = 16
-        Top = 188
+        Top = 144
         Width = 120
         Caption = 'Дата завершения'
         ParentColor = False
@@ -1661,8 +1817,8 @@ object Form246: TdxForm
       object dxDateEdit4: TdxDateEdit
         Left = 172
         Height = 24
-        Top = 184
-        Width = 100
+        Top = 140
+        Width = 108
         MaxLength = 0
         TabOrder = 11
         HideButton = False
@@ -1679,6 +1835,24 @@ object Form246: TdxForm
         Expression = 'MAX(''Результаты_исследований'', ''Дата завершения'')'
         Required = False
         Editable = False
+      end
+      object dxMemo13: TdxMemo
+        Left = 25
+        Height = 36
+        Top = 293
+        Width = 436
+        ScrollBars = ssBoth
+        TabOrder = 12
+        Id = 263322
+        FieldName = 'ID_оборудования'
+        FieldSize = 0
+        Required = False
+        SourceTId = 0
+        SourceFId = 0
+        Delimiter = ', '
+        Expression = '//[Утверждено]'#13#10'IIF([Утверждено]=1&[ID_исследований]<>null,[ID_исследований], MERGE(''Оборудование в протоколе'', ''ID'', '';''))'
+        Editable = False
+        UpdateTree = False
       end
     end
     object dxTabSheet8: TdxTabSheet
@@ -1726,6 +1900,39 @@ object Form246: TdxForm
         Id = 3025
         ManualRefresh = True
       end
+      object dxQueryGrid14: TdxQueryGrid
+        Left = 400
+        Height = 216
+        Top = 68
+        Width = 340
+        AutoAdvance = aaNone
+        Color = clWindow
+        Columns = <>
+        DefaultRowHeight = 20
+        DoubleBuffered = True
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgAlwaysShowSelection, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgDisableInsert, dgTruncCellHints, dgThumbTracking, dgDisplayMemoText]
+        ParentDoubleBuffered = False
+        ShowHint = True
+        TabOrder = 2
+        SelectedColor = clHighlight
+        SelectedTextColor = clHighlightText
+        InactiveSelectedColor = clSilver
+        InactiveSelectedTextColor = clBlack
+        ShowButtons = False
+        VisibleButtons = [gbnAppend, gbnEdit, gbnDelete, gbnRefresh, gbnGoto]
+        VisibleCaptions = []
+        FlatButtons = True
+        ButtonsColor = clBtnFace
+        ButtonSize = 25
+        ButtonFont.Height = -13
+        ButtonFont.Name = 'Verdana'
+        AlignmentButtons = taLeftJustify
+        HideButtonsWhenLostFocus = False
+        WordWrap = False
+        AllowChangeSort = False
+        Id = 3046
+        ManualRefresh = True
+      end
     end
   end
   object dxButton1: TdxButton
@@ -1736,7 +1943,7 @@ object Form246: TdxForm
     Anchors = [akRight, akBottom]
     Caption = 'Просмотр'
     TabOrder = 11
-    ActionOnClick = '<actions><action type="9" id="08951CB2-B27A-4BCF-B714-F0B209F0D7AF" formname="" form_exp="" id_exp="" file_open="" path_template="GET(''Результаты_шаблон'', ''Файл'')" path_doc="" fileaction="1" /><action disabled="1" type="2" template="" expression="GET(''Результаты_шаблон'', ''Файл'')" outfile="" fileaction="1" saverecord="0"/></actions>'
+    ActionOnClick = '<actions><action type="9" id="08951CB2-B27A-4BCF-B714-F0B209F0D7AF" formname="" form_exp="" id_exp="" file_open="" path_template="GET(''Результаты_шаблон'', ''Файл'')" path_doc="" fileaction="1" /><action disabled="1" type="2" template="" expression="GET(''Результаты_шаблон'', ''Файл'')" outfile="" fileaction="1" saverecord="0"/><action type="10" title="!" message="" msgtype="0" exprmsg="result" buttons="1;0;0;0;0;0;0;0;0;0;0"/></actions>'
   end
   object dxEdit2: TdxEdit
     Left = 144
@@ -1816,7 +2023,7 @@ object Form246: TdxForm
     Font.Name = 'Verdana'
     ParentFont = False
     TabOrder = 16
-    ActionOnClick = '<actions><action type="9" id="08951CB2-B27A-4BCF-B714-F0B209F0D7AF" formname="" form_exp="" id_exp="" file_open="" path_template="GET(''Результаты_шаблон'', ''Файл'')" path_doc="" fileaction="1" /><action type="5" /><action type="3" form="Заявка клиента" filter="[ID]=[Заявка клиента|ID]" table="" field="Протокол сформирован" expression=""/></actions>'
+    ActionOnClick = '<actions><action type="9" id="08951CB2-B27A-4BCF-B714-F0B209F0D7AF" formname="" form_exp="" id_exp="" file_open="" path_template="GET(''Результаты_шаблон'', ''Файл'')" path_doc="" fileaction="1" /><action disabled="1" type="9" id="0AABDA55-EC7B-453E-9ECF-BD99CEB2D42E" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" _dscrfield="[Вид документа|Вид документа]+ '' '' + [Номер_документа]" _formcaption="''Заявка клиента''" _formid="[Заявка клиента]" file_path="result" /><action type="9" id="A4578B0A-604E-4BBA-8586-E511CEEA58CC" grid="field;expr|Сформировано;1" ignoreaccess="1" saverec="1" /><action type="5" /><action type="3" form="Заявка клиента" filter="[ID]=[Заявка клиента|ID]" table="" field="Протокол сформирован" expression=""/><action disabled="1" type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" qry="Файлы результат" keeppos="0" /></actions>'
   end
   object dxButton10: TdxButton
     Left = 488
@@ -1830,7 +2037,7 @@ object Form246: TdxForm
     Font.Name = 'Verdana'
     ParentFont = False
     TabOrder = 17
-    ActionOnClick = '<actions><action disabled="1" type="9" id="08951CB2-B27A-4BCF-B714-F0B209F0D7AF" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" formname="" form_exp="" id_exp="" file_open="" path_template="GET(''Результаты_шаблон'', ''Файл'')" path_doc="" fileaction="1" /><comment text="Утвердить протокол"/><action type="7" expression="Setfield(''Утверждено'',1)"/><action type="5" /><action type="3" form="Заявка клиента" filter="[ID]=[Заявка клиента|ID]" table="" field="Протокол утвержден" expression=""/></actions>'
+    ActionOnClick = '<actions><action disabled="1" type="9" id="08951CB2-B27A-4BCF-B714-F0B209F0D7AF" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" disabled="1" formname="" form_exp="" id_exp="" file_open="" path_template="GET(''Результаты_шаблон'', ''Файл'')" path_doc="" fileaction="1" /><comment text="Утвердить протокол"/><action type="7" expression="Setfield(''Утверждено'',1)"/><action type="5" /><action type="3" form="Заявка клиента" filter="[ID]=[Заявка клиента|ID]" table="" field="Протокол утвержден" expression=""/></actions>'
   end
   object Grid: TdxGrid
     Left = 0
@@ -2174,6 +2381,25 @@ object Form246: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f263286'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 263309
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263309'
+      end    
+      item
+        Tag = 263322
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263322'
+      end    
+      item
+        Tag = 263324
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263324l'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

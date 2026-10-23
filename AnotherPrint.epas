@@ -200,7 +200,7 @@ begin
 	if FormPrint<>self then FormPrint.LockMode := lmNoLock;
 	if FormPrint<>self then FormPrint.Edit; // открываем форму на редактирование
   FormPrint.OnPrint := @PrintForm;
-	Result:=FormPrint.Print (PathTemp, PathDoc, err, FileAction);   // Печать идет по выбранной форме и записи, в резалт фозвращается имя напечатанного файла
+	Result:=FormPrint.Print(PathTemp, PathDoc, err, FileAction);   // Печать идет по выбранной форме и записи, в резалт фозвращается имя напечатанного файла
 	if err <> '' then ShowPrintErrors (err); //обработка ошибок
 	if FormPrint<>self then FormPrint.LockMode := lmPessimistic;
   if FormPrint<>self then FormPrint.Cancel;

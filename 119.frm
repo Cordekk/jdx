@@ -147,30 +147,6 @@ object Form119: TdxForm
     Required = False
     Editable = False
   end
-  object dxCalcEdit1: TdxCalcEdit
-    Left = 756
-    Height = 24
-    Top = 0
-    Width = 100
-    MaxLength = 0
-    TabOrder = 6
-    HideButton = False
-    CalculatorLayout = clNormal
-    AsInteger = 0
-    ButtonWidth = 24
-    NumGlyphs = 1
-    Flat = True
-    Id = 262316
-    FieldName = 'Идентификатор'
-    Precission = 0
-    Expression = 'RECID(''Виды документов'')'
-    Required = False
-    DefaultValue = '0'
-    Editable = False
-    NullToZero = True
-    GroupDigits = True
-    PadZeros = True
-  end
   object dxLabel6: TdxLabel
     Left = 24
     Height = 16
@@ -193,7 +169,7 @@ object Form119: TdxForm
     Top = 252
     Width = 140
     MaxLength = 0
-    TabOrder = 7
+    TabOrder = 6
     Id = 262414
     FieldName = 'Срок хранения'
     FieldSize = 50
@@ -215,7 +191,7 @@ object Form119: TdxForm
     Width = 848
     ActivePage = dxTabSheet1
     TabIndex = 0
-    TabOrder = 8
+    TabOrder = 7
     object dxTabSheet1: TdxTabSheet
       Caption = 'Настройки'
       StopTab = False
@@ -267,7 +243,7 @@ object Form119: TdxForm
         Height = 23
         Top = 80
         Width = 214
-        Caption = 'NN- внутри новенклатуры'
+        Caption = 'NN- внутри номенклатуры'
         TabOrder = 2
         ValueChecked = '1'
         ValueUnchecked = '0'
@@ -448,7 +424,7 @@ object Form119: TdxForm
       object dxCheckBox10: TdxCheckBox
         Left = 16
         Height = 23
-        Top = 436
+        Top = 428
         Width = 284
         Caption = 'Редактирует ответственный сотрудник'
         TabOrder = 12
@@ -456,6 +432,38 @@ object Form119: TdxForm
         ValueUnchecked = '0'
         Id = 263185
         FieldName = 'Редактирует ответственный'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox11: TdxCheckBox
+        Left = 16
+        Height = 23
+        Top = 460
+        Width = 284
+        Caption = 'Утверждает ответственный сотрудник'
+        TabOrder = 13
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 263325
+        FieldName = 'Утверждает ответственный'
+        CheckedText = 'Да'
+        UnCheckedText = 'Нет'
+        Editable = False
+        DefaultValue = '0'
+      end
+      object dxCheckBox12: TdxCheckBox
+        Left = 352
+        Height = 23
+        Top = 456
+        Width = 320
+        Caption = 'Использовать таблицу результатов'
+        TabOrder = 14
+        ValueChecked = '1'
+        ValueUnchecked = '0'
+        Id = 263326
+        FieldName = 'Использовать таблицу результатов'
         CheckedText = 'Да'
         UnCheckedText = 'Нет'
         Editable = False
@@ -500,16 +508,16 @@ object Form119: TdxForm
     end
   end
   object dxRecordId1: TdxRecordId
-    Left = 756
+    Left = 768
     Height = 24
     Top = 0
     Width = 100
     ReadOnly = True
     MaxLength = 0
-    TabOrder = 9
+    TabOrder = 8
     FieldName = 'ID записи'
     StopTab = False
-    Id = 263312
+    Id = 263243
   end
   object Grid: TdxGrid
     Left = 0
@@ -573,13 +581,6 @@ object Form119: TdxForm
         Width = 0
         Visible = False
         FieldName = 'f262412'
-      end    
-      item
-        Tag = 262316
-        Title.Caption = ' '
-        Width = 0
-        Visible = False
-        FieldName = 'f262316'
       end    
       item
         ButtonStyle = cbsCheckboxColumn
@@ -665,10 +666,24 @@ object Form119: TdxForm
         FieldName = 'f263185'
       end    
       item
-        Tag = 263312
+        Tag = 263243
         Title.Caption = ' '
         Width = 100
-        FieldName = 'f263312'
+        FieldName = 'f263243'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 263325
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263325'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 263326
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263326'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

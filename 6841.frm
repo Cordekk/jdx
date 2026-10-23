@@ -238,7 +238,7 @@ object Form9: TdxForm
   object dxQueryGrid4: TdxQueryGrid
     Left = 516
     Height = 86
-    Top = 658
+    Top = 661
     Width = 460
     AutoAdvance = aaNone
     Color = clWindow
@@ -553,9 +553,9 @@ object Form9: TdxForm
     Caption = 'Сотрудники в протоколе (исполнители)'
   end
   object dxLabel5: TdxLabel
-    Left = 528
+    Left = 527
     Height = 16
-    Top = 640
+    Top = 642
     Width = 120
     Caption = 'Файлы протокола'
   end
@@ -661,6 +661,31 @@ object Form9: TdxForm
     ParentFont = False
     Expression = 'IIF([Фильтр количечества]<1|[Фильтр количечества]>100, ''Ведите число от 1 до 100'','''')'
   end
+  object dxButton4: TdxButton
+    Left = 824
+    Height = 30
+    Top = 68
+    Width = 140
+    Caption = 'Вернуть протокол'
+    TabOrder = 21
+    ActionOnClick = '<actions><action type="7" expression="EDITINGREC(''Результат'',GET(''Запрос_экспортированные_протоколы'', ''ID'') ,''ФГИС'', 0)"/><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Запрос_экспортированные_протоколы" keeppos="0" /><action type="9" id="27127C44-FC1E-4442-AA90-D1EDEC354917" qry="Запрос_протоколы_экспорт" keeppos="0" /></actions>'
+  end
+  object dxCheckBox1: TdxCheckBox
+    Left = 828
+    Height = 23
+    Top = 19
+    Width = 292
+    Caption = 'Отправлять сразу или черновик'
+    TabOrder = 22
+    ValueChecked = '1'
+    ValueUnchecked = '0'
+    Id = 263331
+    FieldName = 'DataStatus'
+    CheckedText = 'Да'
+    UnCheckedText = 'Нет'
+    Editable = False
+    DefaultValue = '0'
+  end
   object Grid: TdxGrid
     Left = 0
     Height = 150
@@ -747,6 +772,13 @@ object Form9: TdxForm
         Title.Caption = ' '
         Width = 763
         FieldName = 'f263289'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 263331
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f263331'
       end>
     DefaultRowHeight = 20
     DoubleBuffered = True

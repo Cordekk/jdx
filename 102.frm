@@ -18,7 +18,8 @@ object Form102: TdxForm
     'ВО=FILTER:2555|0|0|5'
     'ИО=FILTER:2555|0|0|4'
     'СО=FILTER:2555|0|0|8'
-    'Поверка=FILTER:2555|0|0|1 ~~ 2576|0|0|'
+    'Поверка=FILTER:2555|0|0|1 ~~ 2576|0|0|$3'
+    'Не внесено во ФГИС РА=FILTER:2689|0|1|0'
   )
   ParentField = 0
   LevelCount = 5
@@ -1360,6 +1361,7 @@ object Form102: TdxForm
         FieldName = 'ФГИС РА'
         CheckedText = 'Да'
         UnCheckedText = 'Нет'
+        Expression = 'IIF([Дата следующей проверки]<>oldvalue(''Дата следующей проверки'') | ([Номер ФГИС РА]=null|[Номер ФГИС РА]=0),0,1)'
         Editable = True
         DefaultValue = '0'
       end
@@ -2040,6 +2042,19 @@ object Form102: TdxForm
     Color = clWindow
     Columns = <    
       item
+        Tag = 262401
+        Title.Caption = ' '
+        Width = 63
+        FieldName = 'f262401'
+      end    
+      item
+        ButtonStyle = cbsCheckboxColumn
+        Tag = 2689
+        Title.Caption = ' '
+        Width = 100
+        FieldName = 'f2689'
+      end    
+      item
         Tag = 2495
         Title.Caption = ' '
         Width = 100
@@ -2225,13 +2240,6 @@ object Form102: TdxForm
         FieldName = 'f2658l'
       end    
       item
-        ButtonStyle = cbsCheckboxColumn
-        Tag = 2689
-        Title.Caption = ' '
-        Width = 100
-        FieldName = 'f2689'
-      end    
-      item
         Tag = 7237
         Title.Caption = ' '
         Width = 100
@@ -2408,13 +2416,6 @@ object Form102: TdxForm
         Title.Caption = ' '
         Width = 100
         FieldName = 'f262360'
-      end    
-      item
-        Tag = 262401
-        Title.Caption = ' '
-        Width = 0
-        Visible = False
-        FieldName = 'f262401'
       end    
       item
         Tag = 262707

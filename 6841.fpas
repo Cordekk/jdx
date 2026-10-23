@@ -2,8 +2,8 @@
 begin
    Result := S;
    Result := StringReplace(Result, '&', '&amp;', [rfReplaceAll]);
-   Result := StringReplace(Result, '<', '&lt', [rfReplaceAll]);
-   Result := StringReplace(Result, '>', '&gt', [rfReplaceAll]);
+   Result := StringReplace(Result, '<', '&lt;', [rfReplaceAll]);
+   Result := StringReplace(Result, '>', '&gt;', [rfReplaceAll]);
    Result := StringReplace(Result, '"', '&quot;', [rfReplaceAll]);
    Result := StringReplace(Result, '''', '&apos;', [rfReplaceAll]);
 end;
@@ -111,14 +111,17 @@ begin
       XML := XML + '    <DocCreationDate>' + FormatDateForXML(Qprotocol['Дата протокола']) + '</DocCreationDate>' + #13#10;
       XML := XML + '    <DocStartDate>' + FormatDateForXML(Self['Дата поступления']) + '</DocStartDate>' + #13#10;
       XML := XML + '    <DocValidityDate>' + FormatDateForXML(Self['Дата завершения']) + '</DocValidityDate>' + #13#10;
-      XML := XML + '    <DataStatusId>20</DataStatusId>' + #13#10;
+      XML := XML + '    <DataStatusId>'
+      if Self['DataStatus']=1 then XML := XML + '13' else XML := XML + '20';
+      XML := XML + '</DataStatusId>' + #13#10;
       XML := XML + '    <ProtocolStatusId>6</ProtocolStatusId>' + #13#10;
       //debug(XML); //закомментировать
 
       // 2. Блок ProtocolScan (файл)
+      //если есть записи в запросе, проверяем, что поле файл заполнено и тогда сохраняем файл первой записи.
       Fq.MoveFirst;
-      //if (Fq.RecordCount > 0) and (Fq['Файл'] <> '') then
-      if 1=0 then // ЗАГЛУШКА:
+      if (Fq.RecordCount > 0) and (Fq['Файл'] <> '') then
+      //if 1=0 then // ЗАГЛУШКА: убрать
       begin
          try
             Fm.OpenRecord(Fq.RecId);
@@ -130,17 +133,17 @@ begin
             File.SaveToFile(GetOutputDir + FileName);
             FS2 := TFileStream.Create(GetOutputDir + FileName, fmOpenRead);
             SetLength(Buf, FS2.Size);
-            FS2.Read(Buf[1], FS2.Size); //считываем файловый поток побитно
+            FS2.Read(Buf, FS2.Size); //считываем файловый поток побитно, неправильный вариант - FS2.Read(Buf[1], FS2.Size)
             FS2.Free;
             Base64Str := EncodeBase64(Buf); //кодируем в Base64
-			      //Buf:=''; //зануляем переменную, после этого падает
+			      Buf:=''; //зануляем переменную
             //debug(Base64Str); //закомментировать
             XML := XML + '    <ProtocolScan>' + #13#10;
             XML := XML + '        <Extension>' + EscapeXML(FileExt) + '</Extension>' + #13#10;
             XML := XML + '        <FileName>' + ExtractFileNameOnly(FileName) + '</FileName>' + #13#10;
             XML := XML + '        <Content>' + Base64Str + '</Content>' + #13#10;
             XML := XML + '    </ProtocolScan>' + #13#10;
-			      //Base64Str:=''; //зануляем переменную, после этого падает
+			      Base64Str:=''; //зануляем переменную
         // except
         // debug(ExceptionParam);
          finally
@@ -151,9 +154,7 @@ begin
 			      // Сохраняем XML в файл
             //debug(XML); //закомментировать
 			      FS.Write(XML, Length(XML));
-            //SetLength(XML, 0); //попробуем установить меньшую длину
-            //Delete(XML, 1, Length(XML));  //попробуем удалить символы из строки по одному
-            XML := '';	//зануляем переменную, после этого падает
+            XML := '';	//зануляем переменную
          end;
       end;
 
@@ -185,11 +186,11 @@ begin
 
       // ИНН (должен быть ПЕРВЫМ из этих двух)
       if Qprotocol['ИНН1'] <> '' then
-         XML := XML + '        <InnId>' + EscapeXML(Qprotocol['ИНН1']) + '</InnId>' + #13#10;
+         XML := XML + '        <InnId>' + EscapeXML(Qprotocol['ИНН']) + '</InnId>' + #13#10;
 
       // ОГРН/ОГРНИП (должен быть ВТОРЫМ)
       if Qprotocol['ОГРН1'] <> '' then
-         XML := XML + '        <OgrnId>' + EscapeXML(Qprotocol['ОГРН1']) + '</OgrnId>' + #13#10;
+         XML := XML + '        <OgrnId>' + EscapeXML(Qprotocol['ОГРН']) + '</OgrnId>' + #13#10;
 
       // FullNameDetails для ЮЛ (ТИП КЛИЕНТА = 1) или иностранца (ТИП КЛИЕНТА = 3)
       if (Qprotocol['ТИП КЛИЕНТА'] = '1') or (Qprotocol['ТИП КЛИЕНТА'] = '3') then
@@ -265,19 +266,44 @@ begin
       begin
          XML := XML + '        <ApprovedUserDetails>' + #13#10;
          XML := XML + '            <idFullName>' + EscapeXML(QUser['ФГИС РА1']) + '</idFullName>' + #13#10;
-         XML := XML + '            <PostName>' + EscapeXML('Испытатель') + '</PostName>' + #13#10;
+         XML := XML + '            <PostName>' + EscapeXML(NZ(IIF(QUser['Роль ФГИС РА']='','Испытатель',QUser['Роль ФГИС РА']),'Испытатель')) + '</PostName>' + #13#10;   //EscapeXML(QUser['Роль ФГИС РА'])  или просто EscapeXML('Испытатель')
          XML := XML + '            <idRoleName>1</idRoleName>' + #13#10;
          XML := XML + '        </ApprovedUserDetails>' + #13#10;
          QUser.MoveNext;
       end;
-{   // тут должен быть утверждающий, пока закомментировал, потому что не понятно с должностью и ролью
+         // тут должен быть оформивший (подписавший)
+      // Подписавший (роль 3)
+     IF (Qprotocol['Оформил_Номер ФГИС РА'] <> null) or (Qprotocol['Оформил_Номер ФГИС РА'] <> '') then
+      begin
+      XML := XML + '        <ApprovedUserDetails>' + #13#10;
+      XML := XML + '            <idFullName>' + EscapeXML(Qprotocol['Оформил_Номер ФГИС РА']) + '</idFullName>' + #13#10;
+      XML := XML + '            <PostName>' + EscapeXML(NZ(IIF(Qprotocol['Оформил_Роль ФГИС РА']='','Исполнитель',Qprotocol['Оформил_Роль ФГИС РА']),'Исполнитель')) + '</PostName>' + #13#10;   // EscapeXML(Qprotocol['Оформил_Роль ФГИС РА'])  или EscapeXML('Исполнитель')
+      XML := XML + '            <idRoleName>3</idRoleName>' + #13#10;
+      XML := XML + '        </ApprovedUserDetails>' + #13#10;
+      end;
+
+
+     // тут должен быть согласующий (подписавший)
+      // Подписавший (роль 3)
+      IF (Qprotocol['Согласовал_Номер ФГИС РА'] <> null) or (Qprotocol['Согласовал_Номер ФГИС РА'] <> '') then
+      begin
+      XML := XML + '        <ApprovedUserDetails>' + #13#10;
+      XML := XML + '            <idFullName>' + EscapeXML(Qprotocol['Согласовал_Номер ФГИС РА']) + '</idFullName>' + #13#10;
+      XML := XML + '            <PostName>' + EscapeXML(NZ(IIF(Qprotocol['Согласовал_Роль ФГИС РА']='','Менеджер по качеству',Qprotocol['Согласовал_Роль ФГИС РА']),'Менеджер по качеству')) + '</PostName>' + #13#10;   // EscapeXML(Qprotocol['Согласовал_Роль ФГИС РА'])  или EscapeXML('Менеджер по качеству')
+      XML := XML + '            <idRoleName>3</idRoleName>' + #13#10;
+      XML := XML + '        </ApprovedUserDetails>' + #13#10;
+      end;
+
+   // тут должен быть утверждающий, роль из ФГИС РА обязательна
       // Утвердивший (роль 2)
+      IF (Qprotocol['Утвердивший_ФГИС РА'] <> null) or (Qprotocol['Утвердивший_ФГИС РА'] <> '') then
+      begin
       XML := XML + '        <ApprovedUserDetails>' + #13#10;
       XML := XML + '            <idFullName>' + EscapeXML(Qprotocol['Утвердивший_ФГИС РА']) + '</idFullName>' + #13#10;
-      XML := XML + '            <PostName>' + EscapeXML('Руководитель') + '</PostName>' + #13#10;
+      XML := XML + '            <PostName>' + EscapeXML(NZ(IIF(Qprotocol['Роль ФГИС РА2']='','Руководитель',Qprotocol['Роль ФГИС РА2']),'Руководитель')) + '</PostName>' + #13#10;   // EscapeXML(Qprotocol['Роль ФГИС РА2'])  или EscapeXML('Руководитель')
       XML := XML + '            <idRoleName>2</idRoleName>' + #13#10;
       XML := XML + '        </ApprovedUserDetails>' + #13#10;
-	  }
+      end;
 
       XML := XML + '    </ApprovedUser>' + #13#10;
 
@@ -306,11 +332,24 @@ begin
       while not Qresearch.Eof do
       begin
          XML := XML + '            <ResearchObjectInfo>' + #13#10;
-         XML := XML + '                <UniqueIndicator>' + EscapeXML(Qresearch['Показатель']) + '</UniqueIndicator>' + #13#10;
+
+         if (Qresearch['Показатель_id ФСА']<>null) and (Qresearch['Показатель_id ФСА']<>0)
+          then  XML := XML + '                <IndicatorId>' + EscapeXML(Qresearch['Показатель_id ФСА']) + '</IndicatorId>' + #13#10
+         else XML := XML + '                <UniqueIndicator>' + EscapeXML(Qresearch['Показатель']) + '</UniqueIndicator>' + #13#10;
+
          XML := XML + '                <FactValue>' + EscapeXML(Qresearch['Значение']) + '</FactValue>' + #13#10;
-         XML := XML + '                <UniqueMeasurement>' + EscapeXML(Qresearch['Ед.изм']) + '</UniqueMeasurement>' + #13#10;
-         XML := XML + '                <UniqueMethod>' + EscapeXML(Qresearch['Методика из ОА']) + '</UniqueMethod>' + #13#10;
-         XML := XML + '                <UniqueMethodik>' + EscapeXML(Qresearch['Метод']) + '</UniqueMethodik>' + #13#10;
+
+         if  (Qresearch['Ед.изм_id ФСА']<>null) and  (Qresearch['Ед.изм_id ФСА']<>0)
+          then XML := XML + '                <MeasurementId>' + EscapeXML(Qresearch['Ед.изм_id ФСА']) + '</MeasurementId>' + #13#10
+         else XML := XML + '                <UniqueMeasurement>' + EscapeXML(Qresearch['Ед.изм']) + '</UniqueMeasurement>' + #13#10;
+
+         if  (Qresearch['Методика_id ФСА']<>null) and (Qresearch['Методика_id ФСА']<>0)
+          then XML := XML + '                <DocNameId>' + EscapeXML(Qresearch['Методика_id ФСА']) + '</DocNameId>' + #13#10
+         else XML := XML + '                <UniqueMethod>' + EscapeXML(Qresearch['Методика из ОА']) + '</UniqueMethod>' + #13#10;
+
+         if  (Qresearch['Метод_id ФСА']<>null) and (Qresearch['Метод_id ФСА']<>0)
+         then XML := XML + '                <DocNameMethodikId>' + EscapeXML(Qresearch['Метод_id ФСА']) + '</DocNameMethodikId>' + #13#10
+         else XML := XML + '                <UniqueMethodik>' + EscapeXML(Qresearch['Метод']) + '</UniqueMethodik>' + #13#10;
          XML := XML + '            </ResearchObjectInfo>' + #13#10;
          Qresearch.MoveNext;
       end;
@@ -426,3 +465,4 @@ procedure Form_Create;
 begin
    dxButton3.OnClick := @SaveFilesFromQuery;
 end;       }
+

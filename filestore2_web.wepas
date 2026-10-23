@@ -1,6 +1,6 @@
 {@module
 Author=cordek, develop-soft
-Version=1.0
+Version=1.1
 Description=Содержит действие для кнопки "Добавить файл в хранилище (FileStore2)", которые служат для организации
 системы группового или одиночного добавления и хранения файлов в базе данных.
 Является частью комплекса "Хранилище файлов 2.0".
@@ -20,6 +20,11 @@ Description=Содержит действие для кнопки "Добави�
 {@action
 Id=0AABDA55-EC7B-453E-9ECF-BD99CEB2D42E
 @}
+
+{@function
+Name=File_Add
+@}
+
 
  function File_Add (DscrField, FormCaption, IDcaption, File_path: Variant): Boolean;
 var
