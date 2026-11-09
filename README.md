@@ -1,5 +1,6 @@
 # jdx
 Система электронного документооборота лаборатории JDX
+Акроним JDX - Journal Data of eXperiment или Journal in DataeXpress
 Для сборки необходимо скачать все файлы и заархивировать их в zip, кроме файлов LICENSE и README.md
 Потом расширение .zip переименовать в .dxp
 скачать программу dataexpress с сайта mydataexpress.ru
